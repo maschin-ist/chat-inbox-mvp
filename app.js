@@ -42,6 +42,383 @@ const SUPERVISOR_PROFILE = {
   photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=80&fit=crop&crop=face',
 };
 
+const I18N_STORAGE_KEY = 'mvp-locale';
+let currentLocale = localStorage.getItem(I18N_STORAGE_KEY) || 'en';
+
+const I18N_STRINGS = {
+  en: {
+    'nav.contacts': 'Contacts',
+    'nav.chats': 'Chats',
+    'nav.broadcasts': 'Broadcasts',
+    'lang.english': 'English',
+    'lang.japanese': '日本語',
+    'lang.shortEn': 'EN',
+    'lang.shortJa': '日',
+    'lang.changeAria': 'Change language',
+    'chats.inboxTitle': 'Chats Inbox',
+    'chats.attachImage': 'Attach image',
+    'chats.template': 'Template',
+    'chats.messagePlaceholder': 'Message',
+    'chats.send': 'Send',
+    'chats.sendAria': 'Send message',
+    'chats.noConversations': 'No conversations.',
+    'broadcasts.title': 'Broadcasts',
+    'broadcasts.createNew': 'Create new',
+    'broadcasts.createNewAria': 'Create new broadcast',
+    'broadcasts.emptyTitle': 'Your Broadcasts',
+    'broadcasts.emptyDesc': 'Select a broadcast from the list or create new',
+    'broadcasts.wizardTitle': 'New broadcast',
+    'broadcasts.noTitle': 'No title',
+    'broadcasts.sentSuccess': 'Message successfully sent',
+    'wizard.stepTemplate': 'Choose template',
+    'wizard.stepCompose': 'Compose message',
+    'wizard.stepAudience': 'Select contacts',
+    'wizard.stepAudienceByTag': 'Select contacts by tag',
+    'wizard.stepPreview': 'Broadcast preview',
+    'wizard.templateTitle': 'Choose a template',
+    'wizard.templateDesc': 'Pick the format that best fits your message — you can customize it next.',
+    'wizard.composeTitle': 'Compose your message',
+    'wizard.composeDesc': 'Write the broadcast title and message your contacts will receive.',
+    'wizard.audiencePageTitle': 'Select contacts by tag',
+    'wizard.audienceDesc': 'Pick one tag — everyone with that tag will receive this message.',
+    'wizard.previewTitle': 'Review before sending',
+    'wizard.previewDesc': 'Confirm everything looks correct — you can still go back to edit any step.',
+    'wizard.fieldTitle': 'Title',
+    'wizard.fieldMessage': 'Message',
+    'wizard.fieldLink': 'Link',
+    'wizard.fieldTag': 'Tag',
+    'wizard.titlePlaceholder': 'Enter your title',
+    'wizard.messagePlaceholder': 'Enter message',
+    'wizard.linkPlaceholder': 'https://example.com',
+    'wizard.invalidLink': 'Invalid link format',
+    'wizard.selectTag': 'Select a tag',
+    'wizard.selectTagWarning': 'Select a tag to continue.',
+    'wizard.audienceCount': '{{count}} contacts will receive this broadcast',
+    'wizard.audienceCountOne': '1 contact will receive this broadcast',
+    'wizard.summary': 'Summary',
+    'wizard.summaryTemplate': 'Template',
+    'wizard.summaryRecipients': 'Recipients',
+    'wizard.summaryLink': 'Link',
+    'wizard.summaryViewList': 'View list',
+    'wizard.learnMore': 'Learn more',
+    'common.back': 'BACK',
+    'common.cancel': 'CANCEL',
+    'common.continue': 'CONTINUE',
+    'common.sendBroadcast': 'SEND BROADCAST',
+    'common.discard': 'DISCARD',
+    'common.edit': 'EDIT',
+    'contacts.title': 'Contacts',
+    'contacts.subtitle':
+      'View everyone who joined your project. Select people to create tags and organize users into groups',
+    'contacts.infoTooltip':
+      'Contacts are users who clicked "Join" button of your Project or Official page',
+    'contacts.addTags': 'Add Tags',
+    'contacts.addTagsTitle': 'Add tags',
+    'contacts.addTagsSubtitle': 'Pick one tag to apply to selected contacts',
+    'contacts.addTagsSubtitleOne': 'Select tags to apply to {{name}}',
+    'contacts.addTagsSubtitleMany': 'Select tags to apply to {{count}} contacts',
+    'contacts.colName': 'Name',
+    'contacts.colTags': 'Tags',
+    'contacts.colViewChat': 'View chat',
+    'contacts.weavers': '{{count}} Weavers',
+    'contacts.selectionZero': '0 users selected',
+    'contacts.selectionOne': '1 user selected',
+    'contacts.selectionMany': '{{count}} users selected',
+    'contacts.selectionHint': 'Select contacts to add tags',
+    'contacts.selectAll': 'Select all {{count}} users',
+    'contacts.clearSelection': 'Clear selection',
+    'contacts.noActiveChat': 'No active conversation',
+    'contacts.openChatAria': 'Open chat with {{name}}',
+    'contacts.selectRowAria': 'Select {{name}}',
+    'contacts.applyTags': 'Apply tags',
+    'contacts.cancel': 'Cancel',
+    'contacts.searchTags': 'Search tags',
+    'contacts.noTagsMatch': 'No tags match your search',
+    'contacts.applied': 'Applied',
+    'template.project-updates.title': 'Project Updates',
+    'template.project-updates.desc':
+      'Share friendly welcomes and ongoing updates to keep everyone informed',
+    'template.free-text.title': 'Free text message',
+    'template.free-text.desc': 'Write your own message',
+    'templateModal.title': 'Choose your template',
+    'templateModal.subtitleChat': 'Select how you want to engage with your contact',
+    'templateModal.subtitleContacts': 'Select how you want to engage with your contacts',
+    'templateModal.hint': 'You can customize each template in the next step',
+    'tag.Member': 'Member',
+    'tag.Community member': 'Community member',
+    'tag.Head of Household': 'Head of Household',
+    'tag.1 room': '1 room',
+    'tag.2 room': '2 room',
+    'tag.Retired': 'Retired',
+    'tag.Event invite': 'Event invite',
+    'tag.VIP': 'VIP',
+    'page.title': 'Chats Inbox — MVP',
+  },
+  ja: {
+    'nav.contacts': '連絡先',
+    'nav.chats': 'チャット',
+    'nav.broadcasts': '一斉配信',
+    'lang.english': 'English',
+    'lang.japanese': '日本語',
+    'lang.shortEn': 'EN',
+    'lang.shortJa': '日',
+    'lang.changeAria': '言語を変更',
+    'chats.inboxTitle': 'チャット',
+    'chats.attachImage': '画像を添付',
+    'chats.template': 'テンプレート',
+    'chats.messagePlaceholder': 'メッセージ',
+    'chats.send': '送信',
+    'chats.sendAria': 'メッセージを送信',
+    'chats.noConversations': 'トークはありません。',
+    'broadcasts.title': '一斉配信',
+    'broadcasts.createNew': '新規作成',
+    'broadcasts.createNewAria': '新規配信を作成',
+    'broadcasts.emptyTitle': '配信一覧',
+    'broadcasts.emptyDesc': '一覧から配信を選ぶか、新規作成してください',
+    'broadcasts.wizardTitle': '新規配信',
+    'broadcasts.noTitle': 'タイトル未入力',
+    'broadcasts.sentSuccess': '送信しました',
+    'wizard.stepTemplate': 'テンプレートを選択',
+    'wizard.stepCompose': 'メッセージ作成',
+    'wizard.stepAudience': '連絡先を選択',
+    'wizard.stepAudienceByTag': 'タグで連絡先を選択',
+    'wizard.stepPreview': '配信プレビュー',
+    'wizard.templateTitle': 'テンプレートを選ぶ',
+    'wizard.templateDesc': '内容に合う形式を選び、次のステップで編集できます。',
+    'wizard.composeTitle': 'メッセージを作成',
+    'wizard.composeDesc': '配信のタイトルと本文を入力してください。',
+    'wizard.audiencePageTitle': 'タグで連絡先を選択',
+    'wizard.audienceDesc': 'タグを1つ選ぶと、そのタグの連絡先全員に送信されます。',
+    'wizard.previewTitle': '送信前の確認',
+    'wizard.previewDesc': '内容を確認してください。前のステップに戻って編集できます。',
+    'wizard.fieldTitle': 'タイトル',
+    'wizard.fieldMessage': 'メッセージ',
+    'wizard.fieldLink': 'リンク',
+    'wizard.fieldTag': 'タグ',
+    'wizard.titlePlaceholder': 'タイトルを入力',
+    'wizard.messagePlaceholder': 'メッセージを入力',
+    'wizard.linkPlaceholder': 'https://example.com',
+    'wizard.invalidLink': 'リンクの形式が正しくありません',
+    'wizard.selectTag': 'タグを選択',
+    'wizard.selectTagWarning': 'タグを選択してください。',
+    'wizard.audienceCount': '{{count}}件の連絡先に配信されます',
+    'wizard.audienceCountOne': '1件の連絡先に配信されます',
+    'wizard.summary': '概要',
+    'wizard.summaryTemplate': 'テンプレート',
+    'wizard.summaryRecipients': '送信先',
+    'wizard.summaryLink': 'リンク',
+    'wizard.summaryViewList': '一覧を見る',
+    'wizard.learnMore': '詳しく見る',
+    'common.back': '戻る',
+    'common.cancel': 'キャンセル',
+    'common.continue': '次へ',
+    'common.sendBroadcast': '配信する',
+    'common.discard': '削除',
+    'common.edit': '編集',
+    'contacts.title': '連絡先',
+    'contacts.subtitle':
+      'プロジェクトに参加したユーザーの一覧です。選択してタグを付け、グループを作成できます。',
+    'contacts.infoTooltip':
+      '連絡先は、プロジェクトまたは公式ページの「参加」ボタンを押したユーザーです',
+    'contacts.addTags': 'タグを追加',
+    'contacts.addTagsTitle': 'タグを追加',
+    'contacts.addTagsSubtitle': '選択した連絡先に付けるタグを1つ選んでください',
+    'contacts.addTagsSubtitleOne': '{{name}}に付けるタグを選択',
+    'contacts.addTagsSubtitleMany': '選択中の{{count}}件に付けるタグを選択',
+    'contacts.colName': '名前',
+    'contacts.colTags': 'タグ',
+    'contacts.colViewChat': 'トーク',
+    'contacts.weavers': 'ユーザー {{count}}件',
+    'contacts.selectionZero': '0件選択中',
+    'contacts.selectionOne': '1件選択中',
+    'contacts.selectionMany': '{{count}}件選択中',
+    'contacts.selectionHint': '連絡先を選択してタグを追加',
+    'contacts.selectAll': 'すべて選択（{{count}}件）',
+    'contacts.clearSelection': '選択を解除',
+    'contacts.noActiveChat': 'トークはありません',
+    'contacts.openChatAria': '{{name}}のトークを開く',
+    'contacts.selectRowAria': '{{name}}を選択',
+    'contacts.applyTags': 'タグを適用',
+    'contacts.cancel': 'キャンセル',
+    'contacts.searchTags': 'タグを検索',
+    'contacts.noTagsMatch': '該当するタグがありません',
+    'contacts.applied': '適用済み',
+    'template.project-updates.title': 'プロジェクトのお知らせ',
+    'template.project-updates.desc': '参加のお礼や最新情報を、わかりやすくお知らせします',
+    'template.free-text.title': '自由入力メッセージ',
+    'template.free-text.desc': 'メッセージを自由に入力',
+    'templateModal.title': 'テンプレートを選択',
+    'templateModal.subtitleChat': '連絡先への送信形式を選んでください',
+    'templateModal.subtitleContacts': '連絡先への送信形式を選んでください',
+    'templateModal.hint': '次のステップで内容を編集できます',
+    'tag.Member': 'メンバー',
+    'tag.Community member': 'コミュニティメンバー',
+    'tag.Head of Household': '世帯主',
+    'tag.1 room': '1ルーム',
+    'tag.2 room': '2ルーム',
+    'tag.Retired': '退職',
+    'tag.Event invite': 'イベント招待',
+    'tag.VIP': 'VIP',
+    'page.title': 'トーク — MVP',
+  },
+};
+
+function t(key, params = {}) {
+  let str = I18N_STRINGS[currentLocale]?.[key] ?? I18N_STRINGS.en[key] ?? key;
+  Object.entries(params).forEach(([k, v]) => {
+    str = str.replace(new RegExp(`\\{\\{${k}\\}\\}`, 'g'), String(v));
+  });
+  return str;
+}
+
+function translateTag(tag) {
+  return t(`tag.${tag}`, {}) !== `tag.${tag}` ? t(`tag.${tag}`) : tag;
+}
+
+function getLocalizedTemplateOptions() {
+  return CONTACT_TEMPLATE_OPTIONS.map((tpl) => ({
+    ...tpl,
+    title: t(`template.${tpl.id}.title`),
+    description: t(`template.${tpl.id}.desc`),
+  }));
+}
+
+function getWizardStepLabels() {
+  return [
+    { num: 1, label: t('wizard.stepTemplate'), panel: 'template' },
+    { num: 2, label: t('wizard.stepCompose'), panel: 'compose' },
+    { num: 3, label: t('wizard.stepAudience'), panel: 'audience' },
+    { num: 4, label: t('wizard.stepPreview'), panel: 'preview' },
+  ];
+}
+
+function applyStaticTranslations() {
+  document.documentElement.lang = currentLocale === 'ja' ? 'ja' : 'en';
+  document.title = t('page.title');
+
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const key = el.dataset.i18n;
+    if (key) el.textContent = t(key);
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+    const key = el.dataset.i18nPlaceholder;
+    if (key) el.placeholder = t(key);
+  });
+
+  document.querySelectorAll('[data-i18n-aria]').forEach((el) => {
+    const key = el.dataset.i18nAria;
+    if (key) el.setAttribute('aria-label', t(key));
+  });
+
+  document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
+    const view = btn.dataset.view;
+    if (view === 'contacts') btn.setAttribute('aria-label', t('nav.contacts'));
+    if (view === 'chats') btn.setAttribute('aria-label', t('nav.chats'));
+    if (view === 'broadcasts') btn.setAttribute('aria-label', t('nav.broadcasts'));
+  });
+
+  const langBtn = document.getElementById('lang-switcher-btn');
+  if (langBtn) langBtn.setAttribute('aria-label', t('lang.changeAria'));
+
+  document.querySelectorAll('.lang-switcher-menu__item').forEach((item) => {
+    const locale = item.dataset.locale;
+    const label = item.querySelector('span:first-child');
+    if (label) {
+      label.textContent = locale === 'ja' ? t('lang.japanese') : t('lang.english');
+    }
+    const active = locale === currentLocale;
+    item.classList.toggle('is-active', active);
+    item.setAttribute('aria-checked', active ? 'true' : 'false');
+  });
+}
+
+function refreshLocalizedUI() {
+  applyStaticTranslations();
+  renderChatList();
+  renderMessages();
+  renderBroadcastList();
+  if (broadcastWizardOpen) {
+    renderBroadcastWizardStepper();
+    updateBroadcastWizardPanelTitle();
+    populateBroadcastWizardCompose();
+    renderBroadcastWizardAudienceTags();
+    updateBroadcastWizardAudienceCount();
+    if (broadcastWizardState.step === 4) renderBroadcastWizardPreview();
+    updateBroadcastWizardFooter();
+  } else if (activeBroadcastId) {
+    renderBroadcastDetail();
+  }
+  renderContactsTable();
+  updateContactsSelectionBar();
+  const templateModal = document.getElementById('template-modal');
+  if (templateModal && !templateModal.hidden) {
+    renderTemplateGrid(
+      document.getElementById('template-modal-grid'),
+      selectedContactTemplateId,
+      () => {}
+    );
+  }
+}
+
+function setLocale(locale) {
+  if (locale !== 'en' && locale !== 'ja') return;
+  currentLocale = locale;
+  localStorage.setItem(I18N_STORAGE_KEY, locale);
+  refreshLocalizedUI();
+  closeLangSwitcherMenu();
+}
+
+function openLangSwitcherMenu() {
+  const wrap = document.getElementById('lang-switcher-wrap');
+  const menu = document.getElementById('lang-switcher-menu');
+  const btn = document.getElementById('lang-switcher-btn');
+  if (!wrap || !menu || !btn) return;
+  wrap.classList.add('is-open');
+  menu.hidden = false;
+  menu.setAttribute('aria-hidden', 'false');
+  btn.setAttribute('aria-expanded', 'true');
+}
+
+function closeLangSwitcherMenu() {
+  const wrap = document.getElementById('lang-switcher-wrap');
+  const menu = document.getElementById('lang-switcher-menu');
+  const btn = document.getElementById('lang-switcher-btn');
+  if (!wrap || !menu || !btn) return;
+  wrap.classList.remove('is-open');
+  menu.hidden = true;
+  menu.setAttribute('aria-hidden', 'true');
+  btn.setAttribute('aria-expanded', 'false');
+}
+
+function initLanguageSwitcher() {
+  const wrap = document.getElementById('lang-switcher-wrap');
+  const btn = document.getElementById('lang-switcher-btn');
+  const menu = document.getElementById('lang-switcher-menu');
+  if (!wrap || !btn || !menu) return;
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (wrap.classList.contains('is-open')) closeLangSwitcherMenu();
+    else openLangSwitcherMenu();
+  });
+
+  menu.querySelectorAll('.lang-switcher-menu__item').forEach((item) => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setLocale(item.dataset.locale);
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!wrap.contains(e.target)) closeLangSwitcherMenu();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLangSwitcherMenu();
+  });
+}
+
 const CHAT_TEMPLATE_MESSAGES = {
   'project-updates':
     'Hi [Name], we wanted to share an important project update with you. Let us know if you have any questions.',
@@ -535,7 +912,6 @@ let contactTagCatalog = [
   'New resident',
   'Loyalty member',
 ];
-let broadcastWizardAudienceSearch = '';
 let broadcastWizardAudienceShowError = false;
 let broadcastWizardLinkShowError = false;
 let addTagsPending = new Set();
@@ -671,7 +1047,7 @@ function renderAvatar(conv, className) {
 function renderChatList() {
   const list = getCurrentChatList();
   if (!list.length) {
-    chatListEl.innerHTML = '<li class="broadcast-empty">No conversations.</li>';
+    chatListEl.innerHTML = `<li class="broadcast-empty">${t('chats.noConversations')}</li>`;
     updateTabBadges();
     return;
   }
@@ -831,7 +1207,7 @@ function renderProjectUpdatePreviewCard(title, message) {
     <div class="project-update-card" role="img" aria-label="Project update message preview">
       <div class="project-update-card__title">${cardTitle}</div>
       <p class="project-update-card__body">${cardBody}</p>
-      <button class="project-update-card__btn" type="button" tabindex="-1">Learn more</button>
+      <button class="project-update-card__btn" type="button" tabindex="-1">${t('wizard.learnMore')}</button>
     </div>`;
 }
 
@@ -1065,9 +1441,7 @@ function openTemplateComposer(templateId) {
     return;
   }
   if (templateModalContext === 'chat') {
-    applyMessageTemplate(templateId);
-    closeTemplateModal();
-    closeAttachMenu();
+    return;
   }
 }
 
@@ -1373,7 +1747,7 @@ function initRsvpComposer() {
 function renderTemplateGrid(container, selectedId, onSelect) {
   if (!container) return;
 
-  container.innerHTML = CONTACT_TEMPLATE_OPTIONS.map(
+  container.innerHTML = getLocalizedTemplateOptions().map(
     (tpl) => `
     <button type="button" class="template-card${selectedId === tpl.id ? ' is-selected' : ''}" data-template-id="${tpl.id}">
       <span class="template-card__icon" aria-hidden="true">
@@ -1719,7 +2093,7 @@ broadcastTabsSupervisorEl?.querySelectorAll('.tab').forEach((tab) => {
 });
 
 function tagPillHtml(tag) {
-  return `<span class="contact-tag contact-tag--blue">${tag}</span>`;
+  return `<span class="contact-tag contact-tag--blue">${escapePreviewText(translateTag(tag))}</span>`;
 }
 
 function parseChatTimeToMinutesAgo(timeStr) {
@@ -2065,12 +2439,9 @@ function renderAddTagsList() {
   const total = selected.length;
   if (subtitleEl) {
     if (addTagsSingleContactId && total === 1) {
-      subtitleEl.textContent = `Select tags to apply to ${selected[0].name}`;
+      subtitleEl.textContent = t('contacts.addTagsSubtitleOne', { name: selected[0].name });
     } else {
-      subtitleEl.textContent =
-        total === 1
-          ? 'Select tags to apply to 1 selected contact'
-          : `Select tags to apply to ${total} selected contacts`;
+      subtitleEl.textContent = t('contacts.addTagsSubtitleMany', { count: total });
     }
   }
 
@@ -2078,7 +2449,7 @@ function renderAddTagsList() {
   const tags = contactTagCatalog.filter((tag) => !q || tag.toLowerCase().includes(q));
 
   if (tags.length === 0) {
-    listEl.innerHTML = `<li class="add-tags-popover__empty">No tags match your search</li>`;
+    listEl.innerHTML = `<li class="add-tags-popover__empty">${t('contacts.noTagsMatch')}</li>`;
     return;
   }
 
@@ -2092,9 +2463,9 @@ function renderAddTagsList() {
 
       let meta = '';
       if (onAll) {
-        meta = `<span class="add-tags-popover__tag-meta add-tags-popover__tag-meta--applied">Applied</span>`;
+        meta = `<span class="add-tags-popover__tag-meta add-tags-popover__tag-meta--applied">${t('contacts.applied')}</span>`;
       } else if (onSome) {
-        meta = `<span class="add-tags-popover__tag-meta">${withTag} of ${total}</span>`;
+        meta = `<span class="add-tags-popover__tag-meta">${withTag} / ${total}</span>`;
       }
 
       return `
@@ -2102,7 +2473,7 @@ function renderAddTagsList() {
         <label class="filter-check ${disabled ? 'is-disabled' : ''}">
           <input type="checkbox" value="${tag}" ${isChecked ? 'checked' : ''} ${disabled ? 'disabled' : ''}>
           <span class="filter-check__box" aria-hidden="true"></span>
-          <span class="filter-check__label">${tag}</span>
+          <span class="filter-check__label">${escapePreviewText(translateTag(tag))}</span>
           ${meta}
         </label>
       </li>`;
@@ -2235,9 +2606,6 @@ function renderTemplateModalGrid() {
       return;
     }
     if (templateModalContext === 'chat') {
-      applyMessageTemplate(templateId);
-      closeTemplateModal();
-      closeAttachMenu();
       return;
     }
     selectedContactTemplateId = templateId;
@@ -2257,7 +2625,10 @@ function setTemplateModalOpen(open, context = templateModalContext) {
 
   const subtitleEl = document.getElementById('template-modal-subtitle');
   if (subtitleEl) {
-    subtitleEl.textContent = TEMPLATE_MODAL_SUBTITLES[templateModalContext] || TEMPLATE_MODAL_SUBTITLES.contacts;
+    subtitleEl.textContent =
+      templateModalContext === 'chat'
+        ? t('templateModal.subtitleChat')
+        : t('templateModal.subtitleContacts');
   }
 
   if (open) {
@@ -2296,10 +2667,10 @@ function initTemplateModal() {
 }
 
 const BROADCAST_WIZARD_STEPS = [
-  { num: 1, label: 'Template', panel: 'template' },
-  { num: 2, label: 'Compose', panel: 'compose' },
-  { num: 3, label: 'Audience', panel: 'audience' },
-  { num: 4, label: 'Review', panel: 'preview' },
+  { num: 1, label: 'Choose template', panel: 'template' },
+  { num: 2, label: 'Compose message', panel: 'compose' },
+  { num: 3, label: 'Select contacts', panel: 'audience' },
+  { num: 4, label: 'Broadcast preview', panel: 'preview' },
 ];
 
 const TEMPLATE_TITLES = {
@@ -2309,12 +2680,11 @@ const TEMPLATE_TITLES = {
 
 const BROADCAST_COMPOSE_DEFAULTS = {
   'project-updates': {
-    message:
-      'Hi [Name], we wanted to share an important project update with you. Let us know if you have any questions.',
+    messagePlaceholder: 'Enter message',
     link: 'https://woven.city/updates',
   },
   'free-text': {
-    message: '',
+    messagePlaceholder: 'Enter message',
     link: '',
   },
 };
@@ -2394,6 +2764,48 @@ function toggleBroadcastWizardAudienceTag(tag) {
   refreshWizardDraftListRow();
 }
 
+function updateBroadcastWizardAudienceTrigger() {
+  const labelEl = document.getElementById('broadcast-wizard-audience-label');
+  const trigger = document.getElementById('broadcast-wizard-audience-trigger');
+  const tag = broadcastWizardState.audienceTags[0];
+  if (!labelEl || !trigger) return;
+
+  if (tag) {
+    labelEl.textContent = translateTag(tag);
+    trigger.classList.add('has-value');
+  } else {
+    labelEl.textContent = t('wizard.selectTag');
+    trigger.classList.remove('has-value');
+  }
+}
+
+function selectBroadcastWizardAudienceTag(tag) {
+  broadcastWizardState.audienceTags = tag ? [tag] : [];
+  broadcastWizardAudienceShowError = false;
+  closeAllFilterMenus();
+  renderBroadcastWizardAudienceTags();
+  updateBroadcastWizardAudienceCount();
+  updateBroadcastWizardFooter();
+  refreshWizardDraftListRow();
+}
+
+function initBroadcastWizardAudienceDropdown() {
+  const trigger = document.getElementById('broadcast-wizard-audience-trigger');
+  const menu = document.getElementById('broadcast-wizard-audience-menu');
+  if (!trigger || !menu || trigger.dataset.bound) return;
+  trigger.dataset.bound = 'true';
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = !menu.classList.contains('hidden');
+    closeAllFilterMenus();
+    if (!isOpen) {
+      menu.classList.remove('hidden');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+  });
+}
+
 function normalizeBroadcastLink(value) {
   const trimmed = value.trim();
   if (!trimmed) return '';
@@ -2467,7 +2879,7 @@ function renderBroadcastWizardStepper() {
   const stepper = document.getElementById('broadcast-wizard-stepper');
   if (!stepper) return;
 
-  stepper.innerHTML = BROADCAST_WIZARD_STEPS.map((s) => {
+  stepper.innerHTML = getWizardStepLabels().map((s) => {
     const isComplete = s.num < broadcastWizardState.step;
     const isCurrent = s.num === broadcastWizardState.step;
     const cls = [
@@ -2501,7 +2913,7 @@ function renderBroadcastWizardStepper() {
 
 function showBroadcastWizardStep(step) {
   broadcastWizardState.step = step;
-  const activePanel = BROADCAST_WIZARD_STEPS.find((s) => s.num === step)?.panel;
+  const activePanel = getWizardStepLabels().find((s) => s.num === step)?.panel;
   ['template', 'compose', 'audience', 'schedule', 'preview'].forEach((panelId) => {
     const panel = document.getElementById(`broadcast-wizard-step-${panelId}`);
     if (panel) panel.classList.toggle('hidden', panelId !== activePanel);
@@ -2528,7 +2940,7 @@ function renderBroadcastWizardTemplateChip() {
   const nameEl = document.getElementById('broadcast-wizard-template-chip-name');
   if (!chipWrap) return;
 
-  const option = CONTACT_TEMPLATE_OPTIONS.find((t) => t.id === broadcastWizardState.templateId);
+  const option = getLocalizedTemplateOptions().find((tpl) => tpl.id === broadcastWizardState.templateId);
   if (!option) {
     chipWrap.hidden = true;
     return;
@@ -2539,11 +2951,18 @@ function renderBroadcastWizardTemplateChip() {
   if (nameEl) nameEl.textContent = option.title;
 }
 
+function getLocalizedTemplateTitle(templateId) {
+  if (!templateId) return '—';
+  const key = `template.${templateId}.title`;
+  const localized = t(key);
+  return localized !== key ? localized : TEMPLATE_TITLES[templateId] || '—';
+}
+
 function updateBroadcastWizardPanelTitle() {
   const titleEl = document.getElementById('broadcast-wizard-panel-title');
   if (!titleEl) return;
   const title = broadcastWizardState.title?.trim();
-  titleEl.textContent = title || 'New broadcast';
+  titleEl.textContent = title || t('broadcasts.wizardTitle');
 }
 
 function syncBroadcastWizardComposeFromInputs() {
@@ -2574,11 +2993,14 @@ function populateBroadcastWizardCompose() {
   const titleCounter = document.getElementById('broadcast-wizard-title-counter');
   const messageCounter = document.getElementById('broadcast-wizard-message-counter');
 
-  if (messageInput && !messageInput.value.trim()) {
-    broadcastWizardState.message = defaults.message || '';
-    messageInput.value = broadcastWizardState.message;
-  } else if (messageInput) {
-    broadcastWizardState.message = messageInput.value.trim();
+  if (messageInput) {
+    messageInput.placeholder = t('wizard.messagePlaceholder');
+    if (!messageInput.value.trim()) {
+      broadcastWizardState.message = defaults.message || '';
+      messageInput.value = broadcastWizardState.message;
+    } else {
+      broadcastWizardState.message = messageInput.value.trim();
+    }
   }
 
   if (linkInput && !linkInput.value.trim()) {
@@ -2591,16 +3013,16 @@ function populateBroadcastWizardCompose() {
   const needsLink = broadcastTemplateNeedsLink(broadcastWizardState.templateId);
   if (linkField) linkField.classList.toggle('hidden', !needsLink);
   const linkLabel = document.getElementById('broadcast-wizard-link-label');
-  if (linkLabel) linkLabel.textContent = 'Link';
+  if (linkLabel) linkLabel.textContent = t('wizard.fieldLink');
   if (linkInput) {
-    linkInput.placeholder = 'https://example.com';
+    linkInput.placeholder = t('wizard.linkPlaceholder');
   }
   if (titleInput) {
     broadcastWizardState.title = titleInput.value.trim();
     if (titleCounter) titleCounter.textContent = `${titleInput.value.length} / 60`;
   }
   if (messageCounter) {
-    messageCounter.textContent = `${(messageInput?.value || '').length} / 500`;
+    messageCounter.textContent = `${(messageInput?.value || '').length} / 250`;
   }
   renderBroadcastWizardTemplateChip();
   updateBroadcastWizardPanelTitle();
@@ -2609,69 +3031,34 @@ function populateBroadcastWizardCompose() {
 }
 
 function renderBroadcastWizardAudienceTags() {
-  const container = document.getElementById('broadcast-wizard-audience-tags');
-  const recentEl = document.getElementById('broadcast-wizard-audience-recent');
-  const recentSection = document.getElementById('broadcast-wizard-audience-recent-section');
-  const searchSection = document.getElementById('broadcast-wizard-audience-search-section');
-  const searchTitleEl = document.getElementById('broadcast-wizard-audience-search-title');
-  const searchInput = document.getElementById('broadcast-wizard-audience-search');
-  if (!container) return;
+  const menuEl = document.getElementById('broadcast-wizard-audience-menu');
+  if (!menuEl) return;
 
-  const query = broadcastWizardAudienceSearch.trim().toLowerCase();
-  const isSearching = query.length > 0;
-  const filteredTags = isSearching
-    ? contactTagCatalog.filter((tag) => tag.toLowerCase().includes(query))
-    : [];
-  const recentTags = getRecentlyUsedBroadcastTags(5);
+  const selectedTag = broadcastWizardState.audienceTags[0] || '';
+  const availableTags = contactTagCatalog
+    .filter((tag) => countContactsWithTag(tag) > 0)
+    .sort((a, b) => a.localeCompare(b));
 
-  if (searchInput && searchInput.value !== broadcastWizardAudienceSearch) {
-    searchInput.value = broadcastWizardAudienceSearch;
-  }
-
-  if (recentSection && recentEl) {
-    const showRecent = !isSearching && recentTags.length > 0;
-    recentSection.classList.toggle('hidden', !showRecent);
-    if (showRecent) {
-      recentEl.innerHTML = recentTags
-        .map((tag) => {
-          const selected = broadcastWizardState.audienceTags[0] === tag;
-          return `
-          <button type="button" class="broadcast-wizard__tag-suggest${selected ? ' is-selected' : ''}" data-tag="${tag}">
-            ${tag}
-          </button>`;
-        })
-        .join('');
-      recentEl.querySelectorAll('.broadcast-wizard__tag-suggest').forEach((btn) => {
-        btn.addEventListener('click', () => toggleBroadcastWizardAudienceTag(btn.dataset.tag));
-      });
-    }
-  }
-
-  if (searchSection) {
-    searchSection.classList.toggle('hidden', !isSearching);
-  }
-
-  if (searchTitleEl) {
-    searchTitleEl.textContent =
-      filteredTags.length === 0 ? 'No matching tags' : `Search results (${filteredTags.length})`;
-  }
-
-  container.innerHTML = filteredTags
+  menuEl.innerHTML = availableTags
     .map((tag) => {
-      const selected = broadcastWizardState.audienceTags[0] === tag;
-      return `
-    <button type="button" class="broadcast-wizard__tag-row${selected ? ' is-selected' : ''}" data-tag="${tag}">
-      <span class="broadcast-wizard__tag-row-check" aria-hidden="true">
-        <span class="material-icons">check</span>
-      </span>
-      <span class="broadcast-wizard__tag-row-name">${tag}</span>
-    </button>`;
+      const isSelected = selectedTag === tag;
+      return `<li role="presentation">
+        <button type="button" class="broadcast-wizard__tag-option${isSelected ? ' is-selected' : ''}" data-value="${escapePreviewText(tag)}" role="option" aria-selected="${isSelected}">
+          <span class="broadcast-wizard__tag-option-label">${escapePreviewText(translateTag(tag))}</span>
+          <span class="material-icons broadcast-wizard__tag-option-check" aria-hidden="true">check</span>
+        </button>
+      </li>`;
     })
     .join('');
 
-  container.querySelectorAll('.broadcast-wizard__tag-row').forEach((btn) => {
-    btn.addEventListener('click', () => toggleBroadcastWizardAudienceTag(btn.dataset.tag));
+  menuEl.querySelectorAll('.broadcast-wizard__tag-option').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectBroadcastWizardAudienceTag(btn.dataset.value);
+    });
   });
+
+  updateBroadcastWizardAudienceTrigger();
 }
 
 function updateBroadcastWizardAudienceCount() {
@@ -2689,12 +3076,15 @@ function updateBroadcastWizardAudienceCount() {
       countEl.innerHTML = '';
     } else {
       countEl.classList.remove('hidden');
-      countEl.textContent = `${recipientCount} ${recipientCount === 1 ? 'contact' : 'contacts'} will receive this broadcast`;
+      countEl.textContent =
+        recipientCount === 1
+          ? t('wizard.audienceCountOne')
+          : t('wizard.audienceCount', { count: recipientCount });
     }
   }
 
   if (warningEl) warningEl.classList.toggle('hidden', !showWarning);
-  if (warningTextEl) warningTextEl.textContent = 'Select a tag to continue.';
+  if (warningTextEl) warningTextEl.textContent = t('wizard.selectTagWarning');
 }
 
 function getTemplateTypeKey(templateId) {
@@ -2708,35 +3098,32 @@ function renderBroadcastWizardPreview() {
 
   syncBroadcastWizardComposeFromInputs();
   const recipientCount = countContactsByTags(broadcastWizardState.audienceTags);
-  const templateName = TEMPLATE_TITLES[broadcastWizardState.templateId] || '—';
+  const templateName = getLocalizedTemplateTitle(broadcastWizardState.templateId);
   const audienceTag = broadcastWizardState.audienceTags[0] || '—';
-  const audienceLabel = audienceTag !== '—'
-    ? `${audienceTag} · ${recipientCount} ${recipientCount === 1 ? 'person' : 'people'}`
-    : '—';
+  const audienceLabel =
+    audienceTag !== '—'
+      ? `${translateTag(audienceTag)} · ${recipientCount}`
+      : '—';
 
   const linkRow =
     broadcastTemplateNeedsLink(broadcastWizardState.templateId) &&
     broadcastWizardState.surveyLink.trim()
       ? `<div class="summary-row">
-          <dt class="summary-label">Link</dt>
+          <dt class="summary-label">${t('wizard.summaryLink')}</dt>
           <dd class="summary-value">${escapePreviewText(broadcastWizardState.surveyLink.trim())}</dd>
         </div>`
       : '';
 
   summaryEl.innerHTML = `
     <div class="summary-row">
-      <dt class="summary-label">Template</dt>
+      <dt class="summary-label">${t('wizard.summaryTemplate')}</dt>
       <dd class="summary-value">${templateName}</dd>
     </div>
     <div class="summary-row">
-      <dt class="summary-label">Recipients</dt>
+      <dt class="summary-label">${t('wizard.summaryRecipients')}</dt>
       <dd class="summary-value">${audienceLabel}</dd>
     </div>
-    ${linkRow}
-    <div class="summary-row">
-      <dt class="summary-label">Delivery</dt>
-      <dd class="summary-value">Send immediately</dd>
-    </div>`;
+    ${linkRow}`;
 
   if (broadcastWizardState.templateId === 'project-updates') {
     previewEl.innerHTML = renderProjectUpdatePreviewCard(
@@ -2782,9 +3169,9 @@ function updateBroadcastWizardFooter() {
 
   if (nextBtn) {
     if (step === 4) {
-      nextBtn.textContent = 'SEND BROADCAST';
+      nextBtn.textContent = t('common.sendBroadcast');
     } else {
-      nextBtn.textContent = 'CONTINUE';
+      nextBtn.textContent = t('common.continue');
     }
     nextBtn.disabled = !validateBroadcastWizardStep(step);
   }
@@ -2820,11 +3207,8 @@ function setBroadcastWizardOpen(open) {
 }
 
 function openBroadcastWizard() {
-  broadcastWizardAudienceSearch = '';
   broadcastWizardAudienceShowError = false;
   broadcastWizardLinkShowError = false;
-  const audienceSearchInput = document.getElementById('broadcast-wizard-audience-search');
-  if (audienceSearchInput) audienceSearchInput.value = '';
   broadcastWizardState = createDefaultBroadcastWizardState();
   const titleInput = document.getElementById('broadcast-wizard-title-input');
   const messageInput = document.getElementById('broadcast-wizard-message-input');
@@ -2833,7 +3217,7 @@ function openBroadcastWizard() {
   if (messageInput) messageInput.value = '';
   if (linkInput) linkInput.value = '';
   document.getElementById('broadcast-wizard-title-counter').textContent = '0 / 60';
-  document.getElementById('broadcast-wizard-message-counter').textContent = '0 / 500';
+  document.getElementById('broadcast-wizard-message-counter').textContent = '0 / 250';
   activeBroadcastId = null;
   updateBroadcastWizardPanelTitle();
   showBroadcastWizardStep(1);
@@ -2950,7 +3334,7 @@ function submitBroadcastWizard() {
   if (activeView !== 'broadcasts') switchView('broadcasts');
   else renderBroadcastList();
 
-  showToast('Message successfully sent');
+  showToast(t('broadcasts.sentSuccess'));
 }
 
 function initBroadcastWizard() {
@@ -3026,8 +3410,9 @@ function initBroadcastWizard() {
   });
 
   messageInput?.addEventListener('input', () => {
+    broadcastWizardState.message = messageInput.value.trim();
     document.getElementById('broadcast-wizard-message-counter').textContent =
-      `${messageInput.value.length} / 500`;
+      `${messageInput.value.length} / 250`;
     updateBroadcastWizardFooter();
   });
 
@@ -3061,12 +3446,7 @@ function initBroadcastWizard() {
   if (dateInput) dateInput.value = broadcastWizardState.scheduledDate;
   if (timeInput) timeInput.value = broadcastWizardState.scheduledTime;
 
-  const audienceSearch = document.getElementById('broadcast-wizard-audience-search');
-  audienceSearch?.addEventListener('input', () => {
-    broadcastWizardAudienceSearch = audienceSearch.value;
-    renderBroadcastWizardAudienceTags();
-    updateBroadcastWizardAudienceCount();
-  });
+  initBroadcastWizardAudienceDropdown();
 }
 
 function updateContactsSelectAllButton() {
@@ -3084,9 +3464,9 @@ function updateContactsSelectAllButton() {
   btn.classList.toggle('is-clear', allMatchingSelected);
 
   if (allMatchingSelected) {
-    btn.textContent = 'Clear selection';
+    btn.textContent = t('contacts.clearSelection');
   } else {
-    btn.innerHTML = `Select all <span id="contacts-toolbar-select-total">${displayTotal}</span> users`;
+    btn.innerHTML = t('contacts.selectAll', { count: displayTotal });
   }
 }
 
@@ -3105,9 +3485,10 @@ function updateContactsSelectionBar() {
   tableWrap?.classList.toggle('has-selection', hasSelection);
 
   if (hasSelection) {
-    countEl.textContent = count === 1 ? '1 user selected' : `${count} users selected`;
+    countEl.textContent =
+      count === 1 ? t('contacts.selectionOne') : t('contacts.selectionMany', { count });
   } else {
-    countEl.textContent = '0 users selected';
+    countEl.textContent = t('contacts.selectionZero');
   }
 
   if (clearBtn) clearBtn.hidden = !hasSelection;
@@ -3144,7 +3525,7 @@ function renderContactsTable() {
     <tr class="${isSelected ? 'is-selected' : ''}" data-id="${contact.id}">
       <td class="col-check">
         <label class="contacts-checkbox">
-          <input type="checkbox" class="contact-row-check" data-id="${contact.id}" ${isSelected ? 'checked' : ''} aria-label="Select ${contact.name}">
+          <input type="checkbox" class="contact-row-check" data-id="${contact.id}" ${isSelected ? 'checked' : ''} aria-label="${escapePreviewText(t('contacts.selectRowAria', { name: contact.name }))}">
           <span class="contacts-checkbox__mark"></span>
         </label>
       </td>
@@ -3153,7 +3534,7 @@ function renderContactsTable() {
         <div class="contact-tags">${tagsHtml}</div>
       </td>
       <td class="col-chat">
-        <button class="contacts-chat-btn" type="button" data-chat-id="${contact.chatId || ''}" aria-label="Open chat with ${contact.name}" ${contact.chatId ? '' : 'title="No active conversation"'}>
+        <button class="contacts-chat-btn" type="button" data-chat-id="${contact.chatId || ''}" aria-label="${escapePreviewText(t('contacts.openChatAria', { name: contact.name }))}" ${contact.chatId ? '' : `title="${escapePreviewText(t('contacts.noActiveChat'))}"`}>
           <span class="material-icons">chat_bubble_outline</span>
         </button>
       </td>
@@ -3161,7 +3542,7 @@ function renderContactsTable() {
     })
     .join('');
 
-  if (showingEl) showingEl.textContent = `${displayTotal} Weavers`;
+  if (showingEl) showingEl.textContent = t('contacts.weavers', { count: displayTotal });
 
   if (prevBtn) prevBtn.disabled = contactsPage <= 1;
   if (nextBtn) nextBtn.disabled = contactsPage >= totalPages;
@@ -3382,9 +3763,9 @@ function setupFilterDropdown(btnId, menuId, onSelect) {
 
 function closeAllFilterMenus() {
   document.querySelectorAll('.filter-menu').forEach((m) => m.classList.add('hidden'));
-  document.querySelectorAll('.filter-btn[aria-expanded], .reassign-btn[aria-expanded]').forEach((b) =>
-    b.setAttribute('aria-expanded', 'false')
-  );
+  document.querySelectorAll(
+    '.filter-btn[aria-expanded], .reassign-btn[aria-expanded], .broadcast-wizard__tag-trigger[aria-expanded]'
+  ).forEach((b) => b.setAttribute('aria-expanded', 'false'));
   setAddTagsMenuOpen(false);
 }
 
@@ -3624,7 +4005,9 @@ document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
 renderChatList();
 renderMessages();
 updateProfileAvatar();
+initLanguageSwitcher();
 initContactsView();
 initBroadcastWizard();
 updateTabBadges();
+applyStaticTranslations();
 switchView('contacts');

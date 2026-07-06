@@ -7,7 +7,7 @@
 }
 
 :root {
-  --sidebar-bg: #ebebeb;
+  --sidebar-bg: #e3e1de;
   --sidebar-active: #c4c4c4;
   --panel-radius: 14px;
   --panel-margin: 12px;
@@ -225,8 +225,110 @@ button {
 .sidebar-bottom {
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   overflow: visible;
+}
+
+.lang-switcher-wrap {
+  position: relative;
+  display: flex;
+  width: 100%;
+  overflow: visible;
+}
+
+.lang-switcher-nav {
+  cursor: pointer;
+}
+
+.lang-switcher-nav--icon-only {
+  gap: 0;
+  padding: 0;
+}
+
+.lang-switcher-nav .nav-item-icon--filled {
+  display: none;
+}
+
+.lang-switcher-nav:hover .nav-item-icon--outlined,
+.lang-switcher-wrap.is-open .lang-switcher-nav .nav-item-icon--outlined {
+  display: none;
+}
+
+.lang-switcher-nav:hover .nav-item-icon--filled,
+.lang-switcher-wrap.is-open .lang-switcher-nav .nav-item-icon--filled {
+  display: flex;
+}
+
+.lang-switcher-nav:hover .nav-item-icon-wrap,
+.lang-switcher-wrap.is-open .lang-switcher-nav .nav-item-icon-wrap {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.lang-switcher-menu {
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 132px;
+  padding: 6px;
+  background-color: var(--sidebar-bg);
+  border: none;
+  border-radius: 10px;
+  box-shadow: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+  z-index: 100;
+}
+
+.lang-switcher-wrap.is-open .lang-switcher-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.lang-switcher-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 7px 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.lang-switcher-menu__item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.lang-switcher-menu__item.is-active {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.lang-switcher-menu__check {
+  font-size: 16px;
+  line-height: 1;
+  color: var(--text-primary);
+  opacity: 0;
+  flex-shrink: 0;
+}
+
+.lang-switcher-menu__item.is-active .lang-switcher-menu__check {
+  opacity: 1;
 }
 
 .profile-avatar {
@@ -1144,7 +1246,9 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 14px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 14px;
   border: none;
   border-radius: 8px;
   font-family: inherit;

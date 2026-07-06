@@ -647,16 +647,9 @@
       border-bottom: none;
     }
 
-    /* Compose step — selected template type chip */
+    /* Compose step — template type chip hidden for MVP (selected on step 1) */
     .broadcast-wizard__template-selected {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-
-    .broadcast-wizard__template-selected[hidden] {
-      display: none;
+      display: none !important;
     }
 
     .broadcast-wizard__template-selected-label {
@@ -699,13 +692,137 @@
       color: var(--text-primary);
       line-height: 1.3;
     }
+
+    /* Audience step — tag dropdown */
+    .broadcast-wizard__audience-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 360px;
+    }
+
+    .broadcast-wizard__audience-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .broadcast-wizard__tag-dropdown {
+      width: 100%;
+    }
+
+    .broadcast-wizard__tag-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      width: 100%;
+      min-height: 40px;
+      padding: 6px 10px 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .broadcast-wizard__tag-trigger:hover {
+      border-color: #ccc;
+      background: #fafafa;
+    }
+
+    .broadcast-wizard__tag-trigger:focus {
+      outline: none;
+      border-color: #2b67b5;
+      box-shadow: 0 0 0 2px rgba(43, 103, 181, 0.15);
+    }
+
+    .broadcast-wizard__tag-trigger.has-value {
+      color: #2b67b5;
+    }
+
+    .broadcast-wizard__tag-trigger-label {
+      flex: 1;
+      min-width: 0;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .broadcast-wizard__tag-trigger.has-value .broadcast-wizard__tag-trigger-label {
+      font-weight: 500;
+      color: #2b67b5;
+    }
+
+    .broadcast-wizard__tag-trigger .filter-chevron {
+      flex-shrink: 0;
+    }
+
+    .broadcast-wizard__tag-menu {
+      width: 100%;
+      min-width: 0;
+      max-height: 240px;
+      overflow-y: auto;
+      padding: 6px;
+    }
+
+    .broadcast-wizard__tag-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      padding: 8px 10px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      font-family: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+
+    .broadcast-wizard__tag-option:hover {
+      background: #f5f5f5;
+    }
+
+    .broadcast-wizard__tag-option.is-selected {
+      background: #e8f2fb;
+    }
+
+    .broadcast-wizard__tag-option-label {
+      flex: 1;
+      min-width: 0;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    .broadcast-wizard__tag-option.is-selected .broadcast-wizard__tag-option-label {
+      font-weight: 500;
+      color: #2b67b5;
+    }
+
+    .broadcast-wizard__tag-option-check {
+      font-size: 18px !important;
+      color: #2b67b5;
+      opacity: 0;
+    }
+
+    .broadcast-wizard__tag-option.is-selected .broadcast-wizard__tag-option-check {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
   <div class="app" data-od-id="app-shell">
     <!-- Left Sidebar Rail -->
     <div class="sidebar-rail" data-od-id="sidebar-rail">
-      <nav class="sidebar" style="background-color: rgb(227, 225, 222);" data-od-id="sidebar">
+      <nav class="sidebar" data-od-id="sidebar">
         <div class="sidebar-top" data-od-id="sidebar-top">
           <div class="logo" aria-label="App logo" data-od-id="sidebar-logo">
             <span class="logo-ring"></span>
@@ -716,25 +833,43 @@
               <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">groups</span>
               <span class="material-icons nav-item-icon nav-item-icon--filled">groups</span>
             </span>
-            <span>Contacts</span>
+            <span data-i18n="nav.contacts">Contacts</span>
           </button>
           <button class="nav-item" type="button" data-view="chats" aria-label="Chats" data-od-id="nav-chats">
             <span class="nav-item-icon-wrap" aria-hidden="true">
               <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">chat</span>
               <span class="material-icons nav-item-icon nav-item-icon--filled">chat</span>
             </span>
-            <span>Chats</span>
+            <span data-i18n="nav.chats">Chats</span>
           </button>
           <button class="nav-item" type="button" data-view="broadcasts" aria-label="Broadcasts" data-od-id="nav-broadcasts">
             <span class="nav-item-icon-wrap" aria-hidden="true">
               <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">campaign</span>
               <span class="material-icons nav-item-icon nav-item-icon--filled">campaign</span>
             </span>
-            <span>Broadcasts</span>
+            <span data-i18n="nav.broadcasts">Broadcasts</span>
           </button>
         </div>
       </div>
       <div class="sidebar-bottom" data-od-id="sidebar-bottom">
+        <div class="lang-switcher-wrap" id="lang-switcher-wrap" data-od-id="lang-switcher-wrap">
+          <button type="button" class="nav-item lang-switcher-nav lang-switcher-nav--icon-only" id="lang-switcher-btn" aria-label="Change language" aria-haspopup="menu" aria-expanded="false" aria-controls="lang-switcher-menu">
+            <span class="nav-item-icon-wrap" aria-hidden="true">
+              <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">language</span>
+              <span class="material-icons nav-item-icon nav-item-icon--filled">language</span>
+            </span>
+          </button>
+          <div class="lang-switcher-menu" id="lang-switcher-menu" role="menu" aria-hidden="true" hidden>
+            <button type="button" class="lang-switcher-menu__item is-active" data-locale="en" role="menuitemradio" aria-checked="true">
+              <span>English</span>
+              <span class="lang-switcher-menu__check material-icons" aria-hidden="true">check</span>
+            </button>
+            <button type="button" class="lang-switcher-menu__item" data-locale="ja" role="menuitemradio" aria-checked="false">
+              <span>日本語</span>
+              <span class="lang-switcher-menu__check material-icons" aria-hidden="true">check</span>
+            </button>
+          </div>
+        </div>
         <div class="profile-menu-wrap" data-od-id="sidebar-profile-wrap">
           <div class="profile-avatar-wrap">
             <button type="button" class="profile-avatar" id="profile-avatar-btn" title="Account menu" aria-haspopup="menu" aria-expanded="false" aria-controls="profile-menu" data-od-id="sidebar-profile">
@@ -760,7 +895,7 @@
     <div class="panel-rail panel-rail--inbox" data-od-id="chats-inbox-rail">
       <aside class="inbox panel" data-od-id="chats-inbox-panel">
       <header class="inbox-header mvp-panel-header mvp-panel-header--single" data-od-id="chats-inbox-header">
-        <h2 data-od-id="chats-inbox-title">Chats Inbox</h2>
+        <h2 data-od-id="chats-inbox-title" data-i18n="chats.inboxTitle">Chats Inbox</h2>
         <button class="icon-btn compose-btn" type="button" aria-label="New message" data-od-id="chats-compose-btn" hidden>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M5.8942 16.75L4.01985 18.6243C3.87457 18.7696 3.70993 18.8053 3.52595 18.7313C3.34198 18.6573 3.25 18.5167 3.25 18.3096V5.05768C3.25 4.56056 3.427 4.135 3.781 3.781C4.135 3.427 4.56056 3.25 5.05768 3.25H16.9423C17.4394 3.25 17.8649 3.427 18.2189 3.781C18.5729 4.135 18.75 4.56056 18.75 5.05768V9.275C18.75 9.4814 18.6766 9.65383 18.5298 9.7923C18.383 9.93075 18.2048 9.99998 17.9952 9.99998C17.7856 9.99998 17.609 9.9281 17.4654 9.78435C17.3218 9.6406 17.25 9.46248 17.25 9.25V5.05768C17.25 4.96793 17.2212 4.8942 17.1635 4.8365C17.1058 4.7788 17.032 4.74995 16.9423 4.74995H5.05768C4.96792 4.74995 4.8942 4.7788 4.8365 4.8365C4.7788 4.8942 4.74995 4.96793 4.74995 5.05768V15.25H11.2211C11.4275 15.25 11.6042 15.3234 11.751 15.4702C11.8977 15.617 11.9711 15.7952 11.9711 16.0048C11.9711 16.2144 11.8977 16.391 11.751 16.5346C11.6042 16.6782 11.4275 16.75 11.2211 16.75H5.8942ZM7.80765 8.74995H14.1923C14.4048 8.74995 14.5829 8.67805 14.7267 8.53425C14.8704 8.39043 14.9423 8.21223 14.9423 7.99965C14.9423 7.78705 14.8704 7.60896 14.7267 7.46538C14.5829 7.32179 14.4048 7.25 14.1923 7.25H7.80765C7.59515 7.25 7.41703 7.3219 7.2733 7.4657C7.12955 7.60952 7.05768 7.78772 7.05768 8.0003C7.05768 8.2129 7.12955 8.39099 7.2733 8.53458C7.41703 8.67816 7.59515 8.74995 7.80765 8.74995ZM7.80765 12.75H11.1923C11.4048 12.75 11.5829 12.6781 11.7267 12.5343C11.8704 12.3904 11.9423 12.2122 11.9423 11.9997C11.9423 11.7871 11.8704 11.609 11.7267 11.4654C11.5829 11.3218 11.4048 11.25 11.1923 11.25H7.80765C7.59515 11.25 7.41703 11.3219 7.2733 11.4657C7.12955 11.6095 7.05768 11.7877 7.05768 12.0003C7.05768 12.2129 7.12955 12.391 7.2733 12.5346C7.41703 12.6782 7.59515 12.75 7.80765 12.75ZM17.25 16.75H15C14.7875 16.75 14.6094 16.6781 14.4656 16.5343C14.3219 16.3904 14.25 16.2122 14.25 15.9997C14.25 15.7871 14.3219 15.609 14.4656 15.4654C14.6094 15.3218 14.7875 15.25 15 15.25H17.25V13C17.25 12.7875 17.3219 12.6094 17.4657 12.4656C17.6095 12.3219 17.7877 12.25 18.0003 12.25C18.2129 12.25 18.391 12.3219 18.5346 12.4656C18.6782 12.6094 18.75 12.7875 18.75 13V15.25H21C21.2125 15.25 21.3906 15.3219 21.5344 15.4657C21.6781 15.6095 21.75 15.7877 21.75 16.0003C21.75 16.2129 21.6781 16.391 21.5344 16.5346C21.3906 16.6782 21.2125 16.75 21 16.75H18.75V19C18.75 19.2125 18.6781 19.3906 18.5343 19.5343C18.3904 19.6781 18.2122 19.75 17.9997 19.75C17.787 19.75 17.609 19.6781 17.4654 19.5343C17.3218 19.3906 17.25 19.2125 17.25 19V16.75Z" fill="#494644"/>
@@ -831,17 +966,17 @@
           <div class="attach-menu" id="chat-attach-menu" role="menu" aria-hidden="true">
             <button class="attach-menu__item" type="button" data-attach-action="image" role="menuitem">
               <span class="material-symbols-outlined composer-icon" aria-hidden="true">image</span>
-              Attach image
+              <span data-i18n="chats.attachImage">Attach image</span>
             </button>
             <button class="attach-menu__item" type="button" data-attach-action="template" aria-haspopup="dialog" aria-controls="template-modal" role="menuitem">
               <span class="material-symbols-outlined composer-icon" aria-hidden="true">article</span>
-              Template
+              <span data-i18n="chats.template">Template</span>
             </button>
           </div>
           <input type="file" id="chat-image-input" class="visually-hidden" accept="image/*" tabindex="-1">
         </div>
-        <input type="text" class="message-input" id="message-input" placeholder="Message" autocomplete="off" data-od-id="chat-message-input">
-        <button type="button" class="composer-send-btn" id="chat-send-btn" disabled aria-label="Send message" data-od-id="chat-send-btn">
+        <input type="text" class="message-input" id="message-input" placeholder="Message" autocomplete="off" data-od-id="chat-message-input" data-i18n-placeholder="chats.messagePlaceholder">
+        <button type="button" class="composer-send-btn" id="chat-send-btn" disabled aria-label="Send message" data-od-id="chat-send-btn" data-i18n="chats.send" data-i18n-aria="chats.sendAria">
           Send
         </button>
       </footer>
@@ -855,10 +990,10 @@
         <aside class="inbox panel" data-od-id="broadcasts-inbox-panel">
           <header class="inbox-header mvp-panel-header mvp-panel-header--single" data-od-id="broadcasts-inbox-header">
             <div class="inbox-header__title-row">
-              <h2 data-od-id="broadcasts-inbox-title">Broadcasts</h2>
-              <button type="button" aria-label="Create new broadcast" data-od-id="broadcasts-compose-btn">
+              <h2 data-od-id="broadcasts-inbox-title" data-i18n="broadcasts.title">Broadcasts</h2>
+              <button type="button" aria-label="Create new broadcast" data-od-id="broadcasts-compose-btn" data-i18n-aria="broadcasts.createNewAria">
                 <span class="material-symbols-outlined" aria-hidden="true">add</span>
-                Create new
+                <span data-i18n="broadcasts.createNew">Create new</span>
               </button>
             </div>
           </header>
@@ -870,11 +1005,11 @@
       <div class="panel-rail panel-rail--chat" data-od-id="broadcast-detail-rail">
         <div class="broadcast-empty-state panel" id="broadcast-empty-state" data-od-id="broadcast-empty-state" hidden aria-hidden="true">
           <div class="broadcast-empty-state__content">
-            <h2 class="broadcast-empty-state__title">Your Broadcasts</h2>
-            <p class="broadcast-empty-state__desc">Select a broadcast from the list or create new</p>
-            <button type="button" class="broadcast-empty-state__btn" id="broadcast-empty-new-btn" aria-label="Create new broadcast">
+            <h2 class="broadcast-empty-state__title" data-i18n="broadcasts.emptyTitle">Your Broadcasts</h2>
+            <p class="broadcast-empty-state__desc" data-i18n="broadcasts.emptyDesc">Select a broadcast from the list or create new</p>
+            <button type="button" class="broadcast-empty-state__btn" id="broadcast-empty-new-btn" aria-label="Create new broadcast" data-i18n-aria="broadcasts.createNewAria">
               <span class="material-symbols-outlined" aria-hidden="true">add</span>
-              Create new
+              <span data-i18n="broadcasts.createNew">Create new</span>
             </button>
           </div>
         </div>
@@ -886,19 +1021,19 @@
             </button>
             <header class="broadcast-wizard__panel-header" data-od-id="broadcast-wizard-header">
               <div class="broadcast-wizard__panel-header-title">
-                <h2 id="broadcast-wizard-panel-title">New broadcast</h2>
+                <h2 id="broadcast-wizard-panel-title" data-i18n="broadcasts.wizardTitle">New broadcast</h2>
               </div>
               <nav class="broadcast-wizard__stepper" id="broadcast-wizard-stepper" aria-label="Broadcast creation steps"></nav>
             </header>
             <div class="broadcast-wizard__body" id="broadcast-wizard-body">
               <section class="broadcast-wizard__panel" id="broadcast-wizard-step-template" data-step="1">
-                <h3 class="broadcast-wizard__panel-title">Choose a template</h3>
-                <p class="broadcast-wizard__panel-desc">Pick the format that best fits your message — you can customize it next.</p>
+                <h3 class="broadcast-wizard__panel-title" data-i18n="wizard.templateTitle">Choose a template</h3>
+                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.templateDesc">Pick the format that best fits your message — you can customize it next.</p>
                 <div class="broadcast-wizard__template-grid" id="broadcast-wizard-template-grid"></div>
               </section>
               <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-compose" data-step="2">
-                <h3 class="broadcast-wizard__panel-title">Compose your message</h3>
-                <p class="broadcast-wizard__panel-desc">Write the broadcast title and message your audience will receive.</p>
+                <h3 class="broadcast-wizard__panel-title" data-i18n="wizard.composeTitle">Compose your message</h3>
+                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.composeDesc">Write the broadcast title and message your contacts will receive.</p>
                 <form class="broadcast-wizard__form" id="broadcast-wizard-compose-form" novalidate>
                   <div class="broadcast-wizard__template-selected" id="broadcast-wizard-template-selected" hidden>
                     <span class="broadcast-wizard__template-selected-label">Template type</span>
@@ -908,42 +1043,38 @@
                     </div>
                   </div>
                   <div class="broadcast-wizard__field">
-                    <label class="broadcast-wizard__label" for="broadcast-wizard-title-input">Title</label>
-                    <input type="text" class="broadcast-wizard__input" id="broadcast-wizard-title-input" placeholder="Enter your title" maxlength="60" autocomplete="off">
+                    <label class="broadcast-wizard__label" for="broadcast-wizard-title-input" data-i18n="wizard.fieldTitle">Title</label>
+                    <input type="text" class="broadcast-wizard__input" id="broadcast-wizard-title-input" placeholder="Enter your title" maxlength="60" autocomplete="off" data-i18n-placeholder="wizard.titlePlaceholder">
                     <span class="broadcast-wizard__counter" id="broadcast-wizard-title-counter">0 / 60</span>
                   </div>
                   <div class="broadcast-wizard__field">
-                    <label class="broadcast-wizard__label" for="broadcast-wizard-message-input">Message</label>
-                    <textarea class="broadcast-wizard__textarea" id="broadcast-wizard-message-input" rows="5" maxlength="500" placeholder="Hi [Name], …"></textarea>
-                    <span class="broadcast-wizard__counter" id="broadcast-wizard-message-counter">0 / 500</span>
+                    <label class="broadcast-wizard__label" for="broadcast-wizard-message-input" data-i18n="wizard.fieldMessage">Message</label>
+                    <textarea class="broadcast-wizard__textarea" id="broadcast-wizard-message-input" rows="5" maxlength="250" placeholder="Enter message" data-i18n-placeholder="wizard.messagePlaceholder"></textarea>
+                    <span class="broadcast-wizard__counter" id="broadcast-wizard-message-counter">0 / 250</span>
                   </div>
                   <div class="broadcast-wizard__field hidden" id="broadcast-wizard-link-field">
-                    <label class="broadcast-wizard__label" for="broadcast-wizard-link-input" id="broadcast-wizard-link-label">Link</label>
-                    <input type="text" class="broadcast-wizard__input" id="broadcast-wizard-link-input" placeholder="https://example.com" autocomplete="off" inputmode="url">
+                    <label class="broadcast-wizard__label" for="broadcast-wizard-link-input" id="broadcast-wizard-link-label" data-i18n="wizard.fieldLink">Link</label>
+                    <input type="text" class="broadcast-wizard__input" id="broadcast-wizard-link-input" placeholder="https://example.com" autocomplete="off" inputmode="url" data-i18n-placeholder="wizard.linkPlaceholder">
                     <p class="broadcast-wizard__error hidden" id="broadcast-wizard-link-error">
                       <span class="material-icons" aria-hidden="true">error_outline</span>
-                      Invalid link format
+                      <span data-i18n="wizard.invalidLink">Invalid link format</span>
                     </p>
                   </div>
                 </form>
               </section>
               <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-audience" data-step="3">
-                <h3 class="broadcast-wizard__panel-title">Select audience by tag</h3>
-                <p class="broadcast-wizard__panel-desc">Pick one tag — everyone with that tag will receive this message.</p>
+                <h3 class="broadcast-wizard__panel-title" data-i18n="wizard.audiencePageTitle">Select contacts by tag</h3>
+                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.audienceDesc">Pick one tag — everyone with that tag will receive this message.</p>
                 <div class="broadcast-wizard__audience-panel">
-                  <div class="broadcast-wizard__audience-search-block">
-                    <div class="broadcast-wizard__audience-search-wrap">
-                      <span class="material-icons" aria-hidden="true">search</span>
-                      <input type="search" id="broadcast-wizard-audience-search" class="broadcast-wizard__audience-search" placeholder="Search tags…" autocomplete="off">
+                  <div class="broadcast-wizard__audience-field">
+                    <span class="broadcast-wizard__audience-label" id="broadcast-wizard-audience-label-text" data-i18n="wizard.fieldTag">Tag</span>
+                    <div class="filter-dropdown broadcast-wizard__tag-dropdown">
+                      <button type="button" class="broadcast-wizard__tag-trigger" id="broadcast-wizard-audience-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="broadcast-wizard-audience-label-text broadcast-wizard-audience-label">
+                        <span class="broadcast-wizard__tag-trigger-label" id="broadcast-wizard-audience-label">Select a tag</span>
+                        <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
+                      </button>
+                      <ul class="filter-menu broadcast-wizard__tag-menu hidden" id="broadcast-wizard-audience-menu" role="listbox" aria-labelledby="broadcast-wizard-audience-label-text"></ul>
                     </div>
-                  </div>
-                  <div class="broadcast-wizard__audience-section hidden" id="broadcast-wizard-audience-recent-section">
-                    <h4 class="broadcast-wizard__audience-section-title">Recently used</h4>
-                    <div class="broadcast-wizard__audience-recent" id="broadcast-wizard-audience-recent"></div>
-                  </div>
-                  <div class="broadcast-wizard__audience-section hidden" id="broadcast-wizard-audience-search-section">
-                    <h4 class="broadcast-wizard__audience-section-title" id="broadcast-wizard-audience-search-title">Search results</h4>
-                    <div class="broadcast-wizard__audience-tags" id="broadcast-wizard-audience-tags"></div>
                   </div>
                   <div class="broadcast-wizard__audience-count hidden" id="broadcast-wizard-audience-count" role="status" aria-live="polite"></div>
                   <p class="broadcast-wizard__audience-hint hidden" id="broadcast-wizard-audience-warning">
@@ -988,14 +1119,14 @@
                 </div>
               </section>
               <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-preview" data-step="4">
-                <h3 class="broadcast-wizard__panel-title">Review before sending</h3>
-                <p class="broadcast-wizard__panel-desc">Confirm everything looks correct — you can still go back to edit any step.</p>
+                <h3 class="broadcast-wizard__panel-title" data-i18n="wizard.previewTitle">Review before sending</h3>
+                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.previewDesc">Confirm everything looks correct — you can still go back to edit any step.</p>
                 <div class="broadcast-wizard__preview-layout">
                   <div class="broadcast-wizard__preview-box">
                     <div class="broadcast-wizard__preview-message" id="broadcast-wizard-preview-message"></div>
                   </div>
                   <section class="broadcast-section broadcast-wizard__preview-summary">
-                    <h3>Summary</h3>
+                    <h3 data-i18n="wizard.summary">Summary</h3>
                     <dl class="summary-list" id="broadcast-wizard-summary"></dl>
                   </section>
                 </div>
@@ -1003,11 +1134,11 @@
             </div>
             <footer class="broadcast-wizard__footer">
               <div class="broadcast-wizard__footer-left">
-                <button type="button" class="btn-back-broadcast hidden" id="broadcast-wizard-back">BACK</button>
+                <button type="button" class="btn-back-broadcast hidden" id="broadcast-wizard-back" data-i18n="common.back">BACK</button>
               </div>
               <div class="broadcast-wizard__footer-actions">
-                <button type="button" class="btn-cancel-broadcast" id="broadcast-wizard-discard">CANCEL</button>
-                <button type="button" class="btn-edit-broadcast" id="broadcast-wizard-next">CONTINUE</button>
+                <button type="button" class="btn-cancel-broadcast" id="broadcast-wizard-discard" data-i18n="common.cancel">CANCEL</button>
+                <button type="button" class="btn-edit-broadcast" id="broadcast-wizard-next" data-i18n="common.continue">CONTINUE</button>
               </div>
             </footer>
           </div>
@@ -1023,13 +1154,13 @@
             <header class="contacts-page-header mvp-panel-header mvp-panel-header--stacked" data-od-id="contacts-header">
               <div class="contacts-page-header__top">
                 <div class="contacts-title-info" tabindex="0" aria-describedby="contacts-info-tooltip">
-                  <h2 data-od-id="contacts-title">Contacts</h2>
+                  <h2 data-od-id="contacts-title" data-i18n="contacts.title">Contacts</h2>
                   <span class="material-icons-outlined contacts-title-info__icon" aria-hidden="true">info</span>
-                  <span class="contacts-title-info__tooltip" role="tooltip" id="contacts-info-tooltip">Contacts are users who clicked &ldquo;Join&rdquo; button of your Project or Official page</span>
+                  <span class="contacts-title-info__tooltip" role="tooltip" id="contacts-info-tooltip" data-i18n="contacts.infoTooltip">Contacts are users who clicked &ldquo;Join&rdquo; button of your Project or Official page</span>
                 </div>
               </div>
               <div class="contacts-page-header__meta">
-                <p class="contacts-subtitle" data-od-id="contacts-subtitle">View everyone who joined your project. Select people to create tags and organize users into groups</p>
+                <p class="contacts-subtitle" data-od-id="contacts-subtitle" data-i18n="contacts.subtitle">View everyone who joined your project. Select people to create tags and organize users into groups</p>
               </div>
             </header>
 
@@ -1115,7 +1246,7 @@
                   <div class="contacts-selection-bar__summary">
                     <span class="contacts-selection-pill" tabindex="0">
                       <span id="contacts-selection-count">0 users selected</span>
-                      <span class="contacts-selection-pill__hint" role="tooltip">Select contacts to add tags</span>
+                      <span class="contacts-selection-pill__hint" role="tooltip" id="contacts-selection-hint" data-i18n="contacts.selectionHint">Select contacts to add tags</span>
                       <button type="button" class="contacts-selection-pill__clear" id="contacts-selection-clear" aria-label="Clear selection" hidden>
                         <span class="material-icons">close</span>
                       </button>
@@ -1126,16 +1257,16 @@
                   <div class="filter-dropdown add-tags-dropdown" id="contacts-add-tags-wrap">
                     <button type="button" class="contacts-selection-btn contacts-selection-btn--outline" id="contacts-add-tags-btn" aria-haspopup="dialog" aria-expanded="false" disabled>
                       <span class="material-icons">sell</span>
-                      Add Tags
+                      <span data-i18n="contacts.addTags">Add Tags</span>
                     </button>
                     <div class="add-tags-popover hidden" id="contacts-add-tags-menu" role="dialog" aria-label="Add tags to selected contacts" aria-hidden="true">
                       <div class="add-tags-popover__header">
-                        <p class="add-tags-popover__title">Add tags</p>
-                        <p class="add-tags-popover__subtitle" id="contacts-add-tags-subtitle">Pick one tag to apply to selected contacts</p>
+                        <p class="add-tags-popover__title" data-i18n="contacts.addTagsTitle">Add tags</p>
+                        <p class="add-tags-popover__subtitle" id="contacts-add-tags-subtitle" data-i18n="contacts.addTagsSubtitle">Pick one tag to apply to selected contacts</p>
                       </div>
                       <div class="add-tags-popover__search">
                         <span class="material-icons" aria-hidden="true">search</span>
-                        <input type="search" id="contacts-add-tags-search" placeholder="Search tags" autocomplete="off" aria-label="Search tags">
+                        <input type="search" id="contacts-add-tags-search" placeholder="Search tags" autocomplete="off" aria-label="Search tags" data-i18n-placeholder="contacts.searchTags" data-i18n-aria="contacts.searchTags">
                       </div>
                       <ul class="add-tags-popover__list" id="contacts-add-tags-list"></ul>
                       <div class="add-tags-popover__create">
@@ -1143,8 +1274,8 @@
                         <button type="button" class="add-tags-popover__create-btn" id="contacts-add-tags-create-btn" disabled>Create</button>
                       </div>
                       <div class="add-tags-popover__footer">
-                        <button type="button" class="add-tags-popover__cancel" id="contacts-add-tags-cancel">Cancel</button>
-                        <button type="button" class="add-tags-popover__apply" id="contacts-add-tags-apply" disabled>Apply tags</button>
+                        <button type="button" class="add-tags-popover__cancel" id="contacts-add-tags-cancel" data-i18n="contacts.cancel">Cancel</button>
+                        <button type="button" class="add-tags-popover__apply" id="contacts-add-tags-apply" disabled data-i18n="contacts.applyTags">Apply tags</button>
                       </div>
                     </div>
                   </div>
@@ -1165,9 +1296,9 @@
                         <span class="contacts-checkbox__mark"></span>
                       </label>
                     </th>
-                    <th class="col-name">Name</th>
-                    <th class="col-tags">Tags</th>
-                    <th class="col-chat">View chat</th>
+                    <th class="col-name" data-i18n="contacts.colName">Name</th>
+                    <th class="col-tags" data-i18n="contacts.colTags">Tags</th>
+                    <th class="col-chat" data-i18n="contacts.colViewChat">View chat</th>
                   </tr>
                 </thead>
                 <tbody id="contacts-tbody" data-od-id="contacts-tbody"></tbody>
@@ -1212,11 +1343,11 @@
         <span class="material-icons">close</span>
       </button>
       <header class="template-modal__header">
-        <h2 id="template-modal-title">Choose your template</h2>
-        <p class="template-modal__subtitle" id="template-modal-subtitle">Select how you want to engage with your Project Audience</p>
+        <h2 id="template-modal-title" data-i18n="templateModal.title">Choose your template</h2>
+        <p class="template-modal__subtitle" id="template-modal-subtitle" data-i18n="templateModal.subtitleChat">Select how you want to engage with your contact</p>
       </header>
       <div class="template-modal__grid" id="template-modal-grid"></div>
-      <p class="template-modal__hint">You can customize each template in the next step</p>
+      <p class="template-modal__hint" data-i18n="templateModal.hint">You can customize each template in the next step</p>
     </div>
   </div>
 
