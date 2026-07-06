@@ -162,10 +162,10 @@
     .view--contacts {
       --mvp-h-border: 1px solid var(--border);
       --mvp-h-single-pad: 12px 20px;
-      /* Stacked header (title + subtext) — taller than single-row 44px */
+      /* Stacked header (title + subtext) — taller than single-row 52px */
       --mvp-h-title-pad: 14px 20px 0;
       --mvp-h-meta-pad: 8px 20px 16px;
-      --mvp-h-min: 44px;
+      --mvp-h-min: 52px;
       --mvp-h-stacked-min: 72px;
     }
 
@@ -551,39 +551,62 @@
     .view--broadcasts .inbox-header__title-row {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 8px;
       min-width: 0;
+      width: 100%;
     }
 
     [data-od-id="broadcasts-compose-btn"] {
       display: inline-flex;
       align-items: center;
-      gap: 2px;
+      justify-content: center;
       flex-shrink: 0;
       margin-left: auto;
-      padding: 3px 8px 3px 4px;
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 600;
-      line-height: 1;
-      color: #fff;
-      background: #2b67b5;
+      padding: 0;
       border: none;
-      border-radius: 5px;
+      background: transparent;
       cursor: pointer;
-      white-space: nowrap;
+      border-radius: 10px;
       transition: background 0.15s;
     }
 
-    [data-od-id="broadcasts-compose-btn"]:hover {
-      background: #245a9e;
+    [data-od-id="broadcasts-compose-btn"] .broadcasts-compose-icon-wrap {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      transition: background 0.15s;
     }
 
-    [data-od-id="broadcasts-compose-btn"] .material-symbols-outlined {
-      font-size: 16px;
-      color: #fff;
+    [data-od-id="broadcasts-compose-btn"]:hover .broadcasts-compose-icon-wrap,
+    [data-od-id="broadcasts-compose-btn"]:focus-visible .broadcasts-compose-icon-wrap {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    [data-od-id="broadcasts-compose-btn"] .material-icons-outlined {
+      font-size: 22px;
+      color: var(--text-secondary);
       line-height: 1;
-      font-variation-settings: 'wght' 400;
+    }
+
+    [data-od-id="broadcasts-compose-btn"]:hover .material-icons-outlined,
+    [data-od-id="broadcasts-compose-btn"]:focus-visible .material-icons-outlined {
+      color: var(--text-primary);
+    }
+
+    .view--broadcasts [data-od-id="broadcasts-inbox-header"] {
+      padding: 12px 4px 12px 20px;
+    }
+
+    .view--broadcasts [data-od-id="broadcasts-inbox-header"] .inbox-header__title-row {
+      width: 100%;
+    }
+
+    .view--broadcasts [data-od-id="broadcasts-compose-btn"] {
+      margin-right: 0;
     }
 
     #broadcast-empty-new-btn {
@@ -992,8 +1015,9 @@
             <div class="inbox-header__title-row">
               <h2 data-od-id="broadcasts-inbox-title" data-i18n="broadcasts.title">Broadcasts</h2>
               <button type="button" aria-label="Create new broadcast" data-od-id="broadcasts-compose-btn" data-i18n-aria="broadcasts.createNewAria">
-                <span class="material-symbols-outlined" aria-hidden="true">add</span>
-                <span data-i18n="broadcasts.createNew">Create new</span>
+                <span class="broadcasts-compose-icon-wrap" aria-hidden="true">
+                  <span class="material-icons-outlined">edit_note</span>
+                </span>
               </button>
             </div>
           </header>
