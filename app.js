@@ -109,7 +109,7 @@ const I18N_STRINGS = {
     'common.edit': 'EDIT',
     'contacts.title': 'Contacts',
     'contacts.subtitle':
-      'View everyone who joined your project. Select people to create tags and organize users into groups',
+      'View everyone who joined your Project or Official Page. Select people to organize them by adding tags.',
     'contacts.infoTooltip':
       'Contacts are users who clicked "Join" button of your Project or Official page',
     'contacts.addTags': 'Add Tags',
@@ -217,7 +217,7 @@ const I18N_STRINGS = {
     'common.edit': '編集',
     'contacts.title': '連絡先',
     'contacts.subtitle':
-      'プロジェクトに参加したユーザーの一覧です。選択してタグを付け、グループを作成できます。',
+      'プロジェクトまたは公式ページに参加したユーザーの一覧です。選択してタグを追加し、ユーザーを整理できます。',
     'contacts.infoTooltip':
       '連絡先は、プロジェクトまたは公式ページの「参加」ボタンを押したユーザーです',
     'contacts.addTags': 'タグを追加',
@@ -227,7 +227,7 @@ const I18N_STRINGS = {
     'contacts.addTagsSubtitleMany': '選択中の{{count}}件に付けるタグを選択',
     'contacts.colName': '名前',
     'contacts.colTags': 'タグ',
-    'contacts.colViewChat': 'トーク',
+    'contacts.colViewChat': 'チャット',
     'contacts.weavers': 'ユーザー {{count}}件',
     'contacts.selectionZero': '0件選択中',
     'contacts.selectionOne': '1件選択中',
@@ -235,8 +235,8 @@ const I18N_STRINGS = {
     'contacts.selectionHint': '連絡先を選択してタグを追加',
     'contacts.selectAll': 'すべて選択（{{count}}件）',
     'contacts.clearSelection': '選択を解除',
-    'contacts.noActiveChat': 'トークはありません',
-    'contacts.openChatAria': '{{name}}のトークを開く',
+    'contacts.noActiveChat': 'チャットはありません',
+    'contacts.openChatAria': '{{name}}のチャットを開く',
     'contacts.selectRowAria': '{{name}}を選択',
     'contacts.applyTags': 'タグを適用',
     'contacts.cancel': 'キャンセル',
