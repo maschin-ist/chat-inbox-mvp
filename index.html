@@ -476,6 +476,10 @@
       height: 20px;
     }
 
+    .view--contacts .contacts-selection-pill__clear[hidden] {
+      display: none !important;
+    }
+
     .view--contacts .contacts-selection-bar.is-disabled .contacts-selection-pill__clear {
       color: #757575;
     }
@@ -536,6 +540,64 @@
 
     .view--contacts .contacts-table th {
       border-top: none;
+    }
+
+    .view--contacts .contacts-chat-btn-wrap {
+      position: relative;
+      display: inline-flex;
+      vertical-align: middle;
+    }
+
+    .view--contacts .contacts-chat-btn-wrap.is-inactive .contacts-chat-btn {
+      opacity: 0.38;
+      cursor: default;
+      pointer-events: none;
+      color: var(--text-tertiary);
+    }
+
+    .view--contacts .contacts-chat-btn:not(:disabled) {
+      color: #2B67B5;
+    }
+
+    .view--contacts .contacts-chat-btn:hover:not(:disabled) {
+      background: #e8f2fb;
+      color: #2B67B5;
+    }
+
+    .view--contacts .contacts-chat-btn .material-icons-outlined {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .view--contacts .contacts-chat-btn__tooltip {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      z-index: 40;
+      min-width: 0;
+      max-width: 220px;
+      padding: 8px 12px;
+      background: #494644;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.45;
+      letter-spacing: normal;
+      text-align: left;
+      white-space: normal;
+      border: none;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.15s ease, visibility 0.15s ease;
+    }
+
+    .view--contacts .contacts-chat-btn-wrap:hover .contacts-chat-btn__tooltip,
+    .view--contacts .contacts-chat-btn-wrap:focus-within .contacts-chat-btn__tooltip {
+      opacity: 1;
+      visibility: visible;
     }
 
     .compose-btn svg {
@@ -673,17 +735,111 @@
       text-overflow: ellipsis;
     }
 
+    /* Wizard stepper — compact modern progress (Stripe / Linear pattern) */
     .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__stepper {
+      position: relative;
       margin: 0 !important;
-      padding: 14px 20px 18px !important;
+      padding: 10px 24px 32px !important;
+      max-width: none;
+      width: 100%;
       min-height: 0 !important;
       box-sizing: border-box;
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 8px;
+      flex-wrap: nowrap;
+      gap: 0;
       background: var(--inbox-bg);
       border-bottom: none;
+    }
+
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__step {
+      flex: 1;
+      min-width: 0;
+      position: relative;
+    }
+
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__step-btn {
+      gap: 7px;
+      padding: 0 4px;
+      width: 100%;
+    }
+
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__step-num {
+      width: 22px;
+      height: 22px;
+      min-width: 22px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1.5px solid #d5d5d5;
+      background: #fff;
+      box-shadow: 0 0 0 3px var(--inbox-bg);
+    }
+
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__step.is-current .broadcast-wizard__step-num {
+      background: #2B67B5;
+      border-color: #2B67B5;
+      color: #fff;
+    }
+
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__step.is-complete .broadcast-wizard__step-num {
+      background: #2B67B5;
+      border-color: #2B67B5;
+      color: #fff;
+    }
+
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__step.is-complete .broadcast-wizard__step-num .material-icons {
+      font-size: 13px;
+    }
+
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__step-label {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: #888;
+      padding: 0 2px;
+      max-width: 100%;
+    }
+
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__step.is-current .broadcast-wizard__step-label {
+      color: #2B67B5;
+      font-weight: 600;
+    }
+
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__step.is-complete .broadcast-wizard__step-label {
+      color: #494644;
+    }
+
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__step:not(:last-child)::after {
+      top: 11px;
+      left: calc(50% + 11px);
+      right: calc(-50% + 11px);
+      height: 1.5px;
+      background: #e0e0e0;
+    }
+
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__step.is-complete:not(:last-child)::after {
+      background: #2B67B5;
+    }
+
+    /* Audience step — headline title + explicit description */
+    #broadcast-wizard-step-audience .broadcast-wizard__panel-title {
+      margin: 0 0 10px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: var(--text-primary);
+    }
+
+    #broadcast-wizard-step-audience .broadcast-wizard__panel-desc {
+      margin: 0 0 24px;
+      max-width: 36em;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: #494644;
     }
 
     /* Compose step — template type chip hidden for MVP (selected on step 1) */
@@ -914,7 +1070,7 @@
           <div class="profile-avatar-wrap">
             <button type="button" class="profile-avatar" id="profile-avatar-btn" title="Account menu" aria-haspopup="menu" aria-expanded="false" aria-controls="profile-menu" data-od-id="sidebar-profile">
               <span class="profile-avatar__image" id="profile-avatar-image">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Alex Rivera" />
+                <img src="profile-avatar.jpg" alt="Alex Rivera" class="profile-avatar__photo" />
               </span>
             </button>
             <span class="supervisor-badge hidden" id="supervisor-badge" aria-hidden="true">SV</span>
@@ -1006,11 +1162,7 @@
           <div class="attach-menu" id="chat-attach-menu" role="menu" aria-hidden="true">
             <button class="attach-menu__item" type="button" data-attach-action="image" role="menuitem">
               <span class="material-symbols-outlined composer-icon" aria-hidden="true">image</span>
-              <span data-i18n="chats.attachImage">Attach image</span>
-            </button>
-            <button class="attach-menu__item" type="button" data-attach-action="template" aria-haspopup="dialog" aria-controls="template-modal" role="menuitem">
-              <span class="material-symbols-outlined composer-icon" aria-hidden="true">article</span>
-              <span data-i18n="chats.template">Template</span>
+              <span data-i18n="chats.attachImage">Image</span>
             </button>
           </div>
           <input type="file" id="chat-image-input" class="visually-hidden" accept="image/*" tabindex="-1">
@@ -1116,8 +1268,8 @@
                 </form>
               </section>
               <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-audience" data-step="3">
-                <h3 class="broadcast-wizard__panel-title" data-i18n="wizard.audiencePageTitle">Select contacts by tag</h3>
-                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.audienceDesc">Pick one tag — everyone with that tag will receive this message.</p>
+                <h3 class="broadcast-wizard__panel-title" data-i18n="wizard.audiencePageTitle">Select who will receive this message</h3>
+                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.audienceDesc">Here you can choose recipients grouped by tag in your Contacts page.</p>
                 <div class="broadcast-wizard__audience-panel">
                   <div class="broadcast-wizard__audience-field">
                     <span class="broadcast-wizard__audience-label" id="broadcast-wizard-audience-label-text" data-i18n="wizard.fieldTag">Tag</span>

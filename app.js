@@ -19,7 +19,7 @@ const OPERATORS = {
     name: 'Alex Rivera',
     initials: 'AR',
     color: '#c4a882',
-    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
+    photo: 'profile-avatar.jpg',
   },
   jane: {
     id: 'jane',
@@ -56,7 +56,7 @@ const I18N_STRINGS = {
     'lang.shortJa': '日',
     'lang.changeAria': 'Change language',
     'chats.inboxTitle': 'Chats Inbox',
-    'chats.attachImage': 'Attach image',
+    'chats.attachImage': 'Image',
     'chats.template': 'Template',
     'chats.messagePlaceholder': 'Message',
     'chats.send': 'Send',
@@ -86,8 +86,8 @@ const I18N_STRINGS = {
     'wizard.composeTitle': 'Compose your message',
     'wizard.composeDesc': 'Write the broadcast title and message your contacts will receive.',
     'wizard.composeDescFreeText': 'Write the message your contacts will receive.',
-    'wizard.audiencePageTitle': 'Select contacts by tag',
-    'wizard.audienceDesc': 'Pick one tag — everyone with that tag will receive this message.',
+    'wizard.audiencePageTitle': 'Select who will receive this message',
+    'wizard.audienceDesc': 'Here you can choose recipients grouped by tag in your Contacts page.',
     'wizard.previewTitle': 'Review before sending',
     'wizard.previewDesc': 'Confirm everything looks correct — you can still go back to edit any step.',
     'wizard.fieldTitle': 'Title',
@@ -147,6 +147,7 @@ const I18N_STRINGS = {
     'contacts.selectAll': 'Select all {{count}} users',
     'contacts.clearSelection': 'Clear selection',
     'contacts.noActiveChat': 'No active conversation',
+    'contacts.openChatTooltip': 'Open this conversation in Chats',
     'contacts.openChatAria': 'Open chat with {{name}}',
     'contacts.selectRowAria': 'Select {{name}}',
     'contacts.applyTags': 'Apply tags',
@@ -156,7 +157,7 @@ const I18N_STRINGS = {
     'contacts.applied': 'Applied',
     'template.project-updates.title': 'Card message with link',
     'template.project-updates.desc':
-      'Send a message as a card with a title and optional link.',
+      'Send a message as a card with a title and link.',
     'template.free-text.title': 'Simple message',
     'template.free-text.desc': 'Send a plain chat message with just text.',
     'templateModal.title': 'Choose your template',
@@ -172,49 +173,95 @@ const I18N_STRINGS = {
     'tag.Event invite': 'Event invite',
     'tag.VIP': 'VIP',
     'page.title': 'Chats Inbox — MVP',
+    'chat.sentAt': 'Sent {{time}}',
+    'chat.alice.preview':
+      'Hi, I read your post about Latte Art. Can you tell me how I can join',
+    'chat.alice.date1': 'Today, 11:30 AM',
+    'chat.alice.in1':
+      'Hi, I read your post about Latte Art. Can you tell me how I can join',
+    'chat.alice.out1':
+      'Sure, I am in charge of the event. I can send you the invite and you can learn all the detail',
+    'chat.alice.out2':
+      "You're invited to Latte Art Making Class (Jul 3 & Sep 5). Learn more: https://woven.city/events/latte-art",
+    'chat.sarah.preview': 'Thanks for the quick reply! Looking forward to it.',
+    'chat.sarah.date1': 'Yesterday, 3:15 PM',
+    'chat.sarah.in1': 'Is the latte art class still open for registration?',
+    'chat.sarah.out1': 'Yes! I just sent you an invite. Let me know if you have any questions.',
+    'chat.sarah.in2': 'Thanks for the quick reply! Looking forward to it.',
+    'chat.marcus.preview': 'Could you share the venue address?',
+    'chat.marcus.date1': 'Today, 8:00 AM',
+    'chat.marcus.in1': 'Could you share the venue address?',
+    'chat.emma.preview': 'I saw your event on social media and wanted to learn more.',
+    'chat.emma.date1': 'Today, 2:00 PM',
+    'chat.emma.in1': 'I saw your event on social media and wanted to learn more.',
+    'chat.james.preview': 'What time does the class start?',
+    'chat.james.date1': 'Today, 1:30 PM',
+    'chat.james.in1': 'What time does the class start?',
+    'chat.lisa.preview': 'Do I need to bring my own equipment?',
+    'chat.lisa.date1': 'Today, 12:45 PM',
+    'chat.lisa.in1': 'Do I need to bring my own equipment?',
+    'chat.david.preview': 'Is there a group discount available?',
+    'chat.david.date1': 'Today, 10:00 AM',
+    'chat.david.in1': 'Is there a group discount available?',
+    'chat.nina.preview': 'Can I bring a friend to the workshop?',
+    'chat.nina.date1': 'Today, 9:15 AM',
+    'chat.nina.in1': 'Can I bring a friend to the workshop?',
+    'chat.thomas.preview': 'I need help with my reservation — it shows the wrong date.',
+    'chat.thomas.date1': 'Today, 1:45 PM',
+    'chat.thomas.in1': 'I need help with my reservation — it shows the wrong date.',
+    'chat.thomas.in2': 'Can someone look at this urgently?',
+    'chat.karen.preview': 'Still waiting for a response about my service appointment.',
+    'chat.karen.date1': 'Today, 1:00 PM',
+    'chat.karen.in1': 'Still waiting for a response about my service appointment.',
+    'chat.robert.preview': 'Thanks for confirming the pickup time.',
+    'chat.robert.date1': 'Today, 11:30 AM',
+    'chat.robert.in1': 'Thanks for confirming the pickup time.',
+    'chat.patricia.preview': 'Is the showroom open this Saturday?',
+    'chat.patricia.date1': 'Today, 10:30 AM',
+    'chat.patricia.in1': 'Is the showroom open this Saturday?',
   },
   ja: {
     'nav.contacts': '連絡先',
     'nav.chats': 'チャット',
-    'nav.broadcasts': '一斉配信',
+    'nav.broadcasts': '絞り込み配信',
     'lang.english': 'English',
     'lang.japanese': '日本語',
     'lang.shortEn': 'EN',
     'lang.shortJa': '日',
     'lang.changeAria': '言語を変更',
     'chats.inboxTitle': 'チャット',
-    'chats.attachImage': '画像を添付',
+    'chats.attachImage': '画像',
     'chats.template': 'テンプレート',
     'chats.messagePlaceholder': 'メッセージ',
     'chats.send': '送信',
     'chats.sendAria': 'メッセージを送信',
     'chats.noConversations': 'チャットはありません。',
-    'broadcasts.title': '一斉配信',
+    'broadcasts.title': '絞り込み配信',
     'broadcasts.createNew': '新規作成',
-    'broadcasts.createNewAria': '新規配信を作成',
-    'broadcasts.emptyTitle': '一斉配信',
+    'broadcasts.createNewAria': '新規絞り込み配信を作成',
+    'broadcasts.emptyTitle': '絞り込み配信',
     'broadcasts.emptyLead':
-      '複数の連絡先に同じ内容を送りたい場合は、タグを選んで一斉に配信できます。',
+      '複数の連絡先に一度に届けたい場合は、タグを選んで同じメッセージを絞り込み配信できます。',
     'broadcasts.emptyGuideTitle': '使い方',
     'broadcasts.emptyStep1': 'テンプレートを選ぶ',
     'broadcasts.emptyStep2': 'タグで配信先を指定',
-    'broadcasts.emptyStep3': 'グループ全体に一斉送信',
-    'broadcasts.emptyCta': '配信を作成',
-    'broadcasts.wizardTitle': '新規配信',
+    'broadcasts.emptyStep3': 'タグで絞り込んで一括送信',
+    'broadcasts.emptyCta': '絞り込み配信を作成',
+    'broadcasts.wizardTitle': '新規絞り込み配信',
     'broadcasts.noTitle': 'タイトル未入力',
     'broadcasts.sentSuccess': '送信しました',
     'wizard.stepTemplate': 'テンプレートを選択',
     'wizard.stepCompose': 'メッセージ作成',
     'wizard.stepAudience': '連絡先を選択',
     'wizard.stepAudienceByTag': 'タグで連絡先を選択',
-    'wizard.stepPreview': '配信プレビュー',
+    'wizard.stepPreview': '絞り込み配信プレビュー',
     'wizard.templateTitle': 'テンプレートを選ぶ',
     'wizard.templateDesc': '内容に合う形式を選び、次のステップで編集できます。',
     'wizard.composeTitle': 'メッセージを作成',
-    'wizard.composeDesc': '配信のタイトルと本文を入力してください。',
+    'wizard.composeDesc': '絞り込み配信のタイトルと本文を入力してください。',
     'wizard.composeDescFreeText': '連絡先に届けるメッセージを入力してください。',
-    'wizard.audiencePageTitle': 'タグで連絡先を選択',
-    'wizard.audienceDesc': 'タグを1つ選ぶと、そのタグの連絡先全員に配信されます。',
+    'wizard.audiencePageTitle': 'このメッセージの配信先を選ぶ',
+    'wizard.audienceDesc': '連絡先ページで、タグごとにグループ分けされた配信先を選べます。',
     'wizard.previewTitle': '送信前の確認',
     'wizard.previewDesc': '内容を確認してください。前のステップに戻って編集できます。',
     'wizard.fieldTitle': 'タイトル',
@@ -242,7 +289,7 @@ const I18N_STRINGS = {
     'common.back': '戻る',
     'common.cancel': 'キャンセル',
     'common.continue': '次へ',
-    'common.sendBroadcast': '配信する',
+    'common.sendBroadcast': '絞り込み配信する',
     'common.discard': '削除',
     'common.edit': '編集',
     'contacts.title': '連絡先',
@@ -274,6 +321,7 @@ const I18N_STRINGS = {
     'contacts.selectAll': 'すべて選択（{{count}}件）',
     'contacts.clearSelection': '選択を解除',
     'contacts.noActiveChat': 'チャットはありません',
+    'contacts.openChatTooltip': 'チャットで会話を開く',
     'contacts.openChatAria': '{{name}}のチャットを開く',
     'contacts.selectRowAria': '{{name}}を選択',
     'contacts.applyTags': 'タグを適用',
@@ -298,6 +346,50 @@ const I18N_STRINGS = {
     'tag.Event invite': 'イベント招待',
     'tag.VIP': 'VIP',
     'page.title': 'チャット — MVP',
+    'chat.sentAt': '送信 {{time}}',
+    'chat.alice.preview': 'ラテアートの投稿を見ました。参加方法を教えてください',
+    'chat.alice.date1': '今日 11:30',
+    'chat.alice.in1': 'ラテアートの投稿を拝見しました。参加方法を教えていただけますか',
+    'chat.alice.out1':
+      'イベント担当です。招待状をお送りしますので、詳細はそちらでご確認ください',
+    'chat.alice.out2':
+      'ラテアート教室（7/3・9/5）へのご招待です。詳細はこちら → https://woven.city/events/latte-art',
+    'chat.sarah.preview': '早速の返信ありがとうございます。楽しみにしています',
+    'chat.sarah.date1': '昨日 15:15',
+    'chat.sarah.in1': 'ラテアート教室、まだ申し込みできますか？',
+    'chat.sarah.out1': 'はい！招待状をお送りしました。ご不明点があればお知らせください',
+    'chat.sarah.in2': '早速の返信ありがとうございます。楽しみにしています',
+    'chat.marcus.preview': '会場の住所を教えていただけますか',
+    'chat.marcus.date1': '今日 8:00',
+    'chat.marcus.in1': '会場の住所を教えていただけますか',
+    'chat.emma.preview': 'SNSでイベントを見て、詳しく知りたいと思いました',
+    'chat.emma.date1': '今日 14:00',
+    'chat.emma.in1': 'SNSでイベントを見て、詳しく知りたいと思いました',
+    'chat.james.preview': '開始時間は何時ですか？',
+    'chat.james.date1': '今日 13:30',
+    'chat.james.in1': '開始時間は何時ですか？',
+    'chat.lisa.preview': '道具は自分で持参が必要ですか？',
+    'chat.lisa.date1': '今日 12:45',
+    'chat.lisa.in1': '道具は自分で持参が必要ですか？',
+    'chat.david.preview': 'グループ割引はありますか？',
+    'chat.david.date1': '今日 10:00',
+    'chat.david.in1': 'グループ割引はありますか？',
+    'chat.nina.preview': '友人を連れて参加できますか？',
+    'chat.nina.date1': '今日 9:15',
+    'chat.nina.in1': '友人を連れて参加できますか？',
+    'chat.thomas.preview': '予約の日付が間違って表示されています',
+    'chat.thomas.date1': '今日 13:45',
+    'chat.thomas.in1': '予約の日付が間違って表示されています。対応をお願いします',
+    'chat.thomas.in2': '至急確認していただけますか',
+    'chat.karen.preview': '整備予約について、まだ返信が届いていません',
+    'chat.karen.date1': '今日 13:00',
+    'chat.karen.in1': '整備予約について、まだ返信が届いていません',
+    'chat.robert.preview': '受け取り時間の確認、ありがとうございます',
+    'chat.robert.date1': '今日 11:30',
+    'chat.robert.in1': '受け取り時間の確認、ありがとうございます',
+    'chat.patricia.preview': '今週土曜日もショールームは開いていますか？',
+    'chat.patricia.date1': '今日 10:30',
+    'chat.patricia.in1': '今週土曜日もショールームは開いていますか？',
   },
 };
 
@@ -311,6 +403,24 @@ function t(key, params = {}) {
 
 function translateTag(tag) {
   return t(`tag.${tag}`, {}) !== `tag.${tag}` ? t(`tag.${tag}`) : tag;
+}
+
+function getChatPreviewText(chat) {
+  if (chat.previewDynamic && chat.preview) return chat.preview;
+  if (chat.previewKey) return t(chat.previewKey);
+  return chat.preview || '';
+}
+
+function getLocalizedMessageText(msg) {
+  if (msg.textKey) return t(msg.textKey);
+  return msg.text || '';
+}
+
+function formatMessageStatus(status) {
+  if (!status) return '';
+  const match = status.match(/^Sent\s+(.+)$/);
+  if (match) return t('chat.sentAt', { time: match[1] });
+  return status;
 }
 
 function getLocalizedTemplateOptions() {
@@ -507,24 +617,24 @@ const ALL_CHATS = [
       avatar: null,
       operatorId: 'you',
       escalated: false,
-      preview: 'Hi, I read your post about Latte Art. Can you tell me how I can join',
+      previewKey: 'chat.alice.preview',
       time: 'Just now',
       unread: 0,
       messages: [
-        { type: 'date', text: 'Today, 11:30 AM' },
+        { type: 'date', textKey: 'chat.alice.date1' },
         {
           type: 'incoming',
-          text: 'Hi, I read your post about Latte Art. Can you tell me how I can join',
+          textKey: 'chat.alice.in1',
           time: '13:52',
         },
         {
           type: 'outgoing',
-          text: 'Sure, I am in charge of the event. I can send you the invite and you can learn all the detail',
+          textKey: 'chat.alice.out1',
           status: 'Sent 10:45',
         },
         {
           type: 'outgoing',
-          text: "You're invited to Latte Art Making Class (Jul 3 & Sep 5). Learn more: https://woven.city/events/latte-art",
+          textKey: 'chat.alice.out2',
           status: 'Sent 10:45',
         },
       ],
@@ -537,24 +647,24 @@ const ALL_CHATS = [
       avatar: null,
       operatorId: 'you',
       escalated: false,
-      preview: 'Thanks for the quick reply! Looking forward to it.',
+      previewKey: 'chat.sarah.preview',
       time: '2h ago',
       unread: 1,
       messages: [
-        { type: 'date', text: 'Yesterday, 3:15 PM' },
+        { type: 'date', textKey: 'chat.sarah.date1' },
         {
           type: 'incoming',
-          text: 'Is the latte art class still open for registration?',
+          textKey: 'chat.sarah.in1',
           time: '15:20',
         },
         {
           type: 'outgoing',
-          text: 'Yes! I just sent you an invite. Let me know if you have any questions.',
+          textKey: 'chat.sarah.out1',
           status: 'Sent 15:45',
         },
         {
           type: 'incoming',
-          text: 'Thanks for the quick reply! Looking forward to it.',
+          textKey: 'chat.sarah.in2',
           time: '16:02',
         },
       ],
@@ -567,14 +677,14 @@ const ALL_CHATS = [
       avatar: null,
       operatorId: 'you',
       escalated: false,
-      preview: 'Could you share the venue address?',
+      previewKey: 'chat.marcus.preview',
       time: '5h ago',
       unread: 0,
       messages: [
-        { type: 'date', text: 'Today, 8:00 AM' },
+        { type: 'date', textKey: 'chat.marcus.date1' },
         {
           type: 'incoming',
-          text: 'Could you share the venue address?',
+          textKey: 'chat.marcus.in1',
           time: '08:12',
         },
       ],
@@ -587,14 +697,14 @@ const ALL_CHATS = [
       avatar: null,
       operatorId: null,
       escalated: false,
-      preview: 'I saw your event on social media and wanted to learn more.',
+      previewKey: 'chat.emma.preview',
       time: 'Just now',
       unread: 1,
       messages: [
-        { type: 'date', text: 'Today, 2:00 PM' },
+        { type: 'date', textKey: 'chat.emma.date1' },
         {
           type: 'incoming',
-          text: 'I saw your event on social media and wanted to learn more.',
+          textKey: 'chat.emma.in1',
           time: '14:01',
         },
       ],
@@ -607,14 +717,14 @@ const ALL_CHATS = [
       avatar: null,
       operatorId: null,
       escalated: false,
-      preview: 'What time does the class start?',
+      previewKey: 'chat.james.preview',
       time: '30m ago',
       unread: 1,
       messages: [
-        { type: 'date', text: 'Today, 1:30 PM' },
+        { type: 'date', textKey: 'chat.james.date1' },
         {
           type: 'incoming',
-          text: 'What time does the class start?',
+          textKey: 'chat.james.in1',
           time: '13:30',
         },
       ],
@@ -627,14 +737,14 @@ const ALL_CHATS = [
       avatar: null,
       operatorId: null,
       escalated: false,
-      preview: 'Do I need to bring my own equipment?',
+      previewKey: 'chat.lisa.preview',
       time: '1h ago',
       unread: 0,
       messages: [
-        { type: 'date', text: 'Today, 12:45 PM' },
+        { type: 'date', textKey: 'chat.lisa.date1' },
         {
           type: 'incoming',
-          text: 'Do I need to bring my own equipment?',
+          textKey: 'chat.lisa.in1',
           time: '12:45',
         },
       ],
@@ -647,14 +757,14 @@ const ALL_CHATS = [
       avatar: null,
       operatorId: null,
       escalated: false,
-      preview: 'Is there a group discount available?',
+      previewKey: 'chat.david.preview',
       time: '3h ago',
       unread: 1,
       messages: [
-        { type: 'date', text: 'Today, 10:00 AM' },
+        { type: 'date', textKey: 'chat.david.date1' },
         {
           type: 'incoming',
-          text: 'Is there a group discount available?',
+          textKey: 'chat.david.in1',
           time: '10:05',
         },
       ],
@@ -667,14 +777,14 @@ const ALL_CHATS = [
       avatar: null,
       operatorId: null,
       escalated: false,
-      preview: 'Can I bring a friend to the workshop?',
+      previewKey: 'chat.nina.preview',
       time: '4h ago',
       unread: 0,
       messages: [
-        { type: 'date', text: 'Today, 9:15 AM' },
+        { type: 'date', textKey: 'chat.nina.date1' },
         {
           type: 'incoming',
-          text: 'Can I bring a friend to the workshop?',
+          textKey: 'chat.nina.in1',
           time: '09:15',
         },
       ],
@@ -688,19 +798,19 @@ const ALL_CHATS = [
       operatorId: 'jane',
       escalated: true,
       escalatedReason: 'Flagged by operator',
-      preview: 'I need help with my reservation — it shows the wrong date.',
+      previewKey: 'chat.thomas.preview',
       time: '15m ago',
       unread: 2,
       messages: [
-        { type: 'date', text: 'Today, 1:45 PM' },
+        { type: 'date', textKey: 'chat.thomas.date1' },
         {
           type: 'incoming',
-          text: 'I need help with my reservation — it shows the wrong date.',
+          textKey: 'chat.thomas.in1',
           time: '13:45',
         },
         {
           type: 'incoming',
-          text: 'Can someone look at this urgently?',
+          textKey: 'chat.thomas.in2',
           time: '13:52',
         },
       ],
@@ -714,14 +824,14 @@ const ALL_CHATS = [
       operatorId: null,
       escalated: true,
       escalatedReason: 'Long wait time',
-      preview: 'Still waiting for a response about my service appointment.',
+      previewKey: 'chat.karen.preview',
       time: '45m ago',
       unread: 1,
       messages: [
-        { type: 'date', text: 'Today, 1:00 PM' },
+        { type: 'date', textKey: 'chat.karen.date1' },
         {
           type: 'incoming',
-          text: 'Still waiting for a response about my service appointment.',
+          textKey: 'chat.karen.in1',
           time: '13:00',
         },
       ],
@@ -734,14 +844,14 @@ const ALL_CHATS = [
       avatar: null,
       operatorId: 'jane',
       escalated: false,
-      preview: 'Thanks for confirming the pickup time.',
+      previewKey: 'chat.robert.preview',
       time: '2h ago',
       unread: 0,
       messages: [
-        { type: 'date', text: 'Today, 11:30 AM' },
+        { type: 'date', textKey: 'chat.robert.date1' },
         {
           type: 'incoming',
-          text: 'Thanks for confirming the pickup time.',
+          textKey: 'chat.robert.in1',
           time: '11:30',
         },
       ],
@@ -754,14 +864,14 @@ const ALL_CHATS = [
       avatar: null,
       operatorId: 'mike',
       escalated: false,
-      preview: 'Is the showroom open this Saturday?',
+      previewKey: 'chat.patricia.preview',
       time: '3h ago',
       unread: 0,
       messages: [
-        { type: 'date', text: 'Today, 10:30 AM' },
+        { type: 'date', textKey: 'chat.patricia.date1' },
         {
           type: 'incoming',
-          text: 'Is the showroom open this Saturday?',
+          textKey: 'chat.patricia.in1',
           time: '10:30',
         },
       ],
@@ -969,7 +1079,7 @@ const CONTACT_TEMPLATE_OPTIONS = [
   {
     id: 'project-updates',
     title: 'Card message with link',
-    description: 'Send a message as a card with a title and optional link.',
+    description: 'Send a message as a card with a title and link.',
     icon: 'link',
   },
 ];
@@ -1055,9 +1165,16 @@ function getCurrentUserName() {
 function updateProfileAvatar() {
   const imageWrap = document.getElementById('profile-avatar-image');
   if (!imageWrap) return;
-  const photo = isSupervisorMode ? SUPERVISOR_PROFILE.photo : OPERATORS.you.photo;
-  const name = getCurrentUserName();
-  imageWrap.innerHTML = `<img src="${photo}" alt="${name}" />`;
+  const op = isSupervisorMode
+    ? { photo: SUPERVISOR_PROFILE.photo, name: SUPERVISOR_PROFILE.name, initials: 'JL', color: '#7eb8a8' }
+    : OPERATORS.you;
+  imageWrap.innerHTML = `<img src="${op.photo}" alt="${op.name}"${!isSupervisorMode ? ' class="profile-avatar__photo"' : ''} />`;
+  const img = imageWrap.querySelector('img');
+  if (img) {
+    img.onerror = () => {
+      imageWrap.innerHTML = `<div class="avatar-placeholder" style="width:100%;height:100%;background:${op.color};font-size:13px;display:flex;align-items:center;justify-content:center;color:#fff;border-radius:50%">${op.initials}</div>`;
+    };
+  }
 }
 
 function renderCreatorRow(createdById) {
@@ -1105,7 +1222,7 @@ function renderChatList() {
           <span class="chat-time">${chat.time}</span>
         </div>
         <div class="chat-row-bottom">
-          <span class="chat-preview">${chat.preview}</span>
+          <span class="chat-preview">${getChatPreviewText(chat)}</span>
           ${shouldShowUnreadDot(chat) ? '<span class="unread-dot" aria-label="Unread"></span>' : ''}
         </div>
         ${renderChatOperatorMeta(chat)}
@@ -1274,7 +1391,7 @@ function renderMessages() {
   messagesEl.innerHTML = conv.messages
     .map((msg) => {
       if (msg.type === 'date') {
-        return `<div class="date-divider">${msg.text}</div>`;
+        return `<div class="date-divider">${getLocalizedMessageText(msg)}</div>`;
       }
 
       if (msg.type === 'incoming') {
@@ -1282,7 +1399,7 @@ function renderMessages() {
         <div class="message-row incoming">
           ${avatarHtml(conv.initials, 'msg')}
           <div class="message-content">
-            <div class="bubble incoming">${msg.text}</div>
+            <div class="bubble incoming">${getLocalizedMessageText(msg)}</div>
             <span class="msg-time">${msg.time}</span>
           </div>
         </div>`;
@@ -1292,8 +1409,8 @@ function renderMessages() {
         return `
         <div class="message-row outgoing">
           <div class="message-content">
-            <div class="bubble outgoing">${msg.text}</div>
-            <span class="msg-status">${msg.status}</span>
+            <div class="bubble outgoing">${getLocalizedMessageText(msg)}</div>
+            <span class="msg-status">${formatMessageStatus(msg.status)}</span>
           </div>
         </div>`;
       }
@@ -1303,7 +1420,7 @@ function renderMessages() {
         <div class="message-row outgoing">
           <div class="message-content">
             ${renderEventCard(msg.event)}
-            <span class="msg-status">${msg.status}</span>
+            <span class="msg-status">${formatMessageStatus(msg.status)}</span>
           </div>
         </div>`;
       }
@@ -1313,7 +1430,7 @@ function renderMessages() {
         <div class="message-row outgoing">
           <div class="message-content">
             ${renderSurveyCard(msg.survey)}
-            <span class="msg-status">${msg.status}</span>
+            <span class="msg-status">${formatMessageStatus(msg.status)}</span>
           </div>
         </div>`;
       }
@@ -1333,7 +1450,7 @@ function renderMessages() {
           <div class="message-image__frame">
             <img src="${msg.src}" alt="${msg.alt || 'Attached image'}">
           </div>
-          <span class="msg-status">${msg.status}</span>
+          <span class="msg-status">${formatMessageStatus(msg.status)}</span>
         </div>`;
       }
 
@@ -1425,6 +1542,7 @@ function sendMessage() {
       status: `Sent ${timeStr}`,
     });
     conv.preview = text;
+    conv.previewDynamic = true;
     conv.time = 'Just now';
   }
 
@@ -2784,6 +2902,7 @@ function createDefaultBroadcastWizardState() {
   tomorrow.setDate(tomorrow.getDate() + 1);
   return {
     step: 1,
+    maxReachableStep: 1,
     templateId: null,
     title: '',
     message: '',
@@ -2793,6 +2912,28 @@ function createDefaultBroadcastWizardState() {
     scheduledDate: tomorrow.toISOString().slice(0, 10),
     scheduledTime: '10:00',
   };
+}
+
+function getBroadcastWizardMaxReachableStep(state = broadcastWizardState) {
+  let max = 1;
+  if (state.templateId) max = Math.max(max, 2);
+  if (max >= 2 && validateBroadcastWizardStepForState(2, state)) max = Math.max(max, 3);
+  if (max >= 3 && validateBroadcastWizardStepForState(3, state)) max = Math.max(max, 4);
+  return Math.max(max, state.maxReachableStep ?? 1, state.step ?? 1);
+}
+
+function validateBroadcastWizardStepForState(step, state) {
+  if (step === 1) return !!state.templateId;
+  if (step === 2) {
+    if (!state.message?.trim()) return false;
+    if (broadcastTemplateNeedsTitle(state.templateId) && !state.title?.trim()) return false;
+    if (broadcastTemplateNeedsLink(state.templateId)) {
+      return isValidBroadcastLink(state.surveyLink || '');
+    }
+    return true;
+  }
+  if (step === 3) return (state.audienceTags?.length ?? 0) > 0;
+  return true;
 }
 
 function wizardSessionHasProgress(state = broadcastWizardState) {
@@ -2839,6 +2980,7 @@ function restoreBroadcastWizardUI() {
   broadcastWizardAudienceShowError = false;
   broadcastWizardLinkShowError = false;
   activeBroadcastId = null;
+  broadcastWizardState.maxReachableStep = getBroadcastWizardMaxReachableStep();
   applyWizardStateToInputs();
   updateBroadcastWizardPanelTitle();
   showBroadcastWizardStep(broadcastWizardState.step);
@@ -3024,20 +3166,24 @@ function renderBroadcastWizardStepper() {
   const stepper = document.getElementById('broadcast-wizard-stepper');
   if (!stepper) return;
 
+  const maxReachable = getBroadcastWizardMaxReachableStep();
+
   stepper.innerHTML = getWizardStepLabels().map((s) => {
-    const isComplete = s.num < broadcastWizardState.step;
     const isCurrent = s.num === broadcastWizardState.step;
+    const isComplete = s.num < broadcastWizardState.step;
+    const isReachable = s.num <= maxReachable;
     const cls = [
       'broadcast-wizard__step',
       isComplete ? 'is-complete' : '',
       isCurrent ? 'is-current' : '',
+      isReachable && !isCurrent ? 'is-reachable' : '',
     ]
       .filter(Boolean)
       .join(' ');
     const numContent = isComplete
       ? '<span class="material-icons" aria-hidden="true">check</span>'
       : String(s.num);
-    const disabled = !isComplete && !isCurrent ? ' disabled' : '';
+    const disabled = !isReachable || isCurrent ? ' disabled' : '';
     return `<li class="${cls}">
       <button type="button" class="broadcast-wizard__step-btn" data-goto-step="${s.num}"${disabled} aria-current="${isCurrent ? 'step' : 'false'}">
         <span class="broadcast-wizard__step-num">${numContent}</span>
@@ -3049,7 +3195,9 @@ function renderBroadcastWizardStepper() {
   stepper.querySelectorAll('[data-goto-step]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const target = Number(btn.dataset.gotoStep);
-      if (target >= broadcastWizardState.step || btn.disabled) return;
+      if (btn.disabled || target === broadcastWizardState.step) return;
+      if (target > maxReachable) return;
+      if (broadcastWizardState.step === 2) syncBroadcastWizardComposeFromInputs();
       broadcastWizardState.step = target;
       showBroadcastWizardStep(target);
       persistBroadcastWizardSession();
@@ -3108,17 +3256,6 @@ function getLocalizedTemplateTitle(templateId) {
 function updateBroadcastWizardPanelTitle() {
   const titleEl = document.getElementById('broadcast-wizard-panel-title');
   if (!titleEl) return;
-  if (broadcastTemplateNeedsTitle(broadcastWizardState.templateId)) {
-    const title = broadcastWizardState.title?.trim();
-    titleEl.textContent = title || t('broadcasts.wizardTitle');
-    return;
-  }
-  const message = broadcastWizardState.message?.trim();
-  if (message) {
-    const snippet = message.length > 48 ? `${message.slice(0, 48)}…` : message;
-    titleEl.textContent = snippet;
-    return;
-  }
   titleEl.textContent = t('broadcasts.wizardTitle');
 }
 
@@ -3618,7 +3755,12 @@ function initBroadcastWizard() {
       return;
     }
     if (broadcastWizardState.step === 2) populateBroadcastWizardCompose();
-    showBroadcastWizardStep(broadcastWizardState.step + 1);
+    const nextStep = broadcastWizardState.step + 1;
+    broadcastWizardState.maxReachableStep = Math.max(
+      broadcastWizardState.maxReachableStep ?? 1,
+      nextStep
+    );
+    showBroadcastWizardStep(nextStep);
     refreshWizardDraftListRow();
     persistBroadcastWizardSession();
   });
@@ -3761,9 +3903,12 @@ function renderContactsTable() {
         <div class="contact-tags">${tagsHtml}</div>
       </td>
       <td class="col-chat">
-        <button class="contacts-chat-btn" type="button" data-chat-id="${contact.chatId || ''}" aria-label="${escapePreviewText(t('contacts.openChatAria', { name: contact.name }))}" ${contact.chatId ? '' : `title="${escapePreviewText(t('contacts.noActiveChat'))}"`}>
-          <span class="material-icons">chat_bubble_outline</span>
-        </button>
+        <span class="contacts-chat-btn-wrap${contact.chatId ? '' : ' is-inactive'}" tabindex="0">
+          <button class="contacts-chat-btn" type="button" data-chat-id="${contact.chatId || ''}" aria-describedby="${contact.chatId ? `chat-tip-${contact.id}` : ''}" aria-label="${escapePreviewText(t('contacts.openChatAria', { name: contact.name }))}" ${contact.chatId ? '' : 'disabled'}>
+            <span class="material-icons-outlined" aria-hidden="true">chat</span>
+          </button>
+          <span class="contacts-chat-btn__tooltip" role="tooltip" id="chat-tip-${contact.id}">${escapePreviewText(contact.chatId ? t('contacts.openChatTooltip') : t('contacts.noActiveChat'))}</span>
+        </span>
       </td>
     </tr>`;
     })

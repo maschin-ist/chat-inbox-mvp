@@ -357,7 +357,14 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;
   display: block;
+}
+
+/* Portrait crop — face centered in circle (uploaded street photo) */
+.profile-avatar__image img.profile-avatar__photo {
+  object-position: 38% 22%;
+  transform: scale(1.35);
 }
 
 .profile-menu-wrap {
@@ -2786,17 +2793,17 @@ button {
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  color: var(--text-secondary);
+  color: #2B67B5;
   transition: background 0.12s, color 0.12s;
 }
 
-.contacts-chat-btn:hover {
-  background: #f0f0f0;
+.contacts-chat-btn:hover:not(:disabled) {
+  background: #e8f2fb;
   color: #2B67B5;
 }
 
-.contacts-chat-btn .material-icons {
-  font-size: 20px;
+.contacts-chat-btn:disabled {
+  background: transparent;
 }
 
 .contacts-footer {
@@ -4381,6 +4388,36 @@ button {
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
+}
+
+/* Preview step — lift message/card off grey wizard body */
+.broadcast-wizard--panel .broadcast-wizard__preview-box {
+  width: 100%;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+}
+
+.broadcast-wizard--panel .broadcast-wizard__preview-message {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+.broadcast-wizard--panel .broadcast-wizard__preview-message:not(.broadcast-wizard__preview-message--card) {
+  padding: 4px 2px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+}
+
+.broadcast-wizard--panel .project-update-card {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border-color: #e0e0e0;
 }
 
 .broadcast-wizard__preview-label {
