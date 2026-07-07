@@ -80,7 +80,7 @@ const I18N_STRINGS = {
     'wizard.composeTitle': 'Compose your message',
     'wizard.composeDesc': 'Write the broadcast title and message your contacts will receive.',
     'wizard.audiencePageTitle': 'Select contacts by tag',
-    'wizard.audienceDesc': 'Search for tags to add. You can select more than one.',
+    'wizard.audienceDesc': 'Pick one tag — everyone with that tag will receive this message.',
     'wizard.previewTitle': 'Review before sending',
     'wizard.previewDesc': 'Confirm everything looks correct — you can still go back to edit any step.',
     'wizard.fieldTitle': 'Title',
@@ -92,7 +92,7 @@ const I18N_STRINGS = {
     'wizard.linkPlaceholder': 'https://example.com',
     'wizard.invalidLink': 'Invalid link format',
     'wizard.selectTag': 'Select a tag',
-    'wizard.selectTagWarning': 'Select at least one tag to continue.',
+    'wizard.selectTagWarning': 'Select a tag to continue.',
     'wizard.searchTagsPlaceholder': 'Search tags…',
     'wizard.searchResults': 'Search results',
     'wizard.noMatchingTags': 'No matching tags',
@@ -118,9 +118,17 @@ const I18N_STRINGS = {
       'Contacts are your Project or Official Page participants',
     'contacts.addTags': 'Add Tags',
     'contacts.addTagsTitle': 'Add tags',
-    'contacts.addTagsSubtitle': 'Pick one tag to apply to selected contacts',
-    'contacts.addTagsSubtitleOne': 'Select tags to apply to {{name}}',
-    'contacts.addTagsSubtitleMany': 'Select tags to apply to {{count}} contacts',
+    'contacts.addTagsSubtitle': 'Search or create a tag below',
+    'contacts.addTagsSubtitleOne': '{{name}} · pick a tag',
+    'contacts.addTagsSubtitleOneContact': '1 contact selected',
+    'contacts.addTagsSubtitleMany': '{{count}} contacts selected',
+    'contacts.addTagsHint': 'Type to search existing tags',
+    'contacts.createNewLabel': 'Create new',
+    'contacts.addTagsOrCreate': 'or create new',
+    'contacts.createNewTag': 'Create new tag',
+    'contacts.newTagPlaceholder': 'New tag name',
+    'contacts.createTag': 'Create',
+    'contacts.removeSelectedTag': 'Remove selected tag',
     'contacts.colName': 'Name',
     'contacts.colTags': 'Tags',
     'contacts.colViewChat': 'View chat',
@@ -192,7 +200,7 @@ const I18N_STRINGS = {
     'wizard.composeTitle': 'メッセージを作成',
     'wizard.composeDesc': '配信のタイトルと本文を入力してください。',
     'wizard.audiencePageTitle': 'タグで連絡先を選択',
-    'wizard.audienceDesc': 'タグを検索して追加できます。複数選択できます。',
+    'wizard.audienceDesc': 'タグを1つ選ぶと、そのタグの連絡先全員に配信されます。',
     'wizard.previewTitle': '送信前の確認',
     'wizard.previewDesc': '内容を確認してください。前のステップに戻って編集できます。',
     'wizard.fieldTitle': 'タイトル',
@@ -204,7 +212,7 @@ const I18N_STRINGS = {
     'wizard.linkPlaceholder': 'https://example.com',
     'wizard.invalidLink': 'リンクの形式が正しくありません',
     'wizard.selectTag': 'タグを選択',
-    'wizard.selectTagWarning': 'タグを1つ以上選択してください。',
+    'wizard.selectTagWarning': 'タグを選択してください。',
     'wizard.searchTagsPlaceholder': 'タグを検索…',
     'wizard.searchResults': '検索結果',
     'wizard.noMatchingTags': '一致するタグがありません',
@@ -230,9 +238,17 @@ const I18N_STRINGS = {
       '連絡先は、プロジェクトまたは公式ページの参加者です',
     'contacts.addTags': 'タグを追加',
     'contacts.addTagsTitle': 'タグを追加',
-    'contacts.addTagsSubtitle': '選択した連絡先に付けるタグを1つ選んでください',
-    'contacts.addTagsSubtitleOne': '{{name}}に付けるタグを選択',
-    'contacts.addTagsSubtitleMany': '選択中の{{count}}件に付けるタグを選択',
+    'contacts.addTagsSubtitle': '下の検索または新規作成からタグを選んでください',
+    'contacts.addTagsSubtitleOne': '{{name}} · タグを選択',
+    'contacts.addTagsSubtitleOneContact': '1件選択中',
+    'contacts.addTagsSubtitleMany': '{{count}}件選択中',
+    'contacts.addTagsHint': '入力して既存のタグを検索',
+    'contacts.createNewLabel': '新規作成',
+    'contacts.addTagsOrCreate': 'または新規作成',
+    'contacts.createNewTag': '新規タグを作成',
+    'contacts.newTagPlaceholder': 'タグ名',
+    'contacts.createTag': '作成',
+    'contacts.removeSelectedTag': '選択したタグを解除',
     'contacts.colName': '名前',
     'contacts.colTags': 'タグ',
     'contacts.colViewChat': 'チャット',
@@ -922,7 +938,6 @@ let contactTagCatalog = [
 ];
 let broadcastWizardAudienceShowError = false;
 let broadcastWizardLinkShowError = false;
-let broadcastWizardAudienceSearch = '';
 let addTagsPending = new Set();
 let addTagsSearchQuery = '';
 let addTagsSingleContactId = null;
@@ -2447,23 +2462,63 @@ function updateAddTagsApplyButton() {
   applyBtn.disabled = addTagsPending.size === 0;
 }
 
+function renderAddTagsSelected() {
+  const selectedEl = document.getElementById('contacts-add-tags-selected');
+  if (!selectedEl) return;
+
+  const pending = [...addTagsPending];
+  if (pending.length === 0) {
+    selectedEl.classList.add('hidden');
+    selectedEl.innerHTML = '';
+    return;
+  }
+
+  selectedEl.classList.remove('hidden');
+  selectedEl.innerHTML = pending
+    .map(
+      (tag) => `
+    <span class="contact-tag contact-tag--blue add-tags-popover__selected-pill">
+      <span class="add-tags-popover__pill-text">${escapePreviewText(translateTag(tag))}</span>
+      <button type="button" class="add-tags-popover__pill-remove" data-tag="${escapePreviewText(tag)}" aria-label="${escapePreviewText(t('contacts.removeSelectedTag'))}">
+        <span class="material-icons" aria-hidden="true">close</span>
+      </button>
+    </span>`
+    )
+    .join('');
+
+  selectedEl.querySelectorAll('.add-tags-popover__pill-remove').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const tag = btn.getAttribute('data-tag');
+      if (!tag) return;
+      addTagsPending.delete(tag);
+      renderAddTagsSelected();
+      renderAddTagsList();
+      updateAddTagsApplyButton();
+    });
+  });
+}
+
 function renderAddTagsList() {
   const listEl = document.getElementById('contacts-add-tags-list');
-  const subtitleEl = document.getElementById('contacts-add-tags-subtitle');
   if (!listEl) return;
 
   const selected = getAddTagsTargetContacts();
   const total = selected.length;
-  if (subtitleEl) {
-    if (addTagsSingleContactId && total === 1) {
-      subtitleEl.textContent = t('contacts.addTagsSubtitleOne', { name: selected[0].name });
-    } else {
-      subtitleEl.textContent = t('contacts.addTagsSubtitleMany', { count: total });
-    }
-  }
+
+  renderAddTagsSelected();
 
   const q = addTagsSearchQuery.trim().toLowerCase();
-  const tags = contactTagCatalog.filter((tag) => !q || tag.toLowerCase().includes(q));
+
+  if (!q) {
+    listEl.classList.add('hidden');
+    listEl.innerHTML = '';
+    return;
+  }
+
+  const tags = contactTagCatalog.filter((tag) => tag.toLowerCase().includes(q));
+
+  listEl.classList.remove('hidden');
 
   if (tags.length === 0) {
     listEl.innerHTML = `<li class="add-tags-popover__empty">${t('contacts.noTagsMatch')}</li>`;
@@ -2474,40 +2529,33 @@ function renderAddTagsList() {
     .map((tag) => {
       const withTag = countContactsWithTag(selected, tag);
       const onAll = total > 0 && withTag === total;
-      const onSome = withTag > 0 && withTag < total;
-      const isChecked = onAll || addTagsPending.has(tag);
+      const isSelected = addTagsPending.has(tag);
       const disabled = onAll;
 
       let meta = '';
       if (onAll) {
-        meta = `<span class="add-tags-popover__tag-meta add-tags-popover__tag-meta--applied">${t('contacts.applied')}</span>`;
-      } else if (onSome) {
-        meta = `<span class="add-tags-popover__tag-meta">${withTag} / ${total}</span>`;
+        meta = `<span class="add-tags-popover__result-meta add-tags-popover__result-meta--applied">${t('contacts.applied')}</span>`;
       }
 
       return `
       <li>
-        <label class="filter-check ${disabled ? 'is-disabled' : ''}">
-          <input type="checkbox" value="${tag}" ${isChecked ? 'checked' : ''} ${disabled ? 'disabled' : ''}>
-          <span class="filter-check__box" aria-hidden="true"></span>
-          <span class="filter-check__label">${escapePreviewText(translateTag(tag))}</span>
+        <button type="button" class="add-tags-popover__result ${isSelected ? 'is-selected' : ''} ${disabled ? 'is-disabled' : ''}" data-tag="${escapePreviewText(tag)}" ${disabled ? 'disabled' : ''}>
+          <span class="add-tags-popover__result-label">${escapePreviewText(translateTag(tag))}</span>
           ${meta}
-        </label>
+        </button>
       </li>`;
     })
     .join('');
 
-  listEl.querySelectorAll('input[type="checkbox"]:not(:disabled)').forEach((input) => {
-    input.addEventListener('change', () => {
-      if (input.checked) {
-        addTagsPending.clear();
-        addTagsPending.add(input.value);
-        listEl.querySelectorAll('input[type="checkbox"]:not(:disabled)').forEach((other) => {
-          if (other !== input) other.checked = false;
-        });
-      } else {
-        addTagsPending.delete(input.value);
-      }
+  listEl.querySelectorAll('.add-tags-popover__result:not(.is-disabled)').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const tag = btn.getAttribute('data-tag');
+      if (!tag) return;
+      if (addTagsPending.has(tag)) addTagsPending.delete(tag);
+      else addTagsPending.add(tag);
+      renderAddTagsSelected();
+      renderAddTagsList();
       updateAddTagsApplyButton();
     });
   });
@@ -2520,13 +2568,13 @@ function createContactTag(tagName) {
     contactTagCatalog.push(tag);
     syncTagCatalogToFilterMenu();
   }
-  addTagsPending.clear();
   addTagsPending.add(tag);
   addTagsSearchQuery = '';
   const searchEl = document.getElementById('contacts-add-tags-search');
   const newEl = document.getElementById('contacts-add-tags-new');
   if (searchEl) searchEl.value = '';
   if (newEl) newEl.value = '';
+  renderAddTagsSelected();
   renderAddTagsList();
   updateAddTagsApplyButton();
   return true;
@@ -2536,11 +2584,12 @@ function applyTagsToSelected() {
   if (addTagsPending.size === 0) return;
 
   const selected = getAddTagsTargetContacts();
-  const tag = [...addTagsPending][0];
-  if (!tag) return;
+  const tags = [...addTagsPending];
 
   selected.forEach((contact) => {
-    if (!contact.tags.includes(tag)) contact.tags.push(tag);
+    tags.forEach((tag) => {
+      if (!contact.tags.includes(tag)) contact.tags.push(tag);
+    });
   });
 
   setAddTagsMenuOpen(false);
@@ -2860,11 +2909,10 @@ function getRecentlyUsedBroadcastTags(limit = 5) {
 }
 
 function toggleBroadcastWizardAudienceTag(tag) {
-  const idx = broadcastWizardState.audienceTags.indexOf(tag);
-  if (idx >= 0) {
-    broadcastWizardState.audienceTags.splice(idx, 1);
+  if (broadcastWizardState.audienceTags[0] === tag) {
+    broadcastWizardState.audienceTags = [];
   } else {
-    broadcastWizardState.audienceTags.push(tag);
+    broadcastWizardState.audienceTags = [tag];
   }
   broadcastWizardAudienceShowError = false;
   renderBroadcastWizardAudienceTags();
@@ -2874,14 +2922,46 @@ function toggleBroadcastWizardAudienceTag(tag) {
   persistBroadcastWizardSession();
 }
 
-function initBroadcastWizardAudienceSearch() {
-  const searchInput = document.getElementById('broadcast-wizard-audience-search');
-  if (!searchInput || searchInput.dataset.bound) return;
-  searchInput.dataset.bound = 'true';
+function updateBroadcastWizardAudienceTrigger() {
+  const labelEl = document.getElementById('broadcast-wizard-audience-label');
+  const trigger = document.getElementById('broadcast-wizard-audience-trigger');
+  const tag = broadcastWizardState.audienceTags[0];
+  if (!labelEl || !trigger) return;
 
-  searchInput.addEventListener('input', () => {
-    broadcastWizardAudienceSearch = searchInput.value.trim();
-    renderBroadcastWizardAudienceTags();
+  if (tag) {
+    labelEl.textContent = translateTag(tag);
+    trigger.classList.add('has-value');
+  } else {
+    labelEl.textContent = t('wizard.selectTag');
+    trigger.classList.remove('has-value');
+  }
+}
+
+function selectBroadcastWizardAudienceTag(tag) {
+  broadcastWizardState.audienceTags = tag ? [tag] : [];
+  broadcastWizardAudienceShowError = false;
+  closeAllFilterMenus();
+  renderBroadcastWizardAudienceTags();
+  updateBroadcastWizardAudienceCount();
+  updateBroadcastWizardFooter();
+  refreshWizardDraftListRow();
+  persistBroadcastWizardSession();
+}
+
+function initBroadcastWizardAudienceDropdown() {
+  const trigger = document.getElementById('broadcast-wizard-audience-trigger');
+  const menu = document.getElementById('broadcast-wizard-audience-menu');
+  if (!trigger || !menu || trigger.dataset.bound) return;
+  trigger.dataset.bound = 'true';
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = !menu.classList.contains('hidden');
+    closeAllFilterMenus();
+    if (!isOpen) {
+      menu.classList.remove('hidden');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
   });
 }
 
@@ -3112,97 +3192,55 @@ function populateBroadcastWizardCompose() {
 }
 
 function renderBroadcastWizardAudienceTags() {
-  const container = document.getElementById('broadcast-wizard-audience-tags');
-  const searchSection = document.getElementById('broadcast-wizard-audience-search-section');
-  const selectedEl = document.getElementById('broadcast-wizard-audience-selected');
-  const selectedBlock = document.getElementById('broadcast-wizard-audience-selected-block');
-  const searchTitleEl = document.getElementById('broadcast-wizard-audience-search-title');
-  const searchInput = document.getElementById('broadcast-wizard-audience-search');
-  if (!container) return;
+  const menuEl = document.getElementById('broadcast-wizard-audience-menu');
+  if (!menuEl) return;
 
-  const query = broadcastWizardAudienceSearch.trim().toLowerCase();
-  const isSearching = query.length > 0;
-  const filteredTags = isSearching
-    ? contactTagCatalog.filter(
-        (tag) => tag.toLowerCase().includes(query) && countContactsWithTag(tag) > 0
-      )
-    : [];
+  const selectedTag = broadcastWizardState.audienceTags[0] || '';
+  const availableTags = contactTagCatalog
+    .filter((tag) => countContactsWithTag(tag) > 0)
+    .sort((a, b) => a.localeCompare(b));
 
-  if (searchInput && searchInput.value !== broadcastWizardAudienceSearch) {
-    searchInput.value = broadcastWizardAudienceSearch;
-  }
-
-  const hasSelection = broadcastWizardState.audienceTags.length > 0;
-  selectedBlock?.classList.toggle('has-selection', hasSelection);
-
-  if (selectedEl) {
-    if (!hasSelection) {
-      selectedEl.classList.add('hidden');
-      selectedEl.innerHTML = '';
-    } else {
-      selectedEl.classList.remove('hidden');
-      selectedEl.innerHTML = `
-        <span class="broadcast-wizard__audience-selected-label">${t('wizard.audienceSelected')}</span>
-        ${broadcastWizardState.audienceTags
-          .map(
-            (tag) => `
-          <button type="button" class="broadcast-wizard__audience-chip" data-remove-tag="${escapePreviewText(tag)}" aria-label="Remove ${escapePreviewText(translateTag(tag))}">
-            ${escapePreviewText(translateTag(tag))}
-            <span class="material-icons" aria-hidden="true">close</span>
-          </button>`
-          )
-          .join('')}`;
-      selectedEl.querySelectorAll('[data-remove-tag]').forEach((btn) => {
-        btn.addEventListener('click', () => toggleBroadcastWizardAudienceTag(btn.dataset.removeTag));
-      });
-    }
-  }
-
-  if (searchSection) {
-    searchSection.classList.toggle('hidden', !isSearching);
-  }
-
-  if (searchTitleEl) {
-    searchTitleEl.textContent =
-      filteredTags.length === 0 ? t('wizard.noMatchingTags') : t('wizard.searchResults');
-  }
-
-  container.innerHTML = filteredTags
+  menuEl.innerHTML = availableTags
     .map((tag) => {
-      const selected = broadcastWizardState.audienceTags.includes(tag);
-      return `
-    <button type="button" class="broadcast-wizard__tag-row${selected ? ' is-selected' : ''}" data-tag="${escapePreviewText(tag)}">
-      <span class="broadcast-wizard__tag-row-check" aria-hidden="true">
-        <span class="material-icons">check</span>
-      </span>
-      <span class="broadcast-wizard__tag-row-name">${escapePreviewText(translateTag(tag))}</span>
-    </button>`;
+      const isSelected = selectedTag === tag;
+      return `<li role="presentation">
+        <button type="button" class="broadcast-wizard__tag-option${isSelected ? ' is-selected' : ''}" data-value="${escapePreviewText(tag)}" role="option" aria-selected="${isSelected}">
+          <span class="broadcast-wizard__tag-option-label">${escapePreviewText(translateTag(tag))}</span>
+          <span class="material-icons broadcast-wizard__tag-option-check" aria-hidden="true">check</span>
+        </button>
+      </li>`;
     })
     .join('');
 
-  container.querySelectorAll('.broadcast-wizard__tag-row').forEach((btn) => {
-    btn.addEventListener('click', () => toggleBroadcastWizardAudienceTag(btn.dataset.tag));
+  menuEl.querySelectorAll('.broadcast-wizard__tag-option').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectBroadcastWizardAudienceTag(btn.dataset.value);
+    });
   });
+
+  updateBroadcastWizardAudienceTrigger();
 }
 
 function updateBroadcastWizardAudienceCount() {
   const countEl = document.getElementById('broadcast-wizard-audience-count');
   const warningEl = document.getElementById('broadcast-wizard-audience-warning');
   const warningTextEl = document.getElementById('broadcast-wizard-audience-warning-text');
-  const tags = broadcastWizardState.audienceTags;
-  const { unique } = getAudienceRecipientStats(tags);
-  const showWarning = broadcastWizardAudienceShowError && tags.length === 0;
+  const tag = broadcastWizardState.audienceTags[0];
+  const recipientCount = tag ? countContactsWithTag(tag) : 0;
+  const showWarning =
+    broadcastWizardAudienceShowError && broadcastWizardState.audienceTags.length === 0;
 
   if (countEl) {
-    if (tags.length === 0) {
+    if (!tag) {
       countEl.classList.add('hidden');
       countEl.innerHTML = '';
     } else {
       countEl.classList.remove('hidden');
       countEl.textContent =
-        unique === 1
+        recipientCount === 1
           ? t('wizard.audienceCountOne')
-          : t('wizard.audienceCount', { count: unique });
+          : t('wizard.audienceCount', { count: recipientCount });
     }
   }
 
@@ -3222,10 +3260,10 @@ function renderBroadcastWizardPreview() {
   syncBroadcastWizardComposeFromInputs();
   const recipientCount = countContactsByTags(broadcastWizardState.audienceTags);
   const templateName = getLocalizedTemplateTitle(broadcastWizardState.templateId);
-  const audienceTags = broadcastWizardState.audienceTags;
+  const audienceTag = broadcastWizardState.audienceTags[0] || '—';
   const audienceLabel =
-    audienceTags.length > 0
-      ? `${audienceTags.map((tag) => translateTag(tag)).join(', ')} · ${recipientCount}`
+    audienceTag !== '—'
+      ? `${translateTag(audienceTag)} · ${recipientCount}`
       : '—';
 
   const linkRow =
@@ -3333,7 +3371,6 @@ function setBroadcastWizardOpen(open) {
 function startFreshBroadcastWizard() {
   broadcastWizardAudienceShowError = false;
   broadcastWizardLinkShowError = false;
-  broadcastWizardAudienceSearch = '';
   broadcastWizardState = createDefaultBroadcastWizardState();
   clearBroadcastWizardSession();
   const titleInput = document.getElementById('broadcast-wizard-title-input');
@@ -3391,7 +3428,6 @@ function discardBroadcastWizard() {
   broadcastWizardState = createDefaultBroadcastWizardState();
   broadcastWizardAudienceShowError = false;
   broadcastWizardLinkShowError = false;
-  broadcastWizardAudienceSearch = '';
   clearBroadcastWizardSession();
   setBroadcastWizardOpen(false);
   if (activeBroadcastId === BROADCAST_WIZARD_DRAFT_ID) activeBroadcastId = null;
@@ -3636,7 +3672,7 @@ function initBroadcastWizard() {
   if (dateInput) dateInput.value = broadcastWizardState.scheduledDate;
   if (timeInput) timeInput.value = broadcastWizardState.scheduledTime;
 
-  initBroadcastWizardAudienceSearch();
+  initBroadcastWizardAudienceDropdown();
 }
 
 function updateContactsSelectAllButton() {
