@@ -65,8 +65,14 @@ const I18N_STRINGS = {
     'broadcasts.title': 'Broadcasts',
     'broadcasts.createNew': 'Create new',
     'broadcasts.createNewAria': 'Create new broadcast',
-    'broadcasts.emptyTitle': 'Your Broadcasts',
-    'broadcasts.emptyDesc': 'Create a new broadcast to reach your contacts by tag.',
+    'broadcasts.emptyTitle': 'Broadcasts',
+    'broadcasts.emptyLead':
+      'Need to reach multiple contacts at once? Pick a tag and send the same message to everyone in that group.',
+    'broadcasts.emptyGuideTitle': 'How it works',
+    'broadcasts.emptyStep1': 'Choose a message template',
+    'broadcasts.emptyStep2': 'Select contacts by tag',
+    'broadcasts.emptyStep3': 'Send to the whole group at once',
+    'broadcasts.emptyCta': 'Create broadcast',
     'broadcasts.wizardTitle': 'New broadcast',
     'broadcasts.noTitle': 'No title',
     'broadcasts.sentSuccess': 'Message successfully sent',
@@ -148,11 +154,11 @@ const I18N_STRINGS = {
     'contacts.searchTags': 'Search tags',
     'contacts.noTagsMatch': 'No tags match your search',
     'contacts.applied': 'Applied',
-    'template.project-updates.title': 'Project Updates',
+    'template.project-updates.title': 'Card message with link',
     'template.project-updates.desc':
-      'Share friendly welcomes and ongoing updates to keep everyone informed',
-    'template.free-text.title': 'Free text message',
-    'template.free-text.desc': 'Write your own message',
+      'Send a message as a card with a title and optional link.',
+    'template.free-text.title': 'Simple message',
+    'template.free-text.desc': 'Send a plain chat message with just text.',
     'templateModal.title': 'Choose your template',
     'templateModal.subtitleChat': 'Select how you want to engage with your contact',
     'templateModal.subtitleContacts': 'Select how you want to engage with your contacts',
@@ -186,8 +192,14 @@ const I18N_STRINGS = {
     'broadcasts.title': '一斉配信',
     'broadcasts.createNew': '新規作成',
     'broadcasts.createNewAria': '新規配信を作成',
-    'broadcasts.emptyTitle': '配信一覧',
-    'broadcasts.emptyDesc': 'タグを指定して連絡先に一斉配信を作成できます。',
+    'broadcasts.emptyTitle': '一斉配信',
+    'broadcasts.emptyLead':
+      '複数の連絡先に同じ内容を送りたい場合は、タグを選んで一斉に配信できます。',
+    'broadcasts.emptyGuideTitle': '使い方',
+    'broadcasts.emptyStep1': 'テンプレートを選ぶ',
+    'broadcasts.emptyStep2': 'タグで配信先を指定',
+    'broadcasts.emptyStep3': 'グループ全体に一斉送信',
+    'broadcasts.emptyCta': '配信を作成',
     'broadcasts.wizardTitle': '新規配信',
     'broadcasts.noTitle': 'タイトル未入力',
     'broadcasts.sentSuccess': '送信しました',
@@ -269,10 +281,10 @@ const I18N_STRINGS = {
     'contacts.searchTags': 'タグを検索',
     'contacts.noTagsMatch': '該当するタグがありません',
     'contacts.applied': '適用済み',
-    'template.project-updates.title': 'プロジェクトのお知らせ',
-    'template.project-updates.desc': '参加のお礼や最新情報を、わかりやすくお知らせします',
-    'template.free-text.title': '自由入力メッセージ',
-    'template.free-text.desc': 'メッセージを自由に入力',
+    'template.project-updates.title': 'カードメッセージ（リンク付き）',
+    'template.project-updates.desc': 'タイトルとリンク付きのカード形式で送信します。',
+    'template.free-text.title': 'シンプルなメッセージ',
+    'template.free-text.desc': 'テキストのみのメッセージを送信します。',
     'templateModal.title': 'テンプレートを選択',
     'templateModal.subtitleChat': '連絡先への送信形式を選んでください',
     'templateModal.subtitleContacts': '連絡先への送信形式を選んでください',
@@ -768,7 +780,7 @@ const BROADCASTS = {
       status: 'Sent',
       statusClass: 'sent',
       datetime: 'May 15, 2026 · 2:30 PM',
-      template: 'Project Updates',
+      template: 'Card message with link',
       templateType: 'welcome_bridge',
       recipients: 'Tag: Member',
       scheduledAt: 'May 15, 2026 at 2:30 PM',
@@ -949,22 +961,22 @@ let templateModalContext = 'contacts';
 
 const CONTACT_TEMPLATE_OPTIONS = [
   {
-    id: 'project-updates',
-    title: 'Project Updates',
-    description: 'Share friendly welcomes and ongoing updates to keep everyone informed',
-    icon: 'campaign',
+    id: 'free-text',
+    title: 'Simple message',
+    description: 'Send a plain chat message with just text.',
+    icon: 'edit_note',
   },
   {
-    id: 'free-text',
-    title: 'Free text message',
-    description: 'Write your own message',
-    icon: 'edit_note',
+    id: 'project-updates',
+    title: 'Card message with link',
+    description: 'Send a message as a card with a title and optional link.',
+    icon: 'link',
   },
 ];
 
 const TEMPLATE_SHORT_NAMES = {
-  'project-updates': 'Project Updates',
-  'free-text': 'Free text',
+  'project-updates': 'Card message',
+  'free-text': 'Simple message',
 };
 
 function getOperatorChatList(tab) {
@@ -2749,8 +2761,8 @@ const BROADCAST_WIZARD_STEPS = [
 ];
 
 const TEMPLATE_TITLES = {
-  'project-updates': 'Project Updates',
-  'free-text': 'Free text message',
+  'project-updates': 'Card message with link',
+  'free-text': 'Simple message',
 };
 
 const BROADCAST_COMPOSE_DEFAULTS = {
@@ -3496,7 +3508,7 @@ function submitBroadcastWizard() {
 
   const sentTitle = broadcastTemplateNeedsTitle(broadcastWizardState.templateId)
     ? broadcastWizardState.title || 'Untitled broadcast'
-    : broadcastWizardState.message.slice(0, 60) || 'Free text message';
+    : broadcastWizardState.message.slice(0, 60) || 'Simple message';
 
   const item = {
     id,

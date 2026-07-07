@@ -621,9 +621,16 @@
     #broadcast-empty-new-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      margin-top: 4px;
+      padding: 12px 20px;
       background: #2b67b5;
       color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 10px;
       transition: background 0.15s ease;
     }
 
@@ -632,7 +639,7 @@
     }
 
     #broadcast-empty-new-btn .material-symbols-outlined {
-      font-size: 18px;
+      font-size: 20px;
       color: #fff;
       line-height: 1;
       font-variation-settings: 'wght' 400;
@@ -1040,11 +1047,22 @@
       <div class="panel-rail panel-rail--chat" data-od-id="broadcast-detail-rail">
         <div class="broadcast-empty-state panel" id="broadcast-empty-state" data-od-id="broadcast-empty-state" hidden aria-hidden="true">
           <div class="broadcast-empty-state__content">
-            <h2 class="broadcast-empty-state__title" data-i18n="broadcasts.emptyTitle">Your Broadcasts</h2>
-            <p class="broadcast-empty-state__desc" data-i18n="broadcasts.emptyDesc">Create a new broadcast to reach your contacts by tag.</p>
+            <div class="broadcast-empty-state__icon" aria-hidden="true">
+              <span class="material-symbols-outlined">campaign</span>
+            </div>
+            <h2 class="broadcast-empty-state__title" data-i18n="broadcasts.emptyTitle">Broadcasts</h2>
+            <p class="broadcast-empty-state__lead" data-i18n="broadcasts.emptyLead">Need to reach multiple contacts at once? Pick a tag and send the same message to everyone in that group.</p>
+            <div class="broadcast-empty-state__guide">
+              <p class="broadcast-empty-state__guide-title" data-i18n="broadcasts.emptyGuideTitle">How it works</p>
+              <ol class="broadcast-empty-state__steps">
+                <li data-i18n="broadcasts.emptyStep1">Choose a message template</li>
+                <li data-i18n="broadcasts.emptyStep2">Select contacts by tag</li>
+                <li data-i18n="broadcasts.emptyStep3">Send to the whole group at once</li>
+              </ol>
+            </div>
             <button type="button" class="broadcast-empty-state__btn" id="broadcast-empty-new-btn" aria-label="Create new broadcast" data-i18n-aria="broadcasts.createNewAria">
               <span class="material-symbols-outlined" aria-hidden="true">add</span>
-              <span data-i18n="broadcasts.createNew">Create new</span>
+              <span data-i18n="broadcasts.emptyCta">Create broadcast</span>
             </button>
           </div>
         </div>
