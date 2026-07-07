@@ -2307,8 +2307,11 @@ button {
   gap: 0;
 }
 
-.add-tags-popover__field-group + .add-tags-popover__field-group {
-  margin-top: 16px;
+.add-tags-popover__separator {
+  height: 0;
+  margin: 14px 0;
+  border: none;
+  border-top: 1px solid var(--border);
 }
 
 .add-tags-popover__field-label {
@@ -2416,34 +2419,33 @@ button {
   color: var(--text-tertiary);
 }
 
-.add-tags-popover__field-plus {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  margin: 0 2px 0 4px;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--text-secondary);
-  flex-shrink: 0;
+.add-tags-popover__create-btn {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 14px;
+  border: 1px solid #2B67B5;
+  border-radius: 8px;
+  background: #fff;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  color: #2B67B5;
+  text-align: center;
   cursor: pointer;
-  transition: background 0.12s, color 0.12s;
+  transition: background 0.12s, color 0.12s, border-color 0.12s, opacity 0.12s;
 }
 
-.add-tags-popover__field-plus .material-icons {
-  font-size: 20px;
+.add-tags-popover__create-btn:hover:not(:disabled) {
+  background: #e8f2fb;
 }
 
-.add-tags-popover__field-plus:hover:not(:disabled) {
-  background: #f0f0f0;
-  color: var(--text-primary);
-}
-
-.add-tags-popover__field-plus:disabled {
-  opacity: 0.35;
+.add-tags-popover__create-btn:disabled {
+  border-color: var(--border);
+  background: #fafafa;
+  color: var(--text-tertiary);
   cursor: default;
+  opacity: 1;
 }
 
 .add-tags-popover__results {

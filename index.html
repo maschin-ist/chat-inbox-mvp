@@ -1302,21 +1302,20 @@
                         <div class="add-tags-popover__selected hidden" id="contacts-add-tags-selected" aria-live="polite"></div>
                         <div class="add-tags-popover__field-group">
                           <label class="add-tags-popover__field-label" for="contacts-add-tags-search" data-i18n="contacts.addTagsHint">Type to search existing tags</label>
-                          <label class="add-tags-popover__field" for="contacts-add-tags-search">
+                          <div class="add-tags-popover__field">
                             <span class="material-icons" aria-hidden="true">search</span>
                             <input type="search" id="contacts-add-tags-search" placeholder="Search tags" autocomplete="off" aria-label="Search tags" data-i18n-placeholder="contacts.searchTags" data-i18n-aria="contacts.searchTags">
-                          </label>
+                          </div>
                           <ul class="add-tags-popover__results hidden" id="contacts-add-tags-list" role="listbox" aria-label="Tag search results"></ul>
                         </div>
+                        <div class="add-tags-popover__separator" role="separator" aria-hidden="true"></div>
                         <div class="add-tags-popover__field-group">
                           <label class="add-tags-popover__field-label" for="contacts-add-tags-new" data-i18n="contacts.createNewLabel">Create new</label>
-                          <label class="add-tags-popover__field add-tags-popover__field--create" for="contacts-add-tags-new">
+                          <div class="add-tags-popover__field">
                             <span class="material-icons" aria-hidden="true">label</span>
-                            <input type="text" id="contacts-add-tags-new" placeholder="New tag name" maxlength="40" aria-label="New tag name" data-i18n-placeholder="contacts.newTagPlaceholder" data-i18n-aria="contacts.newTagPlaceholder">
-                            <button type="button" class="add-tags-popover__field-plus" id="contacts-add-tags-create-btn" disabled aria-label="Create tag" data-i18n-aria="contacts.createTag">
-                              <span class="material-icons" aria-hidden="true">add</span>
-                            </button>
-                          </label>
+                            <input type="text" id="contacts-add-tags-new" placeholder="New tag name" maxlength="40" data-i18n-placeholder="contacts.newTagPlaceholder">
+                          </div>
+                          <button type="button" class="add-tags-popover__create-btn" id="contacts-add-tags-create-btn" disabled data-i18n="contacts.createTag">Create tag</button>
                         </div>
                       </div>
                       <div class="add-tags-popover__footer">

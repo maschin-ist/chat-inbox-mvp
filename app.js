@@ -128,7 +128,7 @@ const I18N_STRINGS = {
     'contacts.addTagsOrCreate': 'or create new',
     'contacts.createNewTag': 'Create new tag',
     'contacts.newTagPlaceholder': 'New tag name',
-    'contacts.createTag': 'Create',
+    'contacts.createTag': 'Create tag',
     'contacts.removeSelectedTag': 'Remove selected tag',
     'contacts.colName': 'Name',
     'contacts.colTags': 'Tags',
@@ -249,7 +249,7 @@ const I18N_STRINGS = {
     'contacts.addTagsOrCreate': 'または新規作成',
     'contacts.createNewTag': '新規タグを作成',
     'contacts.newTagPlaceholder': 'タグ名',
-    'contacts.createTag': '作成',
+    'contacts.createTag': 'タグを作成',
     'contacts.removeSelectedTag': '選択したタグを解除',
     'contacts.colName': '名前',
     'contacts.colTags': 'タグ',
@@ -2449,6 +2449,8 @@ function setAddTagsMenuOpen(open) {
     const newEl = document.getElementById('contacts-add-tags-new');
     if (searchEl) searchEl.value = '';
     if (newEl) newEl.value = '';
+    const createBtn = document.getElementById('contacts-add-tags-create-btn');
+    if (createBtn) createBtn.disabled = true;
     updateAddTagsApplyButton();
   } else {
     renderAddTagsList();
@@ -2579,6 +2581,8 @@ function createContactTag(tagName) {
   const newEl = document.getElementById('contacts-add-tags-new');
   if (searchEl) searchEl.value = '';
   if (newEl) newEl.value = '';
+  const createBtn = document.getElementById('contacts-add-tags-create-btn');
+  if (createBtn) createBtn.disabled = true;
   renderAddTagsSelected();
   renderAddTagsList();
   updateAddTagsApplyButton();
@@ -2652,7 +2656,7 @@ function initAddTagsMenu() {
   newEl?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      if (createContactTag(newEl.value)) newEl.focus();
+      if (!createBtn?.disabled && createContactTag(newEl.value)) newEl.focus();
     }
   });
 
@@ -2763,8 +2767,6 @@ const BROADCAST_COMPOSE_DEFAULTS = {
 let broadcastWizardState = createDefaultBroadcastWizardState();
 let broadcastWizardOpen = false;
 
-const BROADCAST_WIZARD_SESSION_KEY = 'woven_broadcast_wizard_v1';
-
 function createDefaultBroadcastWizardState() {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -2792,52 +2794,15 @@ function wizardSessionHasProgress(state = broadcastWizardState) {
   return false;
 }
 
+/** In-memory only — survives sidebar navigation; cleared on full page refresh. */
 function persistBroadcastWizardSession() {
-  if (!wizardSessionHasProgress()) {
-    try {
-      sessionStorage.removeItem(BROADCAST_WIZARD_SESSION_KEY);
-    } catch {
-      /* ignore storage errors */
-    }
-    return;
-  }
-
   if (broadcastWizardOpen && broadcastWizardState.step === 2) {
     syncBroadcastWizardComposeFromInputs();
-  }
-
-  try {
-    sessionStorage.setItem(
-      BROADCAST_WIZARD_SESSION_KEY,
-      JSON.stringify({
-        version: 1,
-        savedAt: Date.now(),
-        state: broadcastWizardState,
-      })
-    );
-  } catch {
-    /* ignore storage errors */
-  }
-}
-
-function loadBroadcastWizardSession() {
-  try {
-    const raw = sessionStorage.getItem(BROADCAST_WIZARD_SESSION_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    if (!parsed?.state || typeof parsed.state !== 'object') return null;
-    return parsed;
-  } catch {
-    return null;
   }
 }
 
 function clearBroadcastWizardSession() {
-  try {
-    sessionStorage.removeItem(BROADCAST_WIZARD_SESSION_KEY);
-  } catch {
-    /* ignore storage errors */
-  }
+  /* legacy sessionStorage drafts are not supported */
 }
 
 function applyWizardStateToInputs() {
@@ -3435,16 +3400,6 @@ function openBroadcastWizard() {
     return;
   }
 
-  const saved = loadBroadcastWizardSession();
-  if (saved?.state && wizardSessionHasProgress(saved.state)) {
-    broadcastWizardState = {
-      ...createDefaultBroadcastWizardState(),
-      ...saved.state,
-    };
-    restoreBroadcastWizardUI();
-    return;
-  }
-
   startFreshBroadcastWizard();
 }
 
@@ -3478,16 +3433,6 @@ function tryRestoreBroadcastWizardOnEnter() {
   if (broadcastWizardOpen) return;
 
   if (wizardSessionHasProgress(broadcastWizardState)) {
-    restoreBroadcastWizardUI();
-    return;
-  }
-
-  const saved = loadBroadcastWizardSession();
-  if (saved?.state && wizardSessionHasProgress(saved.state)) {
-    broadcastWizardState = {
-      ...createDefaultBroadcastWizardState(),
-      ...saved.state,
-    };
     restoreBroadcastWizardUI();
   }
 }
@@ -3607,6 +3552,12 @@ function submitBroadcastWizard() {
 }
 
 function initBroadcastWizard() {
+  try {
+    sessionStorage.removeItem('woven_broadcast_wizard_v1');
+  } catch {
+    /* ignore */
+  }
+
   const composeBtn = document.querySelector('[data-od-id="broadcasts-compose-btn"]');
   const closeBtn = document.getElementById('broadcast-wizard-close');
   const backBtn = document.getElementById('broadcast-wizard-back');
