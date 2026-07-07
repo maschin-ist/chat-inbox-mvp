@@ -231,6 +231,10 @@ button {
   overflow: visible;
 }
 
+#lang-switcher-wrap[hidden] {
+  display: none !important;
+}
+
 .lang-switcher-wrap {
   position: relative;
   display: flex;

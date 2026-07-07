@@ -66,7 +66,7 @@ const I18N_STRINGS = {
     'broadcasts.createNew': 'Create new',
     'broadcasts.createNewAria': 'Create new broadcast',
     'broadcasts.emptyTitle': 'Your Broadcasts',
-    'broadcasts.emptyDesc': 'Select a broadcast from the list or create new',
+    'broadcasts.emptyDesc': 'Create a new broadcast to reach your contacts by tag.',
     'broadcasts.wizardTitle': 'New broadcast',
     'broadcasts.noTitle': 'No title',
     'broadcasts.sentSuccess': 'Message successfully sent',
@@ -174,7 +174,7 @@ const I18N_STRINGS = {
     'broadcasts.createNew': '新規作成',
     'broadcasts.createNewAria': '新規配信を作成',
     'broadcasts.emptyTitle': '配信一覧',
-    'broadcasts.emptyDesc': '一覧から配信を選ぶか、新規作成してください',
+    'broadcasts.emptyDesc': 'タグを指定して連絡先に一斉配信を作成できます。',
     'broadcasts.wizardTitle': '新規配信',
     'broadcasts.noTitle': 'タイトル未入力',
     'broadcasts.sentSuccess': '送信しました',
@@ -1942,7 +1942,7 @@ function renderBroadcastList() {
 
   broadcastListEl.querySelectorAll('.broadcast-item').forEach((item) => {
     item.addEventListener('click', () => {
-      if (broadcastWizardOpen) closeBroadcastWizard();
+      if (broadcastWizardOpen) hideBroadcastWizard();
       activeBroadcastId = item.dataset.id;
       renderBroadcastList();
       renderBroadcastDetail();
@@ -1953,9 +1953,17 @@ function renderBroadcastList() {
   updateTabBadges();
 }
 
+const MVP_BROADCAST_LIST_HIDDEN = true;
+
 function renderBroadcastDetail() {
   if (broadcastWizardOpen) {
     setBroadcastRightPanel({ showDetail: false, showEmpty: false });
+    return;
+  }
+
+  if (MVP_BROADCAST_LIST_HIDDEN) {
+    if (broadcastDetailEl) broadcastDetailEl.innerHTML = '';
+    setBroadcastRightPanel({ showDetail: false, showEmpty: true });
     return;
   }
 
@@ -2049,7 +2057,7 @@ function renderBroadcastDetail() {
 }
 
 function switchBroadcastTab(tab) {
-  if (broadcastWizardOpen) closeBroadcastWizard();
+  if (broadcastWizardOpen) hideBroadcastWizard();
   activeBroadcastTab = tab;
   activeBroadcastId = null;
 
@@ -2063,7 +2071,7 @@ function switchBroadcastTab(tab) {
 }
 
 function switchSupervisorBroadcastTab(tab) {
-  if (broadcastWizardOpen) closeBroadcastWizard();
+  if (broadcastWizardOpen) hideBroadcastWizard();
   supervisorBroadcastTab = tab;
   activeBroadcastId = null;
 
@@ -2692,6 +2700,8 @@ const BROADCAST_COMPOSE_DEFAULTS = {
 let broadcastWizardState = createDefaultBroadcastWizardState();
 let broadcastWizardOpen = false;
 
+const BROADCAST_WIZARD_SESSION_KEY = 'woven_broadcast_wizard_v1';
+
 function createDefaultBroadcastWizardState() {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -2706,6 +2716,95 @@ function createDefaultBroadcastWizardState() {
     scheduledDate: tomorrow.toISOString().slice(0, 10),
     scheduledTime: '10:00',
   };
+}
+
+function wizardSessionHasProgress(state = broadcastWizardState) {
+  if (!state) return false;
+  if (state.step > 1) return true;
+  if (state.templateId) return true;
+  if (state.title?.trim()) return true;
+  if (state.message?.trim()) return true;
+  if (state.surveyLink?.trim()) return true;
+  if (state.audienceTags?.length) return true;
+  return false;
+}
+
+function persistBroadcastWizardSession() {
+  if (!wizardSessionHasProgress()) {
+    try {
+      sessionStorage.removeItem(BROADCAST_WIZARD_SESSION_KEY);
+    } catch {
+      /* ignore storage errors */
+    }
+    return;
+  }
+
+  if (broadcastWizardOpen && broadcastWizardState.step === 2) {
+    syncBroadcastWizardComposeFromInputs();
+  }
+
+  try {
+    sessionStorage.setItem(
+      BROADCAST_WIZARD_SESSION_KEY,
+      JSON.stringify({
+        version: 1,
+        savedAt: Date.now(),
+        state: broadcastWizardState,
+      })
+    );
+  } catch {
+    /* ignore storage errors */
+  }
+}
+
+function loadBroadcastWizardSession() {
+  try {
+    const raw = sessionStorage.getItem(BROADCAST_WIZARD_SESSION_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed?.state || typeof parsed.state !== 'object') return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function clearBroadcastWizardSession() {
+  try {
+    sessionStorage.removeItem(BROADCAST_WIZARD_SESSION_KEY);
+  } catch {
+    /* ignore storage errors */
+  }
+}
+
+function applyWizardStateToInputs() {
+  const titleInput = document.getElementById('broadcast-wizard-title-input');
+  const messageInput = document.getElementById('broadcast-wizard-message-input');
+  const linkInput = document.getElementById('broadcast-wizard-link-input');
+  const titleCounter = document.getElementById('broadcast-wizard-title-counter');
+  const messageCounter = document.getElementById('broadcast-wizard-message-counter');
+
+  if (titleInput) {
+    titleInput.value = broadcastWizardState.title || '';
+    if (titleCounter) titleCounter.textContent = `${titleInput.value.length} / 60`;
+  }
+  if (messageInput) {
+    messageInput.value = broadcastWizardState.message || '';
+    if (messageCounter) messageCounter.textContent = `${messageInput.value.length} / 250`;
+  }
+  if (linkInput) linkInput.value = broadcastWizardState.surveyLink || '';
+}
+
+function restoreBroadcastWizardUI() {
+  broadcastWizardAudienceShowError = false;
+  broadcastWizardLinkShowError = false;
+  activeBroadcastId = null;
+  applyWizardStateToInputs();
+  updateBroadcastWizardPanelTitle();
+  showBroadcastWizardStep(broadcastWizardState.step);
+  setBroadcastWizardOpen(true);
+  renderBroadcastList();
+  persistBroadcastWizardSession();
 }
 
 function countContactsByTags(tags) {
@@ -2762,6 +2861,7 @@ function toggleBroadcastWizardAudienceTag(tag) {
   updateBroadcastWizardAudienceCount();
   updateBroadcastWizardFooter();
   refreshWizardDraftListRow();
+  persistBroadcastWizardSession();
 }
 
 function updateBroadcastWizardAudienceTrigger() {
@@ -2787,6 +2887,7 @@ function selectBroadcastWizardAudienceTag(tag) {
   updateBroadcastWizardAudienceCount();
   updateBroadcastWizardFooter();
   refreshWizardDraftListRow();
+  persistBroadcastWizardSession();
 }
 
 function initBroadcastWizardAudienceDropdown() {
@@ -2907,6 +3008,7 @@ function renderBroadcastWizardStepper() {
       if (target >= broadcastWizardState.step || btn.disabled) return;
       broadcastWizardState.step = target;
       showBroadcastWizardStep(target);
+      persistBroadcastWizardSession();
     });
   });
 }
@@ -2932,6 +3034,7 @@ function showBroadcastWizardStep(step) {
     updateBroadcastWizardAudienceCount();
   }
   if (step === 4) renderBroadcastWizardPreview();
+  persistBroadcastWizardSession();
 }
 
 function renderBroadcastWizardTemplateChip() {
@@ -3189,6 +3292,7 @@ function renderBroadcastWizardTemplates() {
       renderBroadcastWizardTemplates();
       updateBroadcastWizardFooter();
       refreshWizardDraftListRow();
+      persistBroadcastWizardSession();
     }
   );
 }
@@ -3206,10 +3310,11 @@ function setBroadcastWizardOpen(open) {
   }
 }
 
-function openBroadcastWizard() {
+function startFreshBroadcastWizard() {
   broadcastWizardAudienceShowError = false;
   broadcastWizardLinkShowError = false;
   broadcastWizardState = createDefaultBroadcastWizardState();
+  clearBroadcastWizardSession();
   const titleInput = document.getElementById('broadcast-wizard-title-input');
   const messageInput = document.getElementById('broadcast-wizard-message-input');
   const linkInput = document.getElementById('broadcast-wizard-link-input');
@@ -3226,11 +3331,72 @@ function openBroadcastWizard() {
   document.getElementById('broadcast-wizard-discard')?.focus();
 }
 
-function closeBroadcastWizard() {
+function openBroadcastWizard() {
+  if (broadcastWizardOpen) {
+    hideBroadcastWizard();
+    return;
+  }
+
+  if (wizardSessionHasProgress(broadcastWizardState)) {
+    restoreBroadcastWizardUI();
+    return;
+  }
+
+  const saved = loadBroadcastWizardSession();
+  if (saved?.state && wizardSessionHasProgress(saved.state)) {
+    broadcastWizardState = {
+      ...createDefaultBroadcastWizardState(),
+      ...saved.state,
+    };
+    restoreBroadcastWizardUI();
+    return;
+  }
+
+  startFreshBroadcastWizard();
+}
+
+function hideBroadcastWizard() {
+  if (broadcastWizardOpen) {
+    if (broadcastWizardState.step === 2) syncBroadcastWizardComposeFromInputs();
+    persistBroadcastWizardSession();
+  }
   setBroadcastWizardOpen(false);
   if (activeBroadcastId === BROADCAST_WIZARD_DRAFT_ID) activeBroadcastId = null;
   renderBroadcastList();
   renderBroadcastDetail();
+}
+
+function discardBroadcastWizard() {
+  broadcastWizardState = createDefaultBroadcastWizardState();
+  broadcastWizardAudienceShowError = false;
+  broadcastWizardLinkShowError = false;
+  clearBroadcastWizardSession();
+  setBroadcastWizardOpen(false);
+  if (activeBroadcastId === BROADCAST_WIZARD_DRAFT_ID) activeBroadcastId = null;
+  renderBroadcastList();
+  renderBroadcastDetail();
+}
+
+function closeBroadcastWizard() {
+  hideBroadcastWizard();
+}
+
+function tryRestoreBroadcastWizardOnEnter() {
+  if (broadcastWizardOpen) return;
+
+  if (wizardSessionHasProgress(broadcastWizardState)) {
+    restoreBroadcastWizardUI();
+    return;
+  }
+
+  const saved = loadBroadcastWizardSession();
+  if (saved?.state && wizardSessionHasProgress(saved.state)) {
+    broadcastWizardState = {
+      ...createDefaultBroadcastWizardState(),
+      ...saved.state,
+    };
+    restoreBroadcastWizardUI();
+  }
 }
 
 let toastDismissTimer = null;
@@ -3330,9 +3496,15 @@ function submitBroadcastWizard() {
     t.setAttribute('aria-selected', match ? 'true' : 'false');
   });
 
-  closeBroadcastWizard();
+  clearBroadcastWizardSession();
+  broadcastWizardState = createDefaultBroadcastWizardState();
+  setBroadcastWizardOpen(false);
+  if (activeBroadcastId === BROADCAST_WIZARD_DRAFT_ID) activeBroadcastId = null;
   if (activeView !== 'broadcasts') switchView('broadcasts');
-  else renderBroadcastList();
+  else {
+    renderBroadcastList();
+    renderBroadcastDetail();
+  }
 
   showToast(t('broadcasts.sentSuccess'));
 }
@@ -3350,29 +3522,19 @@ function initBroadcastWizard() {
   const dateInput = document.getElementById('broadcast-wizard-date-input');
   const timeInput = document.getElementById('broadcast-wizard-time-input');
 
-  composeBtn?.addEventListener('click', () => {
-    if (broadcastWizardOpen) {
-      closeBroadcastWizard();
-      return;
-    }
-    openBroadcastWizard();
-  });
+  composeBtn?.addEventListener('click', () => openBroadcastWizard());
 
-  document.getElementById('broadcast-empty-new-btn')?.addEventListener('click', () => {
-    if (broadcastWizardOpen) {
-      closeBroadcastWizard();
-      return;
-    }
-    openBroadcastWizard();
-  });
-  closeBtn?.addEventListener('click', () => closeBroadcastWizard());
+  document.getElementById('broadcast-empty-new-btn')?.addEventListener('click', () =>
+    openBroadcastWizard()
+  );
+  closeBtn?.addEventListener('click', () => discardBroadcastWizard());
 
   backBtn?.addEventListener('click', () => {
     if (broadcastWizardState.step <= 1) return;
     showBroadcastWizardStep(broadcastWizardState.step - 1);
   });
 
-  discardBtn?.addEventListener('click', () => closeBroadcastWizard());
+  discardBtn?.addEventListener('click', () => discardBroadcastWizard());
 
   nextBtn?.addEventListener('click', () => {
     if (broadcastWizardState.step === 2 && !validateBroadcastWizardStep(2)) {
@@ -3398,6 +3560,7 @@ function initBroadcastWizard() {
     if (broadcastWizardState.step === 2) populateBroadcastWizardCompose();
     showBroadcastWizardStep(broadcastWizardState.step + 1);
     refreshWizardDraftListRow();
+    persistBroadcastWizardSession();
   });
 
   titleInput?.addEventListener('input', () => {
@@ -3407,6 +3570,7 @@ function initBroadcastWizard() {
     updateBroadcastWizardPanelTitle();
     updateBroadcastWizardFooter();
     refreshWizardDraftListRow();
+    persistBroadcastWizardSession();
   });
 
   messageInput?.addEventListener('input', () => {
@@ -3414,6 +3578,7 @@ function initBroadcastWizard() {
     document.getElementById('broadcast-wizard-message-counter').textContent =
       `${messageInput.value.length} / 250`;
     updateBroadcastWizardFooter();
+    persistBroadcastWizardSession();
   });
 
   linkInput?.addEventListener('input', () => {
@@ -3423,6 +3588,7 @@ function initBroadcastWizard() {
     }
     updateBroadcastWizardLinkErrorUI();
     updateBroadcastWizardFooter();
+    persistBroadcastWizardSession();
   });
 
   document.querySelectorAll('input[name="broadcast-send-mode"]').forEach((radio) => {
@@ -3906,7 +4072,7 @@ document.addEventListener('keydown', (e) => {
     closeTemplateModal();
     closeSurveyComposer();
     closeRsvpComposer();
-    closeBroadcastWizard();
+    if (broadcastWizardOpen) hideBroadcastWizard();
     if (composerNoteMode) setComposerNoteMode(false);
   }
 });
@@ -3979,7 +4145,7 @@ chatAskHelpBtn?.addEventListener('click', () => {
 });
 
 function switchView(view) {
-  if (view !== 'broadcasts' && broadcastWizardOpen) closeBroadcastWizard();
+  if (view !== 'broadcasts' && broadcastWizardOpen) hideBroadcastWizard();
   activeView = view;
 
   document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
@@ -3992,6 +4158,7 @@ function switchView(view) {
 
   if (view === 'broadcasts') {
     renderBroadcastList();
+    tryRestoreBroadcastWizardOnEnter();
   }
   if (view === 'contacts') {
     renderContactsTable();

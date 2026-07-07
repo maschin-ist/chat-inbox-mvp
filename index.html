@@ -609,6 +609,15 @@
       margin-right: 0;
     }
 
+    /* MVP: broadcast list panel hidden — remove hidden on broadcasts-inbox-rail to restore */
+    .view--broadcasts.view--broadcasts-list-hidden [data-od-id="broadcasts-inbox-rail"][hidden] {
+      display: none !important;
+    }
+
+    .view--broadcasts.view--broadcasts-list-hidden .panel-rail--chat {
+      padding-left: var(--panel-gap);
+    }
+
     #broadcast-empty-new-btn {
       display: inline-flex;
       align-items: center;
@@ -875,7 +884,8 @@
         </div>
       </div>
       <div class="sidebar-bottom" data-od-id="sidebar-bottom">
-        <div class="lang-switcher-wrap" id="lang-switcher-wrap" data-od-id="lang-switcher-wrap">
+        <!-- MVP: language switcher hidden — remove `hidden` to restore -->
+        <div class="lang-switcher-wrap" id="lang-switcher-wrap" data-od-id="lang-switcher-wrap" hidden>
           <button type="button" class="nav-item lang-switcher-nav lang-switcher-nav--icon-only" id="lang-switcher-btn" aria-label="Change language" aria-haspopup="menu" aria-expanded="false" aria-controls="lang-switcher-menu">
             <span class="nav-item-icon-wrap" aria-hidden="true">
               <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">language</span>
@@ -1008,8 +1018,9 @@
     </div>
 
     <!-- Broadcasts view -->
-    <div class="view view--broadcasts hidden" id="view-broadcasts" data-od-id="view-broadcasts">
-      <div class="panel-rail panel-rail--inbox" data-od-id="broadcasts-inbox-rail">
+    <div class="view view--broadcasts view--broadcasts-list-hidden hidden" id="view-broadcasts" data-od-id="view-broadcasts">
+      <!-- MVP: list panel hidden — remove hidden to restore sent-broadcast list -->
+      <div class="panel-rail panel-rail--inbox" data-od-id="broadcasts-inbox-rail" hidden>
         <aside class="inbox panel" data-od-id="broadcasts-inbox-panel">
           <header class="inbox-header mvp-panel-header mvp-panel-header--single" data-od-id="broadcasts-inbox-header">
             <div class="inbox-header__title-row">
@@ -1030,7 +1041,7 @@
         <div class="broadcast-empty-state panel" id="broadcast-empty-state" data-od-id="broadcast-empty-state" hidden aria-hidden="true">
           <div class="broadcast-empty-state__content">
             <h2 class="broadcast-empty-state__title" data-i18n="broadcasts.emptyTitle">Your Broadcasts</h2>
-            <p class="broadcast-empty-state__desc" data-i18n="broadcasts.emptyDesc">Select a broadcast from the list or create new</p>
+            <p class="broadcast-empty-state__desc" data-i18n="broadcasts.emptyDesc">Create a new broadcast to reach your contacts by tag.</p>
             <button type="button" class="broadcast-empty-state__btn" id="broadcast-empty-new-btn" aria-label="Create new broadcast" data-i18n-aria="broadcasts.createNewAria">
               <span class="material-symbols-outlined" aria-hidden="true">add</span>
               <span data-i18n="broadcasts.createNew">Create new</span>
