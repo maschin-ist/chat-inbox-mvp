@@ -79,6 +79,7 @@ const I18N_STRINGS = {
     'wizard.templateDesc': 'Pick the format that best fits your message — you can customize it next.',
     'wizard.composeTitle': 'Compose your message',
     'wizard.composeDesc': 'Write the broadcast title and message your contacts will receive.',
+    'wizard.composeDescFreeText': 'Write the message your contacts will receive.',
     'wizard.audiencePageTitle': 'Select contacts by tag',
     'wizard.audienceDesc': 'Pick one tag — everyone with that tag will receive this message.',
     'wizard.previewTitle': 'Review before sending',
@@ -199,6 +200,7 @@ const I18N_STRINGS = {
     'wizard.templateDesc': '内容に合う形式を選び、次のステップで編集できます。',
     'wizard.composeTitle': 'メッセージを作成',
     'wizard.composeDesc': '配信のタイトルと本文を入力してください。',
+    'wizard.composeDescFreeText': '連絡先に届けるメッセージを入力してください。',
     'wizard.audiencePageTitle': 'タグで連絡先を選択',
     'wizard.audienceDesc': 'タグを1つ選ぶと、そのタグの連絡先全員に配信されます。',
     'wizard.previewTitle': '送信前の確認',
@@ -1869,8 +1871,11 @@ function getTemplateDisplayName(templateId) {
 
 function getWizardDraftListData() {
   syncBroadcastWizardComposeFromInputs();
-  const hasTitle = Boolean(broadcastWizardState.title.trim());
-  const title = hasTitle ? broadcastWizardState.title.trim() : 'No title';
+  const needsTitle = broadcastTemplateNeedsTitle(broadcastWizardState.templateId);
+  const hasTitle = needsTitle ? Boolean(broadcastWizardState.title.trim()) : Boolean(broadcastWizardState.message.trim());
+  const title = needsTitle
+    ? (broadcastWizardState.title.trim() || 'No title')
+    : (broadcastWizardState.message.trim().slice(0, 60) || 'No message');
   const titleEmpty = !hasTitle;
   const recipientCount = countContactsByTags(broadcastWizardState.audienceTags);
   const showAudience =
@@ -3009,6 +3014,10 @@ function broadcastTemplateNeedsLink(templateId) {
   return templateId === 'project-updates';
 }
 
+function broadcastTemplateNeedsTitle(templateId) {
+  return templateId === 'project-updates';
+}
+
 function formatBroadcastShortDate(date) {
   const d = String(date.getDate()).padStart(2, '0');
   const m = String(date.getMonth() + 1).padStart(2, '0');
@@ -3122,15 +3131,30 @@ function getLocalizedTemplateTitle(templateId) {
 function updateBroadcastWizardPanelTitle() {
   const titleEl = document.getElementById('broadcast-wizard-panel-title');
   if (!titleEl) return;
-  const title = broadcastWizardState.title?.trim();
-  titleEl.textContent = title || t('broadcasts.wizardTitle');
+  if (broadcastTemplateNeedsTitle(broadcastWizardState.templateId)) {
+    const title = broadcastWizardState.title?.trim();
+    titleEl.textContent = title || t('broadcasts.wizardTitle');
+    return;
+  }
+  const message = broadcastWizardState.message?.trim();
+  if (message) {
+    const snippet = message.length > 48 ? `${message.slice(0, 48)}…` : message;
+    titleEl.textContent = snippet;
+    return;
+  }
+  titleEl.textContent = t('broadcasts.wizardTitle');
 }
 
 function syncBroadcastWizardComposeFromInputs() {
   const titleInput = document.getElementById('broadcast-wizard-title-input');
   const messageInput = document.getElementById('broadcast-wizard-message-input');
   const linkInput = document.getElementById('broadcast-wizard-link-input');
-  broadcastWizardState.title = titleInput?.value.trim() || '';
+  if (broadcastTemplateNeedsTitle(broadcastWizardState.templateId)) {
+    broadcastWizardState.title = titleInput?.value.trim() || '';
+  } else {
+    broadcastWizardState.title = '';
+    if (titleInput) titleInput.value = '';
+  }
   broadcastWizardState.message = messageInput?.value.trim() || '';
   updateBroadcastWizardPanelTitle();
   const rawLink = linkInput?.value.trim() || '';
@@ -3172,13 +3196,24 @@ function populateBroadcastWizardCompose() {
   }
 
   const needsLink = broadcastTemplateNeedsLink(broadcastWizardState.templateId);
+  const needsTitle = broadcastTemplateNeedsTitle(broadcastWizardState.templateId);
+  const titleField = document.getElementById('broadcast-wizard-title-field');
+  if (titleField) titleField.classList.toggle('hidden', !needsTitle);
+  const composeDesc = document.querySelector('#broadcast-wizard-step-compose .broadcast-wizard__panel-desc');
+  if (composeDesc) {
+    composeDesc.textContent = needsTitle ? t('wizard.composeDesc') : t('wizard.composeDescFreeText');
+  }
   if (linkField) linkField.classList.toggle('hidden', !needsLink);
   const linkLabel = document.getElementById('broadcast-wizard-link-label');
   if (linkLabel) linkLabel.textContent = t('wizard.fieldLink');
   if (linkInput) {
     linkInput.placeholder = t('wizard.linkPlaceholder');
   }
-  if (titleInput) {
+  if (!needsTitle) {
+    broadcastWizardState.title = '';
+    if (titleInput) titleInput.value = '';
+    if (titleCounter) titleCounter.textContent = '0 / 60';
+  } else if (titleInput) {
     broadcastWizardState.title = titleInput.value.trim();
     if (titleCounter) titleCounter.textContent = `${titleInput.value.length} / 60`;
   }
@@ -3294,10 +3329,7 @@ function renderBroadcastWizardPreview() {
     previewEl.classList.add('broadcast-wizard__preview-message--card');
   } else {
     previewEl.classList.remove('broadcast-wizard__preview-message--card');
-    const previewText = broadcastWizardState.title
-      ? `${broadcastWizardState.title}\n\n${broadcastWizardState.message}`
-      : broadcastWizardState.message;
-    previewEl.textContent = previewText || '—';
+    previewEl.textContent = broadcastWizardState.message || '—';
   }
 }
 
@@ -3305,7 +3337,10 @@ function validateBroadcastWizardStep(step) {
   if (step === 1) return !!broadcastWizardState.templateId;
   if (step === 2) {
     syncBroadcastWizardComposeFromInputs();
-    if (!broadcastWizardState.title || !broadcastWizardState.message) return false;
+    if (!broadcastWizardState.message) return false;
+    if (broadcastTemplateNeedsTitle(broadcastWizardState.templateId) && !broadcastWizardState.title) {
+      return false;
+    }
     if (broadcastTemplateNeedsLink(broadcastWizardState.templateId)) {
       return isValidBroadcastLink(broadcastWizardState.surveyLink);
     }
@@ -3509,16 +3544,18 @@ function submitBroadcastWizard() {
   const payloadRef = `msg-${Date.now().toString(36)}`;
   const now = new Date();
 
-  let preview = broadcastWizardState.title
-    ? `${broadcastWizardState.title}\n\n${broadcastWizardState.message}`
-    : broadcastWizardState.message;
+  let preview = broadcastWizardState.message;
   if (broadcastWizardState.surveyLink) {
     preview += `\n\n${broadcastWizardState.surveyLink}`;
   }
 
+  const sentTitle = broadcastTemplateNeedsTitle(broadcastWizardState.templateId)
+    ? broadcastWizardState.title || 'Untitled broadcast'
+    : broadcastWizardState.message.slice(0, 60) || 'Free text message';
+
   const item = {
     id,
-    title: broadcastWizardState.title || 'Untitled broadcast',
+    title: sentTitle,
     meta: tagsRef,
     time: formatBroadcastShortDate(now),
     status: 'Sent',
@@ -3637,6 +3674,7 @@ function initBroadcastWizard() {
     broadcastWizardState.message = messageInput.value.trim();
     document.getElementById('broadcast-wizard-message-counter').textContent =
       `${messageInput.value.length} / 250`;
+    updateBroadcastWizardPanelTitle();
     updateBroadcastWizardFooter();
     persistBroadcastWizardSession();
   });
