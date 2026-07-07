@@ -725,129 +725,6 @@
       line-height: 1.3;
     }
 
-    /* Audience step — tag dropdown */
-    .broadcast-wizard__audience-field {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      max-width: 360px;
-    }
-
-    .broadcast-wizard__audience-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .broadcast-wizard__tag-dropdown {
-      width: 100%;
-    }
-
-    .broadcast-wizard__tag-trigger {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      width: 100%;
-      min-height: 40px;
-      padding: 6px 10px 6px 12px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: #fff;
-      font-family: inherit;
-      font-size: 14px;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-
-    .broadcast-wizard__tag-trigger:hover {
-      border-color: #ccc;
-      background: #fafafa;
-    }
-
-    .broadcast-wizard__tag-trigger:focus {
-      outline: none;
-      border-color: #2b67b5;
-      box-shadow: 0 0 0 2px rgba(43, 103, 181, 0.15);
-    }
-
-    .broadcast-wizard__tag-trigger.has-value {
-      color: #2b67b5;
-    }
-
-    .broadcast-wizard__tag-trigger-label {
-      flex: 1;
-      min-width: 0;
-      text-align: left;
-      font-size: 14px;
-      line-height: 1.35;
-    }
-
-    .broadcast-wizard__tag-trigger.has-value .broadcast-wizard__tag-trigger-label {
-      font-weight: 500;
-      color: #2b67b5;
-    }
-
-    .broadcast-wizard__tag-trigger .filter-chevron {
-      flex-shrink: 0;
-    }
-
-    .broadcast-wizard__tag-menu {
-      width: 100%;
-      min-width: 0;
-      max-height: 240px;
-      overflow-y: auto;
-      padding: 6px;
-    }
-
-    .broadcast-wizard__tag-option {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      width: 100%;
-      padding: 8px 10px;
-      border: none;
-      border-radius: 6px;
-      background: transparent;
-      font-family: inherit;
-      text-align: left;
-      cursor: pointer;
-      transition: background 0.12s;
-    }
-
-    .broadcast-wizard__tag-option:hover {
-      background: #f5f5f5;
-    }
-
-    .broadcast-wizard__tag-option.is-selected {
-      background: #e8f2fb;
-    }
-
-    .broadcast-wizard__tag-option-label {
-      flex: 1;
-      min-width: 0;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-primary);
-      line-height: 1.35;
-    }
-
-    .broadcast-wizard__tag-option.is-selected .broadcast-wizard__tag-option-label {
-      font-weight: 500;
-      color: #2b67b5;
-    }
-
-    .broadcast-wizard__tag-option-check {
-      font-size: 18px !important;
-      color: #2b67b5;
-      opacity: 0;
-    }
-
-    .broadcast-wizard__tag-option.is-selected .broadcast-wizard__tag-option-check {
-      opacity: 1;
-    }
   </style>
 </head>
 <body>
@@ -884,8 +761,7 @@
         </div>
       </div>
       <div class="sidebar-bottom" data-od-id="sidebar-bottom">
-        <!-- MVP: language switcher hidden — remove `hidden` to restore -->
-        <div class="lang-switcher-wrap" id="lang-switcher-wrap" data-od-id="lang-switcher-wrap" hidden>
+        <div class="lang-switcher-wrap" id="lang-switcher-wrap" data-od-id="lang-switcher-wrap">
           <button type="button" class="nav-item lang-switcher-nav lang-switcher-nav--icon-only" id="lang-switcher-btn" aria-label="Change language" aria-haspopup="menu" aria-expanded="false" aria-controls="lang-switcher-menu">
             <span class="nav-item-icon-wrap" aria-hidden="true">
               <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">language</span>
@@ -1099,22 +975,25 @@
               </section>
               <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-audience" data-step="3">
                 <h3 class="broadcast-wizard__panel-title" data-i18n="wizard.audiencePageTitle">Select contacts by tag</h3>
-                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.audienceDesc">Pick one tag — everyone with that tag will receive this message.</p>
+                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.audienceDesc">Search for tags to add. You can select more than one.</p>
                 <div class="broadcast-wizard__audience-panel">
-                  <div class="broadcast-wizard__audience-field">
-                    <span class="broadcast-wizard__audience-label" id="broadcast-wizard-audience-label-text" data-i18n="wizard.fieldTag">Tag</span>
-                    <div class="filter-dropdown broadcast-wizard__tag-dropdown">
-                      <button type="button" class="broadcast-wizard__tag-trigger" id="broadcast-wizard-audience-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="broadcast-wizard-audience-label-text broadcast-wizard-audience-label">
-                        <span class="broadcast-wizard__tag-trigger-label" id="broadcast-wizard-audience-label">Select a tag</span>
-                        <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
-                      </button>
-                      <ul class="filter-menu broadcast-wizard__tag-menu hidden" id="broadcast-wizard-audience-menu" role="listbox" aria-labelledby="broadcast-wizard-audience-label-text"></ul>
+                  <div class="broadcast-wizard__audience-selected-block" id="broadcast-wizard-audience-selected-block">
+                    <div class="broadcast-wizard__audience-selected hidden" id="broadcast-wizard-audience-selected" aria-live="polite"></div>
+                  </div>
+                  <div class="broadcast-wizard__audience-search-block">
+                    <div class="broadcast-wizard__audience-search-wrap">
+                      <span class="material-icons" aria-hidden="true">search</span>
+                      <input type="search" id="broadcast-wizard-audience-search" class="broadcast-wizard__audience-search" placeholder="Search tags…" autocomplete="off" data-i18n-placeholder="wizard.searchTagsPlaceholder">
                     </div>
+                  </div>
+                  <div class="broadcast-wizard__audience-section hidden" id="broadcast-wizard-audience-search-section">
+                    <h4 class="broadcast-wizard__audience-section-title" id="broadcast-wizard-audience-search-title" data-i18n="wizard.searchResults">Search results</h4>
+                    <div class="broadcast-wizard__audience-tags" id="broadcast-wizard-audience-tags"></div>
                   </div>
                   <div class="broadcast-wizard__audience-count hidden" id="broadcast-wizard-audience-count" role="status" aria-live="polite"></div>
                   <p class="broadcast-wizard__audience-hint hidden" id="broadcast-wizard-audience-warning">
                     <span class="material-icons" aria-hidden="true">info</span>
-                    <span id="broadcast-wizard-audience-warning-text">Select a tag to continue.</span>
+                    <span id="broadcast-wizard-audience-warning-text">Select at least one tag to continue.</span>
                   </p>
                 </div>
               </section>
@@ -1191,7 +1070,7 @@
                 <div class="contacts-title-info" tabindex="0" aria-describedby="contacts-info-tooltip">
                   <h2 data-od-id="contacts-title" data-i18n="contacts.title">Contacts</h2>
                   <span class="material-icons-outlined contacts-title-info__icon" aria-hidden="true">info</span>
-                  <span class="contacts-title-info__tooltip" role="tooltip" id="contacts-info-tooltip" data-i18n="contacts.infoTooltip">Contacts are users who clicked &ldquo;Join&rdquo; button of your Project or Official page</span>
+                  <span class="contacts-title-info__tooltip" role="tooltip" id="contacts-info-tooltip" data-i18n="contacts.infoTooltip">Contacts are your Project or Official Page participants</span>
                 </div>
               </div>
               <div class="contacts-page-header__meta">
