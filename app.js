@@ -1435,6 +1435,16 @@ function renderMessages() {
         </div>`;
       }
 
+      if (msg.type === 'project-update') {
+        return `
+        <div class="message-row outgoing">
+          <div class="message-content">
+            ${renderProjectUpdatePreviewCard(msg.title, msg.text)}
+            <span class="msg-status">${formatMessageStatus(msg.status)}</span>
+          </div>
+        </div>`;
+      }
+
       if (msg.type === 'note') {
         return `
         <div class="message-note">
@@ -3014,6 +3024,134 @@ function countContactsWithTag(tag) {
   return CONTACTS.filter((c) => c.tags.includes(tag)).length;
 }
 
+function getContactsMatchingTags(tags) {
+  if (!tags.length) return [];
+  const seen = new Set();
+  const matches = [];
+  tags.forEach((tag) => {
+    CONTACTS.forEach((contact) => {
+      if (contact.tags.includes(tag) && !seen.has(contact.id)) {
+        seen.add(contact.id);
+        matches.push(contact);
+      }
+    });
+  });
+  return matches;
+}
+
+function contactInitials(name) {
+  return name
+    .split(/\s+/)
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+function getTodayDateDividerLabel(timeStr) {
+  return currentLocale === 'ja' ? `今日 ${timeStr}` : `Today ${timeStr}`;
+}
+
+function ensureChatForContact(contact) {
+  if (contact.chatId) {
+    const existing = findChatById(contact.chatId);
+    if (existing) return existing;
+  }
+
+  const chatId = contact.chatId || contact.id;
+  const chat = {
+    id: chatId,
+    name: contact.name,
+    status: contact.role,
+    initials: contactInitials(contact.name),
+    avatar: null,
+    operatorId: 'you',
+    escalated: false,
+    preview: '',
+    previewDynamic: true,
+    time: 'Just now',
+    unread: 0,
+    messages: [],
+  };
+
+  ALL_CHATS.unshift(chat);
+  contact.chatId = chatId;
+  return chat;
+}
+
+function buildBroadcastChatMessage(state) {
+  const timeStr = getTimeStr();
+  const status = `Sent ${timeStr}`;
+
+  if (state.templateId === 'project-updates') {
+    return {
+      type: 'project-update',
+      title: state.title.trim(),
+      text: state.message.trim(),
+      link: state.surveyLink.trim(),
+      status,
+      time: timeStr,
+    };
+  }
+
+  return {
+    type: 'outgoing',
+    text: state.message.trim(),
+    status,
+    time: timeStr,
+  };
+}
+
+function getBroadcastPreviewText(state) {
+  if (state.templateId === 'project-updates') {
+    return state.title.trim() || state.message.trim().slice(0, 80);
+  }
+  return state.message.trim().slice(0, 80);
+}
+
+function deliverBroadcastToRecipientChats(tags, state) {
+  const recipients = getContactsMatchingTags(tags);
+  if (!recipients.length) return;
+
+  const message = buildBroadcastChatMessage(state);
+  const previewText = getBroadcastPreviewText(state);
+  const deliveredChatIds = [];
+
+  recipients.forEach((contact) => {
+    const chat = ensureChatForContact(contact);
+
+    const hasTodayDivider = chat.messages.some(
+      (msg) => msg.type === 'date' && getLocalizedMessageText(msg).startsWith(currentLocale === 'ja' ? '今日' : 'Today')
+    );
+    if (!hasTodayDivider) {
+      chat.messages.push({
+        type: 'date',
+        text: getTodayDateDividerLabel(message.time),
+      });
+    }
+
+    chat.messages.push(message);
+    chat.preview = previewText;
+    chat.previewDynamic = true;
+    delete chat.previewKey;
+    chat.time = 'Just now';
+    deliveredChatIds.push(chat.id);
+  });
+
+  deliveredChatIds.forEach((chatId) => {
+    const index = ALL_CHATS.findIndex((c) => c.id === chatId);
+    if (index > 0) {
+      const [chat] = ALL_CHATS.splice(index, 1);
+      ALL_CHATS.unshift(chat);
+    }
+  });
+
+  if (activeView === 'chats') {
+    renderChatList();
+    renderMessages();
+  }
+}
+
 function formatAudienceTagCount(count) {
   return count === 1 ? '1 person' : `${count} people`;
 }
@@ -3681,6 +3819,8 @@ function submitBroadcastWizard() {
   activeBroadcastTab = 'sent';
   activeBroadcastId = id;
 
+  deliverBroadcastToRecipientChats(audienceTags, broadcastWizardState);
+
   broadcastTabsOperatorEl?.querySelectorAll('.tab').forEach((t) => {
     const match = t.dataset.btab === 'sent';
     t.classList.toggle('active', match);
@@ -3691,12 +3831,10 @@ function submitBroadcastWizard() {
   broadcastWizardState = createDefaultBroadcastWizardState();
   setBroadcastWizardOpen(false);
   if (activeBroadcastId === BROADCAST_WIZARD_DRAFT_ID) activeBroadcastId = null;
-  if (activeView !== 'broadcasts') switchView('broadcasts');
-  else {
-    renderBroadcastList();
-    renderBroadcastDetail();
-  }
 
+  switchView('chats');
+  renderChatList();
+  renderMessages();
   showToast(t('broadcasts.sentSuccess'));
 }
 
