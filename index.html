@@ -1505,6 +1505,22 @@
                 </div>
               </div>
 
+              <div class="contacts-table-tools" data-od-id="contacts-sort-control">
+                <div class="filter-dropdown contacts-sort-dropdown">
+                  <button class="filter-btn filter-btn--plain contacts-sort-btn" type="button" id="contacts-sort-btn" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="contacts-sort-btn__label">Sort:</span>
+                    <span id="contacts-sort-value">Latest message</span>
+                    <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
+                  </button>
+                  <ul class="filter-menu filter-menu--radio filter-menu--right hidden" id="contacts-sort-menu" role="listbox" aria-label="Sort contacts">
+                    <li><button type="button" class="filter-radio-item" data-sort="latest">Latest message</button></li>
+                    <li><button type="button" class="filter-radio-item" data-sort="oldest">Oldest message</button></li>
+                    <li><button type="button" class="filter-radio-item" data-sort="alphabetical">Alphabetical (A–Z)</button></li>
+                    <li><button type="button" class="filter-radio-item" data-sort="recently-tagged">Recently tagged</button></li>
+                  </ul>
+                </div>
+              </div>
+
               <div class="contacts-selection-bar is-disabled" id="contacts-selection-bar" data-od-id="contacts-selection-bar">
                 <div class="contacts-selection-bar__left">
                   <div class="contacts-selection-bar__summary">

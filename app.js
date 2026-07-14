@@ -107,6 +107,8 @@ const I18N_STRINGS = {
     'wizard.audienceSelected': 'Selected',
     'wizard.audienceCount': '{{count}} contacts will receive this broadcast',
     'wizard.audienceCountOne': '1 contact will receive this broadcast',
+    'wizard.viewSelectedContacts': 'View selected contacts',
+    'wizard.viewContacts': 'view contacts',
     'wizard.summary': 'Summary',
     'wizard.summaryTemplate': 'Template',
     'wizard.summaryRecipients': 'Recipients',
@@ -159,6 +161,8 @@ const I18N_STRINGS = {
     'template.project-updates.title': 'Card message with link',
     'template.project-updates.desc':
       'Send a message as a card with a title and link.',
+    'template.light-card.title': 'Light card message',
+    'template.light-card.desc': 'Send a message with a lightweight text link.',
     'template.free-text.title': 'Simple message',
     'template.free-text.desc': 'Send a plain chat message with just text.',
     'templateModal.title': 'Choose your template',
@@ -282,6 +286,8 @@ const I18N_STRINGS = {
     'wizard.audienceSelected': '選択中',
     'wizard.audienceCount': '{{count}}件の連絡先に配信されます',
     'wizard.audienceCountOne': '1件の連絡先に配信されます',
+    'wizard.viewSelectedContacts': '選択した連絡先を見る',
+    'wizard.viewContacts': '連絡先を見る',
     'wizard.summary': '概要',
     'wizard.summaryTemplate': 'テンプレート',
     'wizard.summaryRecipients': '送信先',
@@ -333,6 +339,8 @@ const I18N_STRINGS = {
     'contacts.applied': '適用済み',
     'template.project-updates.title': 'カードメッセージ（リンク付き）',
     'template.project-updates.desc': 'タイトルとリンク付きのカード形式で送信します。',
+    'template.light-card.title': 'ライトカードメッセージ',
+    'template.light-card.desc': 'テキストリンク付きの軽量なメッセージを送信します。',
     'template.free-text.title': 'シンプルなメッセージ',
     'template.free-text.desc': 'テキストのみのメッセージを送信します。',
     'templateModal.title': 'テンプレートを選択',
@@ -993,7 +1001,10 @@ function buildContactsList() {
     });
     extraIdx += 1;
   }
-  return list;
+  return list.map((contact, index) => ({
+    ...contact,
+    tagAppliedOrder: CONTACTS_TOTAL - index,
+  }));
 }
 
 const CONTACTS = buildContactsList();
@@ -1047,6 +1058,7 @@ const appShellEl = document.querySelector('.app');
 let contactsSearchQuery = '';
 let contactsRoleFilter = '';
 let contactsTagFilters = [];
+let contactsSort = 'latest';
 let contactsPage = 1;
 let contactsRowsPerPage = CONTACTS_TOTAL;
 let contactsSelectedIds = new Set();
@@ -1398,6 +1410,13 @@ function renderProjectUpdatePreviewCard(title, message) {
     </div>`;
 }
 
+function renderLightCardPreview(title, message, link) {
+  const heading = escapePreviewText(title?.trim() || '—');
+  const body = escapePreviewText(message?.trim() || '—');
+  const href = escapePreviewText(link?.trim() || '#');
+  return `<div class="light-card-preview"><p>${heading}</p><p>${body}</p><a href="${href}" target="_blank" rel="noreferrer">${href}</a></div>`;
+}
+
 function renderSurveyCard(survey) {
   return `
     <div class="survey-card">
@@ -1472,6 +1491,16 @@ function renderMessages() {
         <div class="message-row outgoing">
           <div class="message-content">
             ${renderProjectUpdatePreviewCard(msg.title, msg.text)}
+            <span class="msg-status">${formatMessageStatus(msg.status)}</span>
+          </div>
+        </div>`;
+      }
+
+      if (msg.type === 'light-card') {
+        return `
+        <div class="message-row outgoing">
+          <div class="message-content">
+            ${renderLightCardPreview(msg.title, msg.text, msg.link)}
             <span class="msg-status">${formatMessageStatus(msg.status)}</span>
           </div>
         </div>`;
@@ -2334,6 +2363,29 @@ function getContactChatSortKey(contact) {
 }
 
 function sortContactsForDisplay(contacts) {
+  if (contactsSort === 'alphabetical') {
+    return [...contacts].sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  if (contactsSort === 'recently-tagged') {
+    return [...contacts].sort((a, b) => {
+      const order = (b.tagAppliedOrder || 0) - (a.tagAppliedOrder || 0);
+      return order || a.name.localeCompare(b.name);
+    });
+  }
+
+  if (contactsSort === 'oldest') {
+    return [...contacts].sort((a, b) => {
+      const keyA = getContactChatSortKey(a);
+      const keyB = getContactChatSortKey(b);
+      if (keyA.hasChat !== keyB.hasChat) return keyB.hasChat - keyA.hasChat;
+      if (keyA.hasChat && keyB.hasChat) {
+        if (keyA.minutesAgo !== keyB.minutesAgo) return keyB.minutesAgo - keyA.minutesAgo;
+      }
+      return keyA.name.localeCompare(keyB.name);
+    });
+  }
+
   return [...contacts].sort((a, b) => {
     const keyA = getContactChatSortKey(a);
     const keyB = getContactChatSortKey(b);
@@ -2768,9 +2820,14 @@ function applyTagsToSelected() {
   const tags = [...addTagsPending];
 
   selected.forEach((contact) => {
+    let tagApplied = false;
     tags.forEach((tag) => {
-      if (!contact.tags.includes(tag)) contact.tags.push(tag);
+      if (!contact.tags.includes(tag)) {
+        contact.tags.push(tag);
+        tagApplied = true;
+      }
     });
+    if (tagApplied) contact.tagAppliedOrder = Date.now();
   });
 
   setAddTagsMenuOpen(false);
@@ -2922,11 +2979,26 @@ const BROADCAST_WIZARD_STEPS = [
 
 const TEMPLATE_TITLES = {
   'project-updates': 'Card message with link',
+  'light-card': 'Light card message',
   'free-text': 'Simple message',
 };
 
+const BROADCAST_TEMPLATE_OPTIONS = [
+  ...CONTACT_TEMPLATE_OPTIONS,
+  {
+    id: 'light-card',
+    title: 'Light card message',
+    description: 'Send a message with a lightweight text link.',
+    icon: 'insert_link',
+  },
+];
+
 const BROADCAST_COMPOSE_DEFAULTS = {
   'project-updates': {
+    messagePlaceholder: 'Enter message',
+    link: 'https://woven.city/updates',
+  },
+  'light-card': {
     messagePlaceholder: 'Enter message',
     link: 'https://woven.city/updates',
   },
@@ -3126,6 +3198,17 @@ function buildBroadcastChatMessage(state) {
     };
   }
 
+  if (state.templateId === 'light-card') {
+    return {
+      type: 'light-card',
+      title: state.title.trim(),
+      text: state.message.trim(),
+      link: state.surveyLink.trim(),
+      status,
+      time: timeStr,
+    };
+  }
+
   return {
     type: 'outgoing',
     text: state.message.trim(),
@@ -3136,6 +3219,9 @@ function buildBroadcastChatMessage(state) {
 
 function getBroadcastPreviewText(state) {
   if (state.templateId === 'project-updates') {
+    return state.title.trim() || state.message.trim().slice(0, 80);
+  }
+  if (state.templateId === 'light-card') {
     return state.title.trim() || state.message.trim().slice(0, 80);
   }
   return state.message.trim().slice(0, 80);
@@ -3300,11 +3386,11 @@ function updateBroadcastWizardLinkErrorUI() {
 }
 
 function broadcastTemplateNeedsLink(templateId) {
-  return templateId === 'project-updates';
+  return templateId === 'project-updates' || templateId === 'light-card';
 }
 
 function broadcastTemplateNeedsTitle(templateId) {
-  return templateId === 'project-updates';
+  return templateId === 'project-updates' || templateId === 'light-card';
 }
 
 function formatBroadcastShortDate(date) {
@@ -3405,7 +3491,7 @@ function renderBroadcastWizardTemplateChip() {
   const nameEl = document.getElementById('broadcast-wizard-template-chip-name');
   if (!chipWrap) return;
 
-  const option = getLocalizedTemplateOptions().find((tpl) => tpl.id === broadcastWizardState.templateId);
+  const option = BROADCAST_TEMPLATE_OPTIONS.find((tpl) => tpl.id === broadcastWizardState.templateId);
   if (!option) {
     chipWrap.hidden = true;
     return;
@@ -3546,7 +3632,6 @@ function updateBroadcastWizardAudienceCount() {
   const warningEl = document.getElementById('broadcast-wizard-audience-warning');
   const warningTextEl = document.getElementById('broadcast-wizard-audience-warning-text');
   const tag = broadcastWizardState.audienceTags[0];
-  const recipientCount = tag ? countContactsWithTag(tag) : 0;
   const showWarning =
     broadcastWizardAudienceShowError && broadcastWizardState.audienceTags.length === 0;
 
@@ -3556,10 +3641,7 @@ function updateBroadcastWizardAudienceCount() {
       countEl.innerHTML = '';
     } else {
       countEl.classList.remove('hidden');
-      countEl.textContent =
-        recipientCount === 1
-          ? t('wizard.audienceCountOne')
-          : t('wizard.audienceCount', { count: recipientCount });
+      countEl.innerHTML = `<a class="broadcast-wizard__contacts-link" href="${getBroadcastAudienceContactsUrl(tag)}" target="_blank" rel="noopener">${t('wizard.viewSelectedContacts')}</a>`;
     }
   }
 
@@ -3567,8 +3649,18 @@ function updateBroadcastWizardAudienceCount() {
   if (warningTextEl) warningTextEl.textContent = t('wizard.selectTagWarning');
 }
 
+function getBroadcastAudienceContactsUrl(tag) {
+  const url = new URL(window.location.href);
+  url.search = '';
+  url.searchParams.set('view', 'contacts');
+  url.searchParams.set('tag', tag);
+  return url.href;
+}
+
 function getTemplateTypeKey(templateId) {
-  return templateId === 'project-updates' ? 'welcome_bridge' : 'free';
+  if (templateId === 'project-updates') return 'welcome_bridge';
+  if (templateId === 'light-card') return 'light_card';
+  return 'free';
 }
 
 function renderBroadcastWizardPreview() {
@@ -3577,12 +3669,11 @@ function renderBroadcastWizardPreview() {
   if (!summaryEl || !previewEl) return;
 
   syncBroadcastWizardComposeFromInputs();
-  const recipientCount = countContactsByTags(broadcastWizardState.audienceTags);
   const templateName = getLocalizedTemplateTitle(broadcastWizardState.templateId);
   const audienceTag = broadcastWizardState.audienceTags[0] || '—';
   const audienceLabel =
     audienceTag !== '—'
-      ? `${translateTag(audienceTag)} · ${recipientCount}`
+      ? `${translateTag(audienceTag)} <a class="broadcast-wizard__summary-contacts-link" href="${getBroadcastAudienceContactsUrl(audienceTag)}" target="_blank" rel="noopener">(${t('wizard.viewContacts')})</a>`
       : '—';
 
   const linkRow =
@@ -3609,6 +3700,13 @@ function renderBroadcastWizardPreview() {
     previewEl.innerHTML = renderProjectUpdatePreviewCard(
       broadcastWizardState.title,
       broadcastWizardState.message
+    );
+    previewEl.classList.add('broadcast-wizard__preview-message--card');
+  } else if (broadcastWizardState.templateId === 'light-card') {
+    previewEl.innerHTML = renderLightCardPreview(
+      broadcastWizardState.title,
+      broadcastWizardState.message,
+      broadcastWizardState.surveyLink
     );
     previewEl.classList.add('broadcast-wizard__preview-message--card');
   } else {
@@ -3661,17 +3759,25 @@ function updateBroadcastWizardFooter() {
 }
 
 function renderBroadcastWizardTemplates() {
-  renderTemplateGrid(
-    document.getElementById('broadcast-wizard-template-grid'),
-    broadcastWizardState.templateId,
-    (templateId) => {
-      broadcastWizardState.templateId = templateId;
+  const grid = document.getElementById('broadcast-wizard-template-grid');
+  if (!grid) return;
+  grid.innerHTML = BROADCAST_TEMPLATE_OPTIONS.map((tpl) => {
+    const title = t(`template.${tpl.id}.title`);
+    const description = t(`template.${tpl.id}.desc`);
+    return `<button type="button" class="template-card${broadcastWizardState.templateId === tpl.id ? ' is-selected' : ''}" data-template-id="${tpl.id}">
+      <span class="template-card__icon" aria-hidden="true"><span class="material-icons">${tpl.icon}</span></span>
+      <span class="template-card__body"><span class="template-card__title">${title}</span><span class="template-card__desc">${description}</span></span>
+    </button>`;
+  }).join('');
+  grid.querySelectorAll('.template-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      broadcastWizardState.templateId = card.dataset.templateId;
       renderBroadcastWizardTemplates();
       updateBroadcastWizardFooter();
       refreshWizardDraftListRow();
       persistBroadcastWizardSession();
-    }
-  );
+    });
+  });
 }
 
 function setBroadcastWizardOpen(open) {
@@ -4200,6 +4306,7 @@ function initContactsView() {
   });
 
   setupTagsFilterDropdown('filter-tags-btn', 'filter-tags-menu');
+  initContactsSortDropdown();
   syncTagCatalogToFilterMenu();
   initAddTagsMenu();
   initTemplateModal();
@@ -4212,6 +4319,52 @@ function initContactsView() {
   });
 
   renderContactsTable();
+}
+
+function initContactsSortDropdown() {
+  const btn = document.getElementById('contacts-sort-btn');
+  const menu = document.getElementById('contacts-sort-menu');
+  const value = document.getElementById('contacts-sort-value');
+  if (!btn || !menu || !value) return;
+
+  const labels = {
+    latest: 'Latest message',
+    oldest: 'Oldest message',
+    alphabetical: 'Alphabetical (A–Z)',
+    'recently-tagged': 'Recently tagged',
+  };
+
+  const sync = () => {
+    value.textContent = labels[contactsSort];
+    menu.querySelectorAll('[data-sort]').forEach((item) => {
+      item.classList.toggle('is-selected', item.dataset.sort === contactsSort);
+    });
+  };
+
+  btn.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const isOpen = !menu.classList.contains('hidden');
+    closeAllFilterMenus();
+    if (!isOpen) {
+      menu.classList.remove('hidden');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  menu.querySelectorAll('[data-sort]').forEach((item) => {
+    item.addEventListener('click', (event) => {
+      event.stopPropagation();
+      contactsSort = item.dataset.sort;
+      contactsPage = 1;
+      contactsSelectAllMode = false;
+      sync();
+      menu.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+      renderContactsTable();
+    });
+  });
+
+  sync();
 }
 
 function setupRoleFilterDropdown(btnId, menuId, onSelect) {
@@ -4559,4 +4712,13 @@ initContactsView();
 initBroadcastWizard();
 updateTabBadges();
 applyStaticTranslations();
-switchView('home');
+const launchParams = new URLSearchParams(window.location.search);
+const launchView = launchParams.get('view');
+const launchTag = launchParams.get('tag');
+if (launchView === 'contacts' && launchTag && contactTagCatalog.includes(launchTag)) {
+  contactsTagFilters = [launchTag];
+  contactsPage = 1;
+  syncTagsFilterCheckboxes();
+  updateTagsFilterButton();
+}
+switchView(launchView === 'contacts' ? 'contacts' : 'home');

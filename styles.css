@@ -1814,6 +1814,38 @@ button {
   padding: 20px 20px 0;
 }
 
+.contacts-table-tools {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 12px;
+}
+
+.contacts-sort-dropdown {
+  position: relative;
+  z-index: 30;
+}
+
+.contacts-sort-btn {
+  gap: 4px;
+}
+
+.contacts-sort-btn__label {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.filter-menu.filter-menu--right {
+  right: 0;
+  left: auto;
+  min-width: 210px;
+}
+
+/* Keep the table card clipped normally, but allow its active sort menu to
+   sit above adjacent table controls without being cut off. */
+.contacts-card:has(.contacts-sort-dropdown .filter-menu:not(.hidden)) {
+  overflow: visible;
+}
+
 .contacts-search-wrap {
   position: relative;
   margin-bottom: 16px;
@@ -3333,6 +3365,40 @@ button {
   pointer-events: none;
 }
 
+.light-card-preview {
+  width: 240px;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.light-card-preview p {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.light-card-preview p + p {
+  margin-top: 12px;
+}
+
+.light-card-preview a {
+  display: inline-block;
+  margin-top: 12px;
+  color: #2b67b5;
+  font-size: 14px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* RSVP event card in chat (Yes / No) */
 .event-card--rsvp .event-btn {
   display: none;
@@ -4301,6 +4367,19 @@ button {
 .broadcast-wizard__audience-count.is-empty {
   color: var(--text-secondary);
   font-weight: 500;
+}
+
+.broadcast-wizard__contacts-link,
+.broadcast-wizard__summary-contacts-link {
+  color: var(--btn-blue, #2B67B5);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.broadcast-wizard__contacts-link:hover,
+.broadcast-wizard__summary-contacts-link:hover {
+  text-decoration: underline;
 }
 
 .broadcast-wizard__audience-hint {
