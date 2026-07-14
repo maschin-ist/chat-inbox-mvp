@@ -53,6 +53,7 @@ button {
 .app {
   display: flex;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background: var(--page-bg);
   gap: 0;
@@ -1308,6 +1309,35 @@ button {
 .view.hidden {
   display: none;
 }
+
+/* ── Home: operator command center ── */
+.view--home { display: block; overflow-x: hidden; overflow-y: auto; min-width: 0; min-height: 0; padding: var(--panel-margin) var(--panel-margin) var(--panel-margin) var(--panel-gap); overscroll-behavior: contain; }
+.home-panel { width: 100%; min-width: 0; margin: 0; background: var(--inbox-bg); border-radius: var(--panel-radius); box-shadow: var(--shadow-panel); min-height: 100%; overflow: hidden; }
+.home-header { flex-shrink: 0; }
+.home-header__top { min-width: 0; }
+.home-header__subtitle { color: var(--text-secondary); font-size: 14px; line-height: 1.5; max-width: 52em; }
+.home-section { padding: 24px 20px; border-bottom: 1px solid var(--border); }
+.home-section:last-child { border-bottom: 0; }
+.home-section__heading { margin-bottom: 16px; }
+.home-section__heading h2 { font-size: 15px; letter-spacing: -.015em; }
+.home-section__heading p { margin-top: 4px; color: var(--text-secondary); font-size: 12px; }
+.home-section__heading--row { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+.home-actions-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.home-actions-grid .template-card { min-width: 0; min-height: 112px; }
+.home-section--signal { background: #fcfcfc; }
+.home-text-link { display: inline-flex; align-items: center; gap: 4px; color: #2b67b5; font-size: 12px; font-weight: 650; white-space: nowrap; }
+.home-text-link .material-icons { font-size: 16px; }
+.home-priority-list { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #fff; }
+.home-priority-row { width: 100%; display: grid; grid-template-columns: 36px minmax(0, 1fr) auto 18px; align-items: center; gap: 12px; padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); transition: background .15s ease; }
+.home-priority-row:last-child { border-bottom: 0; }.home-priority-row:hover { background: #f7f7f7; }
+.home-priority-avatar { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 10px; font-weight: 700; }
+.home-priority-copy { min-width: 0; }.home-priority-copy strong { font-size: 13px; }.home-priority-copy small { display: block; margin-top: 3px; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.home-priority-time { font-size: 11px; color: var(--text-secondary); }.home-priority-row > .material-icons { color: var(--text-tertiary); font-size: 17px; }
+.home-metrics-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.home-metric { padding: 16px; border: 1px solid var(--border); border-radius: 10px; min-height: 136px; }.home-metric > .material-icons-outlined { color: #2b67b5; font-size: 20px; }.home-metric p { margin-top: 13px; color: var(--text-secondary); font-size: 11px; }.home-metric strong { display: block; font-size: 24px; letter-spacing: -.04em; margin-top: 3px; font-variant-numeric: tabular-nums; }.home-metric small { color: var(--text-secondary); font-size: 10px; }
+@media (max-width: 800px) { .home-actions-grid { grid-template-columns: 1fr; }.home-metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .view--home { padding: 8px; }.home-panel { border-radius: 10px; }.home-section { padding: 20px; }.home-section__heading--row { align-items: flex-start; flex-direction: column; }.home-priority-row { grid-template-columns: 32px minmax(0, 1fr) 16px; padding: 12px; }.home-priority-time { display: none; }.home-metrics-grid { gap: 8px; } }
+@media (max-width: 390px) { .sidebar-rail { padding-left: 8px; }.sidebar { width: 64px; min-width: 64px; padding-left: 4px; padding-right: 4px; }.nav-item-icon-wrap { width: 36px; height: 36px; }.nav-item { font-size: 9px; }.view--home { padding: 8px 8px 8px 10px; }.home-section { padding: 16px; }.home-metrics-grid { grid-template-columns: 1fr; }.home-metric { min-height: 112px; } }
 
 .hidden {
   display: none !important;

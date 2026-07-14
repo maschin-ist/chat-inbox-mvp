@@ -47,6 +47,7 @@ let currentLocale = localStorage.getItem(I18N_STORAGE_KEY) || 'en';
 
 const I18N_STRINGS = {
   en: {
+    'nav.home': 'Home',
     'nav.contacts': 'Contacts',
     'nav.chats': 'Chats',
     'nav.broadcasts': 'Broadcasts',
@@ -221,6 +222,7 @@ const I18N_STRINGS = {
     'chat.patricia.in1': 'Is the showroom open this Saturday?',
   },
   ja: {
+    'nav.home': 'ホーム',
     'nav.contacts': '連絡先',
     'nav.chats': 'チャット',
     'nav.broadcasts': '絞り込み配信',
@@ -434,8 +436,8 @@ function getLocalizedTemplateOptions() {
 function getWizardStepLabels() {
   return [
     { num: 1, label: t('wizard.stepTemplate'), panel: 'template' },
-    { num: 2, label: t('wizard.stepCompose'), panel: 'compose' },
-    { num: 3, label: t('wizard.stepAudience'), panel: 'audience' },
+    { num: 2, label: t('wizard.stepAudience'), panel: 'audience' },
+    { num: 3, label: t('wizard.stepCompose'), panel: 'compose' },
     { num: 4, label: t('wizard.stepPreview'), panel: 'preview' },
   ];
 }
@@ -461,6 +463,7 @@ function applyStaticTranslations() {
 
   document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
     const view = btn.dataset.view;
+    if (view === 'home') btn.setAttribute('aria-label', t('nav.home'));
     if (view === 'contacts') btn.setAttribute('aria-label', t('nav.contacts'));
     if (view === 'chats') btn.setAttribute('aria-label', t('nav.chats'));
     if (view === 'broadcasts') btn.setAttribute('aria-label', t('nav.broadcasts'));
@@ -995,7 +998,7 @@ function buildContactsList() {
 
 const CONTACTS = buildContactsList();
 
-let activeView = 'contacts';
+let activeView = 'home';
 let activeTab = 'assigned';
 let supervisorTab = 'escalated';
 let activeChatId = 'alice';
@@ -1014,6 +1017,7 @@ const chatSendBtn = document.getElementById('chat-send-btn');
 const viewChatsEl = document.getElementById('view-chats');
 const viewBroadcastsEl = document.getElementById('view-broadcasts');
 const viewContactsEl = document.getElementById('view-contacts');
+const viewHomeEl = document.getElementById('view-home');
 const broadcastListEl = document.getElementById('broadcast-list');
 const broadcastDetailEl = document.getElementById('broadcast-detail');
 const chatsTabsOperatorEl = document.getElementById('chats-tabs-operator');
@@ -1148,6 +1152,34 @@ function updateBroadcastTabBadges() {
 
 function updateTabBadges() {
   updateBroadcastTabBadges();
+  renderHome();
+}
+
+function renderHome() {
+  const priorityList = document.getElementById('home-priority-list');
+  if (!priorityList) return;
+  const open = ALL_CHATS.filter((chat) => !chat.done);
+  const awaiting = open.filter((chat) => chat.unread > 0);
+  const priority = [...awaiting, ...open.filter((chat) => chat.escalated && !chat.unread)]
+    .filter((chat, index, list) => list.findIndex((item) => item.id === chat.id) === index)
+    .slice(0, 4);
+  document.getElementById('home-open-count').textContent = open.length;
+  document.getElementById('home-awaiting-count').textContent = awaiting.length;
+  document.getElementById('home-unread-action').textContent = awaiting.length;
+  document.getElementById('home-contact-count').textContent = CONTACTS.length;
+  document.getElementById('home-broadcast-count').textContent = (BROADCASTS.sent || []).length;
+  priorityList.innerHTML = priority.length ? priority.map((chat) => `
+    <button class="home-priority-row" type="button" data-home-chat="${chat.id}">
+      <span class="home-priority-avatar" style="background:${AVATAR_COLORS[chat.initials] || '#8b9dc3'}">${chat.initials}</span>
+      <span class="home-priority-copy"><strong>${chat.name}</strong><small>${chat.preview || 'New conversation'}</small></span>
+      <span class="home-priority-time">${chat.time || 'Now'}</span><span class="material-icons">arrow_forward</span>
+    </button>`).join('') : '<div class="home-priority-row"><span></span><span class="home-priority-copy"><strong>All caught up</strong><small>There are no open conversations that need attention.</small></span></div>';
+  priorityList.querySelectorAll('[data-home-chat]').forEach((button) => button.addEventListener('click', () => {
+    activeChatId = button.dataset.homeChat;
+    switchView('chats');
+    renderChatList();
+    renderMessages();
+  }));
 }
 
 function operatorMiniAvatar(op) {
@@ -2883,8 +2915,8 @@ function initTemplateModal() {
 
 const BROADCAST_WIZARD_STEPS = [
   { num: 1, label: 'Choose template', panel: 'template' },
-  { num: 2, label: 'Compose message', panel: 'compose' },
-  { num: 3, label: 'Select contacts', panel: 'audience' },
+  { num: 2, label: 'Select contacts', panel: 'audience' },
+  { num: 3, label: 'Compose message', panel: 'compose' },
   { num: 4, label: 'Broadcast preview', panel: 'preview' },
 ];
 
@@ -2934,7 +2966,8 @@ function getBroadcastWizardMaxReachableStep(state = broadcastWizardState) {
 
 function validateBroadcastWizardStepForState(step, state) {
   if (step === 1) return !!state.templateId;
-  if (step === 2) {
+  if (step === 2) return (state.audienceTags?.length ?? 0) > 0;
+  if (step === 3) {
     if (!state.message?.trim()) return false;
     if (broadcastTemplateNeedsTitle(state.templateId) && !state.title?.trim()) return false;
     if (broadcastTemplateNeedsLink(state.templateId)) {
@@ -2942,7 +2975,6 @@ function validateBroadcastWizardStepForState(step, state) {
     }
     return true;
   }
-  if (step === 3) return (state.audienceTags?.length ?? 0) > 0;
   return true;
 }
 
@@ -2959,7 +2991,7 @@ function wizardSessionHasProgress(state = broadcastWizardState) {
 
 /** In-memory only — survives sidebar navigation; cleared on full page refresh. */
 function persistBroadcastWizardSession() {
-  if (broadcastWizardOpen && broadcastWizardState.step === 2) {
+  if (broadcastWizardOpen && broadcastWizardState.step === 3) {
     syncBroadcastWizardComposeFromInputs();
   }
 }
@@ -3335,7 +3367,7 @@ function renderBroadcastWizardStepper() {
       const target = Number(btn.dataset.gotoStep);
       if (btn.disabled || target === broadcastWizardState.step) return;
       if (target > maxReachable) return;
-      if (broadcastWizardState.step === 2) syncBroadcastWizardComposeFromInputs();
+      if (broadcastWizardState.step === 3) syncBroadcastWizardComposeFromInputs();
       broadcastWizardState.step = target;
       showBroadcastWizardStep(target);
       persistBroadcastWizardSession();
@@ -3356,12 +3388,12 @@ function showBroadcastWizardStep(step) {
 
   if (step === 1) renderBroadcastWizardTemplates();
   if (step === 2) {
-    populateBroadcastWizardCompose();
-    renderBroadcastWizardTemplateChip();
-  }
-  if (step === 3) {
     renderBroadcastWizardAudienceTags();
     updateBroadcastWizardAudienceCount();
+  }
+  if (step === 3) {
+    populateBroadcastWizardCompose();
+    renderBroadcastWizardTemplateChip();
   }
   if (step === 4) renderBroadcastWizardPreview();
   persistBroadcastWizardSession();
@@ -3588,6 +3620,9 @@ function renderBroadcastWizardPreview() {
 function validateBroadcastWizardStep(step) {
   if (step === 1) return !!broadcastWizardState.templateId;
   if (step === 2) {
+    return broadcastWizardState.audienceTags.length > 0;
+  }
+  if (step === 3) {
     syncBroadcastWizardComposeFromInputs();
     if (!broadcastWizardState.message) return false;
     if (broadcastTemplateNeedsTitle(broadcastWizardState.templateId) && !broadcastWizardState.title) {
@@ -3597,9 +3632,6 @@ function validateBroadcastWizardStep(step) {
       return isValidBroadcastLink(broadcastWizardState.surveyLink);
     }
     return true;
-  }
-  if (step === 3) {
-    return broadcastWizardState.audienceTags.length > 0;
   }
   return true;
 }
@@ -3624,8 +3656,8 @@ function updateBroadcastWizardFooter() {
     nextBtn.disabled = !validateBroadcastWizardStep(step);
   }
 
-  if (step === 2) updateBroadcastWizardLinkErrorUI();
-  if (step === 3) updateBroadcastWizardAudienceCount();
+  if (step === 2) updateBroadcastWizardAudienceCount();
+  if (step === 3) updateBroadcastWizardLinkErrorUI();
 }
 
 function renderBroadcastWizardTemplates() {
@@ -3692,7 +3724,7 @@ function openBroadcastWizard() {
 
 function hideBroadcastWizard() {
   if (broadcastWizardOpen) {
-    if (broadcastWizardState.step === 2) syncBroadcastWizardComposeFromInputs();
+    if (broadcastWizardState.step === 3) syncBroadcastWizardComposeFromInputs();
     persistBroadcastWizardSession();
   }
   setBroadcastWizardOpen(false);
@@ -3872,7 +3904,7 @@ function initBroadcastWizard() {
   discardBtn?.addEventListener('click', () => discardBroadcastWizard());
 
   nextBtn?.addEventListener('click', () => {
-    if (broadcastWizardState.step === 2 && !validateBroadcastWizardStep(2)) {
+    if (broadcastWizardState.step === 3 && !validateBroadcastWizardStep(3)) {
       if (broadcastTemplateNeedsLink(broadcastWizardState.templateId)) {
         broadcastWizardLinkShowError = true;
         syncBroadcastWizardComposeFromInputs();
@@ -3880,7 +3912,7 @@ function initBroadcastWizard() {
       }
       return;
     }
-    if (broadcastWizardState.step === 3 && !validateBroadcastWizardStep(3)) {
+    if (broadcastWizardState.step === 2 && !validateBroadcastWizardStep(2)) {
       broadcastWizardAudienceShowError = true;
       updateBroadcastWizardAudienceCount();
       return;
@@ -4499,6 +4531,7 @@ function switchView(view) {
   viewChatsEl.classList.toggle('hidden', view !== 'chats');
   viewBroadcastsEl.classList.toggle('hidden', view !== 'broadcasts');
   viewContactsEl.classList.toggle('hidden', view !== 'contacts');
+  viewHomeEl.classList.toggle('hidden', view !== 'home');
 
   if (view === 'broadcasts') {
     renderBroadcastList();
@@ -4507,10 +4540,15 @@ function switchView(view) {
   if (view === 'contacts') {
     renderContactsTable();
   }
+  if (view === 'home') renderHome();
 }
 
 document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
   btn.addEventListener('click', () => switchView(btn.dataset.view));
+});
+
+document.querySelectorAll('[data-home-action]').forEach((btn) => {
+  btn.addEventListener('click', () => switchView(btn.dataset.homeAction));
 });
 
 renderChatList();
@@ -4521,4 +4559,4 @@ initContactsView();
 initBroadcastWizard();
 updateTabBadges();
 applyStaticTranslations();
-switchView('contacts');
+switchView('home');
