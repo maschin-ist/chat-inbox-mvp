@@ -1,0 +1,1190 @@
+<!doctype html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chats Inbox</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  <style>
+    .assist-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: var(--sidebar-bg);
+      border: none;
+      border-radius: 6px;
+      color: #494644;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .assist-btn:hover {
+      background: var(--sidebar-active);
+    }
+
+    .assist-btn__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+
+    .assist-btn__icon--done {
+      background: #c8e6c9;
+      border: none;
+    }
+
+    .assist-btn__icon--done .material-icons {
+      font-size: 12px;
+      color: #2e7d32;
+      line-height: 1;
+    }
+
+    .assist-btn__icon--help {
+      background: #ffcdd2;
+      border: none;
+    }
+
+    .assist-btn__icon--help .material-icons {
+      font-size: 12px;
+      color: #c62828;
+      line-height: 1;
+    }
+
+    .assist-btn__icon--reassign {
+      background: #d5d5d5;
+      border: none;
+    }
+
+    .assist-btn__icon--reassign .material-icons {
+      font-size: 12px;
+      color: #494644;
+      line-height: 1;
+    }
+
+    #chat-reassign-btn {
+      padding: 8px 14px;
+      gap: 8px;
+      align-items: center;
+    }
+
+    #chat-reassign-btn:hover .assist-btn__icon--reassign {
+      background: #bdbdbd;
+    }
+
+    .chat-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #chat-done-btn {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    #chat-done-btn:hover {
+      background: #c8e6c9;
+    }
+
+    #chat-done-btn:hover .assist-btn__icon--done {
+      background: #a5d6a7;
+    }
+
+    #chat-ask-help-btn {
+      position: relative;
+      background: #ffebee;
+      color: #c62828;
+    }
+
+    #chat-ask-help-btn:hover {
+      background: #ffcdd2;
+    }
+
+    #chat-ask-help-btn:hover .assist-btn__icon--help {
+      background: #ef9a9a;
+    }
+
+    #chat-ask-help-btn::after {
+      content: 'Ask your supervisor for assistance';
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      padding: 6px 10px;
+      background: #494644;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: normal;
+      text-transform: none;
+      line-height: 1.35;
+      border-radius: 6px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.15s ease, visibility 0.15s ease;
+      z-index: 20;
+    }
+
+    #chat-ask-help-btn:hover::after,
+    #chat-ask-help-btn:focus-visible::after {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .reassign-menu__header {
+      padding: 8px 12px 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      list-style: none;
+      pointer-events: none;
+    }
+
+    /* Shared top-zone rows: inbox header + tabs == detail header top + meta */
+    .view--chats,
+    .view--broadcasts,
+    .view--contacts {
+      --header-row-pad: 17px 20px 11px;
+      --segment-pad-top: 14px;
+      --segment-pad-bottom: 16px;
+      --header-segment-min-height: calc(var(--segment-pad-top) + 22px + var(--segment-pad-bottom));
+      --header-title-min-height: 58px;
+      --header-zone-height: calc(var(--header-title-min-height) + var(--header-segment-min-height));
+    }
+
+    .view--chats .inbox-header,
+    .view--broadcasts .inbox-header {
+      padding: var(--header-row-pad);
+      display: flex;
+      align-items: center;
+      min-height: var(--header-title-min-height);
+      box-sizing: border-box;
+    }
+
+    [data-od-id="chats-compose-btn"][hidden] {
+      display: none !important;
+    }
+
+    #chat-operator-actions[hidden],
+    #chat-operator-actions.hidden {
+      display: none !important;
+    }
+
+    .view--chats .inbox-header h2[data-od-id="chats-inbox-title"],
+    .view--broadcasts .inbox-header h2[data-od-id="broadcasts-inbox-title"],
+    .view--contacts .contacts-page-header__top h2[data-od-id="contacts-title"],
+    .view--chats .chat-header__top h2,
+    .view--broadcasts .broadcast-detail-header__top h2 {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: normal;
+      color: var(--text-primary);
+      line-height: 1.25;
+      margin: 0;
+    }
+
+    .view--chats .tabs,
+    .view--broadcasts .tabs {
+      min-height: var(--header-segment-min-height);
+      box-sizing: border-box;
+    }
+
+    .view--chats .tabs .tab,
+    .view--broadcasts .tabs .tab {
+      padding: var(--segment-pad-top) 0 var(--segment-pad-bottom);
+    }
+
+    /* Two-row detail headers: title row + meta row, action btn centered */
+    .view--chats .chat-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      padding: 0;
+      box-sizing: border-box;
+      background: var(--inbox-bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .view--broadcasts .broadcast-detail-header {
+      display: block;
+      padding: 0;
+      box-sizing: border-box;
+      background: var(--inbox-bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .view--chats .chat-header__content,
+    .view--broadcasts .broadcast-detail-header__content {
+      display: contents;
+    }
+
+    /* Match inbox-header row: 10+32+6 with title centered like compose-btn pairing */
+    .view--chats .chat-header__top,
+    .view--broadcasts .broadcast-detail-header__top {
+      grid-column: 1;
+      grid-row: 1;
+      padding: var(--header-row-pad);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-sizing: border-box;
+      min-height: var(--header-title-min-height);
+    }
+
+    .view--chats .chat-header__top h2,
+    .view--broadcasts .broadcast-detail-header__top h2 {
+      min-width: 0;
+    }
+
+    .view--broadcasts .broadcast-detail-header__top {
+      flex-wrap: nowrap;
+    }
+
+    .view--broadcasts .broadcast-detail-header__top h2 {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Meta row mirrors tab row height on the left panel */
+    .view--chats .chat-header__meta,
+    .view--broadcasts .broadcast-detail-header__meta {
+      grid-column: 1;
+      grid-row: 2;
+      padding: var(--segment-pad-top) 20px var(--segment-pad-bottom);
+      min-height: var(--header-segment-min-height);
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .view--broadcasts .broadcast-detail-header__meta .status-pill {
+      flex-shrink: 0;
+    }
+
+    /* Vertically centered across both header rows — margin on grid cell only */
+    .view--chats .chat-header > .chat-header-actions,
+    .view--chats .chat-header > .reassign-wrap {
+      grid-column: 2;
+      grid-row: 1 / -1;
+      align-self: center;
+      justify-self: end;
+      flex-shrink: 0;
+      margin: 0 12px 0 0;
+    }
+
+    .view--chats .chat-header > .chat-header-actions {
+      position: relative;
+      z-index: 2;
+    }
+
+    .view--chats .chat-header > .reassign-wrap {
+      z-index: 1;
+    }
+
+    .view--chats .chat-header > .reassign-wrap {
+      display: flex;
+      align-items: center;
+    }
+
+    .view--chats .chat-header > .reassign-wrap .assist-btn {
+      margin: 0;
+    }
+
+    .view--chats .chat-header__status,
+    .view--broadcasts .broadcast-detail-header__datetime,
+    .view--contacts .contacts-subtitle {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.25;
+      margin: 0;
+    }
+
+    .view--contacts .contacts-page-header {
+      flex-shrink: 0;
+      padding: 0;
+      background: var(--inbox-bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .view--contacts .contacts-page-header__top {
+      padding: var(--header-row-pad);
+      display: flex;
+      align-items: center;
+      min-height: var(--header-title-min-height);
+      box-sizing: border-box;
+    }
+
+    .view--contacts .contacts-page-header__meta {
+      padding: var(--segment-pad-top) 20px var(--segment-pad-bottom);
+      min-height: var(--header-segment-min-height);
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+    }
+
+    .view--contacts .contacts-subtitle {
+      margin: 0;
+    }
+
+    .view--contacts .contacts-card__top {
+      padding-top: 16px;
+    }
+
+    .compose-btn svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .view--broadcasts .inbox-header {
+      justify-content: flex-start;
+    }
+
+    .view--broadcasts .inbox-header__title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    [data-od-id="broadcasts-compose-btn"] {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding: 3px 8px 3px 4px;
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1;
+      color: #fff;
+      background: #2b67b5;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    [data-od-id="broadcasts-compose-btn"]:hover {
+      background: #245a9e;
+    }
+
+    [data-od-id="broadcasts-compose-btn"] .material-symbols-outlined {
+      font-size: 16px;
+      color: #fff;
+      line-height: 1;
+      font-variation-settings: 'wght' 400;
+    }
+
+    #broadcast-empty-new-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #2b67b5;
+      color: #fff;
+      transition: background 0.15s ease;
+    }
+
+    #broadcast-empty-new-btn:hover {
+      background: #245a9e;
+    }
+
+    #broadcast-empty-new-btn .material-symbols-outlined {
+      font-size: 18px;
+      color: #fff;
+      line-height: 1;
+      font-variation-settings: 'wght' 400;
+    }
+
+    /* Right-panel wizard stepper matches left header + tabs zone height */
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__stepper {
+      margin: 0;
+      padding: 0 20px;
+      min-height: var(--header-zone-height);
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Compose step — selected template type chip */
+    .broadcast-wizard__template-selected {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .broadcast-wizard__template-selected[hidden] {
+      display: none;
+    }
+
+    .broadcast-wizard__template-selected-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .broadcast-wizard__template-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      align-self: flex-start;
+      padding: 8px 14px 8px 10px;
+      border: 1.5px solid #2b67b5;
+      border-radius: 10px;
+      background: #f5f9fd;
+      box-shadow: 0 0 0 1px #2b67b5;
+    }
+
+    .broadcast-wizard__template-chip-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border: 1.5px solid #2b67b5;
+      border-radius: 50%;
+      color: #2b67b5;
+      flex-shrink: 0;
+    }
+
+    .broadcast-wizard__template-chip-icon.material-icons {
+      font-size: 18px;
+    }
+
+    .broadcast-wizard__template-chip-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+  </style>
+</head>
+<body>
+  <div class="app" data-od-id="app-shell">
+    <!-- Left Sidebar Rail -->
+    <div class="sidebar-rail" data-od-id="sidebar-rail">
+      <nav class="sidebar" style="background-color: rgb(227, 225, 222);" data-od-id="sidebar">
+        <div class="sidebar-top" data-od-id="sidebar-top">
+          <div class="logo" aria-label="App logo" data-od-id="sidebar-logo">
+            <span class="logo-ring"></span>
+          </div>
+          <div class="nav-items" data-od-id="sidebar-nav">
+          <button class="nav-item active" type="button" data-view="home" aria-label="Home" data-od-id="nav-home">
+            <span class="nav-item-icon-wrap" aria-hidden="true">
+              <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">home</span>
+              <span class="material-icons nav-item-icon nav-item-icon--filled">home</span>
+            </span>
+            <span>Home</span>
+          </button>
+          <button class="nav-item" type="button" data-view="broadcasts" aria-label="Broadcasts" data-od-id="nav-broadcasts">
+            <span class="nav-item-icon-wrap" aria-hidden="true">
+              <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">campaign</span>
+              <span class="material-icons nav-item-icon nav-item-icon--filled">campaign</span>
+            </span>
+            <span>Broadcasts</span>
+          </button>
+          <button class="nav-item" type="button" data-view="contacts" aria-label="Contacts" data-od-id="nav-audience">
+            <span class="nav-item-icon-wrap" aria-hidden="true">
+              <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">contacts</span>
+              <span class="material-icons nav-item-icon nav-item-icon--filled">contacts</span>
+            </span>
+            <span>Contacts</span>
+          </button>
+          <button class="nav-item" type="button" data-view="chats" aria-label="Chats" data-od-id="nav-chats">
+            <span class="nav-item-icon-wrap" aria-hidden="true">
+              <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">chat</span>
+              <span class="material-icons nav-item-icon nav-item-icon--filled">chat</span>
+            </span>
+            <span>Chats</span>
+          </button>
+        </div>
+      </div>
+      <div class="sidebar-bottom" data-od-id="sidebar-bottom">
+        <div class="profile-menu-wrap" data-od-id="sidebar-profile-wrap">
+          <div class="profile-avatar-wrap">
+            <button type="button" class="profile-avatar" id="profile-avatar-btn" title="Account menu" aria-haspopup="menu" aria-expanded="false" aria-controls="profile-menu" data-od-id="sidebar-profile">
+              <span class="profile-avatar__image" id="profile-avatar-image">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Alex Rivera" />
+              </span>
+            </button>
+            <span class="supervisor-badge hidden" id="supervisor-badge" aria-hidden="true">SV</span>
+          </div>
+          <div class="profile-menu" id="profile-menu" role="menu" aria-hidden="true">
+            <button class="profile-menu__item" type="button" id="toggle-supervisor-btn" role="menuitem">
+              <span class="material-icons" aria-hidden="true">supervisor_account</span>
+              <span id="toggle-supervisor-label">Switch to Supervisor</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      </nav>
+    </div>
+
+    <!-- Home view -->
+    <div class="view view--home" id="view-home" data-od-id="view-home">
+      <main class="home-panel" data-od-id="home-panel">
+        <header class="home-header" data-od-id="home-header">
+          <h2>Welcome 👋</h2>
+          <p class="home-header__subtitle">Keep track of what needs your attention</p>
+        </header>
+        <section class="home-section" aria-labelledby="home-actions-title" data-od-id="home-actions">
+          <div class="home-section__heading"><h2 id="home-actions-title">Quick Start</h2><p>Common actions</p></div>
+          <div class="home-actions-grid">
+            <button class="template-card" type="button" data-home-action="chats"><span class="template-card__icon" aria-hidden="true"><span class="material-icons">chat</span></span><span class="template-card__body"><span class="template-card__title">Review inbox</span><span class="template-card__desc"><span id="home-unread-action">—</span> conversations need a response</span></span></button>
+            <button class="template-card" type="button" data-home-action="broadcasts"><span class="template-card__icon" aria-hidden="true"><span class="material-icons">campaign</span></span><span class="template-card__body"><span class="template-card__title">Send a new message</span><span class="template-card__desc">Create broadcast message to be sent to multiple users</span></span></button>
+            <button class="template-card" type="button" data-home-action="contacts"><span class="template-card__icon" aria-hidden="true"><span class="material-icons">groups</span></span><span class="template-card__body"><span class="template-card__title">Manage contacts</span><span class="template-card__desc">Organize people and keep tags current</span></span></button>
+          </div>
+        </section>
+        <section class="home-section home-section--signal" aria-labelledby="home-priority-title" data-od-id="home-priority">
+          <div class="home-section__heading home-section__heading--row"><div><h2 id="home-priority-title">Needs your attention</h2><p>Open conversations prioritized by urgency</p></div><button class="home-text-link" type="button" data-home-action="chats">View inbox <span class="material-icons">arrow_forward</span></button></div>
+          <div class="home-priority-list" id="home-priority-list"></div>
+        </section>
+        <section class="home-section" aria-labelledby="home-health-title" data-od-id="home-health">
+          <div class="home-section__heading"><h2 id="home-health-title">Community health</h2><p>Live operational signals from this workspace</p></div>
+          <div class="home-metrics-grid">
+            <article class="home-metric"><span class="material-icons-outlined">mark_email_unread</span><p>Open conversations</p><strong id="home-open-count">—</strong><small>Across your inbox</small></article>
+            <article class="home-metric"><span class="material-icons-outlined">schedule</span><p>Awaiting a reply</p><strong id="home-awaiting-count">—</strong><small>New or unread today</small></article>
+            <article class="home-metric"><span class="material-icons-outlined">group</span><p>Total contacts</p><strong id="home-contact-count">—</strong><small>People in your community</small></article>
+            <article class="home-metric"><span class="material-icons-outlined">campaign</span><p>Broadcasts sent</p><strong id="home-broadcast-count">—</strong><small>Latest outreach activity</small></article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Chats view -->
+    <div class="view view--chats" id="view-chats" data-od-id="view-chats">
+    <div class="panel-rail panel-rail--inbox" data-od-id="chats-inbox-rail">
+      <aside class="inbox panel" data-od-id="chats-inbox-panel">
+      <header class="inbox-header" data-od-id="chats-inbox-header">
+        <h2 data-od-id="chats-inbox-title">Chats Inbox</h2>
+        <button class="icon-btn compose-btn" type="button" aria-label="New message" data-od-id="chats-compose-btn" hidden>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M5.8942 16.75L4.01985 18.6243C3.87457 18.7696 3.70993 18.8053 3.52595 18.7313C3.34198 18.6573 3.25 18.5167 3.25 18.3096V5.05768C3.25 4.56056 3.427 4.135 3.781 3.781C4.135 3.427 4.56056 3.25 5.05768 3.25H16.9423C17.4394 3.25 17.8649 3.427 18.2189 3.781C18.5729 4.135 18.75 4.56056 18.75 5.05768V9.275C18.75 9.4814 18.6766 9.65383 18.5298 9.7923C18.383 9.93075 18.2048 9.99998 17.9952 9.99998C17.7856 9.99998 17.609 9.9281 17.4654 9.78435C17.3218 9.6406 17.25 9.46248 17.25 9.25V5.05768C17.25 4.96793 17.2212 4.8942 17.1635 4.8365C17.1058 4.7788 17.032 4.74995 16.9423 4.74995H5.05768C4.96792 4.74995 4.8942 4.7788 4.8365 4.8365C4.7788 4.8942 4.74995 4.96793 4.74995 5.05768V15.25H11.2211C11.4275 15.25 11.6042 15.3234 11.751 15.4702C11.8977 15.617 11.9711 15.7952 11.9711 16.0048C11.9711 16.2144 11.8977 16.391 11.751 16.5346C11.6042 16.6782 11.4275 16.75 11.2211 16.75H5.8942ZM7.80765 8.74995H14.1923C14.4048 8.74995 14.5829 8.67805 14.7267 8.53425C14.8704 8.39043 14.9423 8.21223 14.9423 7.99965C14.9423 7.78705 14.8704 7.60896 14.7267 7.46538C14.5829 7.32179 14.4048 7.25 14.1923 7.25H7.80765C7.59515 7.25 7.41703 7.3219 7.2733 7.4657C7.12955 7.60952 7.05768 7.78772 7.05768 8.0003C7.05768 8.2129 7.12955 8.39099 7.2733 8.53458C7.41703 8.67816 7.59515 8.74995 7.80765 8.74995ZM7.80765 12.75H11.1923C11.4048 12.75 11.5829 12.6781 11.7267 12.5343C11.8704 12.3904 11.9423 12.2122 11.9423 11.9997C11.9423 11.7871 11.8704 11.609 11.7267 11.4654C11.5829 11.3218 11.4048 11.25 11.1923 11.25H7.80765C7.59515 11.25 7.41703 11.3219 7.2733 11.4657C7.12955 11.6095 7.05768 11.7877 7.05768 12.0003C7.05768 12.2129 7.12955 12.391 7.2733 12.5346C7.41703 12.6782 7.59515 12.75 7.80765 12.75ZM17.25 16.75H15C14.7875 16.75 14.6094 16.6781 14.4656 16.5343C14.3219 16.3904 14.25 16.2122 14.25 15.9997C14.25 15.7871 14.3219 15.609 14.4656 15.4654C14.6094 15.3218 14.7875 15.25 15 15.25H17.25V13C17.25 12.7875 17.3219 12.6094 17.4657 12.4656C17.6095 12.3219 17.7877 12.25 18.0003 12.25C18.2129 12.25 18.391 12.3219 18.5346 12.4656C18.6782 12.6094 18.75 12.7875 18.75 13V15.25H21C21.2125 15.25 21.3906 15.3219 21.5344 15.4657C21.6781 15.6095 21.75 15.7877 21.75 16.0003C21.75 16.2129 21.6781 16.391 21.5344 16.5346C21.3906 16.6782 21.2125 16.75 21 16.75H18.75V19C18.75 19.2125 18.6781 19.3906 18.5343 19.5343C18.3904 19.6781 18.2122 19.75 17.9997 19.75C17.787 19.75 17.609 19.6781 17.4654 19.5343C17.3218 19.3906 17.25 19.2125 17.25 19V16.75Z" fill="#494644"/>
+          </svg>
+        </button>
+      </header>
+
+      <div class="tabs chats-tabs-operator" id="chats-tabs-operator" role="tablist" data-od-id="chats-tabs">
+        <button class="tab" role="tab" data-tab="unassigned" aria-selected="false" data-od-id="chats-tab-unassigned">
+          Unassigned
+          <span class="badge" hidden aria-hidden="true"></span>
+        </button>
+        <button class="tab active" role="tab" data-tab="assigned" aria-selected="true" data-od-id="chats-tab-assigned">
+          Assigned to me
+          <span class="badge" hidden aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="tabs chats-tabs-supervisor hidden" id="chats-tabs-supervisor" role="tablist" data-od-id="chats-tabs-supervisor">
+        <button class="tab active" role="tab" data-stab="escalated" aria-selected="true" data-od-id="chats-tab-escalated">
+          Escalated
+          <span class="badge" hidden aria-hidden="true"></span>
+        </button>
+        <button class="tab" role="tab" data-stab="unassigned" aria-selected="false" data-od-id="chats-tab-sv-unassigned">
+          Unassigned
+          <span class="badge" hidden aria-hidden="true"></span>
+        </button>
+        <button class="tab" role="tab" data-stab="all" aria-selected="false" data-od-id="chats-tab-all">
+          All
+          <span class="badge" hidden aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="inbox-operator-filter hidden" id="chats-operator-filter" data-od-id="chats-operator-filter">
+        <div class="filter-dropdown inbox-operator-dropdown">
+          <button class="filter-btn filter-btn--plain" type="button" id="chats-operator-filter-btn" aria-haspopup="listbox" aria-expanded="false">
+            <span class="filter-btn__label" id="chats-operator-filter-label">All operators</span>
+            <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
+          </button>
+          <ul class="filter-menu hidden" id="chats-operator-filter-menu" role="listbox">
+            <li><button type="button" data-value="">All operators</button></li>
+            <li><button type="button" data-value="you">Alex Rivera</button></li>
+            <li><button type="button" data-value="jane">Jane Smith</button></li>
+            <li><button type="button" data-value="mike">Mike Torres</button></li>
+          </ul>
+        </div>
+      </div>
+
+      <ul class="chat-list" id="chat-list" role="list" data-od-id="chat-list"></ul>
+      </aside>
+    </div>
+
+    <!-- Active Chat -->
+    <div class="panel-rail panel-rail--chat" data-od-id="chat-panel-rail">
+      <main class="chat-panel panel" data-od-id="chat-panel">
+      <header class="chat-header" data-od-id="chat-header">
+        <div class="chat-header__content" data-od-id="chat-title-group">
+          <div class="chat-header__top">
+            <h2 id="chat-title" data-od-id="chat-title">Alice Reynolds</h2>
+          </div>
+          <div class="chat-header__meta" data-od-id="chat-status-row">
+            <p class="chat-header__status" id="chat-status" data-od-id="chat-status">Resident</p>
+          </div>
+        </div>
+        <div class="chat-header-actions" id="chat-operator-actions" data-od-id="chat-assist-btn">
+          <button class="assist-btn" type="button" aria-label="Mark conversation as done" id="chat-done-btn" data-od-id="chat-done-btn">
+            <span class="assist-btn__icon assist-btn__icon--done" aria-hidden="true">
+              <span class="material-icons">check</span>
+            </span>
+            DONE
+          </button>
+          <button class="assist-btn" type="button" aria-label="Ask for help — Ask your supervisor for assistance" id="chat-ask-help-btn" data-od-id="chat-ask-help-btn">
+            <span class="assist-btn__icon assist-btn__icon--help" aria-hidden="true">
+              <span class="material-icons">flag</span>
+            </span>
+            ASK FOR HELP
+          </button>
+        </div>
+        <div class="reassign-wrap hidden" id="chat-reassign-wrap" data-od-id="chat-reassign-wrap">
+          <div class="filter-dropdown reassign-dropdown">
+            <button class="assist-btn reassign-btn" type="button" id="chat-reassign-btn" aria-haspopup="listbox" aria-expanded="false">
+              <span class="assist-btn__icon assist-btn__icon--reassign" aria-hidden="true">
+                <span class="material-icons">person</span>
+              </span>
+              REASSIGN
+            </button>
+            <ul class="filter-menu reassign-menu hidden" id="chat-reassign-menu" role="listbox"></ul>
+          </div>
+        </div>
+      </header>
+
+      <div class="messages" id="messages" data-od-id="chat-messages"></div>
+
+      <footer class="composer" data-od-id="chat-composer">
+        <div class="attach-menu-wrap" data-od-id="chat-attach-wrap">
+          <button class="attach-btn" type="button" id="chat-attach-btn" aria-label="Attach" aria-haspopup="menu" aria-expanded="false" aria-controls="chat-attach-menu" data-od-id="chat-attach-btn">
+            <span class="material-symbols-outlined composer-icon" aria-hidden="true">add</span>
+          </button>
+          <div class="attach-menu" id="chat-attach-menu" role="menu" aria-hidden="true">
+            <button class="attach-menu__item" type="button" data-attach-action="image" role="menuitem">
+              <span class="material-symbols-outlined composer-icon" aria-hidden="true">image</span>
+              Attach image
+            </button>
+            <button class="attach-menu__item" type="button" data-attach-action="template" aria-haspopup="dialog" aria-controls="template-modal" role="menuitem">
+              <span class="material-symbols-outlined composer-icon" aria-hidden="true">article</span>
+              Template
+            </button>
+            <button class="attach-menu__item" type="button" data-attach-action="note" role="menuitem">
+              <span class="material-symbols-outlined composer-icon" aria-hidden="true">sticky_note_2</span>
+              Leave a note
+            </button>
+          </div>
+          <input type="file" id="chat-image-input" class="visually-hidden" accept="image/*" tabindex="-1">
+        </div>
+        <input type="text" class="message-input" id="message-input" placeholder="Message" autocomplete="off" data-od-id="chat-message-input">
+      </footer>
+      </main>
+    </div>
+    </div>
+
+    <!-- Broadcasts view -->
+    <div class="view view--broadcasts hidden" id="view-broadcasts" data-od-id="view-broadcasts">
+      <div class="panel-rail panel-rail--inbox" data-od-id="broadcasts-inbox-rail">
+        <aside class="inbox panel" data-od-id="broadcasts-inbox-panel">
+          <header class="inbox-header" data-od-id="broadcasts-inbox-header">
+            <div class="inbox-header__title-row">
+              <h2 data-od-id="broadcasts-inbox-title">Broadcasts</h2>
+              <button type="button" aria-label="Create new broadcast" data-od-id="broadcasts-compose-btn">
+                <span class="material-symbols-outlined" aria-hidden="true">add</span>
+                Create new
+              </button>
+            </div>
+          </header>
+
+          <div class="tabs broadcast-tabs broadcast-tabs-operator" id="broadcast-tabs-operator" role="tablist" data-od-id="broadcasts-tabs">
+            <button class="tab active" role="tab" data-btab="scheduled" aria-selected="true" data-od-id="broadcasts-tab-scheduled">
+              Scheduled
+              <span class="badge badge--grey" hidden aria-hidden="true"></span>
+            </button>
+            <button class="tab" role="tab" data-btab="drafts" aria-selected="false" data-od-id="broadcasts-tab-drafts">
+              Drafts
+              <span class="badge badge--grey" hidden aria-hidden="true"></span>
+            </button>
+            <button class="tab" role="tab" data-btab="sent" aria-selected="false" data-od-id="broadcasts-tab-sent">
+              Sent
+              <span class="badge badge--grey" hidden aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <div class="tabs broadcast-tabs broadcast-tabs-supervisor hidden" id="broadcast-tabs-supervisor" role="tablist" data-od-id="broadcasts-tabs-supervisor">
+            <button class="tab active" role="tab" data-sbtab="scheduled" aria-selected="true" data-od-id="broadcasts-tab-sv-scheduled">
+              Scheduled
+              <span class="badge badge--grey" hidden aria-hidden="true"></span>
+            </button>
+            <button class="tab" role="tab" data-sbtab="drafts" aria-selected="false" data-od-id="broadcasts-tab-sv-drafts">
+              Drafts
+              <span class="badge badge--grey" hidden aria-hidden="true"></span>
+            </button>
+            <button class="tab" role="tab" data-sbtab="sent" aria-selected="false" data-od-id="broadcasts-tab-sv-sent">
+              Sent
+              <span class="badge badge--grey" hidden aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <ul class="broadcast-list" id="broadcast-list" role="list" data-od-id="broadcast-list"></ul>
+        </aside>
+      </div>
+
+      <div class="panel-rail panel-rail--chat" data-od-id="broadcast-detail-rail">
+        <div class="broadcast-empty-state panel" id="broadcast-empty-state" data-od-id="broadcast-empty-state" hidden aria-hidden="true">
+          <div class="broadcast-empty-state__content">
+            <h2 class="broadcast-empty-state__title">Your Broadcasts</h2>
+            <p class="broadcast-empty-state__desc">Select a broadcast from the list or create new</p>
+            <button type="button" class="broadcast-empty-state__btn" id="broadcast-empty-new-btn" aria-label="Create new broadcast">
+              <span class="material-symbols-outlined" aria-hidden="true">add</span>
+              Create new
+            </button>
+          </div>
+        </div>
+        <main class="broadcast-detail panel" id="broadcast-detail" data-od-id="broadcast-detail-panel" hidden aria-hidden="true"></main>
+        <div class="broadcast-wizard broadcast-wizard--panel panel" id="broadcast-wizard" hidden aria-hidden="true">
+          <div class="broadcast-wizard__dialog" role="region" aria-label="New broadcast">
+            <button type="button" class="broadcast-wizard__close" id="broadcast-wizard-close" aria-label="Close" hidden>
+              <span class="material-icons" aria-hidden="true">close</span>
+            </button>
+            <header class="broadcast-wizard__header" hidden>
+              <h2 id="broadcast-wizard-title">New broadcast</h2>
+              <p class="broadcast-wizard__subtitle">Create and schedule a message to your audience</p>
+            </header>
+            <nav class="broadcast-wizard__stepper" id="broadcast-wizard-stepper" aria-label="Broadcast creation steps"></nav>
+            <div class="broadcast-wizard__body" id="broadcast-wizard-body">
+              <section class="broadcast-wizard__panel" id="broadcast-wizard-step-template" data-step="1">
+                <h3 class="broadcast-wizard__panel-title">Choose a template</h3>
+                <p class="broadcast-wizard__panel-desc">Pick the format that best fits your message — you can customize it next.</p>
+                <div class="broadcast-wizard__template-grid" id="broadcast-wizard-template-grid"></div>
+              </section>
+              <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-compose" data-step="2">
+                <h3 class="broadcast-wizard__panel-title">Compose your message</h3>
+                <p class="broadcast-wizard__panel-desc">Write the broadcast title and message your audience will receive.</p>
+                <form class="broadcast-wizard__form" id="broadcast-wizard-compose-form" novalidate>
+                  <div class="broadcast-wizard__template-selected" id="broadcast-wizard-template-selected" hidden>
+                    <span class="broadcast-wizard__template-selected-label">Template type</span>
+                    <div class="broadcast-wizard__template-chip">
+                      <span class="material-icons broadcast-wizard__template-chip-icon" id="broadcast-wizard-template-chip-icon" aria-hidden="true"></span>
+                      <span class="broadcast-wizard__template-chip-name" id="broadcast-wizard-template-chip-name"></span>
+                    </div>
+                  </div>
+                  <div class="broadcast-wizard__field">
+                    <label class="broadcast-wizard__label" for="broadcast-wizard-title-input">Title</label>
+                    <input type="text" class="broadcast-wizard__input" id="broadcast-wizard-title-input" placeholder="Enter your title" maxlength="60" autocomplete="off">
+                    <span class="broadcast-wizard__counter" id="broadcast-wizard-title-counter">0 / 60</span>
+                  </div>
+                  <div class="broadcast-wizard__field">
+                    <label class="broadcast-wizard__label" for="broadcast-wizard-message-input">Message</label>
+                    <textarea class="broadcast-wizard__textarea" id="broadcast-wizard-message-input" rows="5" maxlength="500" placeholder="Hi [Name], …"></textarea>
+                    <span class="broadcast-wizard__counter" id="broadcast-wizard-message-counter">0 / 500</span>
+                  </div>
+                  <div class="broadcast-wizard__field hidden" id="broadcast-wizard-link-field">
+                    <label class="broadcast-wizard__label" for="broadcast-wizard-link-input" id="broadcast-wizard-link-label">Link</label>
+                    <input type="text" class="broadcast-wizard__input" id="broadcast-wizard-link-input" placeholder="https://example.com" autocomplete="off" inputmode="url">
+                    <p class="broadcast-wizard__error hidden" id="broadcast-wizard-link-error">
+                      <span class="material-icons" aria-hidden="true">error_outline</span>
+                      Invalid link format
+                    </p>
+                  </div>
+                </form>
+              </section>
+              <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-audience" data-step="3">
+                <h3 class="broadcast-wizard__panel-title">Select audience by tags</h3>
+                <p class="broadcast-wizard__panel-desc">Add tags to include everyone who matches — each person receives the message once, even across multiple tags.</p>
+                <div class="broadcast-wizard__audience-panel">
+                  <div class="broadcast-wizard__audience-selected-block" id="broadcast-wizard-audience-selected-block">
+                    <div class="broadcast-wizard__audience-selected hidden" id="broadcast-wizard-audience-selected" aria-live="polite"></div>
+                    <p class="broadcast-wizard__audience-selected-note hidden" id="broadcast-wizard-audience-selected-note">Each tag adds to your audience. Overlapping contacts are only counted once.</p>
+                  </div>
+                  <div class="broadcast-wizard__audience-search-block">
+                    <div class="broadcast-wizard__audience-search-wrap">
+                      <span class="material-icons" aria-hidden="true">search</span>
+                      <input type="search" id="broadcast-wizard-audience-search" class="broadcast-wizard__audience-search" placeholder="Search tags to add…" autocomplete="off">
+                    </div>
+                    <p class="broadcast-wizard__audience-search-hint">Type to find tags — picks are added to your selection above.</p>
+                  </div>
+                  <div class="broadcast-wizard__audience-section hidden" id="broadcast-wizard-audience-recent-section">
+                    <h4 class="broadcast-wizard__audience-section-title">Recently used</h4>
+                    <p class="broadcast-wizard__audience-section-desc">From your recent broadcasts — tap to add or remove.</p>
+                    <div class="broadcast-wizard__audience-recent" id="broadcast-wizard-audience-recent"></div>
+                  </div>
+                  <div class="broadcast-wizard__audience-section hidden" id="broadcast-wizard-audience-search-section">
+                    <h4 class="broadcast-wizard__audience-section-title" id="broadcast-wizard-audience-search-title">Search results</h4>
+                    <div class="broadcast-wizard__audience-tags" id="broadcast-wizard-audience-tags"></div>
+                  </div>
+                  <div class="broadcast-wizard__audience-count hidden" id="broadcast-wizard-audience-count" role="status" aria-live="polite"></div>
+                  <p class="broadcast-wizard__audience-hint hidden" id="broadcast-wizard-audience-warning">
+                    <span class="material-icons" aria-hidden="true">info</span>
+                    <span id="broadcast-wizard-audience-warning-text">Select at least one tag to continue.</span>
+                  </p>
+                </div>
+              </section>
+              <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-schedule" data-step="4">
+                <h3 class="broadcast-wizard__panel-title">When should this send?</h3>
+                <p class="broadcast-wizard__panel-desc">Send immediately or pick a date and time for later delivery.</p>
+                <div class="broadcast-wizard__schedule-options" role="radiogroup" aria-label="Send timing">
+                  <label class="broadcast-wizard__schedule-card">
+                    <input type="radio" name="broadcast-send-mode" value="now" checked>
+                    <span class="broadcast-wizard__schedule-card-body">
+                      <span class="material-icons" aria-hidden="true">send</span>
+                      <span class="broadcast-wizard__schedule-card-title">Send now</span>
+                      <span class="broadcast-wizard__schedule-card-desc">Deliver as soon as you confirm</span>
+                    </span>
+                  </label>
+                  <label class="broadcast-wizard__schedule-card">
+                    <input type="radio" name="broadcast-send-mode" value="schedule">
+                    <span class="broadcast-wizard__schedule-card-body">
+                      <span class="material-icons" aria-hidden="true">schedule</span>
+                      <span class="broadcast-wizard__schedule-card-title">Schedule for later</span>
+                      <span class="broadcast-wizard__schedule-card-desc">Pick a date and time</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="broadcast-wizard__schedule-fields hidden" id="broadcast-wizard-schedule-fields">
+                  <div class="broadcast-wizard__schedule-row">
+                    <div class="broadcast-wizard__field">
+                      <label class="broadcast-wizard__label" for="broadcast-wizard-date-input">Date</label>
+                      <input type="date" class="broadcast-wizard__input" id="broadcast-wizard-date-input">
+                    </div>
+                    <div class="broadcast-wizard__field">
+                      <label class="broadcast-wizard__label" for="broadcast-wizard-time-input">Time</label>
+                      <input type="time" class="broadcast-wizard__input" id="broadcast-wizard-time-input">
+                    </div>
+                  </div>
+                  <p class="broadcast-wizard__timezone">Timezone: America/New_York (GMT-5)</p>
+                </div>
+              </section>
+              <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-preview" data-step="5">
+                <h3 class="broadcast-wizard__panel-title">Review before sending</h3>
+                <p class="broadcast-wizard__panel-desc">Confirm everything looks correct — you can still go back to edit any step.</p>
+                <div class="broadcast-wizard__preview-layout">
+                  <div class="broadcast-wizard__preview-box">
+                    <div class="broadcast-wizard__preview-message" id="broadcast-wizard-preview-message"></div>
+                  </div>
+                  <section class="broadcast-section broadcast-wizard__preview-summary">
+                    <h3>Summary</h3>
+                    <dl class="summary-list" id="broadcast-wizard-summary"></dl>
+                  </section>
+                </div>
+              </section>
+            </div>
+            <footer class="broadcast-wizard__footer">
+              <div class="broadcast-wizard__footer-left">
+                <button type="button" class="btn-back-broadcast hidden" id="broadcast-wizard-back">BACK</button>
+              </div>
+              <div class="broadcast-wizard__footer-actions">
+                <button type="button" class="btn-cancel-broadcast" id="broadcast-wizard-discard">DISCARD DRAFT</button>
+                <button type="button" class="btn-edit-broadcast" id="broadcast-wizard-next">CONTINUE</button>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contacts view -->
+    <div class="view view--contacts hidden" id="view-contacts" data-od-id="view-contacts">
+      <div class="panel-rail panel-rail--full" data-od-id="contacts-rail">
+        <main class="contacts-panel" data-od-id="contacts-panel">
+          <div class="contacts-card" data-od-id="contacts-card">
+            <header class="contacts-page-header" data-od-id="contacts-header">
+              <div class="contacts-page-header__top">
+                <h2 data-od-id="contacts-title">Contacts</h2>
+              </div>
+              <div class="contacts-page-header__meta">
+                <p class="contacts-subtitle" data-od-id="contacts-subtitle">View and manage everyone in your community</p>
+              </div>
+            </header>
+
+            <div class="contacts-card__top" data-od-id="contacts-card-top">
+              <div class="contacts-search-wrap" data-od-id="contacts-search-wrap">
+                <span class="material-icons contacts-search-icon" aria-hidden="true">search</span>
+                <input type="search" class="contacts-search" id="contacts-search" placeholder="Search contacts" autocomplete="off" data-od-id="contacts-search">
+              </div>
+              <div class="contacts-toolbar" data-od-id="contacts-toolbar">
+                <div class="contacts-toolbar__row">
+                <div class="contacts-filters" data-od-id="contacts-filters">
+                  <div class="filter-dropdown" data-od-id="contacts-filter-role">
+                    <button class="filter-btn" type="button" id="filter-role-btn" aria-haspopup="listbox" aria-expanded="false">
+                      <span class="filter-btn__label">User Role</span>
+                      <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
+                    </button>
+                    <ul class="filter-menu filter-menu--radio hidden" id="filter-role-menu" role="listbox">
+                      <li class="filter-menu__hint">One role at a time</li>
+                      <li><button type="button" class="filter-radio-item" data-value="">All roles</button></li>
+                      <li><button type="button" class="filter-radio-item" data-value="Resident">Resident</button></li>
+                      <li><button type="button" class="filter-radio-item" data-value="Worker">Worker</button></li>
+                      <li><button type="button" class="filter-radio-item" data-value="Visitor">Visitor</button></li>
+                    </ul>
+                  </div>
+                  <div class="filter-dropdown filter-dropdown--tags" data-od-id="contacts-filter-tags">
+                    <button class="filter-btn" type="button" id="filter-tags-btn" aria-haspopup="listbox" aria-expanded="false">
+                      <span class="filter-btn__label">Tags</span>
+                      <span class="filter-btn__count hidden" id="filter-tags-count" aria-hidden="true"></span>
+                      <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
+                    </button>
+                    <ul class="filter-menu filter-menu--checkbox hidden" id="filter-tags-menu" role="listbox">
+                      <li class="filter-menu__hint">Select any — matches all chosen</li>
+                      <li>
+                        <label class="filter-check">
+                          <input type="checkbox" value="Opt-in">
+                          <span class="filter-check__box" aria-hidden="true"></span>
+                          <span class="filter-check__label">Opt-in</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label class="filter-check">
+                          <input type="checkbox" value="Head of Household">
+                          <span class="filter-check__box" aria-hidden="true"></span>
+                          <span class="filter-check__label">Head of Household</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label class="filter-check">
+                          <input type="checkbox" value="1 room">
+                          <span class="filter-check__box" aria-hidden="true"></span>
+                          <span class="filter-check__label">1 room</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label class="filter-check">
+                          <input type="checkbox" value="2 room">
+                          <span class="filter-check__box" aria-hidden="true"></span>
+                          <span class="filter-check__label">2 room</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label class="filter-check">
+                          <input type="checkbox" value="Retired">
+                          <span class="filter-check__box" aria-hidden="true"></span>
+                          <span class="filter-check__label">Retired</span>
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <button class="contacts-select-all-btn" type="button" id="contacts-select-all-btn" data-od-id="contacts-select-all-btn">
+                  Select all <span id="contacts-toolbar-select-total">248</span> users
+                </button>
+                </div>
+                <div class="contacts-active-filters" id="contacts-active-filters" data-od-id="contacts-active-tags" hidden>
+                  <div class="contacts-active-filters__chips" id="contacts-active-tags"></div>
+                  <button class="contacts-clear-filters" type="button" id="contacts-clear-filters" hidden>Clear filters</button>
+                </div>
+              </div>
+
+              <div class="contacts-selection-bar" id="contacts-selection-bar" data-od-id="contacts-selection-bar" hidden>
+                <div class="contacts-selection-bar__left">
+                  <div class="contacts-selection-bar__summary">
+                    <span class="contacts-selection-pill">
+                      <span id="contacts-selection-count">0 users selected</span>
+                      <button type="button" class="contacts-selection-pill__clear" id="contacts-selection-clear" aria-label="Clear selection">
+                        <span class="material-icons">close</span>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+                <div class="contacts-selection-bar__actions">
+                  <div class="filter-dropdown add-tags-dropdown" id="contacts-add-tags-wrap">
+                    <button type="button" class="contacts-selection-btn contacts-selection-btn--outline" id="contacts-add-tags-btn" aria-haspopup="dialog" aria-expanded="false">
+                      <span class="material-icons">sell</span>
+                      Add Tags
+                    </button>
+                    <div class="add-tags-popover hidden" id="contacts-add-tags-menu" role="dialog" aria-label="Add tags to selected contacts" aria-hidden="true">
+                      <div class="add-tags-popover__header">
+                        <p class="add-tags-popover__title">Add tags</p>
+                        <p class="add-tags-popover__subtitle" id="contacts-add-tags-subtitle">Select tags to apply to selected contacts</p>
+                      </div>
+                      <div class="add-tags-popover__search">
+                        <span class="material-icons" aria-hidden="true">search</span>
+                        <input type="search" id="contacts-add-tags-search" placeholder="Search tags" autocomplete="off" aria-label="Search tags">
+                      </div>
+                      <ul class="add-tags-popover__list" id="contacts-add-tags-list"></ul>
+                      <div class="add-tags-popover__create">
+                        <input type="text" id="contacts-add-tags-new" placeholder="Create new tag" maxlength="40" aria-label="New tag name">
+                        <button type="button" class="add-tags-popover__create-btn" id="contacts-add-tags-create-btn" disabled>Create</button>
+                      </div>
+                      <div class="add-tags-popover__footer">
+                        <button type="button" class="add-tags-popover__cancel" id="contacts-add-tags-cancel">Cancel</button>
+                        <button type="button" class="add-tags-popover__apply" id="contacts-add-tags-apply" disabled>Apply tags</button>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" class="contacts-selection-btn contacts-selection-btn--solid" id="contacts-create-template-btn">
+                    + CREATE TEMPLATE
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="contacts-table-wrap" data-od-id="contacts-table-wrap">
+              <table class="contacts-table" id="contacts-table" data-od-id="contacts-table">
+                <thead>
+                  <tr>
+                    <th class="col-check">
+                      <label class="contacts-checkbox">
+                        <input type="checkbox" id="contacts-check-all" aria-label="Select all matching users">
+                        <span class="contacts-checkbox__mark"></span>
+                      </label>
+                    </th>
+                    <th class="col-name">Name</th>
+                    <th class="col-role">Role</th>
+                    <th class="col-tags">Tags</th>
+                    <th class="col-chat">Chat</th>
+                  </tr>
+                </thead>
+                <tbody id="contacts-tbody" data-od-id="contacts-tbody"></tbody>
+              </table>
+            </div>
+
+            <footer class="contacts-footer" data-od-id="contacts-footer">
+              <span class="contacts-showing" id="contacts-showing">Showing 10 of 248 users</span>
+              <div class="contacts-pagination" data-od-id="contacts-pagination">
+                <div class="filter-dropdown contacts-rows-dropdown">
+                  <button class="filter-btn filter-btn--plain" type="button" id="rows-per-page-btn" aria-haspopup="listbox">
+                    Rows per page: <span id="rows-per-page-value">10</span>
+                    <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
+                  </button>
+                  <ul class="filter-menu filter-menu--up hidden" id="rows-per-page-menu" role="listbox">
+                    <li><button type="button" data-value="10">10</button></li>
+                    <li><button type="button" data-value="25">25</button></li>
+                    <li><button type="button" data-value="50">50</button></li>
+                  </ul>
+                </div>
+                <span class="contacts-page-range" id="contacts-page-range">1–10 of 248</span>
+                <div class="contacts-page-nav">
+                  <button class="icon-btn contacts-page-btn" type="button" id="contacts-prev-page" aria-label="Previous page" disabled>
+                    <span class="material-icons">chevron_left</span>
+                  </button>
+                  <button class="icon-btn contacts-page-btn" type="button" id="contacts-next-page" aria-label="Next page">
+                    <span class="material-icons">chevron_right</span>
+                  </button>
+                </div>
+              </div>
+            </footer>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div class="template-modal" id="template-modal" hidden aria-hidden="true">
+    <div class="template-modal__backdrop" id="template-modal-backdrop"></div>
+    <div class="template-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="template-modal-title">
+      <button type="button" class="template-modal__close" id="template-modal-close" aria-label="Close">
+        <span class="material-icons">close</span>
+      </button>
+      <header class="template-modal__header">
+        <h2 id="template-modal-title">Choose your template</h2>
+        <p class="template-modal__subtitle" id="template-modal-subtitle">Select how you want to engage with your Project Audience</p>
+      </header>
+      <div class="template-modal__grid" id="template-modal-grid"></div>
+      <p class="template-modal__hint">You can customize each template in the next step</p>
+    </div>
+  </div>
+
+  <div class="template-composer-modal" id="template-composer-modal" hidden aria-hidden="true">
+    <div class="template-composer-modal__backdrop" id="template-composer-backdrop"></div>
+    <div class="template-composer-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="template-composer-title">
+      <button type="button" class="template-composer-modal__close" id="template-composer-close" aria-label="Close">
+        <span class="material-icons">close</span>
+      </button>
+      <header class="template-composer-modal__header">
+        <h2 id="template-composer-title">Surveys</h2>
+        <p class="template-composer-modal__subtitle" id="template-composer-subtitle">Collect deeper feedback from the users with a series of tailored questions</p>
+      </header>
+      <div class="template-composer-modal__body">
+        <div class="template-composer-preview">
+          <div class="survey-preview-card" id="survey-preview-card">
+            <div class="survey-preview-card__question" id="survey-preview-title" style="padding-top: 14px;"></div>
+            <p class="survey-preview-card__message" id="survey-preview-message">We want to hear from you! Please take our survey to provide important feedback. Thank you in advance for your participation!</p>
+            <button type="button" class="survey-preview-card__btn" tabindex="-1">START SURVEY</button>
+          </div>
+        </div>
+        <form class="template-composer-form" id="survey-composer-form" novalidate>
+          <div class="template-composer-field">
+            <label class="template-composer-field__label" for="survey-title-input">Survey Title</label>
+            <input type="text" class="template-composer-field__input" id="survey-title-input" placeholder="Enter Title" maxlength="45" autocomplete="off">
+            <span class="template-composer-field__counter" id="survey-title-counter">0 / 45</span>
+          </div>
+          <div class="template-composer-field">
+            <label class="template-composer-field__label" for="survey-message-input">Message intro text</label>
+            <textarea class="template-composer-field__textarea" id="survey-message-input" rows="4" maxlength="250"></textarea>
+            <span class="template-composer-field__counter" id="survey-message-counter">0 / 250</span>
+          </div>
+          <div class="template-composer-field">
+            <label class="template-composer-field__label" for="survey-link-input">Survey Link</label>
+            <input type="url" class="template-composer-field__input" id="survey-link-input" placeholder="https://example.com/survey" autocomplete="off">
+            <p class="template-composer-field__error" id="survey-link-error" hidden>
+              <span class="material-icons" aria-hidden="true">error</span>
+              Invalid link format
+            </p>
+          </div>
+        </form>
+      </div>
+      <footer class="template-composer-modal__footer">
+        <button type="button" class="template-composer-btn template-composer-btn--cancel" id="survey-composer-cancel">CANCEL</button>
+        <button type="button" class="template-composer-btn template-composer-btn--send" id="survey-composer-send" disabled>SEND</button>
+      </footer>
+    </div>
+  </div>
+
+  <div class="template-composer-modal" id="rsvp-composer-modal" hidden aria-hidden="true">
+    <div class="template-composer-modal__backdrop" id="rsvp-composer-backdrop"></div>
+    <div class="template-composer-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="rsvp-composer-title">
+      <button type="button" class="template-composer-modal__close" id="rsvp-composer-close" aria-label="Close">
+        <span class="material-icons">close</span>
+      </button>
+      <header class="template-composer-modal__header">
+        <h2 id="rsvp-composer-title">RSVP to Event</h2>
+        <p class="template-composer-modal__subtitle">Invite users to confirm attendance and share if they'll join your event</p>
+      </header>
+      <div class="template-composer-modal__body">
+        <div class="template-composer-preview template-composer-preview--rsvp">
+          <div id="rsvp-preview-card"></div>
+        </div>
+        <form class="template-composer-form" id="rsvp-composer-form" novalidate>
+          <div class="template-composer-field">
+            <label class="template-composer-field__label" for="rsvp-event-select">Choose the Event</label>
+            <p class="template-composer-field__hint">You can select an event to send invites for</p>
+            <div class="template-composer-field__select-wrap">
+              <select class="template-composer-field__select" id="rsvp-event-select" aria-label="Choose the Event"></select>
+              <span class="material-icons template-composer-field__select-icon" aria-hidden="true">expand_more</span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <footer class="template-composer-modal__footer">
+        <button type="button" class="template-composer-btn template-composer-btn--cancel" id="rsvp-composer-cancel">CANCEL</button>
+        <button type="button" class="template-composer-btn template-composer-btn--send" id="rsvp-composer-send">SEND</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="app.js"></script>
+
+
+</body></html>
