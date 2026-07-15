@@ -159,8 +159,7 @@
     /* MVP unified panel header — compact, same component everywhere */
     .view--chats,
     .view--broadcasts,
-    .view--contacts,
-    .view--home {
+    .view--contacts {
       --mvp-h-border: 1px solid var(--border);
       --mvp-h-single-pad: 12px 20px;
       /* Stacked header (title + subtext) — taller than single-row 52px */
@@ -206,7 +205,6 @@
     .view--chats .inbox-header h2[data-od-id="chats-inbox-title"],
     .view--broadcasts .inbox-header h2[data-od-id="broadcasts-inbox-title"],
     .view--contacts .contacts-page-header__top h2[data-od-id="contacts-title"],
-    .view--home .home-header__top h2,
     .view--chats .chat-header__content h2,
     .view--broadcasts .broadcast-detail-header__top h2 {
       font-size: 16px;
@@ -1086,56 +1084,6 @@
         </div>
       </div>
       </nav>
-    </div>
-
-    <!-- Home view -->
-    <div class="view view--home" id="view-home" data-od-id="view-home">
-      <main class="home-panel" data-od-id="home-panel">
-        <header class="home-header mvp-panel-header mvp-panel-header--stacked" data-od-id="home-header">
-          <div class="mvp-panel-header__top home-header__top">
-            <h2>Welcome 👋</h2>
-          </div>
-          <div class="mvp-panel-header__meta home-header__meta">
-            <p class="home-header__subtitle">Keep track of what needs your attention</p>
-          </div>
-        </header>
-        <section class="home-section" aria-labelledby="home-actions-title" data-od-id="home-actions">
-          <div class="home-section__heading">
-            <h2 id="home-actions-title">Quick Start</h2>
-            <p>Common actions</p>
-          </div>
-          <div class="home-actions-grid">
-            <button class="template-card" type="button" data-home-action="chats">
-              <span class="template-card__icon" aria-hidden="true"><span class="material-icons">chat</span></span>
-              <span class="template-card__body"><span class="template-card__title">Review inbox</span><span class="template-card__desc"><span id="home-unread-action">—</span> conversations need a response</span></span>
-            </button>
-            <button class="template-card" type="button" data-home-action="broadcasts">
-              <span class="template-card__icon" aria-hidden="true"><span class="material-icons">campaign</span></span>
-              <span class="template-card__body"><span class="template-card__title">Send a new message</span><span class="template-card__desc">Create broadcast message to be sent to multiple users</span></span>
-            </button>
-            <button class="template-card" type="button" data-home-action="contacts">
-              <span class="template-card__icon" aria-hidden="true"><span class="material-icons">groups</span></span>
-              <span class="template-card__body"><span class="template-card__title">Manage contacts</span><span class="template-card__desc">Organize people and keep tags current</span></span>
-            </button>
-          </div>
-        </section>
-        <section class="home-section home-section--signal" aria-labelledby="home-priority-title" data-od-id="home-priority">
-          <div class="home-section__heading home-section__heading--row">
-            <div><h2 id="home-priority-title">Needs your attention</h2><p>Open conversations prioritized by urgency</p></div>
-            <button class="home-text-link" type="button" data-home-action="chats">View inbox <span class="material-icons">arrow_forward</span></button>
-          </div>
-          <div class="home-priority-list" id="home-priority-list"></div>
-        </section>
-        <section class="home-section" aria-labelledby="home-health-title" data-od-id="home-health">
-          <div class="home-section__heading"><h2 id="home-health-title">Community health</h2><p>Live operational signals from this workspace</p></div>
-          <div class="home-metrics-grid">
-            <article class="home-metric"><span class="material-icons-outlined">mark_email_unread</span><p>Open conversations</p><strong id="home-open-count">—</strong><small>Across your inbox</small></article>
-            <article class="home-metric"><span class="material-icons-outlined">schedule</span><p>Awaiting a reply</p><strong id="home-awaiting-count">—</strong><small>New or unread today</small></article>
-            <article class="home-metric"><span class="material-icons-outlined">group</span><p>Total contacts</p><strong id="home-contact-count">—</strong><small>People in your community</small></article>
-            <article class="home-metric"><span class="material-icons-outlined">campaign</span><p>Broadcasts sent</p><strong id="home-broadcast-count">—</strong><small>Latest outreach activity</small></article>
-          </div>
-        </section>
-      </main>
     </div>
 
     <!-- Chats view -->

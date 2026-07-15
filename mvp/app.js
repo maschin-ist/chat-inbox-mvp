@@ -47,7 +47,6 @@ let currentLocale = localStorage.getItem(I18N_STORAGE_KEY) || 'en';
 
 const I18N_STRINGS = {
   en: {
-    'nav.home': 'Home',
     'nav.contacts': 'Contacts',
     'nav.chats': 'Chats',
     'nav.broadcasts': 'Broadcasts',
@@ -232,7 +231,6 @@ const I18N_STRINGS = {
     'chat.patricia.in1': 'Is the showroom open this Saturday?',
   },
   ja: {
-    'nav.home': 'ホーム',
     'nav.contacts': '連絡先',
     'nav.chats': 'チャット',
     'nav.broadcasts': '配信',
@@ -483,7 +481,6 @@ function applyStaticTranslations() {
 
   document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
     const view = btn.dataset.view;
-    if (view === 'home') btn.setAttribute('aria-label', t('nav.home'));
     if (view === 'contacts') btn.setAttribute('aria-label', t('nav.contacts'));
     if (view === 'chats') btn.setAttribute('aria-label', t('nav.chats'));
     if (view === 'broadcasts') btn.setAttribute('aria-label', t('nav.broadcasts'));
@@ -1040,7 +1037,6 @@ const chatSendBtn = document.getElementById('chat-send-btn');
 const viewChatsEl = document.getElementById('view-chats');
 const viewBroadcastsEl = document.getElementById('view-broadcasts');
 const viewContactsEl = document.getElementById('view-contacts');
-const viewHomeEl = document.getElementById('view-home');
 const broadcastListEl = document.getElementById('broadcast-list');
 const broadcastDetailEl = document.getElementById('broadcast-detail');
 const chatsTabsOperatorEl = document.getElementById('chats-tabs-operator');
@@ -1176,34 +1172,6 @@ function updateBroadcastTabBadges() {
 
 function updateTabBadges() {
   updateBroadcastTabBadges();
-  renderHome();
-}
-
-function renderHome() {
-  const priorityList = document.getElementById('home-priority-list');
-  if (!priorityList) return;
-  const open = ALL_CHATS.filter((chat) => !chat.done);
-  const awaiting = open.filter((chat) => chat.unread > 0);
-  const priority = [...awaiting, ...open.filter((chat) => chat.escalated && !chat.unread)]
-    .filter((chat, index, list) => list.findIndex((item) => item.id === chat.id) === index)
-    .slice(0, 4);
-  document.getElementById('home-open-count').textContent = open.length;
-  document.getElementById('home-awaiting-count').textContent = awaiting.length;
-  document.getElementById('home-unread-action').textContent = awaiting.length;
-  document.getElementById('home-contact-count').textContent = CONTACTS.length;
-  document.getElementById('home-broadcast-count').textContent = (BROADCASTS.sent || []).length;
-  priorityList.innerHTML = priority.length ? priority.map((chat) => `
-    <button class="home-priority-row" type="button" data-home-chat="${chat.id}">
-      <span class="home-priority-avatar" style="background:${AVATAR_COLORS[chat.initials] || '#8b9dc3'}">${chat.initials}</span>
-      <span class="home-priority-copy"><strong>${chat.name}</strong><small>${chat.preview || 'New conversation'}</small></span>
-      <span class="home-priority-time">${chat.time || 'Now'}</span><span class="material-icons">arrow_forward</span>
-    </button>`).join('') : '<div class="home-priority-row"><span></span><span class="home-priority-copy"><strong>All caught up</strong><small>There are no open conversations that need attention.</small></span></div>';
-  priorityList.querySelectorAll('[data-home-chat]').forEach((button) => button.addEventListener('click', () => {
-    activeChatId = button.dataset.homeChat;
-    switchView('chats');
-    renderChatList();
-    renderMessages();
-  }));
 }
 
 function operatorMiniAvatar(op) {
@@ -4764,7 +4732,6 @@ function switchView(view) {
   viewChatsEl.classList.toggle('hidden', view !== 'chats');
   viewBroadcastsEl.classList.toggle('hidden', view !== 'broadcasts');
   viewContactsEl.classList.toggle('hidden', view !== 'contacts');
-  viewHomeEl?.classList.toggle('hidden', view !== 'home');
 
   if (view === 'broadcasts') {
     renderBroadcastList();
@@ -4773,15 +4740,10 @@ function switchView(view) {
   if (view === 'contacts') {
     renderContactsTable();
   }
-  if (view === 'home') renderHome();
 }
 
 document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
   btn.addEventListener('click', () => switchView(btn.dataset.view));
-});
-
-document.querySelectorAll('[data-home-action]').forEach((btn) => {
-  btn.addEventListener('click', () => switchView(btn.dataset.homeAction));
 });
 
 document.getElementById('contacts-broadcasts-link')?.addEventListener('click', (event) => {
