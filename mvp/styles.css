@@ -4769,17 +4769,23 @@ button {
   }
 }
 
+.mvp-text-link,
 .broadcast-wizard__contacts-link,
-.broadcast-wizard__summary-contacts-link {
+.broadcast-wizard__summary-contacts-link,
+.summary-link {
   color: var(--btn-blue, #2B67B5);
   font: inherit;
-  font-weight: 600;
-  text-decoration: none;
+  font-weight: 500;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
+.mvp-text-link:hover,
 .broadcast-wizard__contacts-link:hover,
-.broadcast-wizard__summary-contacts-link:hover {
-  text-decoration: underline;
+.broadcast-wizard__summary-contacts-link:hover,
+.summary-link:hover {
+  color: #1f569e;
 }
 
 .broadcast-wizard__audience-hint {
