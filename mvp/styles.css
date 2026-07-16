@@ -1516,8 +1516,9 @@ button {
   align-items: center;
   justify-content: center;
   min-height: 0;
-  padding: 48px 56px;
+  padding: clamp(32px, 6vh, 72px) clamp(24px, 5vw, 80px);
   box-sizing: border-box;
+  overflow-y: auto;
 }
 
 .broadcast-empty-state__content {
@@ -1526,89 +1527,244 @@ button {
   align-items: stretch;
   text-align: left;
   width: 100%;
-  max-width: 400px;
+  max-width: 920px;
+  margin: auto;
 }
 
-.broadcast-empty-state__icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
+.broadcast-empty-state__intro {
+  max-width: 680px;
+  margin-bottom: 28px;
 }
 
-.broadcast-empty-state__icon .material-symbols-outlined {
-  font-size: 26px;
-  color: var(--text-secondary);
-  font-variation-settings: 'wght' 300;
+.broadcast-empty-state__eyebrow {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--btn-blue, #2b67b5);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .broadcast-empty-state__title {
-  font-size: 20px;
+  font-size: clamp(25px, 3vw, 34px);
   font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: -0.01em;
-  margin: 0 0 10px;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 0 0 12px;
+  text-wrap: balance;
 }
 
 .broadcast-empty-state__lead {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-secondary);
-  line-height: 1.55;
-  margin: 0 0 24px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 640px;
+  text-wrap: pretty;
 }
 
-.broadcast-empty-state__guide {
-  background: #fafafa;
+.broadcast-empty-state__path {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 36px minmax(0, 1fr);
+  grid-template-areas:
+    "audience connector message"
+    "audience-note . message-note";
+  align-items: stretch;
+  gap: 14px;
+}
+
+.broadcast-onboarding-card--audience {
+  grid-area: audience;
+}
+
+.broadcast-onboarding-card--message {
+  grid-area: message;
+}
+
+.broadcast-onboarding-card {
+  min-width: 0;
+  min-height: 260px;
+  padding: clamp(20px, 2.4vw, 28px);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px 18px;
+  border-radius: 14px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.broadcast-onboarding-card:hover {
+  transform: translateY(-2px);
+  border-color: #cfd7e3;
+  box-shadow: 0 10px 26px rgba(35, 56, 82, 0.08);
+}
+
+.broadcast-onboarding-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 24px;
 }
 
-.broadcast-empty-state__guide-title {
+.broadcast-onboarding-card__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #eef3fa;
+  color: var(--btn-blue, #2b67b5);
   font-size: 12px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin: 0 0 12px;
+  font-weight: 700;
 }
 
-.broadcast-empty-state__steps {
-  margin: 0;
-  padding: 0 0 0 20px;
-  font-size: 14px;
-  color: var(--text-primary);
-  line-height: 1.5;
+.broadcast-onboarding-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: #f0f4f9;
+  color: var(--btn-blue, #2b67b5);
 }
 
-.broadcast-empty-state__steps li {
-  margin-bottom: 8px;
-}
-
-.broadcast-empty-state__steps li:last-child {
-  margin-bottom: 0;
-}
-
-.broadcast-empty-state__btn {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 10px;
+.broadcast-onboarding-card--message .broadcast-onboarding-card__icon {
   background: var(--btn-blue, #2B67B5);
   color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  font-family: var(--font);
-  cursor: pointer;
-  transition: background 0.15s ease;
 }
 
-.broadcast-empty-state__btn:hover {
+.broadcast-onboarding-card__icon .material-symbols-outlined {
+  font-size: 30px;
+  font-variation-settings: 'wght' 350;
+}
+
+.broadcast-onboarding-card h3 {
+  margin: 0 0 10px;
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.broadcast-onboarding-card p {
+  margin: 0 0 22px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.broadcast-onboarding-card__action {
+  min-height: 44px;
+  margin-top: auto;
+  padding: 10px 14px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.broadcast-onboarding-card__action .material-symbols-outlined {
+  font-size: 19px;
+}
+
+.broadcast-onboarding-card__action--secondary {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text-primary);
+}
+
+.broadcast-onboarding-card__action--secondary:hover {
+  border-color: #b7c4d5;
+  background: #f7f9fc;
+}
+
+.broadcast-onboarding-card__action--primary {
+  border: 1px solid var(--btn-blue, #2B67B5);
+  background: var(--btn-blue, #2B67B5);
+  color: #fff;
+}
+
+.broadcast-onboarding-card__action--primary:hover {
   background: #245a9e;
+  border-color: #245a9e;
+}
+
+.broadcast-empty-state__connector {
+  grid-area: connector;
+  align-self: center;
+  justify-self: center;
+  color: #a3acb8;
+  font-size: 24px;
+}
+
+.broadcast-onboarding-card__note {
+  margin: -2px 2px 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.broadcast-onboarding-card__note--audience {
+  grid-area: audience-note;
+}
+
+.broadcast-onboarding-card__note--message {
+  grid-area: message-note;
+}
+
+@media (max-width: 800px) {
+  .broadcast-empty-state {
+    align-items: flex-start;
+    padding: 28px 22px;
+  }
+
+  .broadcast-empty-state__path {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "audience"
+      "audience-note"
+      "connector"
+      "message"
+      "message-note";
+    gap: 12px;
+  }
+
+  .broadcast-empty-state__connector {
+    transform: rotate(90deg);
+  }
+
+  .broadcast-onboarding-card {
+    min-height: 230px;
+  }
+
+}
+
+@media (max-width: 430px) {
+  .broadcast-empty-state {
+    padding: 24px 16px 32px;
+  }
+
+  .broadcast-empty-state__intro {
+    margin-bottom: 22px;
+  }
+
+  .broadcast-onboarding-card {
+    min-height: 0;
+    padding: 20px;
+  }
 }
 
 .broadcast-detail-header {

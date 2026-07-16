@@ -680,7 +680,7 @@
       padding-left: var(--panel-gap);
     }
 
-    #broadcast-empty-new-btn {
+    #home-create-broadcast-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -696,11 +696,11 @@
       transition: background 0.15s ease;
     }
 
-    #broadcast-empty-new-btn:hover {
+    #home-create-broadcast-btn:hover {
       background: #245a9e;
     }
 
-    #broadcast-empty-new-btn .material-symbols-outlined {
+    #home-create-broadcast-btn .material-symbols-outlined {
       font-size: 20px;
       color: #fff;
       line-height: 1;
@@ -1024,6 +1024,13 @@
             <span class="logo-ring"></span>
           </div>
           <div class="nav-items" data-od-id="sidebar-nav">
+          <button class="nav-item active" type="button" data-view="home" aria-label="Home" data-od-id="nav-home">
+            <span class="nav-item-icon-wrap" aria-hidden="true">
+              <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">home</span>
+              <span class="material-icons nav-item-icon nav-item-icon--filled">home</span>
+            </span>
+            <span data-i18n="nav.home">Home</span>
+          </button>
           <button class="nav-item" type="button" data-view="broadcasts" aria-label="Broadcasts" data-od-id="nav-broadcasts">
             <span class="nav-item-icon-wrap" aria-hidden="true">
               <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">campaign</span>
@@ -1038,7 +1045,7 @@
             </span>
             <span data-i18n="nav.contacts">Contacts</span>
           </button>
-          <button class="nav-item active" type="button" data-view="chats" aria-label="Chats" data-od-id="nav-chats">
+          <button class="nav-item" type="button" data-view="chats" aria-label="Chats" data-od-id="nav-chats">
             <span class="nav-item-icon-wrap" aria-hidden="true">
               <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">chat</span>
               <span class="material-icons nav-item-icon nav-item-icon--filled">chat</span>
@@ -1055,7 +1062,7 @@
               <span class="material-icons nav-item-icon nav-item-icon--filled">language</span>
             </span>
           </button>
-          <div class="lang-switcher-menu" id="lang-switcher-menu" role="menu" aria-hidden="true" hidden>
+          <div class="lang-switcher-menu" id="lang-switcher-menu" role="menu" aria-hidden="true" hidden="">
             <button type="button" class="lang-switcher-menu__item is-active" data-locale="en" role="menuitemradio" aria-checked="true">
               <span>English</span>
               <span class="lang-switcher-menu__check material-icons" aria-hidden="true">check</span>
@@ -1070,13 +1077,13 @@
           <div class="profile-avatar-wrap">
             <button type="button" class="profile-avatar" id="profile-avatar-btn" title="Account menu" aria-haspopup="menu" aria-expanded="false" aria-controls="profile-menu" data-od-id="sidebar-profile">
               <span class="profile-avatar__image" id="profile-avatar-image">
-                <img src="profile-avatar.jpg" alt="Alex Rivera" class="profile-avatar__photo" />
+                <img src="profile-avatar.jpg" alt="Alex Rivera" class="profile-avatar__photo">
               </span>
             </button>
             <span class="supervisor-badge hidden" id="supervisor-badge" aria-hidden="true">SV</span>
           </div>
-          <div class="profile-menu" id="profile-menu" role="menu" aria-hidden="true" hidden>
-            <button class="profile-menu__item hidden" type="button" id="toggle-supervisor-btn" role="menuitem" hidden>
+          <div class="profile-menu" id="profile-menu" role="menu" aria-hidden="true" hidden="">
+            <button class="profile-menu__item hidden" type="button" id="toggle-supervisor-btn" role="menuitem" hidden="">
               <span class="material-icons" aria-hidden="true">supervisor_account</span>
               <span id="toggle-supervisor-label">Switch to Supervisor</span>
             </button>
@@ -1092,9 +1099,9 @@
       <aside class="inbox panel" data-od-id="chats-inbox-panel">
       <header class="inbox-header mvp-panel-header mvp-panel-header--single" data-od-id="chats-inbox-header">
         <h2 data-od-id="chats-inbox-title" data-i18n="chats.inboxTitle">Chats Inbox</h2>
-        <button class="icon-btn compose-btn" type="button" aria-label="New message" data-od-id="chats-compose-btn" hidden>
+        <button class="icon-btn compose-btn" type="button" aria-label="New message" data-od-id="chats-compose-btn" hidden="">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M5.8942 16.75L4.01985 18.6243C3.87457 18.7696 3.70993 18.8053 3.52595 18.7313C3.34198 18.6573 3.25 18.5167 3.25 18.3096V5.05768C3.25 4.56056 3.427 4.135 3.781 3.781C4.135 3.427 4.56056 3.25 5.05768 3.25H16.9423C17.4394 3.25 17.8649 3.427 18.2189 3.781C18.5729 4.135 18.75 4.56056 18.75 5.05768V9.275C18.75 9.4814 18.6766 9.65383 18.5298 9.7923C18.383 9.93075 18.2048 9.99998 17.9952 9.99998C17.7856 9.99998 17.609 9.9281 17.4654 9.78435C17.3218 9.6406 17.25 9.46248 17.25 9.25V5.05768C17.25 4.96793 17.2212 4.8942 17.1635 4.8365C17.1058 4.7788 17.032 4.74995 16.9423 4.74995H5.05768C4.96792 4.74995 4.8942 4.7788 4.8365 4.8365C4.7788 4.8942 4.74995 4.96793 4.74995 5.05768V15.25H11.2211C11.4275 15.25 11.6042 15.3234 11.751 15.4702C11.8977 15.617 11.9711 15.7952 11.9711 16.0048C11.9711 16.2144 11.8977 16.391 11.751 16.5346C11.6042 16.6782 11.4275 16.75 11.2211 16.75H5.8942ZM7.80765 8.74995H14.1923C14.4048 8.74995 14.5829 8.67805 14.7267 8.53425C14.8704 8.39043 14.9423 8.21223 14.9423 7.99965C14.9423 7.78705 14.8704 7.60896 14.7267 7.46538C14.5829 7.32179 14.4048 7.25 14.1923 7.25H7.80765C7.59515 7.25 7.41703 7.3219 7.2733 7.4657C7.12955 7.60952 7.05768 7.78772 7.05768 8.0003C7.05768 8.2129 7.12955 8.39099 7.2733 8.53458C7.41703 8.67816 7.59515 8.74995 7.80765 8.74995ZM7.80765 12.75H11.1923C11.4048 12.75 11.5829 12.6781 11.7267 12.5343C11.8704 12.3904 11.9423 12.2122 11.9423 11.9997C11.9423 11.7871 11.8704 11.609 11.7267 11.4654C11.5829 11.3218 11.4048 11.25 11.1923 11.25H7.80765C7.59515 11.25 7.41703 11.3219 7.2733 11.4657C7.12955 11.6095 7.05768 11.7877 7.05768 12.0003C7.05768 12.2129 7.12955 12.391 7.2733 12.5346C7.41703 12.6782 7.59515 12.75 7.80765 12.75ZM17.25 16.75H15C14.7875 16.75 14.6094 16.6781 14.4656 16.5343C14.3219 16.3904 14.25 16.2122 14.25 15.9997C14.25 15.7871 14.3219 15.609 14.4656 15.4654C14.6094 15.3218 14.7875 15.25 15 15.25H17.25V13C17.25 12.7875 17.3219 12.6094 17.4657 12.4656C17.6095 12.3219 17.7877 12.25 18.0003 12.25C18.2129 12.25 18.391 12.3219 18.5346 12.4656C18.6782 12.6094 18.75 12.7875 18.75 13V15.25H21C21.2125 15.25 21.3906 15.3219 21.5344 15.4657C21.6781 15.6095 21.75 15.7877 21.75 16.0003C21.75 16.2129 21.6781 16.391 21.5344 16.5346C21.3906 16.6782 21.2125 16.75 21 16.75H18.75V19C18.75 19.2125 18.6781 19.3906 18.5343 19.5343C18.3904 19.6781 18.2122 19.75 17.9997 19.75C17.787 19.75 17.609 19.6781 17.4654 19.5343C17.3218 19.3906 17.25 19.2125 17.25 19V16.75Z" fill="#494644"/>
+            <path d="M5.8942 16.75L4.01985 18.6243C3.87457 18.7696 3.70993 18.8053 3.52595 18.7313C3.34198 18.6573 3.25 18.5167 3.25 18.3096V5.05768C3.25 4.56056 3.427 4.135 3.781 3.781C4.135 3.427 4.56056 3.25 5.05768 3.25H16.9423C17.4394 3.25 17.8649 3.427 18.2189 3.781C18.5729 4.135 18.75 4.56056 18.75 5.05768V9.275C18.75 9.4814 18.6766 9.65383 18.5298 9.7923C18.383 9.93075 18.2048 9.99998 17.9952 9.99998C17.7856 9.99998 17.609 9.9281 17.4654 9.78435C17.3218 9.6406 17.25 9.46248 17.25 9.25V5.05768C17.25 4.96793 17.2212 4.8942 17.1635 4.8365C17.1058 4.7788 17.032 4.74995 16.9423 4.74995H5.05768C4.96792 4.74995 4.8942 4.7788 4.8365 4.8365C4.7788 4.8942 4.74995 4.96793 4.74995 5.05768V15.25H11.2211C11.4275 15.25 11.6042 15.3234 11.751 15.4702C11.8977 15.617 11.9711 15.7952 11.9711 16.0048C11.9711 16.2144 11.8977 16.391 11.751 16.5346C11.6042 16.6782 11.4275 16.75 11.2211 16.75H5.8942ZM7.80765 8.74995H14.1923C14.4048 8.74995 14.5829 8.67805 14.7267 8.53425C14.8704 8.39043 14.9423 8.21223 14.9423 7.99965C14.9423 7.78705 14.8704 7.60896 14.7267 7.46538C14.5829 7.32179 14.4048 7.25 14.1923 7.25H7.80765C7.59515 7.25 7.41703 7.3219 7.2733 7.4657C7.12955 7.60952 7.05768 7.78772 7.05768 8.0003C7.05768 8.2129 7.12955 8.39099 7.2733 8.53458C7.41703 8.67816 7.59515 8.74995 7.80765 8.74995ZM7.80765 12.75H11.1923C11.4048 12.75 11.5829 12.6781 11.7267 12.5343C11.8704 12.3904 11.9423 12.2122 11.9423 11.9997C11.9423 11.7871 11.8704 11.609 11.7267 11.4654C11.5829 11.3218 11.4048 11.25 11.1923 11.25H7.80765C7.59515 11.25 7.41703 11.3219 7.2733 11.4657C7.12955 11.6095 7.05768 11.7877 7.05768 12.0003C7.05768 12.2129 7.12955 12.391 7.2733 12.5346C7.41703 12.6782 7.59515 12.75 7.80765 12.75ZM17.25 16.75H15C14.7875 16.75 14.6094 16.6781 14.4656 16.5343C14.3219 16.3904 14.25 16.2122 14.25 15.9997C14.25 15.7871 14.3219 15.609 14.4656 15.4654C14.6094 15.3218 14.7875 15.25 15 15.25H17.25V13C17.25 12.7875 17.3219 12.6094 17.4657 12.4656C17.6095 12.3219 17.7877 12.25 18.0003 12.25C18.2129 12.25 18.391 12.3219 18.5346 12.4656C18.6782 12.6094 18.75 12.7875 18.75 13V15.25H21C21.2125 15.25 21.3906 15.3219 21.5344 15.4657C21.6781 15.6095 21.75 15.7877 21.75 16.0003C21.75 16.2129 21.6781 16.391 21.5344 16.5346C21.3906 16.6782 21.2125 16.75 21 16.75H18.75V19C18.75 19.2125 18.6781 19.3906 18.5343 19.5343C18.3904 19.6781 18.2122 19.75 17.9997 19.75C17.787 19.75 17.609 19.6781 17.4654 19.5343C17.3218 19.3906 17.25 19.2125 17.25 19V16.75Z" fill="#494644"></path>
           </svg>
         </button>
       </header>
@@ -1125,7 +1132,7 @@
         <div class="chat-header__content" data-od-id="chat-title-group">
           <h2 id="chat-title" data-od-id="chat-title">Alice Reynolds</h2>
         </div>
-        <div class="chat-header-actions hidden" id="chat-operator-actions" data-od-id="chat-assist-btn" hidden aria-hidden="true">
+        <div class="chat-header-actions hidden" id="chat-operator-actions" data-od-id="chat-assist-btn" hidden="" aria-hidden="true">
           <button class="assist-btn" type="button" aria-label="Mark conversation as done" id="chat-done-btn" data-od-id="chat-done-btn">
             <span class="assist-btn__icon assist-btn__icon--done" aria-hidden="true">
               <span class="material-icons">check</span>
@@ -1168,7 +1175,7 @@
           <input type="file" id="chat-image-input" class="visually-hidden" accept="image/*" tabindex="-1">
         </div>
         <input type="text" class="message-input" id="message-input" placeholder="Message" autocomplete="off" data-od-id="chat-message-input" data-i18n-placeholder="chats.messagePlaceholder">
-        <button type="button" class="composer-send-btn" id="chat-send-btn" disabled aria-label="Send message" data-od-id="chat-send-btn" data-i18n="chats.send" data-i18n-aria="chats.sendAria">
+        <button type="button" class="composer-send-btn" id="chat-send-btn" disabled="" aria-label="Send message" data-od-id="chat-send-btn" data-i18n="chats.send" data-i18n-aria="chats.sendAria">
           Send
         </button>
       </footer>
@@ -1176,10 +1183,58 @@
     </div>
     </div>
 
+    <!-- Home view -->
+    <div class="view view--home-onboarding" id="view-home" data-od-id="view-home">
+      <div class="panel-rail panel-rail--chat">
+        <main class="broadcast-empty-state panel" id="home-welcome-state" data-od-id="home-welcome-state">
+          <div class="broadcast-empty-state__content">
+            <div class="broadcast-empty-state__intro">
+              <span class="broadcast-empty-state__eyebrow" data-i18n="broadcasts.emptyEyebrow">Getting started</span>
+              <h2 class="broadcast-empty-state__title" data-i18n="broadcasts.emptyTitle">Welcome 👋</h2>
+              <p class="broadcast-empty-state__lead" data-i18n="broadcasts.emptyLead">This web workspace lets you keep track of ongoing conversations, organize your contacts and send messages to multiple people. Here is how it works:</p>
+            </div>
+            <div class="broadcast-empty-state__path" aria-label="Two steps to send a broadcast" data-i18n-aria="broadcasts.emptyPathAria">
+              <article class="broadcast-onboarding-card broadcast-onboarding-card--audience">
+                <div class="broadcast-onboarding-card__top">
+                  <span class="broadcast-onboarding-card__number" aria-hidden="true">1</span>
+                  <span class="broadcast-onboarding-card__icon" aria-hidden="true">
+                    <span class="material-symbols-outlined">group_add</span>
+                  </span>
+                </div>
+                <h3 data-i18n="broadcasts.emptyStep1Title">Create or choose a tag</h3>
+                <p data-i18n="broadcasts.emptyStep1Body">Create a tag for the people you want to message, or choose an existing tag that matches your audience.</p>
+                <button type="button" class="broadcast-onboarding-card__action broadcast-onboarding-card__action--secondary" id="home-manage-tags-btn">
+                  <span data-i18n="broadcasts.emptyStep1Cta">Manage contact tags</span>
+                  <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                </button>
+              </article>
+              <p class="broadcast-onboarding-card__note broadcast-onboarding-card__note--audience" data-i18n="broadcasts.emptyStep1Condition">If you don’t have an audience tag yet</p>
+              <span class="broadcast-empty-state__connector material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+              <article class="broadcast-onboarding-card broadcast-onboarding-card--message">
+                <div class="broadcast-onboarding-card__top">
+                  <span class="broadcast-onboarding-card__number" aria-hidden="true">2</span>
+                  <span class="broadcast-onboarding-card__icon" aria-hidden="true">
+                    <span class="material-symbols-outlined">campaign</span>
+                  </span>
+                </div>
+                <h3 data-i18n="broadcasts.emptyStep2Title">Create your broadcast</h3>
+                <p data-i18n="broadcasts.emptyStep2Body">Start your broadcast, choose the prepared tag, and write the message you want to send.</p>
+                <button type="button" class="broadcast-onboarding-card__action broadcast-onboarding-card__action--primary" id="home-create-broadcast-btn" aria-label="Create new broadcast" data-i18n-aria="broadcasts.createNewAria">
+                  <span data-i18n="broadcasts.emptyCta">Create broadcast</span>
+                  <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                </button>
+              </article>
+              <p class="broadcast-onboarding-card__note broadcast-onboarding-card__note--message" data-i18n="broadcasts.emptyStep2Condition">If your audience tag is ready</p>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
     <!-- Broadcasts view -->
     <div class="view view--broadcasts view--broadcasts-list-hidden hidden" id="view-broadcasts" data-od-id="view-broadcasts">
       <!-- MVP: list panel hidden — remove hidden to restore sent-broadcast list -->
-      <div class="panel-rail panel-rail--inbox" data-od-id="broadcasts-inbox-rail" hidden>
+      <div class="panel-rail panel-rail--inbox" data-od-id="broadcasts-inbox-rail" hidden="">
         <aside class="inbox panel" data-od-id="broadcasts-inbox-panel">
           <header class="inbox-header mvp-panel-header mvp-panel-header--single" data-od-id="broadcasts-inbox-header">
             <div class="inbox-header__title-row">
@@ -1197,31 +1252,10 @@
       </div>
 
       <div class="panel-rail panel-rail--chat" data-od-id="broadcast-detail-rail">
-        <div class="broadcast-empty-state panel" id="broadcast-empty-state" data-od-id="broadcast-empty-state" hidden aria-hidden="true">
-          <div class="broadcast-empty-state__content">
-            <div class="broadcast-empty-state__icon" aria-hidden="true">
-              <span class="material-symbols-outlined">campaign</span>
-            </div>
-            <h2 class="broadcast-empty-state__title" data-i18n="broadcasts.emptyTitle">Broadcasts</h2>
-            <p class="broadcast-empty-state__lead" data-i18n="broadcasts.emptyLead">Need to reach multiple contacts at once? Pick a tag and send the same message to everyone in that group.</p>
-            <div class="broadcast-empty-state__guide">
-              <p class="broadcast-empty-state__guide-title" data-i18n="broadcasts.emptyGuideTitle">How it works</p>
-              <ol class="broadcast-empty-state__steps">
-                <li data-i18n="broadcasts.emptyStep1">Choose a message template</li>
-                <li data-i18n="broadcasts.emptyStep2">Select contacts by tag</li>
-                <li data-i18n="broadcasts.emptyStep3">Send to the whole group at once</li>
-              </ol>
-            </div>
-            <button type="button" class="broadcast-empty-state__btn" id="broadcast-empty-new-btn" aria-label="Create new broadcast" data-i18n-aria="broadcasts.createNewAria">
-              <span class="material-symbols-outlined" aria-hidden="true">add</span>
-              <span data-i18n="broadcasts.emptyCta">Create broadcast</span>
-            </button>
-          </div>
-        </div>
-        <main class="broadcast-detail panel" id="broadcast-detail" data-od-id="broadcast-detail-panel" hidden aria-hidden="true"></main>
-        <div class="broadcast-wizard broadcast-wizard--panel panel" id="broadcast-wizard" hidden aria-hidden="true">
+        <main class="broadcast-detail panel" id="broadcast-detail" data-od-id="broadcast-detail-panel" hidden="" aria-hidden="true"></main>
+        <div class="broadcast-wizard broadcast-wizard--panel panel" id="broadcast-wizard" hidden="" aria-hidden="true">
           <div class="broadcast-wizard__dialog" role="region" aria-label="New broadcast">
-            <button type="button" class="broadcast-wizard__close" id="broadcast-wizard-close" aria-label="Close" hidden>
+            <button type="button" class="broadcast-wizard__close" id="broadcast-wizard-close" aria-label="Close" hidden="">
               <span class="material-icons" aria-hidden="true">close</span>
             </button>
             <header class="broadcast-wizard__panel-header" data-od-id="broadcast-wizard-header">
@@ -1239,8 +1273,8 @@
               <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-compose" data-step="3">
                 <h3 class="broadcast-wizard__panel-title" data-i18n="wizard.composeTitle">Compose your message</h3>
                 <p class="broadcast-wizard__panel-desc" data-i18n="wizard.composeDesc">Write the broadcast title and message your contacts will receive.</p>
-                <form class="broadcast-wizard__form" id="broadcast-wizard-compose-form" novalidate>
-                  <div class="broadcast-wizard__template-selected" id="broadcast-wizard-template-selected" hidden>
+                <form class="broadcast-wizard__form" id="broadcast-wizard-compose-form" novalidate="">
+                  <div class="broadcast-wizard__template-selected" id="broadcast-wizard-template-selected" hidden="">
                     <span class="broadcast-wizard__template-selected-label">Template type</span>
                     <div class="broadcast-wizard__template-chip">
                       <span class="material-icons broadcast-wizard__template-chip-icon" id="broadcast-wizard-template-chip-icon" aria-hidden="true"></span>
@@ -1294,7 +1328,7 @@
                 <p class="broadcast-wizard__panel-desc">Send immediately or pick a date and time for later delivery.</p>
                 <div class="broadcast-wizard__schedule-options" role="radiogroup" aria-label="Send timing">
                   <label class="broadcast-wizard__schedule-card">
-                    <input type="radio" name="broadcast-send-mode" value="now" checked>
+                    <input type="radio" name="broadcast-send-mode" value="now" checked="">
                     <span class="broadcast-wizard__schedule-card-body">
                       <span class="material-icons" aria-hidden="true">send</span>
                       <span class="broadcast-wizard__schedule-card-title">Send now</span>
@@ -1362,7 +1396,7 @@
     </div>
 
     <!-- Contacts view -->
-    <div class="view view--contacts" id="view-contacts" data-od-id="view-contacts">
+    <div class="view view--contacts hidden" id="view-contacts" data-od-id="view-contacts">
       <div class="panel-rail panel-rail--full" data-od-id="contacts-rail">
         <main class="contacts-panel" data-od-id="contacts-panel">
           <div class="contacts-card" data-od-id="contacts-card">
@@ -1380,14 +1414,14 @@
             </header>
 
             <div class="contacts-card__top" data-od-id="contacts-card-top">
-              <div class="contacts-search-wrap hidden" data-od-id="contacts-search-wrap" hidden aria-hidden="true">
+              <div class="contacts-search-wrap hidden" data-od-id="contacts-search-wrap" hidden="" aria-hidden="true">
                 <span class="material-icons contacts-search-icon" aria-hidden="true">search</span>
                 <input type="search" class="contacts-search" id="contacts-search" placeholder="Search contacts" autocomplete="off" data-od-id="contacts-search">
               </div>
-              <div class="contacts-toolbar hidden" data-od-id="contacts-toolbar" hidden aria-hidden="true">
+              <div class="contacts-toolbar hidden" data-od-id="contacts-toolbar" hidden="" aria-hidden="true">
                 <div class="contacts-toolbar__row">
                 <div class="contacts-filters" data-od-id="contacts-filters">
-                  <div class="filter-dropdown hidden" data-od-id="contacts-filter-role" hidden aria-hidden="true">
+                  <div class="filter-dropdown hidden" data-od-id="contacts-filter-role" hidden="" aria-hidden="true">
                     <button class="filter-btn" type="button" id="filter-role-btn" aria-haspopup="listbox" aria-expanded="false">
                       <span class="filter-btn__label">User Role</span>
                       <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
@@ -1450,9 +1484,9 @@
                   Select all <span id="contacts-toolbar-select-total">120</span> users
                 </button>
                 </div>
-                <div class="contacts-active-filters" id="contacts-active-filters" data-od-id="contacts-active-tags" hidden>
+                <div class="contacts-active-filters" id="contacts-active-filters" data-od-id="contacts-active-tags" hidden="">
                   <div class="contacts-active-filters__chips" id="contacts-active-tags"></div>
-                  <button class="contacts-clear-filters" type="button" id="contacts-clear-filters" hidden>Clear filters</button>
+                  <button class="contacts-clear-filters" type="button" id="contacts-clear-filters" hidden="">Clear filters</button>
                 </div>
               </div>
 
@@ -1478,7 +1512,7 @@
                     <span class="contacts-selection-pill" tabindex="0">
                       <span id="contacts-selection-count">0 users selected</span>
                       <span class="contacts-selection-pill__hint" role="tooltip" id="contacts-selection-hint" data-i18n="contacts.selectionHint">Select contacts to add tags</span>
-                      <button type="button" class="contacts-selection-pill__clear" id="contacts-selection-clear" aria-label="Clear selection" hidden>
+                      <button type="button" class="contacts-selection-pill__clear" id="contacts-selection-clear" aria-label="Clear selection" hidden="">
                         <span class="material-icons">close</span>
                       </button>
                     </span>
@@ -1486,7 +1520,7 @@
                 </div>
                 <div class="contacts-selection-bar__actions">
                   <div class="filter-dropdown add-tags-dropdown" id="contacts-add-tags-wrap">
-                    <button type="button" class="contacts-selection-btn contacts-selection-btn--outline" id="contacts-add-tags-btn" aria-haspopup="dialog" aria-expanded="false" disabled>
+                    <button type="button" class="contacts-selection-btn contacts-selection-btn--outline" id="contacts-add-tags-btn" aria-haspopup="dialog" aria-expanded="false" disabled="">
                       <span class="material-icons">sell</span>
                       <span data-i18n="contacts.addTags">Add Tags</span>
                     </button>
@@ -1511,16 +1545,16 @@
                             <span class="material-icons" aria-hidden="true">label</span>
                             <input type="text" id="contacts-add-tags-new" placeholder="New tag name" maxlength="40" data-i18n-placeholder="contacts.newTagPlaceholder">
                           </div>
-                          <button type="button" class="add-tags-popover__create-btn" id="contacts-add-tags-create-btn" disabled data-i18n="contacts.createTag">Create tag</button>
+                          <button type="button" class="add-tags-popover__create-btn" id="contacts-add-tags-create-btn" disabled="" data-i18n="contacts.createTag">Create tag</button>
                         </div>
                       </div>
                       <div class="add-tags-popover__footer">
                         <button type="button" class="add-tags-popover__cancel" id="contacts-add-tags-cancel" data-i18n="contacts.cancel">Cancel</button>
-                        <button type="button" class="add-tags-popover__apply" id="contacts-add-tags-apply" disabled data-i18n="contacts.applyTags">Apply tags</button>
+                        <button type="button" class="add-tags-popover__apply" id="contacts-add-tags-apply" disabled="" data-i18n="contacts.applyTags">Apply tags</button>
                       </div>
                     </div>
                   </div>
-                  <button type="button" class="contacts-selection-btn contacts-selection-btn--solid hidden" id="contacts-create-template-btn" hidden aria-hidden="true">
+                  <button type="button" class="contacts-selection-btn contacts-selection-btn--solid hidden" id="contacts-create-template-btn" hidden="" aria-hidden="true">
                     + CREATE TEMPLATE
                   </button>
                 </div>
@@ -1548,7 +1582,7 @@
 
             <footer class="contacts-footer" data-od-id="contacts-footer">
               <span class="contacts-showing" id="contacts-showing">120 Weavers</span>
-              <div class="contacts-pagination hidden" data-od-id="contacts-pagination" hidden aria-hidden="true">
+              <div class="contacts-pagination hidden" data-od-id="contacts-pagination" hidden="" aria-hidden="true">
                 <div class="filter-dropdown contacts-rows-dropdown">
                   <button class="filter-btn filter-btn--plain" type="button" id="rows-per-page-btn" aria-haspopup="listbox">
                     Rows per page: <span id="rows-per-page-value">10</span>
@@ -1562,7 +1596,7 @@
                 </div>
                 <span class="contacts-page-range" id="contacts-page-range">1–10 of 120</span>
                 <div class="contacts-page-nav">
-                  <button class="icon-btn contacts-page-btn" type="button" id="contacts-prev-page" aria-label="Previous page" disabled>
+                  <button class="icon-btn contacts-page-btn" type="button" id="contacts-prev-page" aria-label="Previous page" disabled="">
                     <span class="material-icons">chevron_left</span>
                   </button>
                   <button class="icon-btn contacts-page-btn" type="button" id="contacts-next-page" aria-label="Next page">
@@ -1577,7 +1611,7 @@
     </div>
   </div>
 
-  <div class="template-modal" id="template-modal" hidden aria-hidden="true">
+  <div class="template-modal" id="template-modal" hidden="" aria-hidden="true">
     <div class="template-modal__backdrop" id="template-modal-backdrop"></div>
     <div class="template-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="template-modal-title">
       <button type="button" class="template-modal__close" id="template-modal-close" aria-label="Close">
@@ -1592,7 +1626,7 @@
     </div>
   </div>
 
-  <div class="template-composer-modal" id="template-composer-modal" hidden aria-hidden="true">
+  <div class="template-composer-modal" id="template-composer-modal" hidden="" aria-hidden="true">
     <div class="template-composer-modal__backdrop" id="template-composer-backdrop"></div>
     <div class="template-composer-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="template-composer-title">
       <button type="button" class="template-composer-modal__close" id="template-composer-close" aria-label="Close">
@@ -1610,7 +1644,7 @@
             <button type="button" class="survey-preview-card__btn" tabindex="-1">START SURVEY</button>
           </div>
         </div>
-        <form class="template-composer-form" id="survey-composer-form" novalidate>
+        <form class="template-composer-form" id="survey-composer-form" novalidate="">
           <div class="template-composer-field">
             <label class="template-composer-field__label" for="survey-title-input">Survey Title</label>
             <input type="text" class="template-composer-field__input" id="survey-title-input" placeholder="Enter Title" maxlength="45" autocomplete="off">
@@ -1624,7 +1658,7 @@
           <div class="template-composer-field">
             <label class="template-composer-field__label" for="survey-link-input">Survey Link</label>
             <input type="url" class="template-composer-field__input" id="survey-link-input" placeholder="https://example.com/survey" autocomplete="off">
-            <p class="template-composer-field__error" id="survey-link-error" hidden>
+            <p class="template-composer-field__error" id="survey-link-error" hidden="">
               <span class="material-icons" aria-hidden="true">error</span>
               Invalid link format
             </p>
@@ -1633,12 +1667,12 @@
       </div>
       <footer class="template-composer-modal__footer">
         <button type="button" class="template-composer-btn template-composer-btn--cancel" id="survey-composer-cancel">CANCEL</button>
-        <button type="button" class="template-composer-btn template-composer-btn--send" id="survey-composer-send" disabled>SEND</button>
+        <button type="button" class="template-composer-btn template-composer-btn--send" id="survey-composer-send" disabled="">SEND</button>
       </footer>
     </div>
   </div>
 
-  <div class="template-composer-modal" id="rsvp-composer-modal" hidden aria-hidden="true">
+  <div class="template-composer-modal" id="rsvp-composer-modal" hidden="" aria-hidden="true">
     <div class="template-composer-modal__backdrop" id="rsvp-composer-backdrop"></div>
     <div class="template-composer-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="rsvp-composer-title">
       <button type="button" class="template-composer-modal__close" id="rsvp-composer-close" aria-label="Close">
@@ -1652,7 +1686,7 @@
         <div class="template-composer-preview template-composer-preview--rsvp">
           <div id="rsvp-preview-card"></div>
         </div>
-        <form class="template-composer-form" id="rsvp-composer-form" novalidate>
+        <form class="template-composer-form" id="rsvp-composer-form" novalidate="">
           <div class="template-composer-field">
             <label class="template-composer-field__label" for="rsvp-event-select">Choose the Event</label>
             <p class="template-composer-field__hint">You can select an event to send invites for</p>
@@ -1673,6 +1707,7 @@
   <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
   <script src="app.js"></script>
+
 
 
 </body></html>

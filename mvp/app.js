@@ -47,6 +47,7 @@ let currentLocale = localStorage.getItem(I18N_STORAGE_KEY) || 'en';
 
 const I18N_STRINGS = {
   en: {
+    'nav.home': 'Home',
     'nav.contacts': 'Contacts',
     'nav.chats': 'Chats',
     'nav.broadcasts': 'Broadcasts',
@@ -65,13 +66,20 @@ const I18N_STRINGS = {
     'broadcasts.title': 'Broadcasts',
     'broadcasts.createNew': 'Create new',
     'broadcasts.createNewAria': 'Create new broadcast',
-    'broadcasts.emptyTitle': 'Broadcasts',
+    'broadcasts.emptyEyebrow': 'Getting started',
+    'broadcasts.emptyTitle': 'Welcome 👋',
     'broadcasts.emptyLead':
-      'Need to reach multiple contacts at once? Pick a tag and send the same message to everyone in that group.',
-    'broadcasts.emptyGuideTitle': 'How it works',
-    'broadcasts.emptyStep1': 'Choose a message template',
-    'broadcasts.emptyStep2': 'Select contacts by tag',
-    'broadcasts.emptyStep3': 'Send to the whole group at once',
+      'This web workspace lets you keep track of ongoing conversations, organize your contacts and send messages to multiple people. Here is how it works:',
+    'broadcasts.emptyPathAria': 'Two steps to send a broadcast',
+    'broadcasts.emptyStep1Condition': 'If you don’t have an audience tag yet',
+    'broadcasts.emptyStep1Title': 'Create or choose a tag',
+    'broadcasts.emptyStep1Body':
+      'Create a tag for the people you want to message, or choose an existing tag that matches your audience.',
+    'broadcasts.emptyStep1Cta': 'Manage contact tags',
+    'broadcasts.emptyStep2Condition': 'If your audience tag is ready',
+    'broadcasts.emptyStep2Title': 'Create your broadcast',
+    'broadcasts.emptyStep2Body':
+      'Start your broadcast, choose the prepared tag, and write the message you want to send.',
     'broadcasts.emptyCta': 'Create broadcast',
     'broadcasts.wizardTitle': 'New broadcast',
     'broadcasts.noTitle': 'No title',
@@ -231,6 +239,7 @@ const I18N_STRINGS = {
     'chat.patricia.in1': 'Is the showroom open this Saturday?',
   },
   ja: {
+    'nav.home': 'ホーム',
     'nav.contacts': '連絡先',
     'nav.chats': 'チャット',
     'nav.broadcasts': '配信',
@@ -249,13 +258,20 @@ const I18N_STRINGS = {
     'broadcasts.title': '配信',
     'broadcasts.createNew': '新規作成',
     'broadcasts.createNewAria': '新規配信を作成',
-    'broadcasts.emptyTitle': '配信',
+    'broadcasts.emptyEyebrow': 'はじめに',
+    'broadcasts.emptyTitle': 'ようこそ 👋',
     'broadcasts.emptyLead':
-      '複数の連絡先に一度に届けたい場合は、タグを選んで同じメッセージを配信できます。',
-    'broadcasts.emptyGuideTitle': '使い方',
-    'broadcasts.emptyStep1': 'テンプレートを選ぶ',
-    'broadcasts.emptyStep2': 'タグで配信先を指定',
-    'broadcasts.emptyStep3': 'タグで絞り込んで一括送信',
+      'このワークスペースでは、進行中の会話を確認し、連絡先を整理して、複数の方へメッセージを送信できます。ご利用の流れをご案内します。',
+    'broadcasts.emptyPathAria': '配信までの2つのステップ',
+    'broadcasts.emptyStep1Condition': '配信先のタグがまだない場合',
+    'broadcasts.emptyStep1Title': 'タグを作成または選択',
+    'broadcasts.emptyStep1Body':
+      'メッセージを届けたい方のタグを作成するか、配信先に合う既存のタグを選びます。',
+    'broadcasts.emptyStep1Cta': '連絡先のタグを管理',
+    'broadcasts.emptyStep2Condition': '配信先のタグが準備できている場合',
+    'broadcasts.emptyStep2Title': '配信を作成する',
+    'broadcasts.emptyStep2Body':
+      '配信を開始し、準備したタグを選んで、届けたいメッセージを作成します。',
     'broadcasts.emptyCta': '配信を作成',
     'broadcasts.wizardTitle': '新規配信',
     'broadcasts.noTitle': 'タイトル未入力',
@@ -481,6 +497,7 @@ function applyStaticTranslations() {
 
   document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
     const view = btn.dataset.view;
+    if (view === 'home') btn.setAttribute('aria-label', t('nav.home'));
     if (view === 'contacts') btn.setAttribute('aria-label', t('nav.contacts'));
     if (view === 'chats') btn.setAttribute('aria-label', t('nav.chats'));
     if (view === 'broadcasts') btn.setAttribute('aria-label', t('nav.broadcasts'));
@@ -1018,7 +1035,7 @@ function buildContactsList() {
 
 const CONTACTS = buildContactsList();
 
-let activeView = 'chats';
+let activeView = 'home';
 let activeTab = 'assigned';
 let supervisorTab = 'escalated';
 let activeChatId = 'alice';
@@ -1035,6 +1052,7 @@ const chatTitleEl = document.getElementById('chat-title');
 const messageInput = document.getElementById('message-input');
 const chatSendBtn = document.getElementById('chat-send-btn');
 const viewChatsEl = document.getElementById('view-chats');
+const viewHomeEl = document.getElementById('view-home');
 const viewBroadcastsEl = document.getElementById('view-broadcasts');
 const viewContactsEl = document.getElementById('view-contacts');
 const broadcastListEl = document.getElementById('broadcast-list');
@@ -4044,8 +4062,11 @@ function initBroadcastWizard() {
 
   composeBtn?.addEventListener('click', () => openBroadcastWizard());
 
-  document.getElementById('broadcast-empty-new-btn')?.addEventListener('click', () =>
-    openBroadcastWizard()
+  document.getElementById('home-create-broadcast-btn')?.addEventListener('click', () =>
+    switchView('broadcasts')
+  );
+  document.getElementById('home-manage-tags-btn')?.addEventListener('click', () =>
+    switchView('contacts')
   );
   closeBtn?.addEventListener('click', () => discardBroadcastWizard());
 
@@ -4054,7 +4075,10 @@ function initBroadcastWizard() {
     showBroadcastWizardStep(broadcastWizardState.step - 1);
   });
 
-  discardBtn?.addEventListener('click', () => discardBroadcastWizard());
+  discardBtn?.addEventListener('click', () => {
+    discardBroadcastWizard();
+    switchView('home');
+  });
 
   nextBtn?.addEventListener('click', () => {
     if (broadcastWizardState.step === 3 && !validateBroadcastWizardStep(3)) {
@@ -4729,13 +4753,18 @@ function switchView(view) {
     btn.classList.toggle('active', btn.dataset.view === view);
   });
 
+  viewHomeEl.classList.toggle('hidden', view !== 'home');
   viewChatsEl.classList.toggle('hidden', view !== 'chats');
   viewBroadcastsEl.classList.toggle('hidden', view !== 'broadcasts');
   viewContactsEl.classList.toggle('hidden', view !== 'contacts');
 
   if (view === 'broadcasts') {
     renderBroadcastList();
-    tryRestoreBroadcastWizardOnEnter();
+    if (wizardSessionHasProgress(broadcastWizardState)) {
+      tryRestoreBroadcastWizardOnEnter();
+    } else if (!broadcastWizardOpen) {
+      startFreshBroadcastWizard();
+    }
   }
   if (view === 'contacts') {
     renderContactsTable();
@@ -4768,4 +4797,7 @@ if (launchView === 'contacts' && launchTag && contactTagCatalog.includes(launchT
   syncTagsFilterCheckboxes();
   updateTagsFilterButton();
 }
-switchView(launchView === 'contacts' ? 'contacts' : 'chats');
+const initialView = ['home', 'broadcasts', 'contacts', 'chats'].includes(launchView)
+  ? launchView
+  : 'home';
+switchView(initialView);
