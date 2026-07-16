@@ -47,7 +47,6 @@ let currentLocale = localStorage.getItem(I18N_STORAGE_KEY) || 'en';
 
 const I18N_STRINGS = {
   en: {
-    'nav.home': 'Home',
     'nav.contacts': 'Contacts',
     'nav.chats': 'Chats',
     'nav.broadcasts': 'Broadcasts',
@@ -57,6 +56,9 @@ const I18N_STRINGS = {
     'lang.shortJa': '日',
     'lang.changeAria': 'Change language',
     'chats.inboxTitle': 'Chats Inbox',
+    'chats.search': 'Search conversations',
+    'chats.searchPlaceholder': 'Search conversations',
+    'chats.noSearchResults': 'No conversations match your search.',
     'chats.attachImage': 'Image',
     'chats.template': 'Template',
     'chats.messagePlaceholder': 'Message',
@@ -66,17 +68,18 @@ const I18N_STRINGS = {
     'broadcasts.title': 'Broadcasts',
     'broadcasts.createNew': 'Create new',
     'broadcasts.createNewAria': 'Create new broadcast',
-    'broadcasts.emptyEyebrow': 'Getting started',
-    'broadcasts.emptyTitle': 'Welcome 👋',
+    'broadcasts.emptyTitle': 'Welcome to Broadcasts 👋',
     'broadcasts.emptyLead':
-      'This web workspace lets you keep track of ongoing conversations, organize your contacts and send messages to multiple people. Here is how it works:',
+      'This web workspace lets you send messages to multiple people. Here is how it works:',
     'broadcasts.emptyPathAria': 'Two steps to send a broadcast',
-    'broadcasts.emptyStep1Condition': 'If you don’t have an audience tag yet',
-    'broadcasts.emptyStep1Title': 'Create or choose a tag',
-    'broadcasts.emptyStep1Body':
-      'Create a tag for the people you want to message, or choose an existing tag that matches your audience.',
+    'broadcasts.emptyStep1Label': 'Step 1',
+    'broadcasts.emptyStep1Title': 'Create a tag',
+    'broadcasts.emptyStep1Helper': 'Skip if you already have one',
+    'broadcasts.emptyStep1BodyPrefix': 'Create a group tag in ',
+    'broadcasts.emptyStep1ContactsLink': 'Contacts',
+    'broadcasts.emptyStep1BodySuffix': ' for the people you want to message.',
     'broadcasts.emptyStep1Cta': 'Manage contact tags',
-    'broadcasts.emptyStep2Condition': 'If your audience tag is ready',
+    'broadcasts.emptyStep2Label': 'Step 2',
     'broadcasts.emptyStep2Title': 'Create your broadcast',
     'broadcasts.emptyStep2Body':
       'Start your broadcast, choose the prepared tag, and write the message you want to send.',
@@ -191,7 +194,7 @@ const I18N_STRINGS = {
     'tag.Event invite': 'Event invite',
     'tag.VIP': 'VIP',
     'page.title': 'Chats Inbox — MVP',
-    'chat.sentAt': 'Sent {{time}}',
+    'chat.sent': 'Sent',
     'chat.alice.preview':
       'Hi, I read your post about Latte Art. Can you tell me how I can join',
     'chat.alice.date1': 'Today, 11:30 AM',
@@ -239,7 +242,6 @@ const I18N_STRINGS = {
     'chat.patricia.in1': 'Is the showroom open this Saturday?',
   },
   ja: {
-    'nav.home': 'ホーム',
     'nav.contacts': '連絡先',
     'nav.chats': 'チャット',
     'nav.broadcasts': '配信',
@@ -249,26 +251,30 @@ const I18N_STRINGS = {
     'lang.shortJa': '日',
     'lang.changeAria': '言語を変更',
     'chats.inboxTitle': 'チャット',
+    'chats.search': '会話を検索',
+    'chats.searchPlaceholder': '会話を検索',
+    'chats.noSearchResults': '検索条件に一致する会話はありません。',
     'chats.attachImage': '画像',
     'chats.template': 'テンプレート',
     'chats.messagePlaceholder': 'メッセージ',
-    'chats.send': '送信',
+    'chats.send': '送信する',
     'chats.sendAria': 'メッセージを送信',
     'chats.noConversations': 'チャットはありません。',
     'broadcasts.title': '配信',
     'broadcasts.createNew': '新規作成',
     'broadcasts.createNewAria': '新規配信を作成',
-    'broadcasts.emptyEyebrow': 'はじめに',
-    'broadcasts.emptyTitle': 'ようこそ 👋',
+    'broadcasts.emptyTitle': '配信へようこそ 👋',
     'broadcasts.emptyLead':
-      'このワークスペースでは、進行中の会話を確認し、連絡先を整理して、複数の方へメッセージを送信できます。ご利用の流れをご案内します。',
+      'このワークスペースでは、複数の方にメッセージを送信できます。ご利用の流れをご案内します。',
     'broadcasts.emptyPathAria': '配信までの2つのステップ',
-    'broadcasts.emptyStep1Condition': '配信先のタグがまだない場合',
-    'broadcasts.emptyStep1Title': 'タグを作成または選択',
-    'broadcasts.emptyStep1Body':
-      'メッセージを届けたい方のタグを作成するか、配信先に合う既存のタグを選びます。',
+    'broadcasts.emptyStep1Label': 'ステップ 1',
+    'broadcasts.emptyStep1Title': 'タグを作成する',
+    'broadcasts.emptyStep1Helper': 'すでにタグがある場合はスキップできます',
+    'broadcasts.emptyStep1BodyPrefix': 'メッセージを送りたい人のグループタグを',
+    'broadcasts.emptyStep1ContactsLink': '連絡先',
+    'broadcasts.emptyStep1BodySuffix': 'で作成します。',
     'broadcasts.emptyStep1Cta': '連絡先のタグを管理',
-    'broadcasts.emptyStep2Condition': '配信先のタグが準備できている場合',
+    'broadcasts.emptyStep2Label': 'ステップ 2',
     'broadcasts.emptyStep2Title': '配信を作成する',
     'broadcasts.emptyStep2Body':
       '配信を開始し、準備したタグを選んで、届けたいメッセージを作成します。',
@@ -382,7 +388,7 @@ const I18N_STRINGS = {
     'tag.Event invite': 'イベント招待',
     'tag.VIP': 'VIP',
     'page.title': 'チャット — MVP',
-    'chat.sentAt': '送信 {{time}}',
+    'chat.sent': '送信済み',
     'chat.alice.preview': 'ラテアートの投稿を見ました。参加方法を教えてください',
     'chat.alice.date1': '今日 11:30',
     'chat.alice.in1': 'ラテアートの投稿を拝見しました。参加方法を教えていただけますか',
@@ -455,8 +461,10 @@ function getLocalizedMessageText(msg) {
 function formatMessageStatus(status) {
   if (!status) return '';
   const match = status.match(/^Sent\s+(.+)$/);
-  if (match) return t('chat.sentAt', { time: match[1] });
-  return status;
+  if (match) {
+    return `<span class="msg-status__label">${t('chat.sent')}</span><span class="msg-status__time">${match[1]}</span>`;
+  }
+  return `<span class="msg-status__label">${status}</span>`;
 }
 
 function getLocalizedTemplateOptions() {
@@ -497,7 +505,6 @@ function applyStaticTranslations() {
 
   document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
     const view = btn.dataset.view;
-    if (view === 'home') btn.setAttribute('aria-label', t('nav.home'));
     if (view === 'contacts') btn.setAttribute('aria-label', t('nav.contacts'));
     if (view === 'chats') btn.setAttribute('aria-label', t('nav.chats'));
     if (view === 'broadcasts') btn.setAttribute('aria-label', t('nav.broadcasts'));
@@ -1035,7 +1042,7 @@ function buildContactsList() {
 
 const CONTACTS = buildContactsList();
 
-let activeView = 'home';
+let activeView = 'broadcasts';
 let activeTab = 'assigned';
 let supervisorTab = 'escalated';
 let activeChatId = 'alice';
@@ -1045,6 +1052,7 @@ let activeBroadcastId = null;
 let isSupervisorMode = false;
 let supervisorOperatorFilter = '';
 let composerNoteMode = false;
+let chatsSearchQuery = '';
 
 const chatListEl = document.getElementById('chat-list');
 const messagesEl = document.getElementById('messages');
@@ -1052,7 +1060,6 @@ const chatTitleEl = document.getElementById('chat-title');
 const messageInput = document.getElementById('message-input');
 const chatSendBtn = document.getElementById('chat-send-btn');
 const viewChatsEl = document.getElementById('view-chats');
-const viewHomeEl = document.getElementById('view-home');
 const viewBroadcastsEl = document.getElementById('view-broadcasts');
 const viewContactsEl = document.getElementById('view-contacts');
 const broadcastListEl = document.getElementById('broadcast-list');
@@ -1080,6 +1087,9 @@ const attachBtn = document.getElementById('chat-attach-btn');
 const chatImageInput = document.getElementById('chat-image-input');
 const composerEl = document.querySelector('.composer');
 const appShellEl = document.querySelector('.app');
+const chatsSearchEl = document.getElementById('chats-search');
+const chatsSearchInput = document.getElementById('chats-search-input');
+const chatsSearchButton = document.getElementById('chats-search-button');
 
 let contactsSearchQuery = '';
 let contactsRoleFilter = '';
@@ -1242,14 +1252,19 @@ function renderAvatar(conv, className) {
 }
 
 function renderChatList() {
-  const list = getCurrentChatList();
+  const query = chatsSearchQuery.trim().toLocaleLowerCase();
+  const list = getCurrentChatList().filter((chat) => {
+    if (!query) return true;
+    return [chat.name, getChatPreviewText(chat)]
+      .some((value) => String(value || '').toLocaleLowerCase().includes(query));
+  });
   if (!list.length) {
-    chatListEl.innerHTML = `<li class="broadcast-empty">${t('chats.noConversations')}</li>`;
+    chatListEl.innerHTML = `<li class="broadcast-empty">${t(query ? 'chats.noSearchResults' : 'chats.noConversations')}</li>`;
     updateTabBadges();
     return;
   }
 
-  if (!list.find((c) => c.id === activeChatId)) {
+  if (!query && !list.find((c) => c.id === activeChatId)) {
     activeChatId = list[0]?.id || null;
   }
 
@@ -1290,6 +1305,31 @@ function renderChatList() {
 
   updateTabBadges();
 }
+
+function setChatsSearchOpen(open) {
+  chatsSearchEl?.classList.toggle('is-open', open);
+  chatsSearchButton?.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (open) {
+    chatsSearchInput?.focus();
+    return;
+  }
+  chatsSearchQuery = '';
+  if (chatsSearchInput) chatsSearchInput.value = '';
+  renderChatList();
+}
+
+chatsSearchButton?.addEventListener('click', () => {
+  setChatsSearchOpen(!chatsSearchEl?.classList.contains('is-open'));
+});
+
+chatsSearchInput?.addEventListener('input', () => {
+  chatsSearchQuery = chatsSearchInput.value;
+  renderChatList();
+});
+
+chatsSearchInput?.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') setChatsSearchOpen(false);
+});
 
 function renderReassignMenu() {
   if (!chatReassignMenu) return;
@@ -1459,8 +1499,8 @@ function renderMessages() {
         <div class="message-row outgoing">
           <div class="message-content">
             <div class="bubble outgoing">${getLocalizedMessageText(msg)}</div>
-            <span class="msg-status">${formatMessageStatus(msg.status)}</span>
           </div>
+          <span class="msg-status">${formatMessageStatus(msg.status)}</span>
         </div>`;
       }
 
@@ -1469,8 +1509,8 @@ function renderMessages() {
         <div class="message-row outgoing">
           <div class="message-content">
             ${renderEventCard(msg.event)}
-            <span class="msg-status">${formatMessageStatus(msg.status)}</span>
           </div>
+          <span class="msg-status">${formatMessageStatus(msg.status)}</span>
         </div>`;
       }
 
@@ -1479,8 +1519,8 @@ function renderMessages() {
         <div class="message-row outgoing">
           <div class="message-content">
             ${renderSurveyCard(msg.survey)}
-            <span class="msg-status">${formatMessageStatus(msg.status)}</span>
           </div>
+          <span class="msg-status">${formatMessageStatus(msg.status)}</span>
         </div>`;
       }
 
@@ -1489,8 +1529,8 @@ function renderMessages() {
         <div class="message-row outgoing">
           <div class="message-content">
             ${renderProjectUpdatePreviewCard(msg.title, msg.text)}
-            <span class="msg-status">${formatMessageStatus(msg.status)}</span>
           </div>
+          <span class="msg-status">${formatMessageStatus(msg.status)}</span>
         </div>`;
       }
 
@@ -1499,8 +1539,8 @@ function renderMessages() {
         <div class="message-row outgoing">
           <div class="message-content">
             ${renderLightCardPreview(msg.title, msg.text, msg.link)}
-            <span class="msg-status">${formatMessageStatus(msg.status)}</span>
           </div>
+          <span class="msg-status">${formatMessageStatus(msg.status)}</span>
         </div>`;
       }
 
@@ -4062,10 +4102,10 @@ function initBroadcastWizard() {
 
   composeBtn?.addEventListener('click', () => openBroadcastWizard());
 
-  document.getElementById('home-create-broadcast-btn')?.addEventListener('click', () =>
-    switchView('broadcasts')
+  document.getElementById('broadcast-empty-new-btn')?.addEventListener('click', () =>
+    openBroadcastWizard()
   );
-  document.getElementById('home-manage-tags-btn')?.addEventListener('click', () =>
+  document.getElementById('broadcast-manage-tags-btn')?.addEventListener('click', () =>
     switchView('contacts')
   );
   closeBtn?.addEventListener('click', () => discardBroadcastWizard());
@@ -4077,7 +4117,6 @@ function initBroadcastWizard() {
 
   discardBtn?.addEventListener('click', () => {
     discardBroadcastWizard();
-    switchView('home');
   });
 
   nextBtn?.addEventListener('click', () => {
@@ -4753,18 +4792,13 @@ function switchView(view) {
     btn.classList.toggle('active', btn.dataset.view === view);
   });
 
-  viewHomeEl.classList.toggle('hidden', view !== 'home');
   viewChatsEl.classList.toggle('hidden', view !== 'chats');
   viewBroadcastsEl.classList.toggle('hidden', view !== 'broadcasts');
   viewContactsEl.classList.toggle('hidden', view !== 'contacts');
 
   if (view === 'broadcasts') {
     renderBroadcastList();
-    if (wizardSessionHasProgress(broadcastWizardState)) {
-      tryRestoreBroadcastWizardOnEnter();
-    } else if (!broadcastWizardOpen) {
-      startFreshBroadcastWizard();
-    }
+    tryRestoreBroadcastWizardOnEnter();
   }
   if (view === 'contacts') {
     renderContactsTable();
@@ -4778,6 +4812,11 @@ document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
 document.getElementById('contacts-broadcasts-link')?.addEventListener('click', (event) => {
   event.preventDefault();
   switchView('broadcasts');
+});
+
+document.getElementById('broadcasts-contacts-link')?.addEventListener('click', (event) => {
+  event.preventDefault();
+  switchView('contacts');
 });
 
 renderChatList();
@@ -4797,7 +4836,7 @@ if (launchView === 'contacts' && launchTag && contactTagCatalog.includes(launchT
   syncTagsFilterCheckboxes();
   updateTagsFilterButton();
 }
-const initialView = ['home', 'broadcasts', 'contacts', 'chats'].includes(launchView)
+const initialView = ['broadcasts', 'contacts', 'chats'].includes(launchView)
   ? launchView
-  : 'home';
+  : 'chats';
 switchView(initialView);
