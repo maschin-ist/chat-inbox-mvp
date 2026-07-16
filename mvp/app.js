@@ -57,7 +57,8 @@ const I18N_STRINGS = {
     'lang.changeAria': 'Change language',
     'chats.inboxTitle': 'Chats Inbox',
     'chats.search': 'Search conversations',
-    'chats.searchPlaceholder': 'Search conversations',
+    'chats.searchPlaceholder': 'Search people',
+    'chats.closeSearch': 'Close search',
     'chats.noSearchResults': 'No conversations match your search.',
     'chats.attachImage': 'Image',
     'chats.template': 'Template',
@@ -252,7 +253,8 @@ const I18N_STRINGS = {
     'lang.changeAria': '言語を変更',
     'chats.inboxTitle': 'チャット',
     'chats.search': '会話を検索',
-    'chats.searchPlaceholder': '会話を検索',
+    'chats.searchPlaceholder': 'ユーザーを検索',
+    'chats.closeSearch': '検索を閉じる',
     'chats.noSearchResults': '検索条件に一致する会話はありません。',
     'chats.attachImage': '画像',
     'chats.template': 'テンプレート',
@@ -1090,6 +1092,7 @@ const appShellEl = document.querySelector('.app');
 const chatsSearchEl = document.getElementById('chats-search');
 const chatsSearchInput = document.getElementById('chats-search-input');
 const chatsSearchButton = document.getElementById('chats-search-button');
+const chatsSearchClose = document.getElementById('chats-search-close');
 
 let contactsSearchQuery = '';
 let contactsRoleFilter = '';
@@ -1320,6 +1323,10 @@ function setChatsSearchOpen(open) {
 
 chatsSearchButton?.addEventListener('click', () => {
   setChatsSearchOpen(!chatsSearchEl?.classList.contains('is-open'));
+});
+
+chatsSearchClose?.addEventListener('click', () => {
+  setChatsSearchOpen(false);
 });
 
 chatsSearchInput?.addEventListener('input', () => {

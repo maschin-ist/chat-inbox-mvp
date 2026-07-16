@@ -1092,18 +1092,25 @@
       <aside class="inbox panel" data-od-id="chats-inbox-panel">
       <header class="inbox-header mvp-panel-header mvp-panel-header--single" data-od-id="chats-inbox-header">
         <h2 data-od-id="chats-inbox-title" data-i18n="chats.inboxTitle">Chats Inbox</h2>
-        <div class="chats-search" id="chats-search">
-          <input class="chats-search__input" id="chats-search-input" type="search" autocomplete="off" data-i18n-placeholder="chats.searchPlaceholder" placeholder="Search conversations" aria-label="Search conversations">
-          <button class="icon-btn chats-search__button" id="chats-search-button" type="button" data-i18n-aria="chats.search" aria-label="Search conversations" aria-expanded="false" aria-controls="chats-search-input">
-            <span class="material-icons" aria-hidden="true">search</span>
-          </button>
-        </div>
+        <button class="icon-btn chats-search__button" id="chats-search-button" type="button" data-i18n-aria="chats.search" aria-label="Search conversations" aria-expanded="false" aria-controls="chats-search">
+          <span class="material-icons" aria-hidden="true">search</span>
+        </button>
         <button class="icon-btn compose-btn" type="button" aria-label="New message" data-od-id="chats-compose-btn" hidden="">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M5.8942 16.75L4.01985 18.6243C3.87457 18.7696 3.70993 18.8053 3.52595 18.7313C3.34198 18.6573 3.25 18.5167 3.25 18.3096V5.05768C3.25 4.56056 3.427 4.135 3.781 3.781C4.135 3.427 4.56056 3.25 5.05768 3.25H16.9423C17.4394 3.25 17.8649 3.427 18.2189 3.781C18.5729 4.135 18.75 4.56056 18.75 5.05768V9.275C18.75 9.4814 18.6766 9.65383 18.5298 9.7923C18.383 9.93075 18.2048 9.99998 17.9952 9.99998C17.7856 9.99998 17.609 9.9281 17.4654 9.78435C17.3218 9.6406 17.25 9.46248 17.25 9.25V5.05768C17.25 4.96793 17.2212 4.8942 17.1635 4.8365C17.1058 4.7788 17.032 4.74995 16.9423 4.74995H5.05768C4.96792 4.74995 4.8942 4.7788 4.8365 4.8365C4.7788 4.8942 4.74995 4.96793 4.74995 5.05768V15.25H11.2211C11.4275 15.25 11.6042 15.3234 11.751 15.4702C11.8977 15.617 11.9711 15.7952 11.9711 16.0048C11.9711 16.2144 11.8977 16.391 11.751 16.5346C11.6042 16.6782 11.4275 16.75 11.2211 16.75H5.8942ZM7.80765 8.74995H14.1923C14.4048 8.74995 14.5829 8.67805 14.7267 8.53425C14.8704 8.39043 14.9423 8.21223 14.9423 7.99965C14.9423 7.78705 14.8704 7.60896 14.7267 7.46538C14.5829 7.32179 14.4048 7.25 14.1923 7.25H7.80765C7.59515 7.25 7.41703 7.3219 7.2733 7.4657C7.12955 7.60952 7.05768 7.78772 7.05768 8.0003C7.05768 8.2129 7.12955 8.39099 7.2733 8.53458C7.41703 8.67816 7.59515 8.74995 7.80765 8.74995ZM7.80765 12.75H11.1923C11.4048 12.75 11.5829 12.6781 11.7267 12.5343C11.8704 12.3904 11.9423 12.2122 11.9423 11.9997C11.9423 11.7871 11.8704 11.609 11.7267 11.4654C11.5829 11.3218 11.4048 11.25 11.1923 11.25H7.80765C7.59515 11.25 7.41703 11.3219 7.2733 11.4657C7.12955 11.6095 7.05768 11.7877 7.05768 12.0003C7.05768 12.2129 7.12955 12.391 7.2733 12.5346C7.41703 12.6782 7.59515 12.75 7.80765 12.75ZM17.25 16.75H15C14.7875 16.75 14.6094 16.6781 14.4656 16.5343C14.3219 16.3904 14.25 16.2122 14.25 15.9997C14.25 15.7871 14.3219 15.609 14.4656 15.4654C14.6094 15.3218 14.7875 15.25 15 15.25H17.25V13C17.25 12.7875 17.3219 12.6094 17.4657 12.4656C17.6095 12.3219 17.7877 12.25 18.0003 12.25C18.2129 12.25 18.391 12.3219 18.5346 12.4656C18.6782 12.6094 18.75 12.7875 18.75 13V15.25H21C21.2125 15.25 21.3906 15.3219 21.5344 15.4657C21.6781 15.6095 21.75 15.7877 21.75 16.0003C21.75 16.2129 21.6781 16.391 21.5344 16.5346C21.3906 16.6782 21.2125 16.75 21 16.75H18.75V19C18.75 19.2125 18.6781 19.3906 18.5343 19.5343C18.3904 19.6781 18.2122 19.75 17.9997 19.75C17.787 19.75 17.609 19.6781 17.4654 19.5343C17.3218 19.3906 17.25 19.2125 17.25 19V16.75Z" fill="#494644"></path>
           </svg>
         </button>
       </header>
+
+      <div class="chats-search" id="chats-search" data-od-id="chats-search-row">
+        <div class="chats-search__field">
+          <span class="material-icons chats-search__icon" aria-hidden="true">search</span>
+          <input class="chats-search__input" id="chats-search-input" type="search" autocomplete="off" data-i18n-placeholder="chats.searchPlaceholder" placeholder="Search people" aria-label="Search conversations">
+          <button class="icon-btn chats-search__close" id="chats-search-close" type="button" data-i18n-aria="chats.closeSearch" aria-label="Close search">
+            <span class="material-icons" aria-hidden="true">close</span>
+          </button>
+        </div>
+      </div>
 
       <div class="inbox-operator-filter hidden" id="chats-operator-filter" data-od-id="chats-operator-filter">
         <div class="filter-dropdown inbox-operator-dropdown">

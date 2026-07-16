@@ -658,58 +658,67 @@ button {
   background: #f0f0f0;
 }
 
-.view--chats [data-od-id="chats-inbox-header"] .chats-search {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  min-width: 32px;
-  margin-left: auto;
+.view--chats .chats-search {
+  display: none;
+  width: 100%;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--inbox-bg);
+  box-sizing: border-box;
 }
 
-.view--chats [data-od-id="chats-inbox-header"] .chats-search__input {
-  width: 0;
+.view--chats .chats-search.is-open {
+  display: block;
+}
+
+.view--chats .chats-search__field {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  padding: 0 8px 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.view--chats .chats-search__field:focus-within {
+  border-color: #2B67B5;
+  box-shadow: 0 0 0 2px rgba(43, 103, 181, 0.12);
+}
+
+.view--chats .chats-search__icon {
+  flex: 0 0 auto;
+  margin-right: 8px;
+  color: var(--text-tertiary);
+  font-size: 20px;
+}
+
+.view--chats .chats-search__input {
+  flex: 1;
   min-width: 0;
-  height: 32px;
+  height: 38px;
   padding: 0;
-  border: 1px solid transparent;
-  border-radius: 6px;
+  border: 0;
   background: transparent;
   color: var(--text-primary);
   font: inherit;
-  font-size: 13px;
-  opacity: 0;
-  pointer-events: none;
-  transition: width 0.18s ease, padding 0.18s ease, opacity 0.12s ease;
-}
-
-.view--chats [data-od-id="chats-inbox-header"] .chats-search.is-open {
-  flex: 1;
-  margin-left: 12px;
-}
-
-.view--chats [data-od-id="chats-inbox-header"] .chats-search.is-open .chats-search__input {
-  width: 100%;
-  padding: 0 10px;
-  border-color: var(--border);
-  background: var(--inbox-bg);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.view--chats [data-od-id="chats-inbox-header"] .chats-search.is-open + [data-od-id="chats-compose-btn"] {
-  display: none !important;
+  font-size: 14px;
+  outline: none;
 }
 
 .view--chats [data-od-id="chats-inbox-header"] .chats-search__button {
+  margin-left: auto;
   flex: 0 0 32px;
 }
 
-.view--chats [data-od-id="chats-inbox-header"] .chats-search.is-open .chats-search__button .material-icons {
-  font-size: 0;
+.view--chats .chats-search__close {
+  flex: 0 0 32px;
+  margin-left: 4px;
 }
 
-.view--chats [data-od-id="chats-inbox-header"] .chats-search.is-open .chats-search__button .material-icons::after {
-  content: 'close';
+.view--chats .chats-search__close .material-icons {
   font-size: 20px;
 }
 
