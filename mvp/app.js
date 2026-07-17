@@ -3051,15 +3051,7 @@ const TEMPLATE_TITLES = {
   'free-text': 'Simple message',
 };
 
-const BROADCAST_TEMPLATE_OPTIONS = [
-  ...CONTACT_TEMPLATE_OPTIONS,
-  {
-    id: 'light-card',
-    title: 'Light card message',
-    description: 'Send a message with a lightweight text link.',
-    icon: 'insert_link',
-  },
-];
+const BROADCAST_TEMPLATE_OPTIONS = [...CONTACT_TEMPLATE_OPTIONS];
 
 const BROADCAST_COMPOSE_DEFAULTS = {
   'project-updates': {
@@ -3529,7 +3521,7 @@ function renderBroadcastWizardStepper() {
   });
 }
 
-function showBroadcastWizardStep(step) {
+function showBroadcastWizardStep(step, { replaceUrl = false } = {}) {
   broadcastWizardState.step = step;
   const activePanel = getWizardStepLabels().find((s) => s.num === step)?.panel;
   ['template', 'compose', 'audience', 'schedule', 'preview'].forEach((panelId) => {
@@ -3551,6 +3543,7 @@ function showBroadcastWizardStep(step) {
   }
   if (step === 4) renderBroadcastWizardPreview();
   persistBroadcastWizardSession();
+  syncBroadcastWizardStepUrl(step, { replace: replaceUrl });
 }
 
 function renderBroadcastWizardTemplateChip() {
@@ -3729,7 +3722,7 @@ function renderBroadcastWizardPreview() {
   const audienceTag = broadcastWizardState.audienceTags[0] || '—';
   const audienceLabel =
     audienceTag !== '—'
-      ? `${translateTag(audienceTag)} <a class="broadcast-wizard__summary-contacts-link" href="${getBroadcastAudienceContactsUrl(audienceTag)}" target="_blank" rel="noopener">(${t('wizard.viewContacts')})</a>`
+      ? translateTag(audienceTag)
       : '—';
 
   const linkRow =
@@ -3849,10 +3842,12 @@ function setBroadcastWizardOpen(open) {
   }
 }
 
-function startFreshBroadcastWizard() {
+function startFreshBroadcastWizard(initialStep = 1, { replaceUrl = false } = {}) {
   broadcastWizardAudienceShowError = false;
   broadcastWizardLinkShowError = false;
   broadcastWizardState = createDefaultBroadcastWizardState();
+  broadcastWizardState.step = initialStep;
+  broadcastWizardState.maxReachableStep = Math.max(1, initialStep);
   clearBroadcastWizardSession();
   const titleInput = document.getElementById('broadcast-wizard-title-input');
   const messageInput = document.getElementById('broadcast-wizard-message-input');
@@ -3864,7 +3859,7 @@ function startFreshBroadcastWizard() {
   document.getElementById('broadcast-wizard-message-counter').textContent = '0 / 250';
   activeBroadcastId = null;
   updateBroadcastWizardPanelTitle();
-  showBroadcastWizardStep(1);
+  showBroadcastWizardStep(initialStep, { replaceUrl });
   setBroadcastWizardOpen(true);
   renderBroadcastList();
   document.getElementById('broadcast-wizard-discard')?.focus();
@@ -3890,6 +3885,7 @@ function hideBroadcastWizard() {
     persistBroadcastWizardSession();
   }
   setBroadcastWizardOpen(false);
+  clearBroadcastWizardStepUrl();
   if (activeBroadcastId === BROADCAST_WIZARD_DRAFT_ID) activeBroadcastId = null;
   renderBroadcastList();
   renderBroadcastDetail();
@@ -3901,6 +3897,7 @@ function discardBroadcastWizard() {
   broadcastWizardLinkShowError = false;
   clearBroadcastWizardSession();
   setBroadcastWizardOpen(false);
+  clearBroadcastWizardStepUrl();
   if (activeBroadcastId === BROADCAST_WIZARD_DRAFT_ID) activeBroadcastId = null;
   renderBroadcastList();
   renderBroadcastDetail();
@@ -4736,6 +4733,29 @@ chatAskHelpBtn?.addEventListener('click', () => {
 
 const validViews = ['broadcasts', 'contacts', 'chats'];
 
+function getBroadcastWizardStepFromLocation() {
+  const step = Number(new URLSearchParams(window.location.search).get('step'));
+  return BROADCAST_WIZARD_STEPS.some((item) => item.num === step) ? step : null;
+}
+
+function syncBroadcastWizardStepUrl(step, { replace = false } = {}) {
+  if (activeView !== 'broadcasts') return;
+  const url = new URL(window.location.href);
+  url.searchParams.set('view', 'broadcasts');
+  url.searchParams.set('step', String(step));
+  url.searchParams.delete('tag');
+  url.hash = '';
+  window.history[replace ? 'replaceState' : 'pushState']({}, '', url);
+}
+
+function clearBroadcastWizardStepUrl() {
+  if (activeView !== 'broadcasts') return;
+  const url = new URL(window.location.href);
+  if (!url.searchParams.has('step')) return;
+  url.searchParams.delete('step');
+  window.history.replaceState({}, '', url);
+}
+
 function getViewFromLocation() {
   const params = new URLSearchParams(window.location.search);
   const queryView = params.get('view');
@@ -4749,6 +4769,7 @@ function syncViewUrl(view, { replace = false } = {}) {
   const url = new URL(window.location.href);
   url.searchParams.set('view', view);
   if (view !== 'contacts') url.searchParams.delete('tag');
+  if (view !== 'broadcasts') url.searchParams.delete('step');
   url.hash = '';
   window.history[replace ? 'replaceState' : 'pushState']({}, '', url);
 }
@@ -4783,6 +4804,10 @@ document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
 
 window.addEventListener('popstate', () => {
   switchView(getViewFromLocation(), { updateUrl: false });
+  const step = getBroadcastWizardStepFromLocation();
+  if (getViewFromLocation() === 'broadcasts' && step) {
+    startFreshBroadcastWizard(step, { replaceUrl: true });
+  }
 });
 
 document.getElementById('contacts-broadcasts-link')?.addEventListener('click', (event) => {
@@ -4814,3 +4839,7 @@ if (launchView === 'contacts' && launchTag && contactTagCatalog.includes(launchT
 }
 const initialView = getViewFromLocation();
 switchView(initialView, { updateUrl: false });
+const initialWizardStep = getBroadcastWizardStepFromLocation();
+if (initialView === 'broadcasts' && initialWizardStep) {
+  startFreshBroadcastWizard(initialWizardStep, { replaceUrl: true });
+}

@@ -109,6 +109,8 @@ button {
   padding: var(--panel-margin) 0 var(--panel-margin) var(--panel-margin);
   display: flex;
   overflow: visible;
+  position: relative;
+  z-index: 1000;
 }
 
 .sidebar {
@@ -242,6 +244,7 @@ button {
   display: flex;
   width: 100%;
   overflow: visible;
+  z-index: 1;
 }
 
 .lang-switcher-nav {
@@ -275,8 +278,10 @@ button {
 .lang-switcher-menu {
   position: absolute;
   left: calc(100% + 12px);
-  top: 50%;
-  transform: translateY(-50%);
+  /* Keep the menu's lower edge level with the language control. */
+  top: auto;
+  bottom: 0;
+  transform: none;
   min-width: 132px;
   padding: 6px;
   background-color: var(--sidebar-bg);
@@ -287,7 +292,7 @@ button {
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0.15s ease, visibility 0.15s ease;
-  z-index: 100;
+  z-index: 1001;
 }
 
 .lang-switcher-wrap.is-open .lang-switcher-menu {
@@ -4931,14 +4936,14 @@ button {
   gap: 10px;
 }
 
-/* Preview step — lift message/card off grey wizard body */
+/* Preview step — simple messages mirror an outgoing chat bubble. */
 .broadcast-wizard--panel .broadcast-wizard__preview-box {
   width: 100%;
-  padding: 20px;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
   box-sizing: border-box;
 }
 
@@ -4949,10 +4954,15 @@ button {
 }
 
 .broadcast-wizard--panel .broadcast-wizard__preview-message:not(.broadcast-wizard__preview-message--card) {
-  padding: 4px 2px;
+  align-self: flex-start;
+  max-width: min(78%, 440px);
+  padding: 12px 16px;
+  background: var(--bubble-outgoing);
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
   font-size: 14px;
-  line-height: 1.55;
-  color: var(--text-primary);
+  line-height: 1.45;
+  color: #fff;
   white-space: pre-wrap;
 }
 
@@ -5081,13 +5091,13 @@ button {
 .toast {
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-width: 280px;
-  max-width: 520px;
-  padding: 14px 16px;
-  background: #43a047;
+  width: fit-content;
+  max-width: min(520px, calc(100vw - 48px));
+  gap: 8px;
+  padding: 10px 12px;
+  background: #1A8055;
   border-radius: 10px;
-  box-shadow: 0 4px 14px rgba(67, 160, 71, 0.28);
+  box-shadow: 0 4px 14px rgba(26, 128, 85, 0.26);
   color: #fff;
   font-size: 14px;
   font-weight: 500;
@@ -5124,12 +5134,11 @@ button {
 
 .toast__icon {
   flex-shrink: 0;
-  font-size: 22px;
-  color: #fff;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .toast__message {
-  flex: 1;
   min-width: 0;
 }
 
@@ -5138,9 +5147,9 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  margin: -4px -4px -4px 0;
+  width: 24px;
+  height: 24px;
+  margin: -2px -4px -2px 0;
   padding: 0;
   background: none;
   border: none;
@@ -5152,7 +5161,7 @@ button {
 }
 
 .toast__close .material-icons {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .toast__close:hover {
