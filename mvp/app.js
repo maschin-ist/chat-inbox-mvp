@@ -43,7 +43,9 @@ const SUPERVISOR_PROFILE = {
 };
 
 const I18N_STORAGE_KEY = 'mvp-locale';
-let currentLocale = localStorage.getItem(I18N_STORAGE_KEY) || 'en';
+// Japanese is the product default. A language explicitly chosen by the user
+// remains stored so English is still available as a persistent preference.
+let currentLocale = localStorage.getItem(I18N_STORAGE_KEY) || 'ja';
 
 const I18N_STRINGS = {
   en: {
