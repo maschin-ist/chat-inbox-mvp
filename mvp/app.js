@@ -4734,9 +4734,31 @@ chatAskHelpBtn?.addEventListener('click', () => {
   updateHeaderActions();
 });
 
-function switchView(view) {
+const validViews = ['broadcasts', 'contacts', 'chats'];
+
+function getViewFromLocation() {
+  const params = new URLSearchParams(window.location.search);
+  const queryView = params.get('view');
+  const hashView = window.location.hash.replace('#', '');
+  return validViews.includes(queryView)
+    ? queryView
+    : (validViews.includes(hashView) ? hashView : 'chats');
+}
+
+function syncViewUrl(view, { replace = false } = {}) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('view', view);
+  if (view !== 'contacts') url.searchParams.delete('tag');
+  url.hash = '';
+  window.history[replace ? 'replaceState' : 'pushState']({}, '', url);
+}
+
+function switchView(view, { updateUrl = true, replaceUrl = false } = {}) {
+  if (!validViews.includes(view)) return;
   if (view !== 'broadcasts' && broadcastWizardOpen) hideBroadcastWizard();
   activeView = view;
+
+  if (updateUrl) syncViewUrl(view, { replace: replaceUrl });
 
   document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.view === view);
@@ -4757,6 +4779,10 @@ function switchView(view) {
 
 document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
   btn.addEventListener('click', () => switchView(btn.dataset.view));
+});
+
+window.addEventListener('popstate', () => {
+  switchView(getViewFromLocation(), { updateUrl: false });
 });
 
 document.getElementById('contacts-broadcasts-link')?.addEventListener('click', (event) => {
@@ -4786,7 +4812,5 @@ if (launchView === 'contacts' && launchTag && contactTagCatalog.includes(launchT
   syncTagsFilterCheckboxes();
   updateTagsFilterButton();
 }
-const initialView = ['broadcasts', 'contacts', 'chats'].includes(launchView)
-  ? launchView
-  : 'chats';
-switchView(initialView);
+const initialView = getViewFromLocation();
+switchView(initialView, { updateUrl: false });
