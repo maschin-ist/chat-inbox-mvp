@@ -230,6 +230,7 @@ button {
   align-items: center;
   gap: 10px;
   overflow: visible;
+  transform: translateY(8px);
 }
 
 #lang-switcher-wrap[hidden] {
@@ -377,6 +378,11 @@ button {
   position: relative;
   display: inline-flex;
   overflow: visible;
+}
+
+/* Temporarily hide the operator account avatar in the MVP sidebar. */
+.profile-avatar-wrap[hidden] {
+  display: none !important;
 }
 
 .profile-menu-wrap.is-open .profile-menu {
@@ -710,6 +716,7 @@ button {
 
 .view--chats [data-od-id="chats-inbox-header"] .chats-search__button {
   margin-left: auto;
+  margin-right: -12px;
   flex: 0 0 32px;
 }
 
@@ -1632,6 +1639,9 @@ button {
 }
 
 .broadcast-empty-state__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: clamp(25px, 3vw, 34px);
   font-weight: 700;
   color: var(--text-primary);
@@ -1639,6 +1649,13 @@ button {
   line-height: 1.15;
   margin: 0 0 12px;
   text-wrap: balance;
+}
+
+.broadcast-empty-state__title-icon {
+  color: #2b67b5;
+  font-size: 56px;
+  line-height: 1;
+  flex: 0 0 auto;
 }
 
 .broadcast-empty-state__lead {
@@ -2056,7 +2073,7 @@ button {
 .contacts-table-tools {
   display: flex;
   justify-content: flex-end;
-  padding-bottom: 12px;
+  padding: 12px 20px 16px;
 }
 
 .contacts-sort-dropdown {
@@ -2065,7 +2082,7 @@ button {
 }
 
 .contacts-sort-btn {
-  gap: 4px;
+  gap: 10px;
 }
 
 .contacts-sort-btn__label {

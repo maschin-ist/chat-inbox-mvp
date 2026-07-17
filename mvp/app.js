@@ -69,17 +69,16 @@ const I18N_STRINGS = {
     'broadcasts.title': 'Broadcasts',
     'broadcasts.createNew': 'Create new',
     'broadcasts.createNewAria': 'Create new broadcast',
-    'broadcasts.emptyTitle': 'Welcome to Broadcasts 👋',
+    'broadcasts.emptyTitle': 'Broadcasts',
     'broadcasts.emptyLead':
-      'This web workspace lets you send messages to multiple people. Here is how it works:',
+      'Broadcasts let you send messages to multiple people. Here is how it works:',
     'broadcasts.emptyPathAria': 'Two steps to send a broadcast',
     'broadcasts.emptyStep1Label': 'Step 1',
     'broadcasts.emptyStep1Title': 'Create a tag',
     'broadcasts.emptyStep1Helper': 'Skip if you already have one',
-    'broadcasts.emptyStep1BodyPrefix': 'Create a group tag in ',
-    'broadcasts.emptyStep1ContactsLink': 'Contacts',
-    'broadcasts.emptyStep1BodySuffix': ' for the people you want to message.',
-    'broadcasts.emptyStep1Cta': 'Manage contact tags',
+    'broadcasts.emptyStep1Body':
+      'Create a group tag on the Contacts page for the people you want to message.',
+    'broadcasts.emptyStep1Cta': 'Open contacts',
     'broadcasts.emptyStep2Label': 'Step 2',
     'broadcasts.emptyStep2Title': 'Create your broadcast',
     'broadcasts.emptyStep2Body':
@@ -175,6 +174,12 @@ const I18N_STRINGS = {
     'contacts.searchTags': 'Search tags',
     'contacts.noTagsMatch': 'No tags match your search',
     'contacts.applied': 'Applied',
+    'contacts.sortBy': 'Sort by',
+    'contacts.sortAria': 'Sort contacts',
+    'contacts.sortLatest': 'Latest message',
+    'contacts.sortOldest': 'Oldest message',
+    'contacts.sortAlphabetical': 'Alphabetical (A–Z)',
+    'contacts.sortRecentlyTagged': 'Recently tagged',
     'template.project-updates.title': 'Message with link',
     'template.project-updates.desc':
       'Send a message as a card with a title and link.',
@@ -265,17 +270,16 @@ const I18N_STRINGS = {
     'broadcasts.title': '配信',
     'broadcasts.createNew': '新規作成',
     'broadcasts.createNewAria': '新規配信を作成',
-    'broadcasts.emptyTitle': '配信へようこそ 👋',
+    'broadcasts.emptyTitle': '配信',
     'broadcasts.emptyLead':
-      'このワークスペースでは、複数の方にメッセージを送信できます。ご利用の流れをご案内します。',
+      '配信では、複数の方にメッセージを送信できます。ご利用の流れをご案内します。',
     'broadcasts.emptyPathAria': '配信までの2つのステップ',
     'broadcasts.emptyStep1Label': 'ステップ 1',
     'broadcasts.emptyStep1Title': 'タグを作成する',
     'broadcasts.emptyStep1Helper': 'すでにタグがある場合はスキップできます',
-    'broadcasts.emptyStep1BodyPrefix': 'メッセージを送りたい人のグループタグを',
-    'broadcasts.emptyStep1ContactsLink': '連絡先',
-    'broadcasts.emptyStep1BodySuffix': 'で作成します。',
-    'broadcasts.emptyStep1Cta': '連絡先のタグを管理',
+    'broadcasts.emptyStep1Body':
+      'メッセージを送りたい相手のグループタグを、連絡先ページで作成します。',
+    'broadcasts.emptyStep1Cta': '連絡先を開く',
     'broadcasts.emptyStep2Label': 'ステップ 2',
     'broadcasts.emptyStep2Title': '配信を作成する',
     'broadcasts.emptyStep2Body':
@@ -371,6 +375,12 @@ const I18N_STRINGS = {
     'contacts.searchTags': 'タグを検索',
     'contacts.noTagsMatch': '該当するタグがありません',
     'contacts.applied': '適用済み',
+    'contacts.sortBy': '並び順',
+    'contacts.sortAria': '連絡先の並び順',
+    'contacts.sortLatest': 'メッセージが新しい順',
+    'contacts.sortOldest': 'メッセージが古い順',
+    'contacts.sortAlphabetical': '名前順（A–Z）',
+    'contacts.sortRecentlyTagged': 'タグを付けた順',
     'template.project-updates.title': 'リンク付きメッセージ',
     'template.project-updates.desc': 'タイトルとリンク付きのカード形式で送信します。',
     'template.light-card.title': 'ライトカードメッセージ',
@@ -504,6 +514,17 @@ function applyStaticTranslations() {
     const key = el.dataset.i18nAria;
     if (key) el.setAttribute('aria-label', t(key));
   });
+
+  const contactsSortValue = document.getElementById('contacts-sort-value');
+  if (contactsSortValue) {
+    const sortLabels = {
+      latest: 'contacts.sortLatest',
+      oldest: 'contacts.sortOldest',
+      alphabetical: 'contacts.sortAlphabetical',
+      'recently-tagged': 'contacts.sortRecentlyTagged',
+    };
+    contactsSortValue.textContent = t(sortLabels[contactsSort] || 'contacts.sortLatest');
+  }
 
   document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
     const view = btn.dataset.view;
@@ -3067,7 +3088,6 @@ function createDefaultBroadcastWizardState() {
     message: '',
     surveyLink: '',
     audienceTags: [],
-    audienceView: 'external',
     sendMode: 'now',
     scheduledDate: tomorrow.toISOString().slice(0, 10),
     scheduledTime: '10:00',
@@ -3391,47 +3411,6 @@ function initBroadcastWizardAudienceDropdown() {
   });
 }
 
-function updateBroadcastWizardAudienceViewOptions() {
-  const audienceView = broadcastWizardState.audienceView === 'contacts' ? 'contacts' : 'external';
-  document.querySelectorAll('[data-audience-view]').forEach((option) => {
-    const selected = option.dataset.audienceView === audienceView;
-    option.classList.toggle('is-selected', selected);
-    option.setAttribute('aria-pressed', selected ? 'true' : 'false');
-  });
-}
-
-function initBroadcastWizardAudienceViewToggle() {
-  const control = document.querySelector('.broadcast-wizard__audience-view-options');
-  const trigger = document.querySelector('.broadcast-wizard__audience-view-trigger');
-  if (control && trigger && !trigger.dataset.bound) {
-    trigger.dataset.bound = 'true';
-    trigger.addEventListener('click', () => {
-      const isOpen = control.classList.toggle('is-open');
-      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-    control.addEventListener('focusout', () => {
-      window.setTimeout(() => {
-        if (!control.contains(document.activeElement)) {
-          control.classList.remove('is-open');
-          trigger.setAttribute('aria-expanded', 'false');
-        }
-      }, 0);
-    });
-  }
-  document.querySelectorAll('[data-audience-view]').forEach((option) => {
-    if (option.dataset.bound) return;
-    option.dataset.bound = 'true';
-    option.addEventListener('click', () => {
-      broadcastWizardState.audienceView = option.dataset.audienceView === 'contacts' ? 'contacts' : 'external';
-      updateBroadcastWizardAudienceViewOptions();
-      updateBroadcastWizardAudienceCount();
-      persistBroadcastWizardSession();
-      control?.classList.remove('is-open');
-      trigger?.setAttribute('aria-expanded', 'false');
-    });
-  });
-}
-
 function normalizeBroadcastLink(value) {
   const trimmed = value.trim();
   if (!trimmed) return '';
@@ -3551,8 +3530,6 @@ function renderBroadcastWizardStepper() {
 function showBroadcastWizardStep(step) {
   broadcastWizardState.step = step;
   const activePanel = getWizardStepLabels().find((s) => s.num === step)?.panel;
-  const audienceViewControl = document.querySelector('.broadcast-wizard__audience-view-options');
-  if (audienceViewControl) audienceViewControl.classList.toggle('hidden', activePanel !== 'audience');
   ['template', 'compose', 'audience', 'schedule', 'preview'].forEach((panelId) => {
     const panel = document.getElementById(`broadcast-wizard-step-${panelId}`);
     if (panel) panel.classList.toggle('hidden', panelId !== activePanel);
@@ -3717,45 +3694,10 @@ function renderBroadcastWizardAudienceTags() {
 }
 
 function updateBroadcastWizardAudienceCount() {
-  const countEl = document.getElementById('broadcast-wizard-audience-count');
-  const contactsEl = document.getElementById('broadcast-wizard-selected-contacts');
   const warningEl = document.getElementById('broadcast-wizard-audience-warning');
   const warningTextEl = document.getElementById('broadcast-wizard-audience-warning-text');
-  const tag = broadcastWizardState.audienceTags[0];
-  const audienceView = broadcastWizardState.audienceView === 'contacts' ? 'contacts' : 'external';
   const showWarning =
     broadcastWizardAudienceShowError && broadcastWizardState.audienceTags.length === 0;
-
-  updateBroadcastWizardAudienceViewOptions();
-
-  if (countEl) {
-    if (!tag) {
-      countEl.classList.add('hidden');
-      countEl.innerHTML = '';
-    } else if (audienceView === 'external') {
-      countEl.classList.remove('hidden');
-      countEl.innerHTML = `<a class="broadcast-wizard__contacts-link" href="${getBroadcastAudienceContactsUrl(tag)}" target="_blank" rel="noopener">${t('wizard.viewSelectedContacts')}</a>`;
-    } else {
-      countEl.classList.add('hidden');
-      countEl.innerHTML = '';
-    }
-  }
-
-  if (contactsEl) {
-    if (!tag || audienceView !== 'contacts') {
-      contactsEl.classList.add('hidden');
-      contactsEl.innerHTML = '';
-    } else {
-      const contacts = getContactsMatchingTags([tag]);
-      contactsEl.classList.remove('hidden');
-      contactsEl.innerHTML = contacts
-        .map((contact) => {
-          const initials = contactInitials(contact.name);
-          return `<li class="broadcast-wizard__selected-contact">${avatarHtml(initials, 'chat')}<span class="broadcast-wizard__selected-contact-name">${escapePreviewText(contact.name)}</span></li>`;
-        })
-        .join('');
-    }
-  }
 
   if (warningEl) warningEl.classList.toggle('hidden', !showWarning);
   if (warningTextEl) warningTextEl.textContent = t('wizard.selectTagWarning');
@@ -4209,7 +4151,6 @@ function initBroadcastWizard() {
   if (timeInput) timeInput.value = broadcastWizardState.scheduledTime;
 
   initBroadcastWizardAudienceDropdown();
-  initBroadcastWizardAudienceViewToggle();
 }
 
 function updateContactsSelectAllButton() {
@@ -4299,7 +4240,7 @@ function renderContactsTable() {
       <td class="col-chat">
         <span class="contacts-chat-btn-wrap${contact.chatId ? '' : ' is-inactive'}" tabindex="0">
           <button class="contacts-chat-btn" type="button" data-chat-id="${contact.chatId || ''}" aria-describedby="${contact.chatId ? `chat-tip-${contact.id}` : ''}" aria-label="${escapePreviewText(t('contacts.openChatAria', { name: contact.name }))}" ${contact.chatId ? '' : 'disabled'}>
-            <span class="material-icons-outlined" aria-hidden="true">chat</span>
+            <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
           </button>
           <span class="contacts-chat-btn__tooltip" role="tooltip" id="chat-tip-${contact.id}">${escapePreviewText(contact.chatId ? t('contacts.openChatTooltip') : t('contacts.noActiveChat'))}</span>
         </span>
@@ -4446,10 +4387,10 @@ function initContactsSortDropdown() {
   if (!btn || !menu || !value) return;
 
   const labels = {
-    latest: 'Latest message',
-    oldest: 'Oldest message',
-    alphabetical: 'Alphabetical (A–Z)',
-    'recently-tagged': 'Recently tagged',
+    latest: t('contacts.sortLatest'),
+    oldest: t('contacts.sortOldest'),
+    alphabetical: t('contacts.sortAlphabetical'),
+    'recently-tagged': t('contacts.sortRecentlyTagged'),
   };
 
   const sync = () => {

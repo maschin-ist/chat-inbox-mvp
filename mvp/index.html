@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
   <style>
     .assist-btn {
@@ -564,7 +565,7 @@
       color: #2B67B5;
     }
 
-    .view--contacts .contacts-chat-btn .material-icons-outlined {
+    .view--contacts .contacts-chat-btn .material-symbols-outlined {
       font-size: 20px;
       line-height: 1;
     }
@@ -1067,7 +1068,7 @@
           </div>
         </div>
         <div class="profile-menu-wrap" data-od-id="sidebar-profile-wrap">
-          <div class="profile-avatar-wrap">
+          <div class="profile-avatar-wrap" hidden>
             <button type="button" class="profile-avatar" id="profile-avatar-btn" title="Account menu" aria-haspopup="menu" aria-expanded="false" aria-controls="profile-menu" data-od-id="sidebar-profile">
               <span class="profile-avatar__image" id="profile-avatar-image">
                 <img src="profile-avatar.jpg" alt="Alex Rivera" class="profile-avatar__photo">
@@ -1213,14 +1214,17 @@
         <main class="broadcast-empty-state panel" id="broadcast-empty-state" data-od-id="broadcast-empty-state" aria-hidden="false">
           <div class="broadcast-empty-state__content">
             <div class="broadcast-empty-state__intro">
-              <h2 class="broadcast-empty-state__title" data-i18n="broadcasts.emptyTitle">Welcome to Broadcasts 👋</h2>
+              <h2 class="broadcast-empty-state__title">
+                <span data-i18n="broadcasts.emptyTitle">Broadcasts</span>
+                <span class="material-icons broadcast-empty-state__title-icon" aria-hidden="true">campaign</span>
+              </h2>
               <p class="broadcast-empty-state__lead" data-i18n="broadcasts.emptyLead">This web workspace lets you send messages to multiple people. Here is how it works:</p>
             </div>
             <div class="broadcast-empty-state__path" aria-label="Two steps to send a broadcast" data-i18n-aria="broadcasts.emptyPathAria">
               <article class="broadcast-onboarding-card broadcast-onboarding-card--audience">
                 <div class="broadcast-onboarding-card__top">
                   <span class="broadcast-onboarding-card__icon" aria-hidden="true">
-                    <span class="material-symbols-outlined">group_add</span>
+                    <span class="material-symbols-outlined">groups</span>
                   </span>
                   <div class="broadcast-onboarding-card__heading">
                     <span class="broadcast-onboarding-card__step" aria-hidden="true" data-i18n="broadcasts.emptyStep1Label">Step 1</span>
@@ -1228,9 +1232,9 @@
                     <span class="broadcast-onboarding-card__helper" data-i18n="broadcasts.emptyStep1Helper">Skip if you already have one</span>
                   </div>
                 </div>
-                <p><span data-i18n="broadcasts.emptyStep1BodyPrefix">Create a group tag in </span><a class="mvp-text-link" href="#contacts" id="broadcasts-contacts-link" data-i18n="broadcasts.emptyStep1ContactsLink">Contacts</a><span data-i18n="broadcasts.emptyStep1BodySuffix"> for the people you want to message.</span></p>
+                <p data-i18n="broadcasts.emptyStep1Body">Create a group tag on the Contacts page for the people you want to message.</p>
                 <button type="button" class="broadcast-onboarding-card__action broadcast-onboarding-card__action--secondary" id="broadcast-manage-tags-btn">
-                  <span data-i18n="broadcasts.emptyStep1Cta">Manage contact tags</span>
+                  <span data-i18n="broadcasts.emptyStep1Cta">Open contacts</span>
                   <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
                 </button>
               </article>
@@ -1317,8 +1321,6 @@
                       <ul class="filter-menu broadcast-wizard__tag-menu hidden" id="broadcast-wizard-audience-menu" role="listbox" aria-labelledby="broadcast-wizard-audience-label-text"></ul>
                     </div>
                   </div>
-                  <div class="broadcast-wizard__audience-count hidden" id="broadcast-wizard-audience-count" role="status" aria-live="polite"></div>
-                  <ul class="broadcast-wizard__selected-contacts hidden" id="broadcast-wizard-selected-contacts" aria-live="polite"></ul>
                   <p class="broadcast-wizard__audience-hint hidden" id="broadcast-wizard-audience-warning">
                     <span class="material-icons" aria-hidden="true">info</span>
                     <span id="broadcast-wizard-audience-warning-text">Select a tag to continue.</span>
@@ -1373,15 +1375,6 @@
                   </section>
                 </div>
               </section>
-            </div>
-            <div class="broadcast-wizard__audience-view-options hidden" data-i18n-aria="wizard.audienceViewAria">
-              <button type="button" class="broadcast-wizard__audience-view-trigger" aria-haspopup="menu" aria-expanded="false" data-i18n-aria="wizard.audienceViewMenu">
-                <span class="material-icons" aria-hidden="true">link</span>
-              </button>
-              <div class="broadcast-wizard__audience-view-menu" role="menu">
-                <button type="button" class="broadcast-wizard__audience-view-option is-selected" data-audience-view="external" aria-pressed="true" role="menuitemradio" data-i18n="wizard.audienceViewExternal">External link</button>
-                <button type="button" class="broadcast-wizard__audience-view-option" data-audience-view="contacts" aria-pressed="false" role="menuitemradio" data-i18n="wizard.audienceViewContacts">View contacts</button>
-              </div>
             </div>
             <footer class="broadcast-wizard__footer">
               <div class="broadcast-wizard__footer-left">
@@ -1494,16 +1487,16 @@
 
               <div class="contacts-table-tools" data-od-id="contacts-sort-control">
                 <div class="filter-dropdown contacts-sort-dropdown">
-                  <button class="filter-btn filter-btn--plain contacts-sort-btn" type="button" id="contacts-sort-btn" aria-haspopup="listbox" aria-expanded="false">
-                    <span class="contacts-sort-btn__label">Sort:</span>
+                  <button class="filter-btn contacts-sort-btn" type="button" id="contacts-sort-btn" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="contacts-sort-btn__label" data-i18n="contacts.sortBy">Sort by</span>
                     <span id="contacts-sort-value">Latest message</span>
                     <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
                   </button>
-                  <ul class="filter-menu filter-menu--radio filter-menu--right hidden" id="contacts-sort-menu" role="listbox" aria-label="Sort contacts">
-                    <li><button type="button" class="filter-radio-item" data-sort="latest">Latest message</button></li>
-                    <li><button type="button" class="filter-radio-item" data-sort="oldest">Oldest message</button></li>
-                    <li><button type="button" class="filter-radio-item" data-sort="alphabetical">Alphabetical (A–Z)</button></li>
-                    <li><button type="button" class="filter-radio-item" data-sort="recently-tagged">Recently tagged</button></li>
+                  <ul class="filter-menu filter-menu--radio filter-menu--right hidden" id="contacts-sort-menu" role="listbox" aria-label="Sort contacts" data-i18n-aria="contacts.sortAria">
+                    <li><button type="button" class="filter-radio-item" data-sort="latest" data-i18n="contacts.sortLatest">Latest message</button></li>
+                    <li><button type="button" class="filter-radio-item" data-sort="oldest" data-i18n="contacts.sortOldest">Oldest message</button></li>
+                    <li><button type="button" class="filter-radio-item" data-sort="alphabetical" data-i18n="contacts.sortAlphabetical">Alphabetical (A–Z)</button></li>
+                    <li><button type="button" class="filter-radio-item" data-sort="recently-tagged" data-i18n="contacts.sortRecentlyTagged">Recently tagged</button></li>
                   </ul>
                 </div>
               </div>
