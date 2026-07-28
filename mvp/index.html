@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chats Inbox — MVP</title>
+  <title>Chats inbox — MVP</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
@@ -573,10 +573,12 @@
     .view--contacts .contacts-chat-btn__tooltip {
       position: absolute;
       top: calc(100% + 8px);
-      right: 0;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 40;
-      min-width: 0;
-      max-width: 220px;
+      display: block;
+      width: max-content;
+      max-width: 240px;
       padding: 8px 12px;
       background: #494644;
       color: #fff;
@@ -584,8 +586,8 @@
       font-weight: 500;
       line-height: 1.45;
       letter-spacing: normal;
-      text-align: left;
-      white-space: normal;
+      text-align: center;
+      white-space: nowrap;
       border: none;
       border-radius: 6px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
@@ -718,7 +720,10 @@
     .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__panel-header-title {
       padding: var(--mvp-h-single-pad);
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 4px;
       min-height: var(--mvp-h-min);
       box-sizing: border-box;
     }
@@ -734,6 +739,16 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .view--broadcasts .broadcast-wizard--panel .broadcast-wizard__panel-subtitle {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--text-secondary);
+      max-width: 640px;
+      text-wrap: pretty;
     }
 
     /* Wizard stepper — compact modern progress (Stripe / Linear pattern) */
@@ -843,7 +858,7 @@
       color: #494644;
     }
 
-    /* Compose step — template type chip hidden for MVP (selected on step 1) */
+    /* Compose step — template type chip hidden for MVP (selected on step 2) */
     .broadcast-wizard__template-selected {
       display: none !important;
     }
@@ -905,6 +920,17 @@
 
     .broadcast-wizard__tag-dropdown {
       width: 100%;
+    }
+
+    .broadcast-wizard__manage-tags-link {
+      align-self: flex-start;
+      margin-top: 4px;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 14px;
+      text-align: left;
     }
 
     .broadcast-wizard__tag-trigger {
@@ -1032,19 +1058,19 @@
             </span>
             <span data-i18n="nav.chats">Chats</span>
           </button>
-          <button class="nav-item" type="button" data-view="broadcasts" aria-label="Broadcasts" data-od-id="nav-broadcasts">
+          <button class="nav-item" type="button" data-view="broadcasts" aria-label="Send broadcast" data-od-id="nav-broadcasts">
             <span class="nav-item-icon-wrap" aria-hidden="true">
               <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">campaign</span>
               <span class="material-icons nav-item-icon nav-item-icon--filled">campaign</span>
             </span>
-            <span data-i18n="nav.broadcasts">Broadcasts</span>
+            <span data-i18n="nav.broadcasts">Send broadcast</span>
           </button>
-          <button class="nav-item" type="button" data-view="contacts" aria-label="Contacts" data-od-id="nav-audience">
+          <button class="nav-item" type="button" data-view="contacts" aria-label="Manage contacts" data-od-id="nav-audience">
             <span class="nav-item-icon-wrap" aria-hidden="true">
               <span class="material-icons-outlined nav-item-icon nav-item-icon--outlined">groups</span>
               <span class="material-icons nav-item-icon nav-item-icon--filled">groups</span>
             </span>
-            <span data-i18n="nav.contacts">Contacts</span>
+            <span data-i18n="nav.contacts">Manage contacts</span>
           </button>
         </div>
       </div>
@@ -1092,7 +1118,7 @@
     <div class="panel-rail panel-rail--inbox" data-od-id="chats-inbox-rail">
       <aside class="inbox panel" data-od-id="chats-inbox-panel">
       <header class="inbox-header mvp-panel-header mvp-panel-header--single" data-od-id="chats-inbox-header">
-        <h2 data-od-id="chats-inbox-title" data-i18n="chats.inboxTitle">Chats Inbox</h2>
+        <h2 data-od-id="chats-inbox-title" data-i18n="chats.inboxTitle">Chats inbox</h2>
         <button class="icon-btn chats-search__button" id="chats-search-button" type="button" data-i18n-aria="chats.search" aria-label="Search conversations" aria-expanded="false" aria-controls="chats-search">
           <span class="material-icons" aria-hidden="true">search</span>
         </button>
@@ -1211,14 +1237,13 @@
       </div>
 
       <div class="panel-rail panel-rail--chat" data-od-id="broadcast-detail-rail">
-        <main class="broadcast-empty-state panel" id="broadcast-empty-state" data-od-id="broadcast-empty-state" aria-hidden="false">
+        <main class="broadcast-empty-state panel" id="broadcast-empty-state" data-od-id="broadcast-empty-state" hidden aria-hidden="true">
           <div class="broadcast-empty-state__content">
             <div class="broadcast-empty-state__intro">
               <h2 class="broadcast-empty-state__title">
                 <span data-i18n="broadcasts.emptyTitle">Broadcasts</span>
                 <span class="material-icons broadcast-empty-state__title-icon" aria-hidden="true">campaign</span>
               </h2>
-              <p class="broadcast-empty-state__lead" data-i18n="broadcasts.emptyLead">This web workspace lets you send messages to multiple people. Here is how it works:</p>
             </div>
             <div class="broadcast-empty-state__path" aria-label="Two steps to send a broadcast" data-i18n-aria="broadcasts.emptyPathAria">
               <article class="broadcast-onboarding-card broadcast-onboarding-card--audience">
@@ -1266,14 +1291,39 @@
             </button>
             <header class="broadcast-wizard__panel-header" data-od-id="broadcast-wizard-header">
               <div class="broadcast-wizard__panel-header-title">
-                <h2 id="broadcast-wizard-panel-title" data-i18n="broadcasts.wizardTitle">New broadcast</h2>
+                <h2 id="broadcast-wizard-panel-title" data-i18n="broadcasts.wizardTitle">Send broadcast</h2>
+                <p class="broadcast-wizard__panel-subtitle" id="broadcast-wizard-panel-subtitle">Send message to multiple users.</p>
               </div>
               <nav class="broadcast-wizard__stepper" id="broadcast-wizard-stepper" aria-label="Broadcast creation steps"></nav>
             </header>
             <div class="broadcast-wizard__body" id="broadcast-wizard-body">
-              <section class="broadcast-wizard__panel" id="broadcast-wizard-step-template" data-step="1">
+              <section class="broadcast-wizard__panel" id="broadcast-wizard-step-audience" data-step="1">
+                <h3 class="broadcast-wizard__panel-title" data-i18n="wizard.audiencePageTitle">Select who will receive this message</h3>
+                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.audienceDesc" style="white-space: pre-line">Choose the tags for your message recipients.
+You can add and edit tags in Manage contacts page.</p>
+                <div class="broadcast-wizard__audience-panel">
+                  <div class="broadcast-wizard__audience-field">
+                    <span class="broadcast-wizard__audience-label" id="broadcast-wizard-audience-label-text" data-i18n="wizard.fieldTag">Tag</span>
+                    <div class="filter-dropdown broadcast-wizard__tag-dropdown">
+                      <button type="button" class="broadcast-wizard__tag-trigger" id="broadcast-wizard-audience-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="broadcast-wizard-audience-label-text broadcast-wizard-audience-label">
+                        <span class="broadcast-wizard__tag-trigger-label" id="broadcast-wizard-audience-label">Select a tag</span>
+                        <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
+                      </button>
+                      <ul class="filter-menu broadcast-wizard__tag-menu hidden" id="broadcast-wizard-audience-menu" role="listbox" aria-labelledby="broadcast-wizard-audience-label-text"></ul>
+                    </div>
+                    <button type="button" class="broadcast-wizard__contacts-link broadcast-wizard__manage-tags-link" id="broadcast-wizard-manage-tags-link" data-i18n="wizard.manageTagsLink">Add or edit tags</button>
+                  </div>
+                  <div class="broadcast-wizard__audience-count hidden" id="broadcast-wizard-audience-count" role="status" aria-live="polite"></div>
+                  <ul class="broadcast-wizard__selected-contacts hidden" id="broadcast-wizard-selected-contacts" aria-live="polite"></ul>
+                  <p class="broadcast-wizard__audience-hint hidden" id="broadcast-wizard-audience-warning">
+                    <span class="material-icons" aria-hidden="true">info</span>
+                    <span id="broadcast-wizard-audience-warning-text">Select a tag to continue.</span>
+                  </p>
+                </div>
+              </section>
+              <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-template" data-step="2">
                 <h3 class="broadcast-wizard__panel-title" data-i18n="wizard.templateTitle">Select message type</h3>
-                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.templateDesc">Pick the format that best fits your message — you can customize it next.</p>
+                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.templateDesc">Choose a message type that matches what you want to send.</p>
                 <div class="broadcast-wizard__template-grid" id="broadcast-wizard-template-grid"></div>
               </section>
               <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-compose" data-step="3">
@@ -1293,8 +1343,8 @@
                     <span class="broadcast-wizard__counter" id="broadcast-wizard-title-counter">0 / 60</span>
                   </div>
                   <div class="broadcast-wizard__field">
-                    <label class="broadcast-wizard__label" for="broadcast-wizard-message-input" data-i18n="wizard.fieldMessage">Message</label>
-                    <textarea class="broadcast-wizard__textarea" id="broadcast-wizard-message-input" rows="5" maxlength="250" placeholder="Enter message" data-i18n-placeholder="wizard.messagePlaceholder"></textarea>
+                    <label class="broadcast-wizard__label" for="broadcast-wizard-message-input" data-i18n="wizard.fieldMessage">Content</label>
+                    <textarea class="broadcast-wizard__textarea" id="broadcast-wizard-message-input" rows="5" maxlength="250" placeholder="We'd appreciate your help with this survey. It only takes a few minutes." data-i18n-placeholder="wizard.messagePlaceholder"></textarea>
                     <span class="broadcast-wizard__counter" id="broadcast-wizard-message-counter">0 / 250</span>
                   </div>
                   <div class="broadcast-wizard__field hidden" id="broadcast-wizard-link-field">
@@ -1306,26 +1356,6 @@
                     </p>
                   </div>
                 </form>
-              </section>
-              <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-audience" data-step="2">
-                <h3 class="broadcast-wizard__panel-title" data-i18n="wizard.audiencePageTitle">Select who will receive this message</h3>
-                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.audienceDesc">Here you can choose recipients grouped by tag in your Contacts page.</p>
-                <div class="broadcast-wizard__audience-panel">
-                  <div class="broadcast-wizard__audience-field">
-                    <span class="broadcast-wizard__audience-label" id="broadcast-wizard-audience-label-text" data-i18n="wizard.fieldTag">Tag</span>
-                    <div class="filter-dropdown broadcast-wizard__tag-dropdown">
-                      <button type="button" class="broadcast-wizard__tag-trigger" id="broadcast-wizard-audience-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="broadcast-wizard-audience-label-text broadcast-wizard-audience-label">
-                        <span class="broadcast-wizard__tag-trigger-label" id="broadcast-wizard-audience-label">Select a tag</span>
-                        <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
-                      </button>
-                      <ul class="filter-menu broadcast-wizard__tag-menu hidden" id="broadcast-wizard-audience-menu" role="listbox" aria-labelledby="broadcast-wizard-audience-label-text"></ul>
-                    </div>
-                  </div>
-                  <p class="broadcast-wizard__audience-hint hidden" id="broadcast-wizard-audience-warning">
-                    <span class="material-icons" aria-hidden="true">info</span>
-                    <span id="broadcast-wizard-audience-warning-text">Select a tag to continue.</span>
-                  </p>
-                </div>
               </section>
               <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-schedule" data-step="4">
                 <h3 class="broadcast-wizard__panel-title">When should this send?</h3>
@@ -1364,7 +1394,7 @@
               </section>
               <section class="broadcast-wizard__panel hidden" id="broadcast-wizard-step-preview" data-step="4">
                 <h3 class="broadcast-wizard__panel-title" data-i18n="wizard.previewTitle">Review before sending</h3>
-                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.previewDesc">Confirm everything looks correct — you can still go back to edit any step.</p>
+                <p class="broadcast-wizard__panel-desc" data-i18n="wizard.previewDesc">We'll send this message with the details below. Please verify your recipients and message content are correct. To make changes, use the Back button in the bottom left.</p>
                 <div class="broadcast-wizard__preview-layout">
                   <div class="broadcast-wizard__preview-box">
                     <div class="broadcast-wizard__preview-message" id="broadcast-wizard-preview-message"></div>
@@ -1381,7 +1411,7 @@
                 <button type="button" class="btn-back-broadcast hidden" id="broadcast-wizard-back" data-i18n="common.back">BACK</button>
               </div>
               <div class="broadcast-wizard__footer-actions">
-                <button type="button" class="btn-cancel-broadcast" id="broadcast-wizard-discard" data-i18n="common.cancel">CANCEL</button>
+                <button type="button" class="btn-cancel-broadcast" id="broadcast-wizard-discard" data-i18n="common.cancel" disabled>CANCEL</button>
                 <button type="button" class="btn-edit-broadcast" id="broadcast-wizard-next" data-i18n="common.continue">CONTINUE</button>
               </div>
             </footer>
@@ -1398,13 +1428,13 @@
             <header class="contacts-page-header mvp-panel-header mvp-panel-header--stacked" data-od-id="contacts-header">
               <div class="contacts-page-header__top">
                 <div class="contacts-title-info" tabindex="0" aria-describedby="contacts-info-tooltip">
-                  <h2 data-od-id="contacts-title" data-i18n="contacts.title">Contacts</h2>
+                  <h2 data-od-id="contacts-title" data-i18n="contacts.title">Manage contacts</h2>
                   <span class="material-icons-outlined contacts-title-info__icon" aria-hidden="true">info</span>
                   <span class="contacts-title-info__tooltip" role="tooltip" id="contacts-info-tooltip" data-i18n="contacts.infoTooltip">Contacts are your Project or Official Page participants</span>
                 </div>
               </div>
               <div class="contacts-page-header__meta">
-                <p class="contacts-subtitle" data-od-id="contacts-subtitle"><span data-i18n="contacts.subtitle">Use this page to organize contacts with tags. To send a message to a group, go to the </span><a class="mvp-text-link" href="#broadcasts" id="contacts-broadcasts-link" data-i18n="contacts.broadcastsLink">Broadcasts</a><span data-i18n="contacts.broadcastsTab"> tab.</span></p>
+                <p class="contacts-subtitle" data-od-id="contacts-subtitle"><span data-i18n="contacts.subtitle">Use tags to manage who receives your broadcast messages.</span></p>
               </div>
             </header>
 

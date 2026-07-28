@@ -49,15 +49,15 @@ let currentLocale = localStorage.getItem(I18N_STORAGE_KEY) || 'ja';
 
 const I18N_STRINGS = {
   en: {
-    'nav.contacts': 'Contacts',
+    'nav.contacts': 'Manage contacts',
     'nav.chats': 'Chats',
-    'nav.broadcasts': 'Broadcasts',
+    'nav.broadcasts': 'Send broadcast',
     'lang.english': 'English',
     'lang.japanese': '日本語',
     'lang.shortEn': 'EN',
     'lang.shortJa': '日',
     'lang.changeAria': 'Change language',
-    'chats.inboxTitle': 'Chats Inbox',
+    'chats.inboxTitle': 'Chats inbox',
     'chats.search': 'Search conversations',
     'chats.searchPlaceholder': 'Search people',
     'chats.closeSearch': 'Close search',
@@ -72,8 +72,7 @@ const I18N_STRINGS = {
     'broadcasts.createNew': 'Create new',
     'broadcasts.createNewAria': 'Create new broadcast',
     'broadcasts.emptyTitle': 'Broadcasts',
-    'broadcasts.emptyLead':
-      'Broadcasts let you send messages to multiple people. Here is how it works:',
+    'broadcasts.wizardSubtitle': 'Send message to multiple users.',
     'broadcasts.emptyPathAria': 'Two steps to send a broadcast',
     'broadcasts.emptyStep1Label': 'Step 1',
     'broadcasts.emptyStep1Title': 'Create a tag',
@@ -86,7 +85,7 @@ const I18N_STRINGS = {
     'broadcasts.emptyStep2Body':
       'Start your broadcast, choose the prepared tag, and write the message you want to send.',
     'broadcasts.emptyCta': 'Create broadcast',
-    'broadcasts.wizardTitle': 'New broadcast',
+    'broadcasts.wizardTitle': 'Send broadcast',
     'broadcasts.noTitle': 'No title',
     'broadcasts.sentSuccess': 'Message successfully sent',
     'wizard.stepTemplate': 'Select message type',
@@ -95,23 +94,25 @@ const I18N_STRINGS = {
     'wizard.stepAudienceByTag': 'Select contacts by tag',
     'wizard.stepPreview': 'Broadcast preview',
     'wizard.templateTitle': 'Select message type',
-    'wizard.templateDesc': 'Pick the format that best fits your message — you can customize it next.',
+    'wizard.templateDesc': 'Choose a message type that matches what you want to send.',
     'wizard.composeTitle': 'Compose your message',
     'wizard.composeDesc': 'Write the broadcast title and message your contacts will receive.',
-    'wizard.composeDescFreeText': 'Write the message your contacts will receive.',
+    'wizard.composeDescFreeText': 'Enter the content of the message you want to send.',
     'wizard.audiencePageTitle': 'Select who will receive this message',
-    'wizard.audienceDesc': 'Here you can choose recipients grouped by tag in your Contacts page.',
+    'wizard.audienceDesc':
+      'Choose the tags for your message recipients.\nYou can add and edit tags in Manage contacts page.',
     'wizard.previewTitle': 'Review before sending',
-    'wizard.previewDesc': 'Confirm everything looks correct — you can still go back to edit any step.',
+    'wizard.previewDesc': "We'll send this message with the details below. Please verify your recipients and message content are correct. To make changes, use the Back button in the bottom left.",
     'wizard.fieldTitle': 'Title',
-    'wizard.fieldMessage': 'Message',
+    'wizard.fieldMessage': 'Content',
     'wizard.fieldLink': 'Link',
     'wizard.fieldTag': 'Tag',
     'wizard.titlePlaceholder': 'Enter your title',
-    'wizard.messagePlaceholder': 'Enter message',
+    'wizard.messagePlaceholder': "We'd appreciate your help with this survey. It only takes a few minutes.",
     'wizard.linkPlaceholder': 'https://example.com',
     'wizard.invalidLink': 'Invalid link format',
     'wizard.selectTag': 'Select a tag',
+    'wizard.manageTagsLink': 'Add or edit tags',
     'wizard.selectTagWarning': 'Select a tag to continue.',
     'wizard.searchTagsPlaceholder': 'Search tags…',
     'wizard.searchResults': 'Search results',
@@ -127,7 +128,7 @@ const I18N_STRINGS = {
     'wizard.audienceViewExternal': 'External link',
     'wizard.audienceViewContacts': 'View contacts',
     'wizard.summary': 'Summary',
-    'wizard.summaryTemplate': 'Template',
+    'wizard.summaryTemplate': 'Message Type',
     'wizard.summaryRecipients': 'Recipients',
     'wizard.summaryLink': 'Link',
     'wizard.summaryViewList': 'View list',
@@ -138,8 +139,8 @@ const I18N_STRINGS = {
     'common.sendBroadcast': 'SEND BROADCAST',
     'common.discard': 'DISCARD',
     'common.edit': 'EDIT',
-    'contacts.title': 'Contacts',
-    'contacts.subtitle': 'Use this page to organize contacts with tags. To send a message to a group, go to the ',
+    'contacts.title': 'Manage contacts',
+    'contacts.subtitle': 'Use tags to manage who receives your broadcast messages.',
     'contacts.broadcastsLink': 'Broadcasts',
     'contacts.broadcastsTab': ' tab.',
     'contacts.infoTooltip':
@@ -182,13 +183,12 @@ const I18N_STRINGS = {
     'contacts.sortOldest': 'Oldest message',
     'contacts.sortAlphabetical': 'Alphabetical (A–Z)',
     'contacts.sortRecentlyTagged': 'Recently tagged',
-    'template.project-updates.title': 'Message with link',
-    'template.project-updates.desc':
-      'Send a message as a card with a title and link.',
+    'template.project-updates.title': 'With link',
+    'template.project-updates.desc': 'A card with a title and link.',
     'template.light-card.title': 'Light card message',
     'template.light-card.desc': 'Send a message with a lightweight text link.',
-    'template.free-text.title': 'Simple message',
-    'template.free-text.desc': 'Send a plain chat message with just text.',
+    'template.free-text.title': 'Text only',
+    'template.free-text.desc': 'A simple text-only message.',
     'templateModal.title': 'Choose your template',
     'templateModal.subtitleChat': 'Select how you want to engage with your contact',
     'templateModal.subtitleContacts': 'Select how you want to engage with your contacts',
@@ -201,7 +201,7 @@ const I18N_STRINGS = {
     'tag.Retired': 'Retired',
     'tag.Event invite': 'Event invite',
     'tag.VIP': 'VIP',
-    'page.title': 'Chats Inbox — MVP',
+    'page.title': 'Chats inbox — MVP',
     'chat.sent': 'Sent',
     'chat.alice.preview':
       'Hi, I read your post about Latte Art. Can you tell me how I can join',
@@ -250,7 +250,7 @@ const I18N_STRINGS = {
     'chat.patricia.in1': 'Is the showroom open this Saturday?',
   },
   ja: {
-    'nav.contacts': '連絡先',
+    'nav.contacts': '配信先の管理',
     'nav.chats': 'チャット',
     'nav.broadcasts': '配信',
     'lang.english': 'English',
@@ -273,8 +273,7 @@ const I18N_STRINGS = {
     'broadcasts.createNew': '新規作成',
     'broadcasts.createNewAria': '新規配信を作成',
     'broadcasts.emptyTitle': '配信',
-    'broadcasts.emptyLead':
-      '配信では、複数の方にメッセージを送信できます。ご利用の流れをご案内します。',
+    'broadcasts.wizardSubtitle': '複数のユーザーに一括でメッセージを配信できます。',
     'broadcasts.emptyPathAria': '配信までの2つのステップ',
     'broadcasts.emptyStep1Label': 'ステップ 1',
     'broadcasts.emptyStep1Title': 'タグを作成する',
@@ -287,32 +286,34 @@ const I18N_STRINGS = {
     'broadcasts.emptyStep2Body':
       '配信を開始し、準備したタグを選んで、届けたいメッセージを作成します。',
     'broadcasts.emptyCta': '配信を作成',
-    'broadcasts.wizardTitle': '新規配信',
+    'broadcasts.wizardTitle': '配信',
     'broadcasts.noTitle': 'タイトル未入力',
     'broadcasts.sentSuccess': '送信しました',
     'wizard.stepTemplate': 'メッセージの種類を選択',
     'wizard.stepCompose': 'メッセージ作成',
-    'wizard.stepAudience': '連絡先を選択',
+    'wizard.stepAudience': '配信先の選択',
     'wizard.stepAudienceByTag': 'タグで連絡先を選択',
-    'wizard.stepPreview': '配信プレビュー',
+    'wizard.stepPreview': '配信内容の確認',
     'wizard.templateTitle': 'メッセージの種類を選択',
-    'wizard.templateDesc': '内容に合う形式を選び、次のステップで編集できます。',
+    'wizard.templateDesc': '配信したい内容に合わせてメッセージの種類を選んでください。',
     'wizard.composeTitle': 'メッセージを作成',
     'wizard.composeDesc': '配信のタイトルと本文を入力してください。',
-    'wizard.composeDescFreeText': '連絡先に届けるメッセージを入力してください。',
+    'wizard.composeDescFreeText': '配信するメッセージの内容を入力してください。',
     'wizard.audiencePageTitle': 'このメッセージの配信先を選ぶ',
-    'wizard.audienceDesc': '連絡先ページで、タグごとにグループ分けされた配信先を選べます。',
-    'wizard.previewTitle': '送信前の確認',
-    'wizard.previewDesc': '内容を確認してください。前のステップに戻って編集できます。',
+    'wizard.audienceDesc':
+      'メッセージの配信先となるタグを選択してください。\nタグは「配信先の管理」画面で追加・編集できます。',
+    'wizard.previewTitle': '配信内容の確認',
+    'wizard.previewDesc': '以下の内容で配信します。配信先やメッセージ内容に誤りがないか確認してください。 内容を修正したい場合は、左下の戻るボタンから前の画面へ戻ってください。',
     'wizard.fieldTitle': 'タイトル',
-    'wizard.fieldMessage': 'メッセージ',
+    'wizard.fieldMessage': '内容',
     'wizard.fieldLink': 'リンク',
     'wizard.fieldTag': 'タグ',
     'wizard.titlePlaceholder': 'タイトルを入力',
-    'wizard.messagePlaceholder': 'メッセージを入力',
+    'wizard.messagePlaceholder': 'アンケートにご協力をお願いいたします。所要時間は数分程度です。',
     'wizard.linkPlaceholder': 'https://example.com',
     'wizard.invalidLink': 'リンクの形式が正しくありません',
     'wizard.selectTag': 'タグを選択',
+    'wizard.manageTagsLink': 'タグを追加・編集する',
     'wizard.selectTagWarning': 'タグを選択してください。',
     'wizard.searchTagsPlaceholder': 'タグを検索…',
     'wizard.searchResults': '検索結果',
@@ -339,8 +340,8 @@ const I18N_STRINGS = {
     'common.sendBroadcast': '配信する',
     'common.discard': '削除',
     'common.edit': '編集',
-    'contacts.title': '連絡先',
-    'contacts.subtitle': 'このページでは、タグを使って連絡先を整理できます。グループにメッセージを送信するには、',
+    'contacts.title': '配信先の管理',
+    'contacts.subtitle': 'メッセージの配信対象となるユーザーをタグで管理できます',
     'contacts.broadcastsLink': '配信',
     'contacts.broadcastsTab': 'タブをご利用ください。',
     'contacts.infoTooltip':
@@ -383,12 +384,12 @@ const I18N_STRINGS = {
     'contacts.sortOldest': 'メッセージが古い順',
     'contacts.sortAlphabetical': '名前順（A–Z）',
     'contacts.sortRecentlyTagged': 'タグを付けた順',
-    'template.project-updates.title': 'リンク付きメッセージ',
-    'template.project-updates.desc': 'タイトルとリンク付きのカード形式で送信します。',
+    'template.project-updates.title': 'リンク付き',
+    'template.project-updates.desc': 'タイトルとリンク付きのカード形式',
     'template.light-card.title': 'ライトカードメッセージ',
     'template.light-card.desc': 'テキストリンク付きの軽量なメッセージを送信します。',
-    'template.free-text.title': 'シンプルなメッセージ',
-    'template.free-text.desc': 'テキストのみのメッセージを送信します。',
+    'template.free-text.title': 'テキストのみ',
+    'template.free-text.desc': 'テキストのみのシンプルなメッセージ',
     'templateModal.title': 'テンプレートを選択',
     'templateModal.subtitleChat': '連絡先への送信形式を選んでください',
     'templateModal.subtitleContacts': '連絡先への送信形式を選んでください',
@@ -491,8 +492,8 @@ function getLocalizedTemplateOptions() {
 
 function getWizardStepLabels() {
   return [
-    { num: 1, label: t('wizard.stepTemplate'), panel: 'template' },
-    { num: 2, label: t('wizard.stepAudience'), panel: 'audience' },
+    { num: 1, label: t('wizard.stepAudience'), panel: 'audience' },
+    { num: 2, label: t('wizard.stepTemplate'), panel: 'template' },
     { num: 3, label: t('wizard.stepCompose'), panel: 'compose' },
     { num: 4, label: t('wizard.stepPreview'), panel: 'preview' },
   ];
@@ -558,9 +559,13 @@ function refreshLocalizedUI() {
   if (broadcastWizardOpen) {
     renderBroadcastWizardStepper();
     updateBroadcastWizardPanelTitle();
+    if (broadcastWizardState.step === 1) {
+      renderBroadcastWizardAudienceTags();
+      updateBroadcastWizardAudienceCount();
+    }
+    if (broadcastWizardState.step === 2) renderBroadcastWizardTemplates();
     populateBroadcastWizardCompose();
-    renderBroadcastWizardAudienceTags();
-    updateBroadcastWizardAudienceCount();
+    if (broadcastWizardState.step === 3) renderBroadcastWizardTemplateChip();
     if (broadcastWizardState.step === 4) renderBroadcastWizardPreview();
     updateBroadcastWizardFooter();
   } else if (activeBroadcastId) {
@@ -1150,8 +1155,8 @@ let templateModalContext = 'contacts';
 const CONTACT_TEMPLATE_OPTIONS = [
   {
     id: 'free-text',
-    title: 'Simple message',
-    description: 'Send a plain chat message with just text.',
+    title: 'Text only',
+    description: 'A simple text-only message.',
     icon: 'edit_note',
   },
   {
@@ -1164,7 +1169,7 @@ const CONTACT_TEMPLATE_OPTIONS = [
 
 const TEMPLATE_SHORT_NAMES = {
   'project-updates': 'Card message',
-  'free-text': 'Simple message',
+  'free-text': 'Text only',
 };
 
 function getOperatorChatList(tab) {
@@ -2134,8 +2139,7 @@ function getTemplateShortName(templateId) {
 
 function getTemplateDisplayName(templateId) {
   if (!templateId) return null;
-  const option = CONTACT_TEMPLATE_OPTIONS.find((t) => t.id === templateId);
-  return option ? option.title : null;
+  return getLocalizedTemplateTitle(templateId);
 }
 
 function getWizardDraftListData() {
@@ -2253,6 +2257,15 @@ function renderBroadcastList() {
 
 const MVP_BROADCAST_LIST_HIDDEN = true;
 
+function ensureBroadcastWizardVisible() {
+  if (broadcastWizardOpen) return;
+  if (wizardSessionHasProgress(broadcastWizardState)) {
+    restoreBroadcastWizardUI();
+  } else {
+    startFreshBroadcastWizard();
+  }
+}
+
 function renderBroadcastDetail() {
   if (broadcastWizardOpen) {
     setBroadcastRightPanel({ showDetail: false, showEmpty: false });
@@ -2261,14 +2274,16 @@ function renderBroadcastDetail() {
 
   if (MVP_BROADCAST_LIST_HIDDEN) {
     if (broadcastDetailEl) broadcastDetailEl.innerHTML = '';
-    setBroadcastRightPanel({ showDetail: false, showEmpty: true });
+    setBroadcastRightPanel({ showDetail: false, showEmpty: false });
+    ensureBroadcastWizardVisible();
     return;
   }
 
   const item = getActiveBroadcast();
   if (!item) {
     if (broadcastDetailEl) broadcastDetailEl.innerHTML = '';
-    setBroadcastRightPanel({ showDetail: false, showEmpty: true });
+    setBroadcastRightPanel({ showDetail: false, showEmpty: false });
+    ensureBroadcastWizardVisible();
     return;
   }
 
@@ -3039,8 +3054,8 @@ function initTemplateModal() {
 }
 
 const BROADCAST_WIZARD_STEPS = [
-  { num: 1, label: 'Select message type', panel: 'template' },
-  { num: 2, label: 'Select contacts', panel: 'audience' },
+  { num: 1, label: 'Select contacts', panel: 'audience' },
+  { num: 2, label: 'Select message type', panel: 'template' },
   { num: 3, label: 'Compose message', panel: 'compose' },
   { num: 4, label: 'Broadcast preview', panel: 'preview' },
 ];
@@ -3048,7 +3063,7 @@ const BROADCAST_WIZARD_STEPS = [
 const TEMPLATE_TITLES = {
   'project-updates': 'Message with link',
   'light-card': 'Light card message',
-  'free-text': 'Simple message',
+  'free-text': 'Text only',
 };
 
 const BROADCAST_TEMPLATE_OPTIONS = [...CONTACT_TEMPLATE_OPTIONS];
@@ -3090,15 +3105,15 @@ function createDefaultBroadcastWizardState() {
 
 function getBroadcastWizardMaxReachableStep(state = broadcastWizardState) {
   let max = 1;
-  if (state.templateId) max = Math.max(max, 2);
-  if (max >= 2 && validateBroadcastWizardStepForState(2, state)) max = Math.max(max, 3);
+  if ((state.audienceTags?.length ?? 0) > 0) max = Math.max(max, 2);
+  if (max >= 2 && state.templateId) max = Math.max(max, 3);
   if (max >= 3 && validateBroadcastWizardStepForState(3, state)) max = Math.max(max, 4);
   return Math.max(max, state.maxReachableStep ?? 1, state.step ?? 1);
 }
 
 function validateBroadcastWizardStepForState(step, state) {
-  if (step === 1) return !!state.templateId;
-  if (step === 2) return (state.audienceTags?.length ?? 0) > 0;
+  if (step === 1) return (state.audienceTags?.length ?? 0) > 0;
+  if (step === 2) return !!state.templateId;
   if (step === 3) {
     if (!state.message?.trim()) return false;
     if (broadcastTemplateNeedsTitle(state.templateId) && !state.title?.trim()) return false;
@@ -3532,11 +3547,11 @@ function showBroadcastWizardStep(step, { replaceUrl = false } = {}) {
   renderBroadcastWizardStepper();
   updateBroadcastWizardFooter();
 
-  if (step === 1) renderBroadcastWizardTemplates();
-  if (step === 2) {
+  if (step === 1) {
     renderBroadcastWizardAudienceTags();
     updateBroadcastWizardAudienceCount();
   }
+  if (step === 2) renderBroadcastWizardTemplates();
   if (step === 3) {
     populateBroadcastWizardCompose();
     renderBroadcastWizardTemplateChip();
@@ -3560,7 +3575,7 @@ function renderBroadcastWizardTemplateChip() {
 
   chipWrap.hidden = false;
   if (iconEl) iconEl.textContent = option.icon;
-  if (nameEl) nameEl.textContent = option.title;
+  if (nameEl) nameEl.textContent = getLocalizedTemplateTitle(broadcastWizardState.templateId);
 }
 
 function getLocalizedTemplateTitle(templateId) {
@@ -3572,8 +3587,10 @@ function getLocalizedTemplateTitle(templateId) {
 
 function updateBroadcastWizardPanelTitle() {
   const titleEl = document.getElementById('broadcast-wizard-panel-title');
-  if (!titleEl) return;
-  titleEl.textContent = t('broadcasts.wizardTitle');
+  if (titleEl) titleEl.textContent = t('broadcasts.wizardTitle');
+
+  const subtitleEl = document.getElementById('broadcast-wizard-panel-subtitle');
+  if (subtitleEl) subtitleEl.textContent = t('broadcasts.wizardSubtitle');
 }
 
 function syncBroadcastWizardComposeFromInputs() {
@@ -3765,10 +3782,10 @@ function renderBroadcastWizardPreview() {
 }
 
 function validateBroadcastWizardStep(step) {
-  if (step === 1) return !!broadcastWizardState.templateId;
-  if (step === 2) {
+  if (step === 1) {
     return broadcastWizardState.audienceTags.length > 0;
   }
+  if (step === 2) return !!broadcastWizardState.templateId;
   if (step === 3) {
     syncBroadcastWizardComposeFromInputs();
     if (!broadcastWizardState.message) return false;
@@ -3786,12 +3803,17 @@ function validateBroadcastWizardStep(step) {
 function updateBroadcastWizardFooter() {
   const backBtn = document.getElementById('broadcast-wizard-back');
   const nextBtn = document.getElementById('broadcast-wizard-next');
+  const discardBtn = document.getElementById('broadcast-wizard-discard');
   const step = broadcastWizardState.step;
 
   if (backBtn) {
     const showBack = step > 1;
     backBtn.classList.toggle('hidden', !showBack);
     backBtn.hidden = !showBack;
+  }
+
+  if (discardBtn) {
+    discardBtn.disabled = broadcastWizardState.audienceTags.length === 0;
   }
 
   if (nextBtn) {
@@ -3803,7 +3825,7 @@ function updateBroadcastWizardFooter() {
     nextBtn.disabled = !validateBroadcastWizardStep(step);
   }
 
-  if (step === 2) updateBroadcastWizardAudienceCount();
+  if (step === 1) updateBroadcastWizardAudienceCount();
   if (step === 3) updateBroadcastWizardLinkErrorUI();
 }
 
@@ -3862,7 +3884,10 @@ function startFreshBroadcastWizard(initialStep = 1, { replaceUrl = false } = {})
   showBroadcastWizardStep(initialStep, { replaceUrl });
   setBroadcastWizardOpen(true);
   renderBroadcastList();
-  document.getElementById('broadcast-wizard-discard')?.focus();
+  const focusTarget = broadcastWizardState.audienceTags.length
+    ? document.getElementById('broadcast-wizard-discard')
+    : document.getElementById('broadcast-wizard-audience-trigger');
+  focusTarget?.focus();
 }
 
 function openBroadcastWizard() {
@@ -4056,6 +4081,9 @@ function initBroadcastWizard() {
   document.getElementById('broadcast-manage-tags-btn')?.addEventListener('click', () =>
     switchView('contacts')
   );
+  document.getElementById('broadcast-wizard-manage-tags-link')?.addEventListener('click', () =>
+    switchView('contacts')
+  );
   closeBtn?.addEventListener('click', () => discardBroadcastWizard());
 
   backBtn?.addEventListener('click', () => {
@@ -4076,7 +4104,7 @@ function initBroadcastWizard() {
       }
       return;
     }
-    if (broadcastWizardState.step === 2 && !validateBroadcastWizardStep(2)) {
+    if (broadcastWizardState.step === 1 && !validateBroadcastWizardStep(1)) {
       broadcastWizardAudienceShowError = true;
       updateBroadcastWizardAudienceCount();
       return;
@@ -4827,7 +4855,6 @@ initLanguageSwitcher();
 initContactsView();
 initBroadcastWizard();
 updateTabBadges();
-applyStaticTranslations();
 const launchParams = new URLSearchParams(window.location.search);
 const launchView = launchParams.get('view');
 const launchTag = launchParams.get('tag');
@@ -4843,3 +4870,4 @@ const initialWizardStep = getBroadcastWizardStepFromLocation();
 if (initialView === 'broadcasts' && initialWizardStep) {
   startFreshBroadcastWizard(initialWizardStep, { replaceUrl: true });
 }
+refreshLocalizedUI();

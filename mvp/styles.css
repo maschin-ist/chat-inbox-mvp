@@ -1663,6 +1663,16 @@ button {
   flex: 0 0 auto;
 }
 
+.broadcast-empty-state__subtitle {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 20px;
+  max-width: 640px;
+  text-wrap: pretty;
+}
+
 .broadcast-empty-state__lead {
   font-size: 15px;
   color: var(--text-secondary);
@@ -1990,8 +2000,16 @@ button {
   transition: background 0.15s;
 }
 
-.btn-cancel-broadcast:hover {
+.btn-cancel-broadcast:hover:not(:disabled) {
   background: #fff5f5;
+}
+
+.btn-cancel-broadcast:disabled {
+  border-color: #e0e0e0;
+  background: #fafafa;
+  color: #bdbdbd;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .btn-back-broadcast {
@@ -3012,6 +3030,7 @@ button {
   width: 72px;
   text-align: center;
   padding-right: 20px !important;
+  overflow: visible;
 }
 
 .contacts-checkbox {
