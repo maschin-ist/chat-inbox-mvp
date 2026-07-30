@@ -179,10 +179,11 @@ const I18N_STRINGS = {
     'contacts.applied': 'Applied',
     'contacts.sortBy': 'Sort by',
     'contacts.sortAria': 'Sort contacts',
-    'contacts.sortLatest': 'Latest message',
-    'contacts.sortOldest': 'Oldest message',
-    'contacts.sortAlphabetical': 'Alphabetical (A–Z)',
+    'contacts.sortAlphabetical': 'Alphabetical',
     'contacts.sortRecentlyTagged': 'Recently tagged',
+    'contacts.tagsMore': '+{{count}} more',
+    'contacts.tagsLess': 'Show less',
+    'contacts.tagsMoreAria': 'Show {{count}} more tags',
     'template.project-updates.title': 'With link',
     'template.project-updates.desc': 'A card with a title and link.',
     'template.light-card.title': 'Light card message',
@@ -380,10 +381,11 @@ const I18N_STRINGS = {
     'contacts.applied': '適用済み',
     'contacts.sortBy': '並び順',
     'contacts.sortAria': '連絡先の並び順',
-    'contacts.sortLatest': 'メッセージが新しい順',
-    'contacts.sortOldest': 'メッセージが古い順',
-    'contacts.sortAlphabetical': '名前順（A–Z）',
+    'contacts.sortAlphabetical': '名前順',
     'contacts.sortRecentlyTagged': 'タグを付けた順',
+    'contacts.tagsMore': '+{{count}}件',
+    'contacts.tagsLess': '表示を減らす',
+    'contacts.tagsMoreAria': '他{{count}}件のタグを表示',
     'template.project-updates.title': 'リンク付き',
     'template.project-updates.desc': 'タイトルとリンク付きのカード形式',
     'template.light-card.title': 'ライトカードメッセージ',
@@ -521,12 +523,10 @@ function applyStaticTranslations() {
   const contactsSortValue = document.getElementById('contacts-sort-value');
   if (contactsSortValue) {
     const sortLabels = {
-      latest: 'contacts.sortLatest',
-      oldest: 'contacts.sortOldest',
       alphabetical: 'contacts.sortAlphabetical',
       'recently-tagged': 'contacts.sortRecentlyTagged',
     };
-    contactsSortValue.textContent = t(sortLabels[contactsSort] || 'contacts.sortLatest');
+    contactsSortValue.textContent = t(sortLabels[contactsSort] || 'contacts.sortRecentlyTagged');
   }
 
   document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
@@ -995,8 +995,8 @@ const UNIVERSAL_TAG = 'Member';
 const UNIVERSAL_TAG_SECONDARY = 'Community member';
 
 const CONTACTS_SEED = [
-  { id: 'tanaka', name: 'Tanaka Haruto', role: 'Resident', tags: [UNIVERSAL_TAG, 'Head of Household', '1 room'], chatId: null },
-  { id: 'yamamoto', name: 'Yamamoto Aiko', role: 'Worker', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY, 'Retired'], chatId: null },
+  { id: 'tanaka', name: 'Tanaka Haruto', role: 'Resident', tags: [UNIVERSAL_TAG, 'Head of Household', '1 room', 'VIP'], chatId: null },
+  { id: 'yamamoto', name: 'Yamamoto Aiko', role: 'Worker', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY, 'Retired', 'Event invite'], chatId: null },
   { id: 'nakamura', name: 'Nakamura Ren', role: 'Worker', tags: [UNIVERSAL_TAG, '2 room'], chatId: null },
   { id: 'kobayashi', name: 'Kobayashi Aoi', role: 'Resident', tags: [UNIVERSAL_TAG, 'Head of Household', '2 room'], chatId: null },
   { id: 'sato', name: 'Sato Yuki', role: 'Resident', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY, '1 room'], chatId: null },
@@ -1050,6 +1050,7 @@ function buildContactsList() {
     [UNIVERSAL_TAG, 'Retired'],
     [UNIVERSAL_TAG, 'Head of Household'],
     [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY, 'Head of Household'],
+    [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY, 'Head of Household', 'VIP'],
   ];
   let extraIdx = 0;
   while (list.length < CONTACTS_TOTAL) {
@@ -1125,7 +1126,7 @@ const chatsSearchClose = document.getElementById('chats-search-close');
 let contactsSearchQuery = '';
 let contactsRoleFilter = '';
 let contactsTagFilters = [];
-let contactsSort = 'latest';
+let contactsSort = 'recently-tagged';
 let contactsPage = 1;
 let contactsRowsPerPage = CONTACTS_TOTAL;
 let contactsSelectedIds = new Set();
@@ -2413,36 +2414,26 @@ broadcastTabsSupervisorEl?.querySelectorAll('.tab').forEach((tab) => {
   tab.addEventListener('click', () => switchSupervisorBroadcastTab(tab.dataset.sbtab));
 });
 
+const CONTACT_TAGS_VISIBLE_MAX = 3;
+const contactsExpandedTagIds = new Set();
+
 function tagPillHtml(tag) {
   return `<span class="contact-tag contact-tag--blue">${escapePreviewText(translateTag(tag))}</span>`;
 }
 
-function parseChatTimeToMinutesAgo(timeStr) {
-  if (!timeStr) return Number.POSITIVE_INFINITY;
-  const t = timeStr.trim().toLowerCase();
-  if (t === 'just now') return 0;
-  const minutesMatch = t.match(/^(\d+)\s*m\s*ago$/);
-  if (minutesMatch) return parseInt(minutesMatch[1], 10);
-  const hoursMatch = t.match(/^(\d+)\s*h\s*ago$/);
-  if (hoursMatch) return parseInt(hoursMatch[1], 10) * 60;
-  const daysMatch = t.match(/^(\d+)\s*d\s*ago$/);
-  if (daysMatch) return parseInt(daysMatch[1], 10) * 24 * 60;
-  return Number.POSITIVE_INFINITY;
-}
+function contactTagsHtml(tags, contactId) {
+  const isExpanded = contactsExpandedTagIds.has(contactId);
+  const hiddenCount = Math.max(0, tags.length - CONTACT_TAGS_VISIBLE_MAX);
+  const visibleTags = isExpanded ? tags : tags.slice(0, CONTACT_TAGS_VISIBLE_MAX);
+  const pills = visibleTags.map(tagPillHtml).join('');
 
-function getContactChatSortKey(contact) {
-  if (!contact.chatId) {
-    return { hasChat: 0, minutesAgo: Number.POSITIVE_INFINITY, name: contact.name };
+  if (hiddenCount <= 0) return pills;
+
+  if (isExpanded) {
+    return `${pills}<button type="button" class="contact-tag-more" data-contact-id="${contactId}" data-action="collapse" aria-label="${escapePreviewText(t('contacts.tagsLess'))}">${escapePreviewText(t('contacts.tagsLess'))}</button>`;
   }
-  const chat = findChatById(contact.chatId);
-  if (!chat) {
-    return { hasChat: 0, minutesAgo: Number.POSITIVE_INFINITY, name: contact.name };
-  }
-  return {
-    hasChat: 1,
-    minutesAgo: parseChatTimeToMinutesAgo(chat.time),
-    name: contact.name,
-  };
+
+  return `${pills}<button type="button" class="contact-tag-more" data-contact-id="${contactId}" data-action="expand" aria-label="${escapePreviewText(t('contacts.tagsMoreAria', { count: hiddenCount }))}">${escapePreviewText(t('contacts.tagsMore', { count: hiddenCount }))}</button>`;
 }
 
 function sortContactsForDisplay(contacts) {
@@ -2450,34 +2441,9 @@ function sortContactsForDisplay(contacts) {
     return [...contacts].sort((a, b) => a.name.localeCompare(b.name));
   }
 
-  if (contactsSort === 'recently-tagged') {
-    return [...contacts].sort((a, b) => {
-      const order = (b.tagAppliedOrder || 0) - (a.tagAppliedOrder || 0);
-      return order || a.name.localeCompare(b.name);
-    });
-  }
-
-  if (contactsSort === 'oldest') {
-    return [...contacts].sort((a, b) => {
-      const keyA = getContactChatSortKey(a);
-      const keyB = getContactChatSortKey(b);
-      if (keyA.hasChat !== keyB.hasChat) return keyB.hasChat - keyA.hasChat;
-      if (keyA.hasChat && keyB.hasChat) {
-        if (keyA.minutesAgo !== keyB.minutesAgo) return keyB.minutesAgo - keyA.minutesAgo;
-      }
-      return keyA.name.localeCompare(keyB.name);
-    });
-  }
-
   return [...contacts].sort((a, b) => {
-    const keyA = getContactChatSortKey(a);
-    const keyB = getContactChatSortKey(b);
-    if (keyA.hasChat !== keyB.hasChat) return keyB.hasChat - keyA.hasChat;
-    if (keyA.hasChat && keyB.hasChat) {
-      if (keyA.minutesAgo !== keyB.minutesAgo) return keyA.minutesAgo - keyB.minutesAgo;
-      return keyA.name.localeCompare(keyB.name);
-    }
-    return keyA.name.localeCompare(keyB.name);
+    const order = (b.tagAppliedOrder || 0) - (a.tagAppliedOrder || 0);
+    return order || a.name.localeCompare(b.name);
   });
 }
 
@@ -4251,7 +4217,7 @@ function renderContactsTable() {
   tbody.innerHTML = pageItems
     .map((contact) => {
       const isSelected = contactsSelectAllMode || contactsSelectedIds.has(contact.id);
-      const tagsHtml = contact.tags.map(tagPillHtml).join('');
+      const tagsHtml = contactTagsHtml(contact.tags, contact.id);
       return `
     <tr class="${isSelected ? 'is-selected' : ''}" data-id="${contact.id}">
       <td class="col-check">
@@ -4307,6 +4273,16 @@ function renderContactsTable() {
       const chatId = btn.dataset.chatId;
       if (!chatId) return;
       openChatFromContact(chatId);
+    });
+  });
+
+  tbody.querySelectorAll('.contact-tag-more').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const contactId = btn.dataset.contactId;
+      if (!contactId) return;
+      if (btn.dataset.action === 'collapse') contactsExpandedTagIds.delete(contactId);
+      else contactsExpandedTagIds.add(contactId);
+      renderContactsTable();
     });
   });
 }
@@ -4414,8 +4390,6 @@ function initContactsSortDropdown() {
   if (!btn || !menu || !value) return;
 
   const labels = {
-    latest: t('contacts.sortLatest'),
-    oldest: t('contacts.sortOldest'),
     alphabetical: t('contacts.sortAlphabetical'),
     'recently-tagged': t('contacts.sortRecentlyTagged'),
   };

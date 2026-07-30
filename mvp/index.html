@@ -1519,14 +1519,12 @@ You can add and edit tags in Manage contacts page.</p>
                 <div class="filter-dropdown contacts-sort-dropdown">
                   <button class="filter-btn contacts-sort-btn" type="button" id="contacts-sort-btn" aria-haspopup="listbox" aria-expanded="false">
                     <span class="contacts-sort-btn__label" data-i18n="contacts.sortBy">Sort by</span>
-                    <span id="contacts-sort-value">Latest message</span>
+                    <span id="contacts-sort-value">Recently tagged</span>
                     <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
                   </button>
                   <ul class="filter-menu filter-menu--radio filter-menu--right hidden" id="contacts-sort-menu" role="listbox" aria-label="Sort contacts" data-i18n-aria="contacts.sortAria">
-                    <li><button type="button" class="filter-radio-item" data-sort="latest" data-i18n="contacts.sortLatest">Latest message</button></li>
-                    <li><button type="button" class="filter-radio-item" data-sort="oldest" data-i18n="contacts.sortOldest">Oldest message</button></li>
-                    <li><button type="button" class="filter-radio-item" data-sort="alphabetical" data-i18n="contacts.sortAlphabetical">Alphabetical (A–Z)</button></li>
-                    <li><button type="button" class="filter-radio-item" data-sort="recently-tagged" data-i18n="contacts.sortRecentlyTagged">Recently tagged</button></li>
+                    <li><button type="button" class="filter-radio-item is-selected" data-sort="recently-tagged" data-i18n="contacts.sortRecentlyTagged">Recently tagged</button></li>
+                    <li><button type="button" class="filter-radio-item" data-sort="alphabetical" data-i18n="contacts.sortAlphabetical">Alphabetical</button></li>
                   </ul>
                 </div>
               </div>
