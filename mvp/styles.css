@@ -936,6 +936,67 @@ button {
   background: var(--chat-bg);
 }
 
+.chat-panel--empty .messages {
+  padding: 0;
+}
+
+.chat-empty-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 240px;
+  padding: 48px 32px;
+  box-sizing: border-box;
+}
+
+.chat-empty-state__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 320px;
+}
+
+.chat-empty-state__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  background: #e8e8e8;
+}
+
+.chat-empty-state__icon {
+  font-size: 32px;
+  line-height: 1;
+  color: var(--text-secondary);
+}
+
+.chat-empty-state__title {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.chat-empty-state__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+
+.chat-panel--empty .composer {
+  display: none;
+}
+
 .date-divider {
   text-align: center;
   font-size: 12px;

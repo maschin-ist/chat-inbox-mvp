@@ -68,6 +68,8 @@ const I18N_STRINGS = {
     'chats.send': 'Send',
     'chats.sendAria': 'Send message',
     'chats.noConversations': 'No conversations.',
+    'chats.selectChat': 'No Chats Selected',
+    'chats.selectChatDesc': 'Select conversation from the list to view messages.',
     'broadcasts.title': 'Broadcasts',
     'broadcasts.createNew': 'Create new',
     'broadcasts.createNewAria': 'Create new broadcast',
@@ -270,6 +272,8 @@ const I18N_STRINGS = {
     'chats.send': '送信する',
     'chats.sendAria': 'メッセージを送信',
     'chats.noConversations': 'チャットはありません。',
+    'chats.selectChat': 'チャットを選択',
+    'chats.selectChatDesc': '左の一覧から会話を選択してください。',
     'broadcasts.title': '配信',
     'broadcasts.createNew': '新規作成',
     'broadcasts.createNewAria': '新規配信を作成',
@@ -1195,10 +1199,8 @@ function findChatById(id) {
 }
 
 function getActiveConversation() {
-  const list = getCurrentChatList();
-  const match = list.find((c) => c.id === activeChatId);
-  if (match) return match;
-  return findChatById(activeChatId) || list[0];
+  if (!activeChatId) return null;
+  return findChatById(activeChatId) || null;
 }
 
 function countUnreadInList(list) {
@@ -1296,7 +1298,7 @@ function renderChatList() {
     return;
   }
 
-  if (!query && !list.find((c) => c.id === activeChatId)) {
+  if (!query && activeChatId && !list.find((c) => c.id === activeChatId)) {
     activeChatId = list[0]?.id || null;
   }
 
@@ -1501,14 +1503,50 @@ function renderSurveyCard(survey) {
     </div>`;
 }
 
+function getChatEmptyStateHTML() {
+  return `
+    <div class="chat-empty-state" role="status">
+      <div class="chat-empty-state__content">
+        <div class="chat-empty-state__icon-wrap" aria-hidden="true">
+          <span class="material-icons-outlined chat-empty-state__icon">chat</span>
+        </div>
+        <h3 class="chat-empty-state__title">${t('chats.selectChat')}</h3>
+        <p class="chat-empty-state__text">${t('chats.selectChatDesc')}</p>
+      </div>
+    </div>`;
+}
+
 function renderMessages() {
   const conv = getActiveConversation();
+  const chatPanelEl = document.getElementById('chat-panel');
+  const chatHeaderEl = document.querySelector('.chat-header');
 
   if (!conv) {
     if (chatTitleEl) chatTitleEl.textContent = '';
-    if (messagesEl) messagesEl.innerHTML = '';
+    if (messagesEl) {
+      messagesEl.innerHTML = getChatEmptyStateHTML();
+    }
+    chatPanelEl?.classList.add('chat-panel--empty');
+    if (chatHeaderEl) {
+      chatHeaderEl.hidden = true;
+      chatHeaderEl.setAttribute('aria-hidden', 'true');
+    }
+    if (composerEl) {
+      composerEl.hidden = true;
+      composerEl.setAttribute('aria-hidden', 'true');
+    }
     updateHeaderActions();
     return;
+  }
+
+  chatPanelEl?.classList.remove('chat-panel--empty');
+  if (chatHeaderEl) {
+    chatHeaderEl.hidden = false;
+    chatHeaderEl.removeAttribute('aria-hidden');
+  }
+  if (composerEl) {
+    composerEl.hidden = false;
+    composerEl.removeAttribute('aria-hidden');
   }
 
   chatTitleEl.textContent = conv.name;
@@ -3999,7 +4037,6 @@ function submitBroadcastWizard() {
 
   BROADCASTS.sent.unshift(item);
   activeBroadcastTab = 'sent';
-  activeBroadcastId = id;
 
   deliverBroadcastToRecipientChats(audienceTags, broadcastWizardState);
 
@@ -4012,7 +4049,8 @@ function submitBroadcastWizard() {
   clearBroadcastWizardSession();
   broadcastWizardState = createDefaultBroadcastWizardState();
   setBroadcastWizardOpen(false);
-  if (activeBroadcastId === BROADCAST_WIZARD_DRAFT_ID) activeBroadcastId = null;
+  activeBroadcastId = null;
+  activeChatId = null;
 
   switchView('chats');
   renderChatList();
