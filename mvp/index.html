@@ -1727,6 +1727,24 @@ You can add and edit tags in Manage contacts page.</p>
     </div>
   </div>
 
+  <div class="confirm-dialog" id="broadcast-discard-dialog" hidden="" aria-hidden="true">
+    <div class="confirm-dialog__backdrop" id="broadcast-discard-dialog-backdrop"></div>
+    <div
+      class="confirm-dialog__panel"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="broadcast-discard-dialog-title"
+      aria-describedby="broadcast-discard-dialog-desc"
+    >
+      <h2 class="confirm-dialog__title" id="broadcast-discard-dialog-title" data-i18n="wizard.discardTitle">Cancel broadcast?</h2>
+      <p class="confirm-dialog__desc" id="broadcast-discard-dialog-desc" data-i18n="wizard.discardDesc">Any changes you've made will be lost.</p>
+      <div class="confirm-dialog__actions">
+        <button type="button" class="confirm-dialog__btn confirm-dialog__btn--danger" id="broadcast-discard-dialog-confirm" data-i18n="wizard.discardConfirm">Cancel broadcast</button>
+        <button type="button" class="confirm-dialog__btn confirm-dialog__btn--primary" id="broadcast-discard-dialog-keep" data-i18n="wizard.discardKeepEditing">Keep editing</button>
+      </div>
+    </div>
+  </div>
+
   <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
   <script src="app.js"></script>

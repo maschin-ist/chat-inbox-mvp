@@ -135,6 +135,10 @@ const I18N_STRINGS = {
     'wizard.summaryLink': 'Link',
     'wizard.summaryViewList': 'View list',
     'wizard.learnMore': 'Learn more',
+    'wizard.discardTitle': 'Cancel broadcast?',
+    'wizard.discardDesc': "Any changes you've made will be lost.",
+    'wizard.discardKeepEditing': 'Keep editing',
+    'wizard.discardConfirm': 'Cancel broadcast',
     'common.back': 'BACK',
     'common.cancel': 'CANCEL',
     'common.continue': 'CONTINUE',
@@ -339,6 +343,10 @@ const I18N_STRINGS = {
     'wizard.summaryLink': 'リンク',
     'wizard.summaryViewList': '一覧を見る',
     'wizard.learnMore': '詳しく見る',
+    'wizard.discardTitle': '配信をキャンセルしますか？',
+    'wizard.discardDesc': '入力した内容は保存されません。',
+    'wizard.discardKeepEditing': '編集を続ける',
+    'wizard.discardConfirm': '配信をキャンセル',
     'common.back': '戻る',
     'common.cancel': 'キャンセル',
     'common.continue': '次へ',
@@ -3920,7 +3928,58 @@ function hideBroadcastWizard() {
   renderBroadcastDetail();
 }
 
+function isAnyOverlayOpen() {
+  return (
+    !document.getElementById('template-modal')?.hidden ||
+    !document.getElementById('template-composer-modal')?.hidden ||
+    !document.getElementById('rsvp-composer-modal')?.hidden ||
+    !document.getElementById('broadcast-discard-dialog')?.hidden
+  );
+}
+
+function syncBodyScrollLock() {
+  document.body.style.overflow = isAnyOverlayOpen() ? 'hidden' : '';
+}
+
+let broadcastDiscardDialogReturnFocus = null;
+
+function setBroadcastDiscardDialogOpen(open) {
+  const dialog = document.getElementById('broadcast-discard-dialog');
+  if (!dialog) return;
+
+  dialog.hidden = !open;
+  dialog.setAttribute('aria-hidden', open ? 'false' : 'true');
+  syncBodyScrollLock();
+
+  const appShell = document.querySelector('.app');
+  if (appShell) {
+    if (open) appShell.setAttribute('inert', '');
+    else appShell.removeAttribute('inert');
+  }
+
+  if (open) {
+    broadcastDiscardDialogReturnFocus = document.activeElement;
+    const keepBtn = document.getElementById('broadcast-discard-dialog-keep');
+    window.requestAnimationFrame(() => keepBtn?.focus());
+    return;
+  }
+
+  if (broadcastDiscardDialogReturnFocus?.focus) {
+    broadcastDiscardDialogReturnFocus.focus();
+  }
+  broadcastDiscardDialogReturnFocus = null;
+}
+
+function requestDiscardBroadcastWizard() {
+  if (wizardSessionHasProgress(broadcastWizardState)) {
+    setBroadcastDiscardDialogOpen(true);
+    return;
+  }
+  discardBroadcastWizard();
+}
+
 function discardBroadcastWizard() {
+  setBroadcastDiscardDialogOpen(false);
   broadcastWizardState = createDefaultBroadcastWizardState();
   broadcastWizardAudienceShowError = false;
   broadcastWizardLinkShowError = false;
@@ -3930,6 +3989,23 @@ function discardBroadcastWizard() {
   if (activeBroadcastId === BROADCAST_WIZARD_DRAFT_ID) activeBroadcastId = null;
   renderBroadcastList();
   renderBroadcastDetail();
+}
+
+function initBroadcastDiscardDialog() {
+  const dialog = document.getElementById('broadcast-discard-dialog');
+  const backdrop = document.getElementById('broadcast-discard-dialog-backdrop');
+  const keepBtn = document.getElementById('broadcast-discard-dialog-keep');
+  const confirmBtn = document.getElementById('broadcast-discard-dialog-confirm');
+
+  backdrop?.addEventListener('click', () => setBroadcastDiscardDialogOpen(false));
+  keepBtn?.addEventListener('click', () => setBroadcastDiscardDialogOpen(false));
+  confirmBtn?.addEventListener('click', () => discardBroadcastWizard());
+
+  document.addEventListener('keydown', (e) => {
+    if (dialog?.hidden || e.key !== 'Escape') return;
+    e.preventDefault();
+    setBroadcastDiscardDialogOpen(false);
+  });
 }
 
 function closeBroadcastWizard() {
@@ -4088,7 +4164,7 @@ function initBroadcastWizard() {
   document.getElementById('broadcast-wizard-manage-tags-link')?.addEventListener('click', () =>
     switchView('contacts')
   );
-  closeBtn?.addEventListener('click', () => discardBroadcastWizard());
+  closeBtn?.addEventListener('click', () => requestDiscardBroadcastWizard());
 
   backBtn?.addEventListener('click', () => {
     if (broadcastWizardState.step <= 1) return;
@@ -4096,7 +4172,7 @@ function initBroadcastWizard() {
   });
 
   discardBtn?.addEventListener('click', () => {
-    discardBroadcastWizard();
+    requestDiscardBroadcastWizard();
   });
 
   nextBtn?.addEventListener('click', () => {
@@ -4865,6 +4941,7 @@ renderMessages();
 updateProfileAvatar();
 initLanguageSwitcher();
 initContactsView();
+initBroadcastDiscardDialog();
 initBroadcastWizard();
 updateTabBadges();
 const launchParams = new URLSearchParams(window.location.search);
