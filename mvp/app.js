@@ -110,10 +110,11 @@ const I18N_STRINGS = {
     'wizard.fieldLink': 'Link',
     'wizard.fieldTag': 'Tag',
     'wizard.titlePlaceholder': 'Enter your title',
-    'wizard.messagePlaceholder': "We'd appreciate your help with this survey. It only takes a few minutes.",
-    'wizard.linkPlaceholder': 'https://example.com',
+    'wizard.messagePlaceholder': 'Enter your content',
+    'wizard.linkPlaceholder': 'Enter your link',
     'wizard.invalidLink': 'Invalid link format',
     'wizard.selectTag': 'Select a tag',
+    'wizard.allContacts': 'All contacts',
     'wizard.manageTagsLink': 'Create tag',
     'wizard.selectTagWarning': 'Select a tag to continue.',
     'wizard.searchTagsPlaceholder': 'Search tags…',
@@ -318,10 +319,11 @@ const I18N_STRINGS = {
     'wizard.fieldLink': 'リンク',
     'wizard.fieldTag': 'タグ',
     'wizard.titlePlaceholder': 'タイトルを入力',
-    'wizard.messagePlaceholder': 'アンケートにご協力をお願いいたします。所要時間は数分程度です。',
-    'wizard.linkPlaceholder': 'https://example.com',
+    'wizard.messagePlaceholder': '内容を入力してください',
+    'wizard.linkPlaceholder': 'リンクを入力してください',
     'wizard.invalidLink': 'リンクの形式が正しくありません',
     'wizard.selectTag': 'タグを選択',
+    'wizard.allContacts': 'すべての配信先',
     'wizard.manageTagsLink': 'タグを作成',
     'wizard.selectTagWarning': 'タグを選択してください。',
     'wizard.searchTagsPlaceholder': 'タグを検索…',
@@ -473,6 +475,7 @@ function t(key, params = {}) {
 }
 
 function translateTag(tag) {
+  if (tag === ALL_CONTACTS_AUDIENCE_TAG) return t('wizard.allContacts');
   return t(`tag.${tag}`, {}) !== `tag.${tag}` ? t(`tag.${tag}`) : tag;
 }
 
@@ -1005,6 +1008,7 @@ const CONTACTS_TOTAL = 120;
 
 const UNIVERSAL_TAG = 'Member';
 const UNIVERSAL_TAG_SECONDARY = 'Community member';
+const ALL_CONTACTS_AUDIENCE_TAG = '__all_contacts__';
 
 const CONTACTS_SEED = [
   { id: 'tanaka', name: 'Tanaka Haruto', role: 'Resident', tags: [UNIVERSAL_TAG, 'Head of Household', '1 room', 'VIP'], chatId: null },
@@ -3082,15 +3086,12 @@ const BROADCAST_TEMPLATE_OPTIONS = [...CONTACT_TEMPLATE_OPTIONS];
 
 const BROADCAST_COMPOSE_DEFAULTS = {
   'project-updates': {
-    messagePlaceholder: 'Enter message',
-    link: 'https://woven.city/updates',
+    link: '',
   },
   'light-card': {
-    messagePlaceholder: 'Enter message',
-    link: 'https://woven.city/updates',
+    link: '',
   },
   'free-text': {
-    messagePlaceholder: 'Enter message',
     link: '',
   },
 };
@@ -3197,6 +3198,11 @@ function countContactsByTags(tags) {
 function getAudienceRecipientStats(tags) {
   if (!tags.length) return { unique: 0, sumOfTagCounts: 0, overlap: 0 };
 
+  if (tags.includes(ALL_CONTACTS_AUDIENCE_TAG)) {
+    const unique = CONTACTS.length;
+    return { unique, sumOfTagCounts: unique, overlap: 0 };
+  }
+
   const uniqueIds = new Set();
   let sumOfTagCounts = 0;
 
@@ -3217,6 +3223,8 @@ function countContactsWithTag(tag) {
 
 function getContactsMatchingTags(tags) {
   if (!tags.length) return [];
+  if (tags.includes(ALL_CONTACTS_AUDIENCE_TAG)) return [...CONTACTS];
+
   const seen = new Set();
   const matches = [];
   tags.forEach((tag) => {
@@ -3695,17 +3703,27 @@ function renderBroadcastWizardAudienceTags() {
     .filter((tag) => countContactsWithTag(tag) > 0)
     .sort((a, b) => a.localeCompare(b));
 
-  menuEl.innerHTML = availableTags
-    .map((tag) => {
-      const isSelected = selectedTag === tag;
-      return `<li role="presentation">
+  const allContactsSelected = selectedTag === ALL_CONTACTS_AUDIENCE_TAG;
+  const allContactsOption = `<li role="presentation">
+    <button type="button" class="broadcast-wizard__tag-option${allContactsSelected ? ' is-selected' : ''}" data-value="${ALL_CONTACTS_AUDIENCE_TAG}" role="option" aria-selected="${allContactsSelected}">
+      <span class="broadcast-wizard__tag-option-label">${escapePreviewText(t('wizard.allContacts'))}</span>
+      <span class="material-icons broadcast-wizard__tag-option-check" aria-hidden="true">check</span>
+    </button>
+  </li>`;
+
+  menuEl.innerHTML =
+    allContactsOption +
+    availableTags
+      .map((tag) => {
+        const isSelected = selectedTag === tag;
+        return `<li role="presentation">
         <button type="button" class="broadcast-wizard__tag-option${isSelected ? ' is-selected' : ''}" data-value="${escapePreviewText(tag)}" role="option" aria-selected="${isSelected}">
           <span class="broadcast-wizard__tag-option-label">${escapePreviewText(translateTag(tag))}</span>
           <span class="material-icons broadcast-wizard__tag-option-check" aria-hidden="true">check</span>
         </button>
       </li>`;
-    })
-    .join('');
+      })
+      .join('');
 
   menuEl.querySelectorAll('.broadcast-wizard__tag-option').forEach((btn) => {
     btn.addEventListener('click', (e) => {
@@ -4067,7 +4085,7 @@ function submitBroadcastWizard() {
   const templateType = getTemplateTypeKey(broadcastWizardState.templateId);
   const audienceTags = broadcastWizardState.audienceTags;
   const tagsLabel = audienceTags.length ? audienceTags.map((tag) => translateTag(tag)).join(', ') : '—';
-  const tagsRef = audienceTags.length ? `Tags: ${audienceTags.join(', ')}` : '—';
+  const tagsRef = audienceTags.length ? `Tags: ${tagsLabel}` : '—';
   const id = `broadcast-${Date.now()}`;
   const payloadRef = `msg-${Date.now().toString(36)}`;
   const now = new Date();
