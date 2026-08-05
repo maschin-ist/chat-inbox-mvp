@@ -4481,6 +4481,12 @@ button {
   transition: border-color 0.12s;
 }
 
+.broadcast-wizard__input::placeholder,
+.broadcast-wizard__textarea::placeholder {
+  color: var(--text-tertiary);
+  opacity: 1;
+}
+
 .broadcast-wizard__input:focus,
 .broadcast-wizard__textarea:focus {
   outline: none;
