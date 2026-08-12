@@ -3165,7 +3165,6 @@ function applyWizardStateToInputs() {
   const messageInput = document.getElementById('broadcast-wizard-message-input');
   const linkInput = document.getElementById('broadcast-wizard-link-input');
   const titleCounter = document.getElementById('broadcast-wizard-title-counter');
-  const messageCounter = document.getElementById('broadcast-wizard-message-counter');
 
   if (titleInput) {
     titleInput.value = broadcastWizardState.title || '';
@@ -3173,8 +3172,8 @@ function applyWizardStateToInputs() {
   }
   if (messageInput) {
     messageInput.value = broadcastWizardState.message || '';
-    if (messageCounter) messageCounter.textContent = `${messageInput.value.length} / 250`;
   }
+  applyBroadcastMessageMaxLength();
   if (linkInput) linkInput.value = broadcastWizardState.surveyLink || '';
 }
 
@@ -3488,6 +3487,28 @@ function broadcastTemplateNeedsTitle(templateId) {
   return templateId === 'project-updates' || templateId === 'light-card';
 }
 
+/** Text-only allows 2048; message-with-link (and light-card) stays at 250. */
+function getBroadcastMessageMaxLength(templateId = broadcastWizardState.templateId) {
+  return broadcastTemplateNeedsLink(templateId) ? 250 : 2048;
+}
+
+function applyBroadcastMessageMaxLength(templateId = broadcastWizardState.templateId) {
+  const messageInput = document.getElementById('broadcast-wizard-message-input');
+  const messageCounter = document.getElementById('broadcast-wizard-message-counter');
+  const max = getBroadcastMessageMaxLength(templateId);
+  if (messageInput) {
+    messageInput.maxLength = max;
+    if (messageInput.value.length > max) {
+      messageInput.value = messageInput.value.slice(0, max);
+      broadcastWizardState.message = messageInput.value.trim();
+    }
+  }
+  if (messageCounter) {
+    messageCounter.textContent = `${(messageInput?.value || '').length} / ${max}`;
+  }
+  return max;
+}
+
 function formatBroadcastShortDate(date) {
   const d = String(date.getDate()).padStart(2, '0');
   const m = String(date.getMonth() + 1).padStart(2, '0');
@@ -3644,7 +3665,6 @@ function populateBroadcastWizardCompose() {
   const linkInput = document.getElementById('broadcast-wizard-link-input');
   const linkField = document.getElementById('broadcast-wizard-link-field');
   const titleCounter = document.getElementById('broadcast-wizard-title-counter');
-  const messageCounter = document.getElementById('broadcast-wizard-message-counter');
 
   if (messageInput) {
     messageInput.placeholder = t('wizard.messagePlaceholder');
@@ -3685,9 +3705,7 @@ function populateBroadcastWizardCompose() {
     broadcastWizardState.title = titleInput.value.trim();
     if (titleCounter) titleCounter.textContent = `${titleInput.value.length} / 60`;
   }
-  if (messageCounter) {
-    messageCounter.textContent = `${(messageInput?.value || '').length} / 250`;
-  }
+  applyBroadcastMessageMaxLength();
   renderBroadcastWizardTemplateChip();
   updateBroadcastWizardPanelTitle();
   if (!needsLink) broadcastWizardLinkShowError = false;
@@ -3908,7 +3926,7 @@ function startFreshBroadcastWizard(initialStep = 1, { replaceUrl = false } = {})
   if (messageInput) messageInput.value = '';
   if (linkInput) linkInput.value = '';
   document.getElementById('broadcast-wizard-title-counter').textContent = '0 / 60';
-  document.getElementById('broadcast-wizard-message-counter').textContent = '0 / 250';
+  applyBroadcastMessageMaxLength();
   activeBroadcastId = null;
   updateBroadcastWizardPanelTitle();
   showBroadcastWizardStep(initialStep, { replaceUrl });
@@ -4237,8 +4255,7 @@ function initBroadcastWizard() {
 
   messageInput?.addEventListener('input', () => {
     broadcastWizardState.message = messageInput.value.trim();
-    document.getElementById('broadcast-wizard-message-counter').textContent =
-      `${messageInput.value.length} / 250`;
+    applyBroadcastMessageMaxLength();
     updateBroadcastWizardPanelTitle();
     updateBroadcastWizardFooter();
     persistBroadcastWizardSession();
