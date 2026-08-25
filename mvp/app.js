@@ -1883,9 +1883,10 @@ function createCommunityChatFromModal() {
   updateTabBadges();
 }
 
-chatsComposeBtn?.addEventListener('click', () => {
-  setCommunityChatModalOpen(true);
-});
+// New message / community-chat create entry point — hidden for this push
+// chatsComposeBtn?.addEventListener('click', () => {
+//   setCommunityChatModalOpen(true);
+// });
 
 document.getElementById('community-chat-modal-close')?.addEventListener('click', () => {
   setCommunityChatModalOpen(false);
