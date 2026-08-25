@@ -70,6 +70,31 @@ const I18N_STRINGS = {
     'chats.noConversations': 'No conversations.',
     'chats.selectChat': 'No Chats Selected',
     'chats.selectChatDesc': 'Select conversation from the list to view messages.',
+    'chats.newMessageAria': 'New message',
+    'chats.newMessage': 'New message',
+    'communityChat.title': 'New chat',
+    'communityChat.closeAria': 'Close new chat',
+    'communityChat.intro':
+      'You are creating a new community group chat with your Project participants. They will receive invitations to join.',
+    'communityChat.nameLabel': 'Add chat name',
+    'communityChat.namePlaceholder': 'Enter chat name',
+    'communityChat.participantsLabel': 'Add participants',
+    'communityChat.searchPlaceholder': 'Search by name, email, or tag',
+    'communityChat.noMatches': 'No people or tags match “{{query}}”',
+    'communityChat.tagAddAll': 'Add everyone with this tag',
+    'communityChat.tagAddCount': 'Add {{count}} people',
+    'communityChat.tagAlreadyAdded': 'Everyone with this tag is already added',
+    'communityChat.removeParticipantAria': 'Remove {{name}}',
+    'communityChat.create': 'Create',
+    'communityChat.selectedZero': '0 selected',
+    'communityChat.selectedOne': '1 selected',
+    'communityChat.selectedMany': '{{count}} selected',
+    'communityChat.systemCreated': 'Community chat created. Invitations sent to selected participants.',
+    'communityChat.defaultPreview': 'Community chat started',
+    'chat.community.preview': 'Looking forward to seeing everyone at the next meetup!',
+    'chat.community.date1': 'Today, 12:05 PM',
+    'chat.community.in1': 'Looking forward to seeing everyone at the next meetup!',
+    'chat.community.out1': 'Welcome to the project community chat. Feel free to introduce yourselves.',
     'broadcasts.title': 'Broadcasts',
     'broadcasts.createNew': 'Create new',
     'broadcasts.createNewAria': 'Create new broadcast',
@@ -279,6 +304,31 @@ const I18N_STRINGS = {
     'chats.noConversations': 'チャットはありません。',
     'chats.selectChat': 'チャットを選択',
     'chats.selectChatDesc': '左の一覧から会話を選択してください。',
+    'chats.newMessageAria': '新しいメッセージ',
+    'chats.newMessage': '新しいメッセージ',
+    'communityChat.title': '新しいチャット',
+    'communityChat.closeAria': '新しいチャットを閉じる',
+    'communityChat.intro':
+      'プロジェクト参加者とのコミュニティグループチャットを作成します。参加者に招待が送られます。',
+    'communityChat.nameLabel': 'チャット名を追加',
+    'communityChat.namePlaceholder': 'チャット名を入力',
+    'communityChat.participantsLabel': '参加者を追加',
+    'communityChat.searchPlaceholder': '名前・メール・タグで検索',
+    'communityChat.noMatches': '「{{query}}」に一致する人・タグがありません',
+    'communityChat.tagAddAll': 'このタグの全員を追加',
+    'communityChat.tagAddCount': '{{count}}人を追加',
+    'communityChat.tagAlreadyAdded': 'このタグの人は全員追加済みです',
+    'communityChat.removeParticipantAria': '{{name}}を削除',
+    'communityChat.create': '作成',
+    'communityChat.selectedZero': '0人選択中',
+    'communityChat.selectedOne': '1人選択中',
+    'communityChat.selectedMany': '{{count}}人選択中',
+    'communityChat.systemCreated': 'コミュニティチャットを作成しました。選択した参加者に招待を送信しました。',
+    'communityChat.defaultPreview': 'コミュニティチャットを開始しました',
+    'chat.community.preview': '次回のミートアップで皆さんにお会いできるのを楽しみにしています！',
+    'chat.community.date1': '今日 12:05',
+    'chat.community.in1': '次回のミートアップで皆さんにお会いできるのを楽しみにしています！',
+    'chat.community.out1': 'プロジェクトのコミュニティチャットへようこそ。ぜひ自己紹介してください。',
     'broadcasts.title': '配信',
     'broadcasts.createNew': '新規作成',
     'broadcasts.createNewAria': '新規配信を作成',
@@ -699,6 +749,38 @@ const RSVP_EVENTS = [
 
 const ALL_CHATS = [
     {
+      id: 'community-brooklyn',
+      name: 'Brooklyn Simmons',
+      status: 'Community',
+      kind: 'community',
+      projectId: 'project-a',
+      projectTitle: 'Latte Art Making Class',
+      initials: 'BS',
+      avatar: 'community-avatar-sample.png',
+      badgeIcon: 'community-badge-icon.png',
+      participantIds: ['alice', 'sarah', 'marcus', 'emma', 'james'],
+      operatorId: 'you',
+      escalated: false,
+      previewKey: 'chat.community.preview',
+      time: '1m',
+      unread: 0,
+      messages: [
+        { type: 'date', textKey: 'chat.community.date1' },
+        {
+          type: 'outgoing',
+          textKey: 'chat.community.out1',
+          status: 'Sent 12:00',
+        },
+        {
+          type: 'incoming',
+          textKey: 'chat.community.in1',
+          time: '12:05',
+          senderName: 'Brooklyn Simmons',
+          senderInitials: 'BS',
+        },
+      ],
+    },
+    {
       id: 'alice',
       name: 'Alice Reynolds',
       status: 'Resident',
@@ -1083,8 +1165,20 @@ function buildContactsList() {
   }
   return list.map((contact, index) => ({
     ...contact,
+    email: contact.email || contactEmailFromName(contact.name, contact.id),
     tagAppliedOrder: CONTACTS_TOTAL - index,
   }));
+}
+
+function contactEmailFromName(name, id) {
+  const local = String(name || id || 'user')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '.')
+    .replace(/^\.+|\.+$/g, '')
+    .slice(0, 40);
+  return `${local || id || 'user'}@woven-city.example`;
 }
 
 const CONTACTS = buildContactsList();
@@ -1297,11 +1391,32 @@ function renderAvatar(conv, className) {
   return `<div class="${className}"><div class="avatar-placeholder" style="background:${color}">${conv.initials}</div></div>`;
 }
 
+function isCommunityChat(chat) {
+  return chat?.kind === 'community';
+}
+
+function renderChatListAvatar(chat) {
+  const avatar = renderAvatar(chat, 'chat-avatar');
+  if (!isCommunityChat(chat)) return avatar;
+
+  const badgeInner = chat.badgeIcon
+    ? `<img src="${chat.badgeIcon}" alt="" />`
+    : `<span class="material-symbols-outlined" aria-hidden="true">groups</span>`;
+
+  return `
+    <div class="chat-avatar-wrap chat-avatar-wrap--community">
+      ${avatar}
+      <span class="chat-avatar__badge" title="${escapePreviewText(chat.projectTitle || 'Community')}" aria-hidden="true">
+        ${badgeInner}
+      </span>
+    </div>`;
+}
+
 function renderChatList() {
   const query = chatsSearchQuery.trim().toLocaleLowerCase();
   const list = getCurrentChatList().filter((chat) => {
     if (!query) return true;
-    return [chat.name, getChatPreviewText(chat)]
+    return [chat.name, getChatPreviewText(chat), chat.projectTitle, chat.status]
       .some((value) => String(value || '').toLocaleLowerCase().includes(query));
   });
   if (!list.length) {
@@ -1317,8 +1432,8 @@ function renderChatList() {
   chatListEl.innerHTML = list
     .map(
       (chat) => `
-    <li class="chat-item ${chat.id === activeChatId ? 'selected' : ''}" data-id="${chat.id}" role="listitem">
-      ${renderAvatar(chat, 'chat-avatar')}
+    <li class="chat-item ${isCommunityChat(chat) ? 'chat-item--community' : ''} ${chat.id === activeChatId ? 'selected' : ''}" data-id="${chat.id}" role="listitem">
+      ${renderChatListAvatar(chat)}
       <div class="chat-body">
         <div class="chat-row-top">
           <span class="chat-name">${chat.name}</span>
@@ -1379,6 +1494,502 @@ chatsSearchInput?.addEventListener('input', () => {
 
 chatsSearchInput?.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') setChatsSearchOpen(false);
+});
+
+const communityChatModal = document.getElementById('community-chat-modal');
+const communityChatForm = document.getElementById('community-chat-form');
+const communityChatNameInput = document.getElementById('community-chat-name');
+const communityChatSearchInput = document.getElementById('community-chat-participant-search');
+const communityChatPickerField = document.getElementById('community-chat-picker-field');
+const communityChatSelectedChips = document.getElementById('community-chat-selected-chips');
+const communityChatSuggestions = document.getElementById('community-chat-suggestions');
+const communityChatCreateBtn = document.getElementById('community-chat-create');
+const communityChatCreateCount = document.getElementById('community-chat-create-count');
+const chatsComposeBtn = document.querySelector('[data-od-id="chats-compose-btn"]');
+
+const communityChatState = {
+  selectedIds: new Set(),
+  searchQuery: '',
+  highlightIndex: -1,
+  returnFocus: null,
+};
+
+function getCommunityParticipantPool() {
+  return CONTACTS;
+}
+
+function getCommunitySelectedContacts() {
+  return getCommunityParticipantPool().filter((c) => communityChatState.selectedIds.has(c.id));
+}
+
+function formatCommunitySelectedCount(count) {
+  if (count === 0) return t('communityChat.selectedZero');
+  if (count === 1) return t('communityChat.selectedOne');
+  return t('communityChat.selectedMany', { count });
+}
+
+function updateCommunityChatCreateState() {
+  const count = communityChatState.selectedIds.size;
+  if (communityChatCreateCount) {
+    communityChatCreateCount.textContent = formatCommunitySelectedCount(count);
+  }
+  if (communityChatCreateBtn) {
+    communityChatCreateBtn.disabled = count === 0;
+  }
+}
+
+function scoreCommunityPersonToken(token, name, email) {
+  if (!token) return null;
+  if (email === token) return 1;
+  if (name.startsWith(token)) return 2;
+  if (name.includes(token)) return 3;
+  if (email.includes(token)) return 4;
+  return null;
+}
+
+function getCommunityTagCatalog() {
+  const map = new Map();
+  getCommunityParticipantPool().forEach((contact) => {
+    (Array.isArray(contact.tags) ? contact.tags : []).forEach((tag) => {
+      if (!tag) return;
+      if (!map.has(tag)) map.set(tag, []);
+      map.get(tag).push(contact);
+    });
+  });
+  return map;
+}
+
+function getCommunitySearchMatches() {
+  const raw = communityChatState.searchQuery.trim();
+  if (!raw) return [];
+  const tokens = raw.toLocaleLowerCase().split(/\s+/).filter(Boolean);
+  if (!tokens.length) return [];
+
+  const fullQuery = raw.toLocaleLowerCase();
+  const results = [];
+
+  // People: name + email only (tags do not surface individual people)
+  getCommunityParticipantPool().forEach((contact) => {
+    if (communityChatState.selectedIds.has(contact.id)) return;
+
+    const name = String(contact.name || '').toLocaleLowerCase();
+    const email = String(contact.email || '').toLocaleLowerCase();
+    const tokenRanks = tokens.map((token) => scoreCommunityPersonToken(token, name, email));
+    if (tokenRanks.some((rank) => rank == null)) return;
+
+    let rank = Math.min(...tokenRanks);
+    if (email === fullQuery) rank = 1;
+
+    results.push({
+      kind: 'person',
+      contact,
+      rank,
+    });
+  });
+
+  // Tags: picking a tag bulk-selects everyone with it
+  const tagCatalog = getCommunityTagCatalog();
+  tagCatalog.forEach((members, tag) => {
+    const tagLower = String(tag).toLocaleLowerCase();
+    const translated = String(translateTag(tag) || tag).toLocaleLowerCase();
+    const starts =
+      tagLower.startsWith(fullQuery) ||
+      translated.startsWith(fullQuery) ||
+      tokens.every((token) => tagLower.startsWith(token) || translated.startsWith(token));
+    const contains =
+      tagLower.includes(fullQuery) ||
+      translated.includes(fullQuery) ||
+      tokens.every((token) => tagLower.includes(token) || translated.includes(token));
+    if (!starts && !contains) return;
+
+    const addable = members.filter((c) => !communityChatState.selectedIds.has(c.id));
+    results.push({
+      kind: 'tag',
+      tag,
+      members,
+      addableCount: addable.length,
+      rank: starts ? 0 : 0.5,
+    });
+  });
+
+  results.sort((a, b) => {
+    if (a.rank !== b.rank) return a.rank - b.rank;
+    if (a.kind !== b.kind) return a.kind === 'tag' ? -1 : 1;
+    if (a.kind === 'tag') {
+      return String(a.tag || '').localeCompare(String(b.tag || ''), undefined, {
+        sensitivity: 'base',
+      });
+    }
+    return String(a.contact.name || '').localeCompare(String(b.contact.name || ''), undefined, {
+      sensitivity: 'base',
+    });
+  });
+
+  return results;
+}
+
+function renderCommunitySelectedChips() {
+  if (!communityChatSelectedChips) return;
+  const selected = getCommunitySelectedContacts();
+  communityChatSelectedChips.innerHTML = selected
+    .map((contact) => {
+      const initials = contactInitials(contact.name);
+      const color = AVATAR_COLORS[initials] || '#b0b0b0';
+      const removeLabel = t('communityChat.removeParticipantAria', { name: contact.name });
+      return `
+        <span class="community-chat-chip" data-contact-id="${contact.id}">
+          <span class="community-chat-chip__avatar" aria-hidden="true" style="background:${color}">${initials}</span>
+          <span class="community-chat-chip__name">${escapePreviewText(contact.name)}</span>
+          <button type="button" class="community-chat-chip__remove" data-remove-id="${contact.id}" aria-label="${escapePreviewText(removeLabel)}">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </span>`;
+    })
+    .join('');
+
+  communityChatSelectedChips.querySelectorAll('[data-remove-id]').forEach((btn) => {
+    btn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      removeCommunityParticipant(btn.dataset.removeId);
+      communityChatSearchInput?.focus();
+    });
+  });
+}
+
+function setCommunitySuggestionsOpen(open) {
+  if (!communityChatSuggestions || !communityChatSearchInput) return;
+  communityChatSuggestions.hidden = !open;
+  communityChatSearchInput.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (!open) communityChatState.highlightIndex = -1;
+  const dialog = communityChatModal?.querySelector('.community-chat-modal__dialog');
+  dialog?.classList.toggle('is-searching', Boolean(open));
+}
+
+function renderCommunitySuggestions() {
+  if (!communityChatSuggestions) return;
+  const query = communityChatState.searchQuery.trim();
+  if (!query) {
+    communityChatSuggestions.innerHTML = '';
+    setCommunitySuggestionsOpen(false);
+    return;
+  }
+
+  const matches = getCommunitySearchMatches();
+  if (!matches.length) {
+    communityChatSuggestions.innerHTML = `<li class="community-chat-suggestion community-chat-suggestion--empty" role="presentation">${escapePreviewText(t('communityChat.noMatches', { query }))}</li>`;
+    setCommunitySuggestionsOpen(true);
+    communityChatState.highlightIndex = -1;
+    return;
+  }
+
+  if (communityChatState.highlightIndex >= matches.length) {
+    communityChatState.highlightIndex = matches.length - 1;
+  }
+
+  communityChatSuggestions.innerHTML = matches
+    .map((match, index) => {
+      const active = index === communityChatState.highlightIndex;
+
+      if (match.kind === 'tag') {
+        const tagLabel = translateTag(match.tag);
+        const subtitle =
+          match.addableCount > 0
+            ? t('communityChat.tagAddCount', { count: match.addableCount })
+            : t('communityChat.tagAlreadyAdded');
+        const disabled = match.addableCount === 0 ? ' disabled' : '';
+        return `
+        <li role="option" id="community-suggestion-tag-${index}" aria-selected="${active}">
+          <button type="button" class="community-chat-suggestion community-chat-suggestion--tag${active ? ' is-active' : ''}" data-tag="${escapePreviewText(match.tag)}" data-suggestion-index="${index}"${disabled}>
+            <span class="community-chat-suggestion__avatar community-chat-suggestion__avatar--tag" aria-hidden="true">
+              <span class="material-symbols-outlined">sell</span>
+            </span>
+            <span class="community-chat-suggestion__body">
+              <span class="community-chat-suggestion__name">${escapePreviewText(tagLabel)}</span>
+              <span class="community-chat-suggestion__email">${escapePreviewText(subtitle)}</span>
+            </span>
+          </button>
+        </li>`;
+      }
+
+      const contact = match.contact;
+      const initials = contactInitials(contact.name);
+      const color = AVATAR_COLORS[initials] || '#b0b0b0';
+      const email = contact.email || contactEmailFromName(contact.name, contact.id);
+      return `
+        <li role="option" id="community-suggestion-${contact.id}" aria-selected="${active}">
+          <button type="button" class="community-chat-suggestion${active ? ' is-active' : ''}" data-contact-id="${contact.id}" data-suggestion-index="${index}">
+            <span class="community-chat-suggestion__avatar" aria-hidden="true">
+              <span class="avatar-placeholder" style="background:${color}">${initials}</span>
+            </span>
+            <span class="community-chat-suggestion__body">
+              <span class="community-chat-suggestion__name">${escapePreviewText(contact.name)}</span>
+              <span class="community-chat-suggestion__email">${escapePreviewText(email)}</span>
+            </span>
+          </button>
+        </li>`;
+    })
+    .join('');
+
+  setCommunitySuggestionsOpen(true);
+
+  communityChatSuggestions.querySelectorAll('[data-contact-id]').forEach((btn) => {
+    btn.addEventListener('mousedown', (event) => {
+      event.preventDefault();
+    });
+    btn.addEventListener('click', () => {
+      addCommunityParticipant(btn.dataset.contactId);
+    });
+  });
+
+  communityChatSuggestions.querySelectorAll('[data-tag]').forEach((btn) => {
+    btn.addEventListener('mousedown', (event) => {
+      event.preventDefault();
+    });
+    btn.addEventListener('click', () => {
+      if (btn.disabled) return;
+      addCommunityParticipantsByTag(btn.dataset.tag);
+    });
+  });
+}
+
+function clearCommunitySearchField() {
+  communityChatState.searchQuery = '';
+  communityChatState.highlightIndex = -1;
+  if (communityChatSearchInput) communityChatSearchInput.value = '';
+  renderCommunitySuggestions();
+}
+
+function addCommunityParticipant(id) {
+  if (!id || communityChatState.selectedIds.has(id)) return;
+  communityChatState.selectedIds.add(id);
+  clearCommunitySearchField();
+  renderCommunitySelectedChips();
+  updateCommunityChatCreateState();
+  communityChatSearchInput?.focus();
+}
+
+function addCommunityParticipantsByTag(tag) {
+  if (!tag) return;
+  const members = getCommunityParticipantPool().filter(
+    (contact) => Array.isArray(contact.tags) && contact.tags.includes(tag)
+  );
+  let added = 0;
+  members.forEach((contact) => {
+    if (communityChatState.selectedIds.has(contact.id)) return;
+    communityChatState.selectedIds.add(contact.id);
+    added += 1;
+  });
+  if (!added) return;
+  clearCommunitySearchField();
+  renderCommunitySelectedChips();
+  updateCommunityChatCreateState();
+  communityChatSearchInput?.focus();
+}
+
+function removeCommunityParticipant(id) {
+  if (!id) return;
+  communityChatState.selectedIds.delete(id);
+  renderCommunitySelectedChips();
+  renderCommunitySuggestions();
+  updateCommunityChatCreateState();
+}
+
+function setCommunityChatModalOpen(open) {
+  if (!communityChatModal) return;
+
+  communityChatModal.hidden = !open;
+  communityChatModal.setAttribute('aria-hidden', open ? 'false' : 'true');
+  syncBodyScrollLock();
+
+  const appShell = document.querySelector('.app');
+  if (appShell) {
+    if (open) appShell.setAttribute('inert', '');
+    else appShell.removeAttribute('inert');
+  }
+
+  if (open) {
+    communityChatState.returnFocus = document.activeElement;
+    communityChatState.selectedIds = new Set();
+    communityChatState.searchQuery = '';
+    communityChatState.highlightIndex = -1;
+    if (communityChatNameInput) communityChatNameInput.value = '';
+    if (communityChatSearchInput) communityChatSearchInput.value = '';
+    renderCommunitySelectedChips();
+    renderCommunitySuggestions();
+    updateCommunityChatCreateState();
+    communityChatNameInput?.focus();
+    return;
+  }
+
+  setCommunitySuggestionsOpen(false);
+  const focusTarget = communityChatState.returnFocus;
+  communityChatState.returnFocus = null;
+  if (focusTarget && typeof focusTarget.focus === 'function') focusTarget.focus();
+}
+
+function createCommunityChatFromModal() {
+  const selected = getCommunitySelectedContacts();
+  if (!selected.length) return;
+
+  const name = (communityChatNameInput?.value || '').trim() || selected[0].name;
+  const first = selected[0];
+  const project = RSVP_EVENTS[0] || { id: 'project-a', title: 'Latte Art Making Class' };
+  const timeStr = typeof getTimeStr === 'function' ? getTimeStr() : '12:05';
+  const chatId = `community-${Date.now()}`;
+
+  const chat = {
+    id: chatId,
+    name,
+    status: 'Community',
+    kind: 'community',
+    projectId: project.id,
+    projectTitle: project.title,
+    initials: contactInitials(name),
+    avatar: 'community-avatar-sample.png',
+    badgeIcon: 'community-badge-icon.png',
+    participantIds: selected.map((c) => c.id),
+    operatorId: 'you',
+    escalated: false,
+    preview: t('communityChat.defaultPreview'),
+    previewDynamic: true,
+    time: 'Just now',
+    unread: 0,
+    messages: [
+      {
+        type: 'date',
+        text: getTodayDateDividerLabel(timeStr),
+      },
+      {
+        type: 'system',
+        text: t('communityChat.systemCreated'),
+      },
+      {
+        type: 'outgoing',
+        text: t('chat.community.out1'),
+        status: `Sent ${timeStr}`,
+        time: timeStr,
+      },
+    ],
+  };
+
+  ALL_CHATS.unshift(chat);
+  activeChatId = chatId;
+  setCommunityChatModalOpen(false);
+  setChatsSearchOpen(false);
+  renderChatList();
+  renderMessages();
+  renderReassignMenu();
+  updateTabBadges();
+}
+
+chatsComposeBtn?.addEventListener('click', () => {
+  setCommunityChatModalOpen(true);
+});
+
+document.getElementById('community-chat-modal-close')?.addEventListener('click', () => {
+  setCommunityChatModalOpen(false);
+});
+
+document.getElementById('community-chat-modal-backdrop')?.addEventListener('click', () => {
+  setCommunityChatModalOpen(false);
+});
+
+communityChatPickerField?.addEventListener('click', () => {
+  communityChatSearchInput?.focus();
+});
+
+communityChatSearchInput?.addEventListener('input', () => {
+  communityChatState.searchQuery = communityChatSearchInput.value;
+  communityChatState.highlightIndex = 0;
+  renderCommunitySuggestions();
+});
+
+communityChatSearchInput?.addEventListener('focus', () => {
+  if (communityChatState.searchQuery.trim()) renderCommunitySuggestions();
+});
+
+communityChatSearchInput?.addEventListener('blur', () => {
+  window.setTimeout(() => {
+    if (!communityChatModal || communityChatModal.hidden) return;
+    if (communityChatSuggestions?.contains(document.activeElement)) return;
+    setCommunitySuggestionsOpen(false);
+  }, 120);
+});
+
+communityChatSearchInput?.addEventListener('keydown', (event) => {
+  const matches = getCommunitySearchMatches();
+  const suggestionsOpen = communityChatSuggestions && !communityChatSuggestions.hidden;
+
+  if (event.key === 'ArrowDown' && suggestionsOpen && matches.length) {
+    event.preventDefault();
+    communityChatState.highlightIndex =
+      communityChatState.highlightIndex < matches.length - 1
+        ? communityChatState.highlightIndex + 1
+        : 0;
+    renderCommunitySuggestions();
+    return;
+  }
+
+  if (event.key === 'ArrowUp' && suggestionsOpen && matches.length) {
+    event.preventDefault();
+    communityChatState.highlightIndex =
+      communityChatState.highlightIndex > 0
+        ? communityChatState.highlightIndex - 1
+        : matches.length - 1;
+    renderCommunitySuggestions();
+    return;
+  }
+
+  if (event.key === 'Enter' && suggestionsOpen && matches.length) {
+    event.preventDefault();
+    const index =
+      communityChatState.highlightIndex >= 0 ? communityChatState.highlightIndex : 0;
+    const pick = matches[index];
+    if (!pick) return;
+    if (pick.kind === 'tag') {
+      if (pick.addableCount > 0) addCommunityParticipantsByTag(pick.tag);
+      return;
+    }
+    if (pick.contact) addCommunityParticipant(pick.contact.id);
+    return;
+  }
+
+  if (event.key === 'Escape' && suggestionsOpen) {
+    event.preventDefault();
+    event.stopPropagation();
+    communityChatState.searchQuery = '';
+    if (communityChatSearchInput) communityChatSearchInput.value = '';
+    setCommunitySuggestionsOpen(false);
+    return;
+  }
+
+  if (
+    event.key === 'Backspace' &&
+    !communityChatSearchInput.value &&
+    communityChatState.selectedIds.size
+  ) {
+    const selected = getCommunitySelectedContacts();
+    const last = selected[selected.length - 1];
+    if (last) removeCommunityParticipant(last.id);
+  }
+});
+
+communityChatForm?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  createCommunityChatFromModal();
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && communityChatModal && !communityChatModal.hidden) {
+    if (communityChatSuggestions && !communityChatSuggestions.hidden) {
+      event.preventDefault();
+      setCommunitySuggestionsOpen(false);
+      return;
+    }
+    event.preventDefault();
+    setCommunityChatModalOpen(false);
+  }
 });
 
 function renderReassignMenu() {
@@ -1492,8 +2103,10 @@ function renderProjectUpdatePreviewCard(title, message) {
 
   return `
     <div class="project-update-card" role="img" aria-label="Project update message preview">
-      <div class="project-update-card__title">${cardTitle}</div>
-      <p class="project-update-card__body">${cardBody}</p>
+      <div class="project-update-card__content">
+        <div class="project-update-card__title">${cardTitle}</div>
+        <p class="project-update-card__body">${cardBody}</p>
+      </div>
       <button class="project-update-card__btn" type="button" tabindex="-1">${t('wizard.learnMore')}</button>
     </div>`;
 }
@@ -1570,14 +2183,19 @@ function renderMessages() {
       }
 
       if (msg.type === 'incoming') {
+        const initials = msg.senderInitials || conv.initials;
         return `
         <div class="message-row incoming">
-          ${avatarHtml(conv.initials, 'msg')}
+          ${avatarHtml(initials, 'msg')}
           <div class="message-content">
-            <div class="bubble incoming">${getLocalizedMessageText(msg)}</div>
+            <div class="bubble incoming">${msg.senderName && isCommunityChat(conv) ? `<span class="msg-sender-name">${escapePreviewText(msg.senderName)}</span>` : ''}${getLocalizedMessageText(msg)}</div>
             <span class="msg-time">${msg.time}</span>
           </div>
         </div>`;
+      }
+
+      if (msg.type === 'system') {
+        return `<div class="date-divider date-divider--system">${getLocalizedMessageText(msg)}</div>`;
       }
 
       if (msg.type === 'outgoing') {
@@ -3969,7 +4587,8 @@ function isAnyOverlayOpen() {
     !document.getElementById('template-modal')?.hidden ||
     !document.getElementById('template-composer-modal')?.hidden ||
     !document.getElementById('rsvp-composer-modal')?.hidden ||
-    !document.getElementById('broadcast-discard-dialog')?.hidden
+    !document.getElementById('broadcast-discard-dialog')?.hidden ||
+    !document.getElementById('community-chat-modal')?.hidden
   );
 }
 
