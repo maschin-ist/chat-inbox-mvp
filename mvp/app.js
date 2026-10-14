@@ -191,8 +191,33 @@ const I18N_STRINGS = {
     'contacts.createTag': 'Create tag',
     'contacts.removeSelectedTag': 'Remove selected tag',
     'contacts.colName': 'Name',
+    'contacts.colRole': 'Role',
+    'contacts.colStatus': 'Status',
     'contacts.colTags': 'Tags',
     'contacts.colViewChat': 'View chat',
+    'contacts.filterRole': 'Role',
+    'contacts.filterStatus': 'Status',
+    'contacts.filterTags': 'Tags',
+    'contacts.oneRoleAtATime': 'One role at a time',
+    'contacts.oneStatusAtATime': 'One status at a time',
+    'contacts.allRoles': 'All roles',
+    'contacts.allStatuses': 'All statuses',
+    'contacts.roleResident': 'Resident',
+    'contacts.roleWorker': 'Worker',
+    'contacts.roleVisitor': 'Visitor',
+    'contacts.searchContacts': 'Search contacts',
+    'contacts.searchChipPrefix': 'Search',
+    'contacts.clearFilters': 'Clear filters',
+    'contacts.clearAll': 'Clear all',
+    'contacts.tagsFilterHint': 'Select any — matches all chosen',
+    'status.not-started': 'Not started',
+    'status.agreement-signed': 'Agreement signed',
+    'status.consent-signed': 'Consent signed',
+    'status.active': 'Active',
+    'status.desc.not-started': "Eligible to participate; hasn't signed the data agreement.",
+    'status.desc.agreement-signed': "Data agreement signed; consent isn't active (never given, expired, or revoked, including after leaving a project).",
+    'status.desc.consent-signed': "Data agreement and consent active; hasn't joined a project yet.",
+    'status.desc.active': 'Data agreement and consent active, and currently in a project.',
     'contacts.weavers': '{{count}} Weavers',
     'contacts.selectionZero': '0 users selected',
     'contacts.selectionOne': '1 user selected',
@@ -281,6 +306,24 @@ const I18N_STRINGS = {
     'chat.patricia.preview': 'Is the showroom open this Saturday?',
     'chat.patricia.date1': 'Today, 10:30 AM',
     'chat.patricia.in1': 'Is the showroom open this Saturday?',
+    'profile.licenses': 'Licenses',
+    'profile.signout': 'Sign out',
+    'licenses.title': 'Third-party licenses',
+    'licenses.subtitle': 'This application includes the open source software and third-party notices listed below.',
+    'licenses.searchPlaceholder': 'Search packages, licenses, authors...',
+    'licenses.all': 'All',
+    'licenses.packages': 'packages',
+    'licenses.package': 'package',
+    'licenses.showingPackages': '{{count}} packages',
+    'licenses.showingPackage': '1 package',
+    'licenses.copyNotice': 'Copy notice',
+    'licenses.copied': 'Copied!',
+    'licenses.viewFormatted': 'Formatted',
+    'licenses.viewRaw': 'Raw notice',
+    'licenses.noResults': 'No matching licenses found for “{{query}}”',
+    'licenses.viewLicense': 'View license',
+    'licenses.hideLicense': 'Hide license',
+    'licenses.homepage': 'Repository',
   },
   ja: {
     'nav.contacts': '配信先の管理',
@@ -425,8 +468,33 @@ const I18N_STRINGS = {
     'contacts.createTag': 'タグを作成',
     'contacts.removeSelectedTag': '選択したタグを解除',
     'contacts.colName': '名前',
+    'contacts.colRole': 'ロール',
+    'contacts.colStatus': 'ステータス',
     'contacts.colTags': 'タグ',
     'contacts.colViewChat': 'チャット',
+    'contacts.filterRole': 'ロール',
+    'contacts.filterStatus': 'ステータス',
+    'contacts.filterTags': 'タグ',
+    'contacts.oneRoleAtATime': '1つのロールを選択',
+    'contacts.oneStatusAtATime': '1つのステータスを選択',
+    'contacts.allRoles': 'すべてのロール',
+    'contacts.allStatuses': 'すべてのステータス',
+    'contacts.roleResident': '住民',
+    'contacts.roleWorker': 'ワーカー',
+    'contacts.roleVisitor': 'ビジター',
+    'contacts.searchContacts': '連絡先を検索',
+    'contacts.searchChipPrefix': '検索',
+    'contacts.clearFilters': 'フィルターを解除',
+    'contacts.clearAll': 'すべてクリア',
+    'contacts.tagsFilterHint': '選択したタグに一致する連絡先を表示',
+    'status.not-started': '開始前',
+    'status.agreement-signed': '署名済み',
+    'status.consent-signed': '同意済み',
+    'status.active': '参加中',
+    'status.desc.not-started': '参加資格あり。データ規約に未署名。',
+    'status.desc.agreement-signed': 'データ規約に署名済み。同意は無効（未付与、期限切れ、取消、プロジェクト離脱後など）。',
+    'status.desc.consent-signed': 'データ規約および同意が有効。まだプロジェクトに参加していません。',
+    'status.desc.active': 'データ規約および同意が有効で、現在プロジェクトに参加中。',
     'contacts.weavers': 'ユーザー {{count}}件',
     'contacts.selectionZero': '0件選択中',
     'contacts.selectionOne': '1件選択中',
@@ -513,6 +581,24 @@ const I18N_STRINGS = {
     'chat.patricia.preview': '今週土曜日もショールームは開いていますか？',
     'chat.patricia.date1': '今日 10:30',
     'chat.patricia.in1': '今週土曜日もショールームは開いていますか？',
+    'profile.licenses': 'ライセンス',
+    'profile.signout': 'サインアウト',
+    'licenses.title': 'サードパーティライセンス',
+    'licenses.subtitle': '本アプリケーションには、以下のオープンソースソフトウェアおよびサードパーティの通知が含まれています。',
+    'licenses.searchPlaceholder': 'パッケージ名、ライセンス、作者を検索...',
+    'licenses.all': 'すべて',
+    'licenses.packages': '件',
+    'licenses.package': '件',
+    'licenses.showingPackages': '{{count}}件のパッケージ',
+    'licenses.showingPackage': '1件のパッケージ',
+    'licenses.copyNotice': '通知をコピー',
+    'licenses.copied': 'コピーしました！',
+    'licenses.viewFormatted': '整形表示',
+    'licenses.viewRaw': '原文（Raw）',
+    'licenses.noResults': '「{{query}}」に一致するライセンスは見つかりませんでした',
+    'licenses.viewLicense': 'ライセンスを表示',
+    'licenses.hideLicense': 'ライセンスを隠す',
+    'licenses.homepage': 'リポジトリ',
   },
 };
 
@@ -638,6 +724,11 @@ function refreshLocalizedUI() {
   }
   renderContactsTable();
   updateContactsSelectionBar();
+  updateRoleFilterMenuSelection();
+  updateStatusFilterMenuSelection();
+  if (typeof renderLicensesView === 'function') {
+    renderLicensesView();
+  }
   const templateModal = document.getElementById('template-modal');
   if (templateModal && !templateModal.hidden) {
     renderTemplateGrid(
@@ -1092,19 +1183,50 @@ const UNIVERSAL_TAG = 'Member';
 const UNIVERSAL_TAG_SECONDARY = 'Community member';
 const ALL_CONTACTS_AUDIENCE_TAG = '__all_contacts__';
 
+const STATUS_DEFINITIONS = {
+  'not-started': {
+    id: 'not-started',
+    group: 'A',
+    labelKey: 'status.not-started',
+    descKey: 'status.desc.not-started',
+    theme: 'gray',
+  },
+  'agreement-signed': {
+    id: 'agreement-signed',
+    group: 'B',
+    labelKey: 'status.agreement-signed',
+    descKey: 'status.desc.agreement-signed',
+    theme: 'gray',
+  },
+  'consent-signed': {
+    id: 'consent-signed',
+    group: 'C',
+    labelKey: 'status.consent-signed',
+    descKey: 'status.desc.consent-signed',
+    theme: 'gray',
+  },
+  'active': {
+    id: 'active',
+    group: 'D',
+    labelKey: 'status.active',
+    descKey: 'status.desc.active',
+    theme: 'green',
+  },
+};
+
 const CONTACTS_SEED = [
-  { id: 'tanaka', name: 'Tanaka Haruto', role: 'Resident', tags: [UNIVERSAL_TAG, 'Head of Household', '1 room', 'VIP'], chatId: null },
-  { id: 'yamamoto', name: 'Yamamoto Aiko', role: 'Worker', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY, 'Retired', 'Event invite'], chatId: null },
-  { id: 'nakamura', name: 'Nakamura Ren', role: 'Worker', tags: [UNIVERSAL_TAG, '2 room'], chatId: null },
-  { id: 'kobayashi', name: 'Kobayashi Aoi', role: 'Resident', tags: [UNIVERSAL_TAG, 'Head of Household', '2 room'], chatId: null },
-  { id: 'sato', name: 'Sato Yuki', role: 'Resident', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY, '1 room'], chatId: null },
-  { id: 'watanabe', name: 'Watanabe Mei', role: 'Visitor', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY], chatId: null },
-  { id: 'alice', name: 'Alice Reynolds', role: 'Resident', tags: [UNIVERSAL_TAG, 'Head of Household'], chatId: 'alice' },
-  { id: 'sarah', name: 'Sarah Williams', role: 'Visitor', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY], chatId: 'sarah' },
-  { id: 'emma', name: 'Emma Thompson', role: 'Visitor', tags: [UNIVERSAL_TAG, '2 room'], chatId: 'emma' },
-  { id: 'marcus', name: 'Marcus Chen', role: 'Resident', tags: [UNIVERSAL_TAG, 'Retired'], chatId: 'marcus' },
-  { id: 'james', name: 'James Okafor', role: 'Visitor', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY], chatId: 'james' },
-  { id: 'david', name: 'David Miller', role: 'Visitor', tags: [UNIVERSAL_TAG, '1 room'], chatId: 'david' },
+  { id: 'tanaka', name: 'Tanaka Haruto', role: 'Resident', status: 'active', tags: [UNIVERSAL_TAG, 'Head of Household', '1 room', 'VIP'], chatId: null },
+  { id: 'yamamoto', name: 'Yamamoto Aiko', role: 'Worker', status: 'consent-signed', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY, 'Retired', 'Event invite'], chatId: null },
+  { id: 'nakamura', name: 'Nakamura Ren', role: 'Worker', status: 'agreement-signed', tags: [UNIVERSAL_TAG, '2 room'], chatId: null },
+  { id: 'kobayashi', name: 'Kobayashi Aoi', role: 'Resident', status: 'not-started', tags: [UNIVERSAL_TAG, 'Head of Household', '2 room'], chatId: null },
+  { id: 'sato', name: 'Sato Yuki', role: 'Resident', status: 'active', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY, '1 room'], chatId: null },
+  { id: 'watanabe', name: 'Watanabe Mei', role: 'Visitor', status: 'agreement-signed', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY], chatId: null },
+  { id: 'alice', name: 'Alice Reynolds', role: 'Resident', status: 'active', tags: [UNIVERSAL_TAG, 'Head of Household'], chatId: 'alice' },
+  { id: 'sarah', name: 'Sarah Williams', role: 'Visitor', status: 'not-started', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY], chatId: 'sarah' },
+  { id: 'emma', name: 'Emma Thompson', role: 'Visitor', status: 'consent-signed', tags: [UNIVERSAL_TAG, '2 room'], chatId: 'emma' },
+  { id: 'marcus', name: 'Marcus Chen', role: 'Resident', status: 'active', tags: [UNIVERSAL_TAG, 'Retired'], chatId: 'marcus' },
+  { id: 'james', name: 'James Okafor', role: 'Visitor', status: 'agreement-signed', tags: [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY], chatId: 'james' },
+  { id: 'david', name: 'David Miller', role: 'Visitor', status: 'not-started', tags: [UNIVERSAL_TAG, '1 room'], chatId: 'david' },
 ];
 
 const CONTACTS_EXTRA_NAMES = [
@@ -1140,6 +1262,7 @@ const CONTACTS_EXTRA_NAMES = [
 function buildContactsList() {
   const list = [...CONTACTS_SEED];
   const roles = ['Resident', 'Worker', 'Visitor'];
+  const statuses = ['active', 'consent-signed', 'agreement-signed', 'not-started'];
   const tagSets = [
     [UNIVERSAL_TAG],
     [UNIVERSAL_TAG, UNIVERSAL_TAG_SECONDARY],
@@ -1158,6 +1281,7 @@ function buildContactsList() {
       id: `contact-${list.length}`,
       name,
       role: roles[list.length % roles.length],
+      status: statuses[list.length % statuses.length],
       tags: tagSets[list.length % tagSets.length],
       chatId: null,
     });
@@ -1183,7 +1307,7 @@ function contactEmailFromName(name, id) {
 
 const CONTACTS = buildContactsList();
 
-let activeView = 'broadcasts';
+let activeView = 'chats';
 let activeTab = 'assigned';
 let supervisorTab = 'escalated';
 let activeChatId = 'alice';
@@ -1203,6 +1327,7 @@ const chatSendBtn = document.getElementById('chat-send-btn');
 const viewChatsEl = document.getElementById('view-chats');
 const viewBroadcastsEl = document.getElementById('view-broadcasts');
 const viewContactsEl = document.getElementById('view-contacts');
+const viewLicensesEl = document.getElementById('view-licenses');
 const broadcastListEl = document.getElementById('broadcast-list');
 const broadcastDetailEl = document.getElementById('broadcast-detail');
 const chatsTabsOperatorEl = document.getElementById('chats-tabs-operator');
@@ -1235,6 +1360,7 @@ const chatsSearchClose = document.getElementById('chats-search-close');
 
 let contactsSearchQuery = '';
 let contactsRoleFilter = '';
+let contactsStatusFilter = '';
 let contactsTagFilters = [];
 let contactsSort = 'recently-tagged';
 let contactsPage = 1;
@@ -3105,6 +3231,25 @@ function contactTagsHtml(tags, contactId) {
   return `${pills}<button type="button" class="contact-tag-more" data-contact-id="${contactId}" data-action="expand" aria-label="${escapePreviewText(t('contacts.tagsMoreAria', { count: hiddenCount }))}">${escapePreviewText(t('contacts.tagsMore', { count: hiddenCount }))}</button>`;
 }
 
+function contactRoleHtml(role) {
+  let label = role;
+  if (currentLocale === 'ja') {
+    if (role === 'Resident') label = '住民';
+    else if (role === 'Worker') label = 'ワーカー';
+    else if (role === 'Visitor') label = 'ビジター';
+  }
+  return `<span class="contact-role">${escapePreviewText(label)}</span>`;
+}
+
+function contactStatusBadgeHtml(statusId) {
+  const meta = STATUS_DEFINITIONS[statusId] || STATUS_DEFINITIONS['not-started'];
+  const label = t(meta.labelKey);
+  const desc = t(meta.descKey);
+  const badgeClass = meta.theme === 'green' ? 'status-badge status-badge--green' : 'status-badge status-badge--gray';
+
+  return `<span class="${badgeClass}" data-tooltip="${escapePreviewText(desc)}" aria-label="${escapePreviewText(`${label}: ${desc}`)}" tabindex="0">${escapePreviewText(label)}</span>`;
+}
+
 function sortContactsForDisplay(contacts) {
   if (contactsSort === 'alphabetical') {
     return [...contacts].sort((a, b) => a.name.localeCompare(b.name));
@@ -3117,7 +3262,38 @@ function sortContactsForDisplay(contacts) {
 }
 
 function getFilteredContacts() {
-  return sortContactsForDisplay(CONTACTS);
+  let list = CONTACTS;
+  if (contactsSearchQuery.trim()) {
+    const q = contactsSearchQuery.trim().toLowerCase();
+    list = list.filter((c) => {
+      const meta = STATUS_DEFINITIONS[c.status];
+      const statusLabel = meta?.labelKey ? t(meta.labelKey).toLowerCase() : '';
+      const statusDesc = meta?.descKey ? t(meta.descKey).toLowerCase() : '';
+      const roleLabel = c.role.toLowerCase();
+      return (
+        c.name.toLowerCase().includes(q) ||
+        (c.email && c.email.toLowerCase().includes(q)) ||
+        (c.tags && c.tags.some((t) => t.toLowerCase().includes(q))) ||
+        roleLabel.includes(q) ||
+        statusLabel.includes(q) ||
+        statusDesc.includes(q)
+      );
+    });
+  }
+
+  if (contactsRoleFilter) {
+    list = list.filter((c) => c.role === contactsRoleFilter);
+  }
+
+  if (contactsStatusFilter) {
+    list = list.filter((c) => c.status === contactsStatusFilter);
+  }
+
+  if (contactsTagFilters.length > 0) {
+    list = list.filter((c) => contactsTagFilters.some((t) => c.tags.includes(t)));
+  }
+
+  return sortContactsForDisplay(list);
 }
 
 function updateRoleFilterMenuSelection() {
@@ -3127,10 +3303,18 @@ function updateRoleFilterMenuSelection() {
   document.getElementById('filter-role-btn')?.classList.toggle('is-active', !!contactsRoleFilter);
 }
 
+function updateStatusFilterMenuSelection() {
+  document.querySelectorAll('#filter-status-menu .filter-radio-item').forEach((item) => {
+    item.classList.toggle('is-selected', item.dataset.value === contactsStatusFilter);
+  });
+  document.getElementById('filter-status-btn')?.classList.toggle('is-active', !!contactsStatusFilter);
+}
+
 function getContactsActiveFilterCount() {
   let count = 0;
   if (contactsSearchQuery.trim()) count += 1;
   if (contactsRoleFilter) count += 1;
+  if (contactsStatusFilter) count += 1;
   if (contactsTagFilters.length > 0) count += 1;
   return count;
 }
@@ -3139,11 +3323,13 @@ function clearContactsFilters() {
   const searchEl = document.getElementById('contacts-search');
   contactsSearchQuery = '';
   contactsRoleFilter = '';
+  contactsStatusFilter = '';
   contactsTagFilters = [];
   contactsPage = 1;
   contactsSelectAllMode = false;
   if (searchEl) searchEl.value = '';
   updateRoleFilterMenuSelection();
+  updateStatusFilterMenuSelection();
   syncTagsFilterCheckboxes();
   updateTagsFilterButton();
   renderContactsTable();
@@ -3170,14 +3356,18 @@ function bindFilterChipRemoveHandlers(container) {
   container.querySelectorAll('.filter-chip__remove').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (btn.dataset.remove === 'search') {
+      const removeType = btn.dataset.remove;
+      if (removeType === 'search') {
         contactsSearchQuery = '';
         const searchEl = document.getElementById('contacts-search');
         if (searchEl) searchEl.value = '';
-      } else if (btn.dataset.remove === 'role') {
+      } else if (removeType === 'role') {
         contactsRoleFilter = '';
         updateRoleFilterMenuSelection();
-      } else if (btn.dataset.tag) {
+      } else if (removeType === 'status') {
+        contactsStatusFilter = '';
+        updateStatusFilterMenuSelection();
+      } else if (removeType === 'tag') {
         contactsTagFilters = contactsTagFilters.filter((tag) => tag !== btn.dataset.tag);
         syncTagsFilterCheckboxes();
         updateTagsFilterButton();
@@ -3201,8 +3391,8 @@ function renderContactsFilterChips() {
   if (searchQuery) {
     chips.push(`
       <span class="filter-chip filter-chip--search">
-        <span class="filter-chip__prefix">Search</span>
-        <span class="filter-chip__label">${searchQuery}</span>
+        <span class="filter-chip__prefix">${t('contacts.searchChipPrefix')}</span>
+        <span class="filter-chip__label">${escapePreviewText(searchQuery)}</span>
         <button class="filter-chip__remove" type="button" data-remove="search" aria-label="Remove search filter">
           <span class="material-icons">close</span>
         </button>
@@ -3210,11 +3400,30 @@ function renderContactsFilterChips() {
   }
 
   if (contactsRoleFilter) {
+    let roleLabel = contactsRoleFilter;
+    if (currentLocale === 'ja') {
+      if (contactsRoleFilter === 'Resident') roleLabel = '住民';
+      else if (contactsRoleFilter === 'Worker') roleLabel = 'ワーカー';
+      else if (contactsRoleFilter === 'Visitor') roleLabel = 'ビジター';
+    }
     chips.push(`
       <span class="filter-chip filter-chip--role">
-        <span class="filter-chip__prefix">Role</span>
-        <span class="filter-chip__label">${contactsRoleFilter}</span>
+        <span class="filter-chip__prefix">${t('contacts.colRole')}</span>
+        <span class="filter-chip__label">${escapePreviewText(roleLabel)}</span>
         <button class="filter-chip__remove" type="button" data-remove="role" aria-label="Remove role filter">
+          <span class="material-icons">close</span>
+        </button>
+      </span>`);
+  }
+
+  if (contactsStatusFilter) {
+    const meta = STATUS_DEFINITIONS[contactsStatusFilter];
+    const statusLabel = meta?.labelKey ? t(meta.labelKey) : contactsStatusFilter;
+    chips.push(`
+      <span class="filter-chip filter-chip--status">
+        <span class="filter-chip__prefix">${t('contacts.colStatus')}</span>
+        <span class="filter-chip__label">${escapePreviewText(statusLabel)}</span>
+        <button class="filter-chip__remove" type="button" data-remove="status" aria-label="Remove status filter">
           <span class="material-icons">close</span>
         </button>
       </span>`);
@@ -3223,8 +3432,8 @@ function renderContactsFilterChips() {
   contactsTagFilters.forEach((tag) => {
     chips.push(`
       <span class="filter-chip filter-chip--tag">
-        <span class="filter-chip__label">${tag}</span>
-        <button class="filter-chip__remove" type="button" data-remove="tag" data-tag="${tag}" aria-label="Remove ${tag} tag filter">
+        <span class="filter-chip__label">${escapePreviewText(translateTag(tag))}</span>
+        <button class="filter-chip__remove" type="button" data-remove="tag" data-tag="${escapePreviewText(tag)}" aria-label="Remove ${escapePreviewText(tag)} tag filter">
           <span class="material-icons">close</span>
         </button>
       </span>`);
@@ -3234,10 +3443,9 @@ function renderContactsFilterChips() {
   const hasFilters = chips.length > 0;
   rowEl.hidden = !hasFilters;
 
-  if (clearFiltersBtn) {
-    const filterCount = getContactsActiveFilterCount();
-    clearFiltersBtn.hidden = !hasFilters;
-    clearFiltersBtn.textContent = filterCount > 1 ? `Clear filters (${filterCount})` : 'Clear filters';
+  const clearAllBtn = document.getElementById('contacts-clear-all-btn');
+  if (clearAllBtn) {
+    clearAllBtn.classList.toggle('hidden', !hasFilters);
   }
 
   if (hasFilters) bindFilterChipRemoveHandlers(chipsContainer);
@@ -4947,6 +5155,7 @@ function updateContactsSelectionBar() {
   const count = getContactsSelectionCount();
   const hasSelection = count > 0;
 
+  bar.hidden = !hasSelection;
   bar.classList.toggle('is-disabled', !hasSelection);
   tableWrap?.classList.toggle('has-selection', hasSelection);
 
@@ -4996,6 +5205,8 @@ function renderContactsTable() {
         </label>
       </td>
       <td class="col-name"><span class="contact-name">${contact.name}</span></td>
+      <td class="col-role">${contactRoleHtml(contact.role)}</td>
+      <td class="col-status">${contactStatusBadgeHtml(contact.status)}</td>
       <td class="col-tags">
         <div class="contact-tags">${tagsHtml}</div>
       </td>
@@ -5023,6 +5234,7 @@ function renderContactsTable() {
   checkAllEl.indeterminate = someSelected && !allMatchingSelected;
 
   updateContactsSelectionBar();
+  renderContactsFilterChips();
 
   tbody.querySelectorAll('.contact-row-check').forEach((input) => {
     input.addEventListener('change', () => {
@@ -5112,6 +5324,7 @@ function initContactsView() {
   document.getElementById('contacts-selection-clear')?.addEventListener('click', clearContactsSelection);
 
   clearFiltersBtn?.addEventListener('click', clearContactsFilters);
+  document.getElementById('contacts-clear-all-btn')?.addEventListener('click', clearContactsFilters);
 
   prevBtn?.addEventListener('click', () => {
     if (contactsPage > 1) {
@@ -5133,6 +5346,14 @@ function initContactsView() {
     contactsPage = 1;
     contactsSelectAllMode = false;
     updateRoleFilterMenuSelection();
+    renderContactsTable();
+  });
+
+  setupStatusFilterDropdown('filter-status-btn', 'filter-status-menu', (value) => {
+    contactsStatusFilter = value;
+    contactsPage = 1;
+    contactsSelectAllMode = false;
+    updateStatusFilterMenuSelection();
     renderContactsTable();
   });
 
@@ -5221,6 +5442,33 @@ function setupRoleFilterDropdown(btnId, menuId, onSelect) {
   });
 
   updateRoleFilterMenuSelection();
+}
+
+function setupStatusFilterDropdown(btnId, menuId, onSelect) {
+  const btn = document.getElementById(btnId);
+  const menu = document.getElementById(menuId);
+  if (!btn || !menu) return;
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = !menu.classList.contains('hidden');
+    closeAllFilterMenus();
+    if (!isOpen) {
+      menu.classList.remove('hidden');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  menu.querySelectorAll('.filter-radio-item[data-value]').forEach((item) => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      onSelect(item.dataset.value);
+      menu.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  updateStatusFilterMenuSelection();
 }
 
 function setupTagsFilterDropdown(btnId, menuId) {
@@ -5345,7 +5593,7 @@ chatImageInput?.addEventListener('change', (e) => {
 document.addEventListener('click', (e) => {
   closeAllFilterMenus();
   if (!profileMenuWrap?.contains(e.target)) {
-    setProfileMenuOpen(false);
+    closeProfileMenu();
   }
   if (!attachMenuWrap?.contains(e.target)) {
     closeAttachMenu();
@@ -5403,28 +5651,9 @@ function toggleSupervisorMode() {
   updateSupervisorUI();
 }
 
-function setProfileMenuOpen(open) {
-  profileMenuWrap?.classList.toggle('is-open', open);
-  profileMenuEl?.setAttribute('aria-hidden', open ? 'false' : 'true');
-  profileAvatarBtn?.setAttribute('aria-expanded', open ? 'true' : 'false');
-}
-
-profileAvatarBtn?.addEventListener('click', (e) => {
-  e.stopPropagation();
-  const isOpen = profileMenuWrap?.classList.contains('is-open');
-  closeAttachMenu();
-  setProfileMenuOpen(!isOpen);
-});
-
-toggleSupervisorBtn?.addEventListener('click', (e) => {
-  e.stopPropagation();
-  toggleSupervisorMode();
-  setProfileMenuOpen(false);
-});
-
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    setProfileMenuOpen(false);
+    closeProfileMenu();
     closeAttachMenu();
     setAddTagsMenuOpen(false);
     closeTemplateModal();
@@ -5502,7 +5731,7 @@ chatAskHelpBtn?.addEventListener('click', () => {
   updateHeaderActions();
 });
 
-const validViews = ['broadcasts', 'contacts', 'chats'];
+const validViews = ['broadcasts', 'contacts', 'chats', 'licenses'];
 
 function getBroadcastWizardStepFromLocation() {
   const step = Number(new URLSearchParams(window.location.search).get('step'));
@@ -5559,13 +5788,21 @@ function switchView(view, { updateUrl = true, replaceUrl = false } = {}) {
   viewChatsEl.classList.toggle('hidden', view !== 'chats');
   viewBroadcastsEl.classList.toggle('hidden', view !== 'broadcasts');
   viewContactsEl.classList.toggle('hidden', view !== 'contacts');
+  if (viewLicensesEl) viewLicensesEl.classList.toggle('hidden', view !== 'licenses');
 
+  if (view === 'chats') {
+    renderChatList();
+    renderMessages();
+  }
   if (view === 'broadcasts') {
     renderBroadcastList();
     tryRestoreBroadcastWizardOnEnter();
   }
   if (view === 'contacts') {
     renderContactsTable();
+  }
+  if (view === 'licenses') {
+    renderLicensesView();
   }
 }
 
@@ -5591,10 +5828,229 @@ document.getElementById('broadcasts-contacts-link')?.addEventListener('click', (
   switchView('contacts');
 });
 
+/* ==========================================================================
+   Profile Menu
+   ========================================================================== */
+
+function openProfileMenu() {
+  const wrap = document.getElementById('profile-menu-wrap');
+  const menu = document.getElementById('profile-menu');
+  const btn = document.getElementById('profile-avatar-btn');
+  if (!wrap || !menu || !btn) return;
+  wrap.classList.add('is-open');
+  menu.hidden = false;
+  menu.removeAttribute('hidden');
+  menu.setAttribute('aria-hidden', 'false');
+  btn.setAttribute('aria-expanded', 'true');
+}
+
+function closeProfileMenu() {
+  const wrap = document.getElementById('profile-menu-wrap');
+  const menu = document.getElementById('profile-menu');
+  const btn = document.getElementById('profile-avatar-btn');
+  if (!wrap || !menu || !btn) return;
+  wrap.classList.remove('is-open');
+  menu.hidden = true;
+  menu.setAttribute('hidden', '');
+  menu.setAttribute('aria-hidden', 'true');
+  btn.setAttribute('aria-expanded', 'false');
+}
+
+function initProfileMenu() {
+  const wrap = document.getElementById('profile-menu-wrap');
+  const btn = document.getElementById('profile-avatar-btn');
+  const menu = document.getElementById('profile-menu');
+  const licensesItem = document.getElementById('profile-menu-licenses');
+  const signoutItem = document.getElementById('profile-menu-signout');
+  if (!wrap || !btn || !menu) return;
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (wrap.classList.contains('is-open')) {
+      closeProfileMenu();
+    } else {
+      closeLangSwitcherMenu();
+      openProfileMenu();
+    }
+  });
+
+  licensesItem?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeProfileMenu();
+    switchView('licenses');
+  });
+
+  signoutItem?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeProfileMenu();
+    showToast(currentLocale === 'ja' ? 'サインアウトしました' : 'Signed out successfully');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!wrap.contains(e.target)) closeProfileMenu();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeProfileMenu();
+  });
+}
+
+/* ==========================================================================
+   Third-party Licenses Text Notice
+   ========================================================================== */
+
+const LICENSES_NOTICE_TEXT = `Third-party software notices
+woven-city-app-biz 1.0.0
+
+This application includes the open source software listed below.
+
+Components:
+
+@formatjs/fast-memoize 3.1.7: https://github.com/formatjs/formatjs#readme : MIT License
+@formatjs/icu-messageformat-parser 3.5.18: https://github.com/formatjs/formatjs#readme : MIT License
+@formatjs/icu-skeleton-parser 2.1.11: https://github.com/formatjs/formatjs#readme : MIT License
+@internationalized/number 3.6.8: https://github.com/adobe/react-spectrum#readme : Apache License 2.0
+@internationalized/string 3.2.10: https://github.com/adobe/react-spectrum#readme : Apache License 2.0
+@socket.io/component-emitter 3.1.2: https://github.com/socketio/emitter#readme : MIT License
+@swc/helpers 0.5.23: https://github.com/swc-project/helpers#readme : Apache License 2.0
+@tanstack/query-core 5.102.6: https://tanstack.com/query : MIT License
+@tanstack/react-query 5.102.6: https://tanstack.com/query : MIT License
+clsx 2.1.1: https://github.com/lukeed/clsx#readme : MIT License
+dequal 2.0.3: https://github.com/lukeed/dequal#readme : MIT License
+engine.io-client 6.6.6: https://github.com/socketio/engine.io-client : MIT License
+engine.io-parser 5.2.3: https://github.com/socketio/engine.io-parser : MIT License
+intl-messageformat 11.2.15: https://github.com/yahoo/intl-messageformat : BSD 3-clause "New" or "Revised" License
+next-intl 4.13.2: https://github.com/amannn/next-intl#readme : MIT License
+next.js 16.3.6: https://nextjs.org : MIT License
+pino 10.3.1: https://github.com/mcollina/pino#readme : MIT License
+quick-format-unescaped 4.0.4: https://github.com/davidmarkclements/quick-format#readme : MIT License
+React from Facebook 19.2.8: https://react.dev : MIT License
+react-aria 3.49.0: https://github.com/souporserious/react-aria : Apache License 2.0
+react-aria-components 1.18.0: https://github.com/juanca/react-aria-components#readme : Apache License 2.0
+react-dom 19.2.8: https://www.npmjs.com/package/react-dom : MIT License
+react-intersection-observer 10.0.3: https://github.com/thebuilder/react-intersection-observer : MIT License
+react-stately 3.47.0: https://github.com/cjhowe7/react-stately#readme : Apache License 2.0
+scheduler 0.27.0: https://reactjs.org/ : MIT License
+Socket.IO Parser 4.2.7: http://socket.io/ : MIT License
+socket.io-client 4.8.3: https://github.com/LearnBoost/socket.io-client : MIT License
+swr 2.4.1: https://github.com/ryancat/selenium-webdriverjs-example#readme : MIT License
+use-intl 4.14.5: https://next-intl-docs.vercel.app/ : MIT License
+use-sync-external-store 1.7.0: https://github.com/facebook/react#readme : MIT License
+zod 4.4.3: https://github.com/vriad/zod#readme : MIT License
+
+Copyright Text:
+
+@formatjs/fast-memoize 3.1.7 npmjs:@formatjs/fast-memoize/3.1.7: https://github.com/formatjs/formatjs#readme
+    (c) 2023 FormatJS
+
+@formatjs/icu-messageformat-parser 3.5.18 npmjs:@formatjs/icu-messageformat-parser/3.5.18: https://github.com/formatjs/formatjs#readme
+    (c) 2023 FormatJS
+
+@formatjs/icu-skeleton-parser 2.1.11 npmjs:@formatjs/icu-skeleton-parser/2.1.11: https://github.com/formatjs/formatjs#readme
+    (c) 2023 FormatJS
+
+@internationalized/number 3.6.8 npmjs:@internationalized/number/3.6.8: https://github.com/adobe/react-spectrum#readme
+    Copyright (c) 2020 Adobe Inc. All rights reserved.
+
+@internationalized/string 3.2.10 npmjs:@internationalized/string/3.2.10: https://github.com/adobe/react-spectrum#readme
+    Copyright (c) 2020 Adobe Inc. All rights reserved.
+
+@socket.io/component-emitter 3.1.2 npmjs:@socket.io/component-emitter/3.1.2: https://github.com/socketio/emitter#readme
+    Copyright (c) 2014 Component contributors <dev@component.io>
+
+@swc/helpers 0.5.23 npmjs:@swc/helpers/0.5.23: https://github.com/swc-project/helpers#readme
+    Copyright (c) 2019 Speedy Web Compiler Authors
+
+@tanstack/query-core 5.102.6 npmjs:@tanstack/query-core/5.102.6: https://tanstack.com/query
+    Copyright (c) 2022 Tanner Linsley
+
+@tanstack/react-query 5.102.6 npmjs:@tanstack/react-query/5.102.6: https://tanstack.com/query
+    Copyright (c) 2022 Tanner Linsley
+
+clsx 2.1.1 npmjs:clsx/2.1.1: https://github.com/lukeed/clsx#readme
+    Copyright (c) Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
+
+dequal 2.0.3 npmjs:dequal/2.0.3: https://github.com/lukeed/dequal#readme
+    Copyright (c) Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
+
+engine.io-client 6.6.6 npmjs:engine.io-client/6.6.6: https://github.com/socketio/engine.io-client
+    Copyright (c) 2014 Guillermo Rauch <rauchg@gmail.com>
+
+engine.io-parser 5.2.3 npmjs:engine.io-parser/5.2.3: https://github.com/socketio/engine.io-parser
+    Copyright (c) 2014 Guillermo Rauch <rauchg@gmail.com>
+
+intl-messageformat 11.2.15 npmjs:intl-messageformat/11.2.15: https://github.com/yahoo/intl-messageformat
+    Copyright (c) 2014 Yahoo! Inc. / 2023 FormatJS
+
+next-intl 4.13.2 npmjs:next-intl/4.13.2: https://github.com/amannn/next-intl#readme
+    Copyright (c) Jan Amann <jan@amann.me>
+
+next.js 16.3.6 npmjs:next.js/16.3.6: https://nextjs.org
+    Copyright (c) 2025 Vercel, Inc.
+
+pino 10.3.1 npmjs:pino/10.3.1: https://github.com/mcollina/pino#readme
+    Copyright (c) Matteo Collina and David Mark Clements
+
+quick-format-unescaped 4.0.4 npmjs:quick-format-unescaped/4.0.4: https://github.com/davidmarkclements/quick-format#readme
+    Copyright (c) David Mark Clements
+
+React from Facebook 19.2.8 npmjs:react/19.2.8: https://react.dev
+    Copyright (c) Meta Platforms, Inc. and affiliates.
+
+react-aria 3.49.0 npmjs:react-aria/3.49.0: https://github.com/souporserious/react-aria
+    Copyright (c) 2020 Adobe Inc. All rights reserved.
+
+react-aria-components 1.18.0 npmjs:react-aria-components/1.18.0: https://github.com/juanca/react-aria-components#readme
+    Copyright (c) 2020 Adobe Inc. All rights reserved.
+
+react-dom 19.2.8 npmjs:react-dom/19.2.8: https://www.npmjs.com/package/react-dom
+    Copyright (c) Meta Platforms, Inc. and affiliates.
+
+react-intersection-observer 10.0.3 npmjs:react-intersection-observer/10.0.3: https://github.com/thebuilder/react-intersection-observer
+    Copyright (c) 2019 Robin Blomberg
+
+react-stately 3.47.0 npmjs:react-stately/3.47.0: https://github.com/cjhowe7/react-stately#readme
+    Copyright (c) 2020 Adobe Inc. All rights reserved.
+
+scheduler 0.27.0 npmjs:scheduler/0.27.0: https://reactjs.org/
+    Copyright (c) Meta Platforms, Inc. and affiliates.
+
+Socket.IO Parser 4.2.7 npmjs:socket.io-parser/4.2.7: http://socket.io/
+    Copyright (c) 2014 Guillermo Rauch <rauchg@gmail.com>
+
+socket.io-client 4.8.3 npmjs:socket.io-client/4.8.3: https://github.com/LearnBoost/socket.io-client
+    Copyright (c) 2014 Guillermo Rauch <rauchg@gmail.com>
+
+swr 2.4.1 npmjs:swr/2.4.1: https://github.com/ryancat/selenium-webdriverjs-example#readme
+    Copyright (c) 2025 Vercel, Inc.
+
+use-intl 4.14.5 npmjs:use-intl/4.14.5: https://next-intl-docs.vercel.app/
+    Copyright (c) Jan Amann <jan@amann.me>
+
+use-sync-external-store 1.7.0 npmjs:use-sync-external-store/1.7.0: https://github.com/facebook/react#readme
+    Copyright (c) Meta Platforms, Inc. and affiliates.
+
+zod 4.4.3 npmjs:zod/4.4.3: https://github.com/vriad/zod#readme
+    Copyright (c) 2020 Colin McDonnell`;
+
+function renderLicensesView() {
+  const contentEl = document.getElementById('licenses-text-content');
+  if (contentEl) {
+    contentEl.textContent = LICENSES_NOTICE_TEXT;
+  }
+}
+
+function initLicensesView() {
+  renderLicensesView();
+}
+
 renderChatList();
 renderMessages();
 updateProfileAvatar();
 initLanguageSwitcher();
+initProfileMenu();
+initLicensesView();
 initContactsView();
 initBroadcastDiscardDialog();
 initBroadcastWizard();
@@ -5615,3 +6071,4 @@ if (initialView === 'broadcasts' && initialWizardStep) {
   startFreshBroadcastWizard(initialWizardStep, { replaceUrl: true });
 }
 refreshLocalizedUI();
+

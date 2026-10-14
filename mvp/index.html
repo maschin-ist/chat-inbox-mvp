@@ -160,7 +160,8 @@
     /* MVP unified panel header — compact, same component everywhere */
     .view--chats,
     .view--broadcasts,
-    .view--contacts {
+    .view--contacts,
+    .view--licenses {
       --mvp-h-border: 1px solid var(--border);
       --mvp-h-single-pad: 12px 20px;
       /* Stacked header (title + subtext) — taller than single-row 52px */
@@ -206,6 +207,7 @@
     .view--chats .inbox-header h2[data-od-id="chats-inbox-title"],
     .view--broadcasts .inbox-header h2[data-od-id="broadcasts-inbox-title"],
     .view--contacts .contacts-page-header__top h2[data-od-id="contacts-title"],
+    .view--licenses .contacts-page-header__top h2[data-od-id="licenses-title"],
     .view--chats .chat-header__content h2,
     .view--broadcasts .broadcast-detail-header__top h2 {
       font-size: 16px;
@@ -345,7 +347,8 @@
       align-items: flex-start;
     }
 
-    .view--contacts .contacts-subtitle {
+    .view--contacts .contacts-subtitle,
+    .view--licenses .contacts-subtitle {
       font-size: 14px;
       font-weight: 400;
       color: var(--text-secondary);
@@ -354,7 +357,8 @@
       max-width: 52em;
     }
 
-    .view--contacts .contacts-page-header {
+    .view--contacts .contacts-page-header,
+    .view--licenses .contacts-page-header {
       flex-shrink: 0;
       padding: 0;
       background: var(--inbox-bg);
@@ -363,14 +367,16 @@
       box-sizing: border-box;
     }
 
-    .view--contacts .contacts-page-header__top {
+    .view--contacts .contacts-page-header__top,
+    .view--licenses .contacts-page-header__top {
       padding: var(--mvp-h-title-pad);
       display: flex;
       align-items: center;
       box-sizing: border-box;
     }
 
-    .view--contacts .contacts-title-info {
+    .view--contacts .contacts-title-info,
+    .view--licenses .contacts-title-info {
       position: relative;
       display: inline-flex;
       align-items: center;
@@ -415,19 +421,21 @@
       visibility: visible;
     }
 
-    .view--contacts .contacts-page-header__meta {
+    .view--contacts .contacts-page-header__meta,
+    .view--licenses .contacts-page-header__meta {
       padding: var(--mvp-h-meta-pad);
       box-sizing: border-box;
       display: flex;
       align-items: flex-start;
     }
 
-    .view--contacts .contacts-subtitle {
+    .view--contacts .contacts-subtitle,
+    .view--licenses .contacts-subtitle {
       margin: 0;
     }
 
     .view--contacts .contacts-card__top {
-      padding: 0;
+      padding: 18px 20px 0;
     }
 
     /* Full-width action row — flush with table header (no floating bar) */
@@ -436,13 +444,15 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      min-height: 53px;
-      padding: 12px 20px;
-      margin: 0;
+      min-height: 44px;
+      padding: 8px 20px;
+      margin: 8px 0 0 0;
       border-radius: 0;
+      border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       background: #2B67B5;
       box-sizing: border-box;
+      width: 100%;
     }
 
     .view--contacts .contacts-selection-bar.is-disabled {
@@ -1087,19 +1097,18 @@
             </button>
           </div>
         </div>
-        <div class="profile-menu-wrap" data-od-id="sidebar-profile-wrap">
-          <div class="profile-avatar-wrap" hidden>
+        <div class="profile-menu-wrap" id="profile-menu-wrap" data-od-id="sidebar-profile-wrap">
+          <div class="profile-avatar-wrap" id="profile-avatar-wrap">
             <button type="button" class="profile-avatar" id="profile-avatar-btn" title="Account menu" aria-haspopup="menu" aria-expanded="false" aria-controls="profile-menu" data-od-id="sidebar-profile">
-              <span class="profile-avatar__image" id="profile-avatar-image">
-                <img src="profile-avatar.jpg" alt="Alex Rivera" class="profile-avatar__photo">
-              </span>
+              <span class="profile-avatar__initial" id="profile-avatar-initial">J</span>
             </button>
-            <span class="supervisor-badge hidden" id="supervisor-badge" aria-hidden="true">SV</span>
           </div>
           <div class="profile-menu" id="profile-menu" role="menu" aria-hidden="true" hidden="">
-            <button class="profile-menu__item hidden" type="button" id="toggle-supervisor-btn" role="menuitem" hidden="">
-              <span class="material-icons" aria-hidden="true">supervisor_account</span>
-              <span id="toggle-supervisor-label">Switch to Supervisor</span>
+            <button class="profile-menu__item" type="button" id="profile-menu-licenses" role="menuitem">
+              <span class="profile-menu__label" data-i18n="profile.licenses">Licenses</span>
+            </button>
+            <button class="profile-menu__item" type="button" id="profile-menu-signout" role="menuitem">
+              <span class="profile-menu__label" data-i18n="profile.signout">Sign out</span>
             </button>
           </div>
         </div>
@@ -1108,7 +1117,7 @@
     </div>
 
     <!-- Chats view -->
-    <div class="view view--chats hidden" id="view-chats" data-od-id="view-chats">
+    <div class="view view--chats" id="view-chats" data-od-id="view-chats">
     <div class="panel-rail panel-rail--inbox" data-od-id="chats-inbox-rail">
       <aside class="inbox panel" data-od-id="chats-inbox-panel">
       <header class="inbox-header mvp-panel-header mvp-panel-header--single" data-od-id="chats-inbox-header">
@@ -1211,7 +1220,7 @@
     </div>
 
     <!-- Broadcasts view -->
-    <div class="view view--broadcasts view--broadcasts-list-hidden" id="view-broadcasts" data-od-id="view-broadcasts">
+    <div class="view view--broadcasts view--broadcasts-list-hidden hidden" id="view-broadcasts" data-od-id="view-broadcasts">
       <!-- MVP: list panel hidden — remove hidden to restore sent-broadcast list -->
       <div class="panel-rail panel-rail--inbox" data-od-id="broadcasts-inbox-rail" hidden="">
         <aside class="inbox panel" data-od-id="broadcasts-inbox-panel">
@@ -1433,34 +1442,48 @@ You can create tags in Manage contacts page.</p>
             </header>
 
             <div class="contacts-card__top" data-od-id="contacts-card-top">
-              <div class="contacts-search-wrap hidden" data-od-id="contacts-search-wrap" hidden="" aria-hidden="true">
+              <div class="contacts-search-wrap" data-od-id="contacts-search-wrap">
                 <span class="material-icons contacts-search-icon" aria-hidden="true">search</span>
-                <input type="search" class="contacts-search" id="contacts-search" placeholder="Search contacts" autocomplete="off" data-od-id="contacts-search">
+                <input type="search" class="contacts-search" id="contacts-search" placeholder="Search contacts" autocomplete="off" data-od-id="contacts-search" data-i18n-placeholder="contacts.searchContacts">
               </div>
-              <div class="contacts-toolbar hidden" data-od-id="contacts-toolbar" hidden="" aria-hidden="true">
+              <div class="contacts-toolbar" data-od-id="contacts-toolbar">
                 <div class="contacts-toolbar__row">
                 <div class="contacts-filters" data-od-id="contacts-filters">
-                  <div class="filter-dropdown hidden" data-od-id="contacts-filter-role" hidden="" aria-hidden="true">
+                  <div class="filter-dropdown" data-od-id="contacts-filter-role">
                     <button class="filter-btn" type="button" id="filter-role-btn" aria-haspopup="listbox" aria-expanded="false">
-                      <span class="filter-btn__label">User Role</span>
+                      <span class="filter-btn__label" data-i18n="contacts.filterRole">Role</span>
                       <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
                     </button>
                     <ul class="filter-menu filter-menu--radio hidden" id="filter-role-menu" role="listbox">
-                      <li class="filter-menu__hint">One role at a time</li>
-                      <li><button type="button" class="filter-radio-item" data-value="">All roles</button></li>
-                      <li><button type="button" class="filter-radio-item" data-value="Resident">Resident</button></li>
-                      <li><button type="button" class="filter-radio-item" data-value="Worker">Worker</button></li>
-                      <li><button type="button" class="filter-radio-item" data-value="Visitor">Visitor</button></li>
+                      <li class="filter-menu__hint" data-i18n="contacts.oneRoleAtATime">One role at a time</li>
+                      <li><button type="button" class="filter-radio-item" data-value="" data-i18n="contacts.allRoles">All roles</button></li>
+                      <li><button type="button" class="filter-radio-item" data-value="Resident" data-i18n="contacts.roleResident">Resident</button></li>
+                      <li><button type="button" class="filter-radio-item" data-value="Worker" data-i18n="contacts.roleWorker">Worker</button></li>
+                      <li><button type="button" class="filter-radio-item" data-value="Visitor" data-i18n="contacts.roleVisitor">Visitor</button></li>
+                    </ul>
+                  </div>
+                  <div class="filter-dropdown" data-od-id="contacts-filter-status">
+                    <button class="filter-btn" type="button" id="filter-status-btn" aria-haspopup="listbox" aria-expanded="false">
+                      <span class="filter-btn__label" data-i18n="contacts.filterStatus">Status</span>
+                      <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
+                    </button>
+                    <ul class="filter-menu filter-menu--radio hidden" id="filter-status-menu" role="listbox">
+                      <li class="filter-menu__hint" data-i18n="contacts.oneStatusAtATime">One status at a time</li>
+                      <li><button type="button" class="filter-radio-item" data-value="" data-i18n="contacts.allStatuses">All statuses</button></li>
+                      <li><button type="button" class="filter-radio-item" data-value="not-started" data-i18n="status.not-started">Not started</button></li>
+                      <li><button type="button" class="filter-radio-item" data-value="agreement-signed" data-i18n="status.agreement-signed">Agreement signed</button></li>
+                      <li><button type="button" class="filter-radio-item" data-value="consent-signed" data-i18n="status.consent-signed">Consent signed</button></li>
+                      <li><button type="button" class="filter-radio-item" data-value="active" data-i18n="status.active">Active</button></li>
                     </ul>
                   </div>
                   <div class="filter-dropdown filter-dropdown--tags" data-od-id="contacts-filter-tags">
                     <button class="filter-btn" type="button" id="filter-tags-btn" aria-haspopup="listbox" aria-expanded="false">
-                      <span class="filter-btn__label">Tags</span>
+                      <span class="filter-btn__label" data-i18n="contacts.filterTags">Tags</span>
                       <span class="filter-btn__count hidden" id="filter-tags-count" aria-hidden="true"></span>
                       <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
                     </button>
                     <ul class="filter-menu filter-menu--checkbox hidden" id="filter-tags-menu" role="listbox">
-                      <li class="filter-menu__hint">Select any — matches all chosen</li>
+                      <li class="filter-menu__hint" data-i18n="contacts.tagsFilterHint">Select any — matches all chosen</li>
                       <li>
                         <label class="filter-check">
                           <input type="checkbox" value="Member">
@@ -1498,83 +1521,80 @@ You can create tags in Manage contacts page.</p>
                       </li>
                     </ul>
                   </div>
+                  <button class="contacts-clear-all-btn hidden" type="button" id="contacts-clear-all-btn" data-i18n="contacts.clearAll">Clear all</button>
                 </div>
-                <button class="contacts-select-all-btn" type="button" id="contacts-select-all-btn" data-od-id="contacts-select-all-btn">
-                  Select all <span id="contacts-toolbar-select-total">120</span> users
-                </button>
+                <div class="contacts-table-tools" data-od-id="contacts-sort-control">
+                  <div class="filter-dropdown contacts-sort-dropdown">
+                    <button class="filter-btn contacts-sort-btn" type="button" id="contacts-sort-btn" aria-haspopup="listbox" aria-expanded="false">
+                      <span class="contacts-sort-btn__label" data-i18n="contacts.sortBy">Sort by</span>
+                      <span id="contacts-sort-value">Recently tagged</span>
+                      <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
+                    </button>
+                    <ul class="filter-menu filter-menu--radio filter-menu--right hidden" id="contacts-sort-menu" role="listbox" aria-label="Sort contacts" data-i18n-aria="contacts.sortAria">
+                      <li><button type="button" class="filter-radio-item is-selected" data-sort="recently-tagged" data-i18n="contacts.sortRecentlyTagged">Recently tagged</button></li>
+                      <li><button type="button" class="filter-radio-item" data-sort="alphabetical" data-i18n="contacts.sortAlphabetical">Alphabetical</button></li>
+                    </ul>
+                  </div>
+                </div>
                 </div>
                 <div class="contacts-active-filters" id="contacts-active-filters" data-od-id="contacts-active-tags" hidden="">
                   <div class="contacts-active-filters__chips" id="contacts-active-tags"></div>
-                  <button class="contacts-clear-filters" type="button" id="contacts-clear-filters" hidden="">Clear filters</button>
+                  <button class="contacts-clear-filters" type="button" id="contacts-clear-filters" hidden="" data-i18n="contacts.clearFilters">Clear filters</button>
                 </div>
               </div>
+            </div>
 
-              <div class="contacts-table-tools" data-od-id="contacts-sort-control">
-                <div class="filter-dropdown contacts-sort-dropdown">
-                  <button class="filter-btn contacts-sort-btn" type="button" id="contacts-sort-btn" aria-haspopup="listbox" aria-expanded="false">
-                    <span class="contacts-sort-btn__label" data-i18n="contacts.sortBy">Sort by</span>
-                    <span id="contacts-sort-value">Recently tagged</span>
-                    <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
-                  </button>
-                  <ul class="filter-menu filter-menu--radio filter-menu--right hidden" id="contacts-sort-menu" role="listbox" aria-label="Sort contacts" data-i18n-aria="contacts.sortAria">
-                    <li><button type="button" class="filter-radio-item is-selected" data-sort="recently-tagged" data-i18n="contacts.sortRecentlyTagged">Recently tagged</button></li>
-                    <li><button type="button" class="filter-radio-item" data-sort="alphabetical" data-i18n="contacts.sortAlphabetical">Alphabetical</button></li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="contacts-selection-bar is-disabled" id="contacts-selection-bar" data-od-id="contacts-selection-bar">
-                <div class="contacts-selection-bar__left">
-                  <div class="contacts-selection-bar__summary">
-                    <span class="contacts-selection-pill" tabindex="0">
-                      <span id="contacts-selection-count">0 users selected</span>
-                      <span class="contacts-selection-pill__hint" role="tooltip" id="contacts-selection-hint" data-i18n="contacts.selectionHint">Select contacts to add tags</span>
-                      <button type="button" class="contacts-selection-pill__clear" id="contacts-selection-clear" aria-label="Clear selection" hidden="">
-                        <span class="material-icons">close</span>
-                      </button>
-                    </span>
-                  </div>
-                </div>
-                <div class="contacts-selection-bar__actions">
-                  <div class="filter-dropdown add-tags-dropdown" id="contacts-add-tags-wrap">
-                    <button type="button" class="contacts-selection-btn contacts-selection-btn--outline" id="contacts-add-tags-btn" aria-haspopup="dialog" aria-expanded="false" disabled="">
-                      <span class="material-icons">sell</span>
-                      <span data-i18n="contacts.addTags">Add Tags</span>
+            <div class="contacts-selection-bar is-disabled" id="contacts-selection-bar" data-od-id="contacts-selection-bar" hidden="">
+              <div class="contacts-selection-bar__left">
+                <div class="contacts-selection-bar__summary">
+                  <span class="contacts-selection-pill" tabindex="0">
+                    <span id="contacts-selection-count">0 users selected</span>
+                    <span class="contacts-selection-pill__hint" role="tooltip" id="contacts-selection-hint" data-i18n="contacts.selectionHint">Select contacts to add tags</span>
+                    <button type="button" class="contacts-selection-pill__clear" id="contacts-selection-clear" aria-label="Clear selection" hidden="">
+                      <span class="material-icons">close</span>
                     </button>
-                    <div class="add-tags-popover hidden" id="contacts-add-tags-menu" role="dialog" aria-label="Add tags to selected contacts" aria-hidden="true">
-                      <div class="add-tags-popover__header">
-                        <p class="add-tags-popover__title" data-i18n="contacts.addTagsTitle">Add tags</p>
-                      </div>
-                      <div class="add-tags-popover__body">
-                        <div class="add-tags-popover__selected hidden" id="contacts-add-tags-selected" aria-live="polite"></div>
-                        <div class="add-tags-popover__field-group">
-                          <label class="add-tags-popover__field-label" for="contacts-add-tags-search" data-i18n="contacts.addTagsHint">Type to search existing tags</label>
-                          <div class="add-tags-popover__field">
-                            <span class="material-icons" aria-hidden="true">search</span>
-                            <input type="search" id="contacts-add-tags-search" placeholder="Search tags" autocomplete="off" aria-label="Search tags" data-i18n-placeholder="contacts.searchTags" data-i18n-aria="contacts.searchTags">
-                          </div>
-                          <ul class="add-tags-popover__results hidden" id="contacts-add-tags-list" role="listbox" aria-label="Tag search results"></ul>
+                  </span>
+                </div>
+              </div>
+              <div class="contacts-selection-bar__actions">
+                <div class="filter-dropdown add-tags-dropdown" id="contacts-add-tags-wrap">
+                  <button type="button" class="contacts-selection-btn contacts-selection-btn--outline" id="contacts-add-tags-btn" aria-haspopup="dialog" aria-expanded="false" disabled="">
+                    <span class="material-icons">sell</span>
+                    <span data-i18n="contacts.addTags">Add Tags</span>
+                  </button>
+                  <div class="add-tags-popover hidden" id="contacts-add-tags-menu" role="dialog" aria-label="Add tags to selected contacts" aria-hidden="true">
+                    <div class="add-tags-popover__header">
+                      <p class="add-tags-popover__title" data-i18n="contacts.addTagsTitle">Add tags</p>
+                    </div>
+                    <div class="add-tags-popover__body">
+                      <div class="add-tags-popover__selected hidden" id="contacts-add-tags-selected" aria-live="polite"></div>
+                      <div class="add-tags-popover__field-group">
+                        <label class="add-tags-popover__field-label" for="contacts-add-tags-search" data-i18n="contacts.addTagsHint">Type to search existing tags</label>
+                        <div class="add-tags-popover__field">
+                          <span class="material-icons" aria-hidden="true">search</span>
+                          <input type="search" id="contacts-add-tags-search" placeholder="Search tags" autocomplete="off" aria-label="Search tags" data-i18n-placeholder="contacts.searchTags" data-i18n-aria="contacts.searchTags">
                         </div>
-                        <div class="add-tags-popover__separator" role="separator" aria-hidden="true"></div>
-                        <div class="add-tags-popover__field-group">
-                          <label class="add-tags-popover__field-label" for="contacts-add-tags-new" data-i18n="contacts.createNewLabel">Create new</label>
-                          <div class="add-tags-popover__field">
-                            <span class="material-icons" aria-hidden="true">label</span>
-                            <input type="text" id="contacts-add-tags-new" placeholder="New tag name" maxlength="40" data-i18n-placeholder="contacts.newTagPlaceholder">
-                          </div>
-                          <button type="button" class="add-tags-popover__create-btn" id="contacts-add-tags-create-btn" disabled="" data-i18n="contacts.createTag">Create tag</button>
-                        </div>
+                        <ul class="add-tags-popover__results hidden" id="contacts-add-tags-list" role="listbox" aria-label="Tag search results"></ul>
                       </div>
-                      <div class="add-tags-popover__footer">
-                        <button type="button" class="add-tags-popover__cancel" id="contacts-add-tags-cancel" data-i18n="contacts.cancel">Cancel</button>
-                        <button type="button" class="add-tags-popover__apply" id="contacts-add-tags-apply" disabled="" data-i18n="contacts.applyTags">Apply tags</button>
+                      <div class="add-tags-popover__separator" role="separator" aria-hidden="true"></div>
+                      <div class="add-tags-popover__field-group">
+                        <label class="add-tags-popover__field-label" for="contacts-add-tags-new" data-i18n="contacts.createNewLabel">Create new</label>
+                        <div class="add-tags-popover__field">
+                          <span class="material-icons" aria-hidden="true">label</span>
+                          <input type="text" id="contacts-add-tags-new" placeholder="New tag name" maxlength="40" data-i18n-placeholder="contacts.newTagPlaceholder">
+                        </div>
+                        <button type="button" class="add-tags-popover__create-btn" id="contacts-add-tags-create-btn" disabled="" data-i18n="contacts.createTag">Create tag</button>
                       </div>
                     </div>
+                    <div class="add-tags-popover__footer">
+                      <button type="button" class="add-tags-popover__cancel" id="contacts-add-tags-cancel" data-i18n="contacts.cancel">Cancel</button>
+                      <button type="button" class="add-tags-popover__apply" id="contacts-add-tags-apply" disabled="" data-i18n="contacts.applyTags">Apply tags</button>
+                    </div>
                   </div>
-                  <button type="button" class="contacts-selection-btn contacts-selection-btn--solid hidden" id="contacts-create-template-btn" hidden="" aria-hidden="true">
-                    + CREATE TEMPLATE
-                  </button>
                 </div>
+                <button type="button" class="contacts-selection-btn contacts-selection-btn--solid hidden" id="contacts-create-template-btn" hidden="" aria-hidden="true">
+                  + CREATE TEMPLATE
+                </button>
               </div>
             </div>
 
@@ -1589,6 +1609,8 @@ You can create tags in Manage contacts page.</p>
                       </label>
                     </th>
                     <th class="col-name" data-i18n="contacts.colName">Name</th>
+                    <th class="col-role" data-i18n="contacts.colRole">Role</th>
+                    <th class="col-status" data-i18n="contacts.colStatus">Status</th>
                     <th class="col-tags" data-i18n="contacts.colTags">Tags</th>
                     <th class="col-chat" data-i18n="contacts.colViewChat">View chat</th>
                   </tr>
@@ -1622,6 +1644,30 @@ You can create tags in Manage contacts page.</p>
                 </div>
               </div>
             </footer>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Licenses view -->
+    <div class="view view--licenses hidden" id="view-licenses" data-od-id="view-licenses">
+      <div class="panel-rail panel-rail--full" data-od-id="licenses-rail">
+        <main class="contacts-panel" data-od-id="licenses-panel">
+          <div class="contacts-card" data-od-id="licenses-card">
+            <header class="contacts-page-header mvp-panel-header mvp-panel-header--stacked" data-od-id="licenses-header">
+              <div class="contacts-page-header__top">
+                <div class="contacts-title-info">
+                  <h2 data-od-id="licenses-title" data-i18n="licenses.title">Third-party licenses</h2>
+                </div>
+              </div>
+              <div class="contacts-page-header__meta">
+                <p class="contacts-subtitle" data-od-id="licenses-subtitle"><span data-i18n="licenses.subtitle">This application includes the open source software and third-party notices listed below.</span></p>
+              </div>
+            </header>
+
+            <div class="licenses-body" id="licenses-body" data-od-id="licenses-body">
+              <pre class="licenses-text" id="licenses-text-content"></pre>
+            </div>
           </div>
         </main>
       </div>
