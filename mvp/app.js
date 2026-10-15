@@ -1566,19 +1566,6 @@ function updateTabBadges() {
   renderHome();
 }
 
-function renderHome2Metric(metric) {
-  const label = escapePreviewText(t(`home2.metric.${metric.key}`));
-  const unavailable = metric.value === null;
-  const tipText = metric.tip ? escapePreviewText(t(`home2.tip.${metric.tip}`)) : '';
-  const info = metric.tip
-    ? `<span class="home2-info" tabindex="0" data-tooltip="${tipText}" aria-label="${tipText}"><span class="material-icons-outlined" aria-hidden="true">info</span></span>`
-    : '';
-  const value = unavailable
-    ? `<span aria-label="${escapePreviewText(t('home2.unavailable'))}">—</span>`
-    : escapePreviewText(metric.value);
-  return `<div class="home2-metric${unavailable ? ' home2-metric--na' : ''}"><dt>${label}${info}</dt><dd>${value}</dd></div>`;
-}
-
 function renderHome3SplitMetric(metric) {
   const label = escapePreviewText(t(`home2.metric.${metric.key}`));
   const unavailable = metric.value === null;
@@ -1624,38 +1611,6 @@ function renderHomeRecentChatList(listEl) {
     </li>`).join('');
 }
 
-function renderHome2() {
-  const broadcastMetricsEl = document.getElementById('home2-broadcast-metrics');
-  const conversationMetricsEl = document.getElementById('home2-conversation-metrics');
-  const chatListEl2 = document.getElementById('home2-chat-list');
-  if (!broadcastMetricsEl || !conversationMetricsEl || !chatListEl2) return;
-
-  // Reach, broadcasts sent and active rooms come from prototype data; the remaining
-  // values are illustrative (analytics availability still needs engineering validation).
-  const reachEl = document.getElementById('home2-reach-count');
-  if (reachEl) reachEl.textContent = CONTACTS.length;
-
-  const broadcastMetrics = [
-    { key: 'broadcastsSent', value: String((BROADCASTS.sent || []).length) },
-    { key: 'deliveryRate', value: '96%', tip: 'deliveryRate' },
-    { key: 'readRate', value: '72%' },
-    { key: 'clickRate', value: '38%' },
-    { key: 'responseRate', value: null, tip: 'responseRate' },
-  ];
-  const conversationMetrics = [
-    { key: 'messagesSent', value: '156' },
-    { key: 'messagesReceived', value: '89' },
-    { key: 'activeRooms', value: String(ALL_CHATS.length), tip: 'activeRooms' },
-    { key: 'activeContributors', value: '22', tip: 'activeContributors' },
-    { key: 'activeReaders', value: '61', tip: 'activeReaders' },
-  ];
-  broadcastMetricsEl.innerHTML = broadcastMetrics.map(renderHome2Metric).join('');
-  conversationMetricsEl.innerHTML = conversationMetrics.map(renderHome2Metric).join('');
-
-  renderHomeRecentChatList(chatListEl2);
-  renderHome3();
-}
-
 function renderHome3() {
   const reachTotalEl = document.getElementById('home3-reach-total');
   const reachMetricsEl = document.getElementById('home3-reach-metrics');
@@ -1672,6 +1627,7 @@ function renderHome3() {
       renderHome3RoleMetric('Residents', roleCounts.Resident),
       renderHome3RoleMetric('Workers', roleCounts.Worker),
       renderHome3RoleMetric('Visitors', roleCounts.Visitor),
+      '<div class="home3-split-metric home3-split-metric--spacer" aria-hidden="true"><dt>&nbsp;</dt><dd>&nbsp;</dd></div>',
     ].join('');
   }
 
@@ -1692,53 +1648,8 @@ function renderHome3() {
   renderHomeRecentChatList(chatListEl3);
 }
 
-function setHomeOption(option) {
-  const opt = String(option);
-  document.getElementById('home-option-1')?.classList.toggle('hidden', opt !== '1');
-  document.getElementById('home-option-2')?.classList.toggle('hidden', opt !== '2');
-  document.getElementById('home-option-3')?.classList.toggle('hidden', opt !== '3');
-  document.querySelectorAll('[data-home-option]').forEach((btn) => {
-    const active = btn.dataset.homeOption === opt;
-    btn.classList.toggle('is-active', active);
-    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-  });
-}
-
 function renderHome() {
-  renderHome2();
-  const priorityList = document.getElementById('home-priority-list');
-  if (!priorityList) return;
-  const open = ALL_CHATS.filter((chat) => !chat.done);
-  const awaiting = open.filter((chat) => chat.unread > 0);
-  const priority = [...awaiting, ...open.filter((chat) => chat.escalated && !chat.unread)]
-    .filter((chat, index, list) => list.findIndex((item) => item.id === chat.id) === index)
-    .slice(0, 4);
-  const openCountEl = document.getElementById('home-open-count');
-  const awaitingCountEl = document.getElementById('home-awaiting-count');
-  const unreadActionEl = document.getElementById('home-unread-action');
-  const contactCountEl = document.getElementById('home-contact-count');
-  const broadcastCountEl = document.getElementById('home-broadcast-count');
-  if (openCountEl) openCountEl.textContent = open.length;
-  if (awaitingCountEl) awaitingCountEl.textContent = awaiting.length;
-  if (unreadActionEl) unreadActionEl.textContent = awaiting.length;
-  if (contactCountEl) contactCountEl.textContent = CONTACTS.length;
-  if (broadcastCountEl) broadcastCountEl.textContent = (BROADCASTS.sent || []).length;
-  priorityList.innerHTML = priority.length ? priority.map((chat) => `
-    <button class="home-priority-row" type="button" data-home-chat="${chat.id}">
-      <span class="home-priority-avatar" style="background:${AVATAR_COLORS[chat.initials] || '#8b9dc3'}">${chat.initials}</span>
-      <span class="home-priority-copy"><strong>${escapePreviewText(chat.name)}</strong><small>${escapePreviewText(chat.preview || 'New conversation')}</small></span>
-      <span class="home-priority-time">${chat.time || 'Now'}</span><span class="material-icons">arrow_forward</span>
-    </button>`).join('') : '<div class="home-priority-row"><span></span><span class="home-priority-copy"><strong>All caught up</strong><small>There are no open conversations that need attention.</small></span></div>';
-  priorityList.querySelectorAll('[data-home-chat]').forEach((button) => button.addEventListener('click', () => {
-    const chatId = button.dataset.homeChat;
-    const match = findChatById(chatId);
-    if (!match) return;
-    activeChatId = chatId;
-    switchView('chats');
-    renderChatList();
-    renderMessages();
-    renderReassignMenu();
-  }));
+  renderHome3();
 }
 
 function operatorMiniAvatar(op) {
@@ -6087,25 +5998,7 @@ document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
   btn.addEventListener('click', () => switchView(btn.dataset.view));
 });
 
-document.querySelectorAll('[data-home-action]').forEach((btn) => {
-  btn.addEventListener('click', () => switchView(btn.dataset.homeAction));
-});
-
-document.querySelectorAll('[data-home-option]').forEach((btn) => {
-  btn.addEventListener('click', () => setHomeOption(btn.dataset.homeOption));
-});
-
-document.getElementById('home2-view-all-chats')?.addEventListener('click', () => switchView('chats'));
 document.getElementById('home3-view-all-chats')?.addEventListener('click', () => switchView('chats'));
-
-document.getElementById('home2-chat-list')?.addEventListener('click', (event) => {
-  const row = event.target.closest('[data-home2-chat]');
-  if (!row) return;
-  const conv = findChatById(row.dataset.home2Chat);
-  if (!conv) return;
-  conv.unread = 0;
-  openChatFromContact(conv.id);
-});
 
 document.getElementById('home3-chat-list')?.addEventListener('click', (event) => {
   const row = event.target.closest('[data-home2-chat]');
@@ -6119,17 +6012,6 @@ document.getElementById('home3-chat-list')?.addEventListener('click', (event) =>
 document.querySelectorAll('[data-home3-action]').forEach((btn) => {
   btn.addEventListener('click', () => {
     if (btn.dataset.home3Action === 'broadcast') {
-      switchView('broadcasts');
-      if (!broadcastWizardOpen) openBroadcastWizard();
-      return;
-    }
-    switchView('contacts');
-  });
-});
-
-document.querySelectorAll('[data-home2-action]').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    if (btn.dataset.home2Action === 'broadcast') {
       switchView('broadcasts');
       if (!broadcastWizardOpen) openBroadcastWizard();
       return;
