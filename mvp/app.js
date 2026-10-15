@@ -49,6 +49,52 @@ let currentLocale = localStorage.getItem(I18N_STORAGE_KEY) || 'ja';
 
 const I18N_STRINGS = {
   en: {
+    'nav.home': 'Home',
+    'home2.title': 'Home',
+    'home2.overview.title': 'Communication overview',
+    'home2.period': 'Last 30 days',
+    'home2.reach.label': 'Reachable audience',
+    'home2.reach.unit': 'participants',
+    'home2.reach.hint': 'Eligible to receive broadcast messages',
+    'home2.broadcast.title': 'Broadcast performance',
+    'home2.conversation.title': 'Conversation activity',
+    'home2.metric.broadcastsSent': 'Broadcasts sent',
+    'home2.metric.deliveryRate': 'Delivery rate',
+    'home2.metric.readRate': 'Read rate',
+    'home2.metric.clickRate': 'Click rate',
+    'home2.metric.responseRate': 'Response rate',
+    'home2.metric.messagesSent': 'Sent messages',
+    'home2.metric.messagesReceived': 'Received messages',
+    'home2.metric.activeRooms': 'Active rooms',
+    'home2.metric.activeContributors': 'Active contributors',
+    'home2.metric.activeReaders': 'Active readers',
+    'home2.tip.deliveryRate': 'Successfully delivered messages divided by attempted deliveries.',
+    'home2.tip.responseRate': 'Not available yet. Replies to broadcasts can’t be attributed to a specific broadcast.',
+    'home2.tip.activeRooms': 'One-to-one and group rooms with at least one message in this period.',
+    'home2.tip.activeContributors': 'Participants who sent at least one message in this period.',
+    'home2.tip.activeReaders': 'Participants who read at least one message in this period. May overlap with contributors.',
+    'home2.unavailable': 'Not available',
+    'home2.recent.title': 'Recent chats',
+    'home2.recent.viewAll': 'View all conversations',
+    'home2.recent.empty': 'No conversations yet.',
+    'home2.recent.unreadAria': '{{count}} unread',
+    'home2.actions.title': 'Quick actions',
+    'home2.actions.broadcast.title': 'Broadcast Message',
+    'home2.actions.broadcast.desc': 'Send a message to eligible participants.',
+    'home2.actions.broadcast.cta': 'Create broadcast',
+    'home2.actions.tags.title': 'Tag Management',
+    'home2.actions.tags.desc': 'Organize your audience using tags.',
+    'home2.actions.tags.cta': 'Manage tags',
+    'home2.news.title': 'What\'s new',
+    'home2.news.viewAll': 'View all',
+    'home2.news.new': 'New',
+    'home2.news.featured.title': 'Targeted Messaging',
+    'home2.news.featured.desc': 'Learn how to prepare your first broadcast.',
+    'home2.news.learnMore': 'Learn more',
+    'home2.news.item1.title': 'Scheduled maintenance',
+    'home2.news.item1.date': 'Oct 20',
+    'home2.news.item2.title': 'New guide: Managing audience tags',
+    'home2.news.item2.date': 'Oct 9',
     'nav.contacts': 'Manage contacts',
     'nav.chats': 'Chats',
     'nav.broadcasts': 'Send broadcast',
@@ -326,6 +372,52 @@ const I18N_STRINGS = {
     'licenses.homepage': 'Repository',
   },
   ja: {
+    'nav.home': 'ホーム',
+    'home2.title': 'ホーム',
+    'home2.overview.title': 'コミュニケーション概要',
+    'home2.period': '過去30日間',
+    'home2.reach.label': 'リーチ可能なオーディエンス',
+    'home2.reach.unit': '人',
+    'home2.reach.hint': '配信メッセージを受信できる参加者',
+    'home2.broadcast.title': '配信のパフォーマンス',
+    'home2.conversation.title': '会話のアクティビティ',
+    'home2.metric.broadcastsSent': '配信数',
+    'home2.metric.deliveryRate': '配信成功率',
+    'home2.metric.readRate': '既読率',
+    'home2.metric.clickRate': 'クリック率',
+    'home2.metric.responseRate': '返信率',
+    'home2.metric.messagesSent': '送信メッセージ',
+    'home2.metric.messagesReceived': '受信メッセージ',
+    'home2.metric.activeRooms': 'アクティブなルーム',
+    'home2.metric.activeContributors': 'アクティブな投稿者',
+    'home2.metric.activeReaders': 'アクティブな閲覧者',
+    'home2.tip.deliveryRate': '配信を試みた件数に対する、正常に配信された件数の割合です。',
+    'home2.tip.responseRate': '現在は利用できません。配信への返信を特定の配信に紐づけることができません。',
+    'home2.tip.activeRooms': '期間内にメッセージのやり取りがあった1対1およびグループのルームです。',
+    'home2.tip.activeContributors': '期間内に1件以上メッセージを送信した参加者です。',
+    'home2.tip.activeReaders': '期間内に1件以上メッセージを読んだ参加者です。投稿者と重複する場合があります。',
+    'home2.unavailable': '利用不可',
+    'home2.recent.title': '最近のチャット',
+    'home2.recent.viewAll': 'すべての会話を表示',
+    'home2.recent.empty': '会話はまだありません。',
+    'home2.recent.unreadAria': '未読{{count}}件',
+    'home2.actions.title': 'クイックアクション',
+    'home2.actions.broadcast.title': '配信メッセージ',
+    'home2.actions.broadcast.desc': '対象の参加者にメッセージを送信します。',
+    'home2.actions.broadcast.cta': '配信を作成',
+    'home2.actions.tags.title': 'タグ管理',
+    'home2.actions.tags.desc': 'タグを使ってオーディエンスを整理します。',
+    'home2.actions.tags.cta': 'タグを管理',
+    'home2.news.title': '新着情報',
+    'home2.news.viewAll': 'すべて表示',
+    'home2.news.new': 'NEW',
+    'home2.news.featured.title': 'ターゲット配信',
+    'home2.news.featured.desc': '最初の配信メッセージの準備方法を確認しましょう。',
+    'home2.news.learnMore': '詳しく見る',
+    'home2.news.item1.title': 'メンテナンスのお知らせ',
+    'home2.news.item1.date': '10月20日',
+    'home2.news.item2.title': '新しいガイド：オーディエンスタグの管理',
+    'home2.news.item2.date': '10月9日',
     'nav.contacts': '配信先の管理',
     'nav.chats': 'チャット',
     'nav.broadcasts': '配信',
@@ -682,6 +774,7 @@ function applyStaticTranslations() {
 
   document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
     const view = btn.dataset.view;
+    if (view === 'home') btn.setAttribute('aria-label', t('nav.home'));
     if (view === 'contacts') btn.setAttribute('aria-label', t('nav.contacts'));
     if (view === 'chats') btn.setAttribute('aria-label', t('nav.chats'));
     if (view === 'broadcasts') btn.setAttribute('aria-label', t('nav.broadcasts'));
@@ -728,6 +821,9 @@ function refreshLocalizedUI() {
   updateStatusFilterMenuSelection();
   if (typeof renderLicensesView === 'function') {
     renderLicensesView();
+  }
+  if (typeof renderHome === 'function') {
+    renderHome();
   }
   const templateModal = document.getElementById('template-modal');
   if (templateModal && !templateModal.hidden) {
@@ -1307,7 +1403,7 @@ function contactEmailFromName(name, id) {
 
 const CONTACTS = buildContactsList();
 
-let activeView = 'chats';
+let activeView = 'home';
 let activeTab = 'assigned';
 let supervisorTab = 'escalated';
 let activeChatId = 'alice';
@@ -1324,6 +1420,7 @@ const messagesEl = document.getElementById('messages');
 const chatTitleEl = document.getElementById('chat-title');
 const messageInput = document.getElementById('message-input');
 const chatSendBtn = document.getElementById('chat-send-btn');
+const viewHomeEl = document.getElementById('view-home');
 const viewChatsEl = document.getElementById('view-chats');
 const viewBroadcastsEl = document.getElementById('view-broadcasts');
 const viewContactsEl = document.getElementById('view-contacts');
@@ -1466,6 +1563,182 @@ function updateBroadcastTabBadges() {
 
 function updateTabBadges() {
   updateBroadcastTabBadges();
+  renderHome();
+}
+
+function renderHome2Metric(metric) {
+  const label = escapePreviewText(t(`home2.metric.${metric.key}`));
+  const unavailable = metric.value === null;
+  const tipText = metric.tip ? escapePreviewText(t(`home2.tip.${metric.tip}`)) : '';
+  const info = metric.tip
+    ? `<span class="home2-info" tabindex="0" data-tooltip="${tipText}" aria-label="${tipText}"><span class="material-icons-outlined" aria-hidden="true">info</span></span>`
+    : '';
+  const value = unavailable
+    ? `<span aria-label="${escapePreviewText(t('home2.unavailable'))}">—</span>`
+    : escapePreviewText(metric.value);
+  return `<div class="home2-metric${unavailable ? ' home2-metric--na' : ''}"><dt>${label}${info}</dt><dd>${value}</dd></div>`;
+}
+
+function renderHome3SplitMetric(metric) {
+  const label = escapePreviewText(t(`home2.metric.${metric.key}`));
+  const unavailable = metric.value === null;
+  const value = unavailable
+    ? `<span aria-label="${escapePreviewText(t('home2.unavailable'))}">—</span>`
+    : escapePreviewText(metric.value);
+  return `<div class="home3-split-metric${unavailable ? ' home3-split-metric--na' : ''}"><dt>${label}</dt><dd>${value}</dd></div>`;
+}
+
+function renderHome3RoleMetric(label, value) {
+  return `<div class="home3-split-metric"><dt>${escapePreviewText(label)}</dt><dd>${escapePreviewText(String(value))}</dd></div>`;
+}
+
+function getHome3ReachRoleCounts() {
+  const counts = { Resident: 0, Worker: 0, Visitor: 0 };
+  CONTACTS.forEach((contact) => {
+    if (Object.prototype.hasOwnProperty.call(counts, contact.role)) {
+      counts[contact.role] += 1;
+    }
+  });
+  return counts;
+}
+
+const HOME_RECENT_CHAT_LIMIT = 6;
+
+function renderHomeRecentChatList(listEl) {
+  if (!listEl) return;
+  const recent = ALL_CHATS.slice(0, HOME_RECENT_CHAT_LIMIT);
+  if (!recent.length) {
+    listEl.innerHTML = `<li class="home2-chat-empty">${escapePreviewText(t('home2.recent.empty'))}</li>`;
+    return;
+  }
+  listEl.innerHTML = recent.map((chat) => `
+    <li>
+      <button class="home2-chat-row" type="button" data-home2-chat="${escapePreviewText(chat.id)}">
+        ${renderChatListAvatar(chat)}
+        <span class="home2-chat-copy"><strong>${escapePreviewText(chat.name)}</strong><small>${escapePreviewText(getChatPreviewText(chat))}</small></span>
+        <span class="home2-chat-time">${escapePreviewText(chat.time || '')}</span>
+        ${chat.unread > 0
+          ? `<span class="home2-unread" aria-label="${escapePreviewText(t('home2.recent.unreadAria', { count: chat.unread }))}">${chat.unread}</span>`
+          : '<span class="home2-unread-spacer" aria-hidden="true"></span>'}
+      </button>
+    </li>`).join('');
+}
+
+function renderHome2() {
+  const broadcastMetricsEl = document.getElementById('home2-broadcast-metrics');
+  const conversationMetricsEl = document.getElementById('home2-conversation-metrics');
+  const chatListEl2 = document.getElementById('home2-chat-list');
+  if (!broadcastMetricsEl || !conversationMetricsEl || !chatListEl2) return;
+
+  // Reach, broadcasts sent and active rooms come from prototype data; the remaining
+  // values are illustrative (analytics availability still needs engineering validation).
+  const reachEl = document.getElementById('home2-reach-count');
+  if (reachEl) reachEl.textContent = CONTACTS.length;
+
+  const broadcastMetrics = [
+    { key: 'broadcastsSent', value: String((BROADCASTS.sent || []).length) },
+    { key: 'deliveryRate', value: '96%', tip: 'deliveryRate' },
+    { key: 'readRate', value: '72%' },
+    { key: 'clickRate', value: '38%' },
+    { key: 'responseRate', value: null, tip: 'responseRate' },
+  ];
+  const conversationMetrics = [
+    { key: 'messagesSent', value: '156' },
+    { key: 'messagesReceived', value: '89' },
+    { key: 'activeRooms', value: String(ALL_CHATS.length), tip: 'activeRooms' },
+    { key: 'activeContributors', value: '22', tip: 'activeContributors' },
+    { key: 'activeReaders', value: '61', tip: 'activeReaders' },
+  ];
+  broadcastMetricsEl.innerHTML = broadcastMetrics.map(renderHome2Metric).join('');
+  conversationMetricsEl.innerHTML = conversationMetrics.map(renderHome2Metric).join('');
+
+  renderHomeRecentChatList(chatListEl2);
+  renderHome3();
+}
+
+function renderHome3() {
+  const reachTotalEl = document.getElementById('home3-reach-total');
+  const reachMetricsEl = document.getElementById('home3-reach-metrics');
+  const broadcastMetricsEl = document.getElementById('home3-broadcast-metrics');
+  const conversationMetricsEl = document.getElementById('home3-conversation-metrics');
+  const chatListEl3 = document.getElementById('home3-chat-list');
+  if (!broadcastMetricsEl || !conversationMetricsEl) return;
+
+  const roleCounts = getHome3ReachRoleCounts();
+  const participantTotal = roleCounts.Resident + roleCounts.Worker + roleCounts.Visitor;
+  if (reachTotalEl) reachTotalEl.textContent = String(participantTotal);
+  if (reachMetricsEl) {
+    reachMetricsEl.innerHTML = [
+      renderHome3RoleMetric('Residents', roleCounts.Resident),
+      renderHome3RoleMetric('Workers', roleCounts.Worker),
+      renderHome3RoleMetric('Visitors', roleCounts.Visitor),
+    ].join('');
+  }
+
+  const broadcastSecondary = [
+    { key: 'broadcastsSent', value: String((BROADCASTS.sent || []).length) },
+    { key: 'readRate', value: '72%' },
+    { key: 'clickRate', value: '38%' },
+    { key: 'responseRate', value: null },
+  ];
+  const conversationSecondary = [
+    { key: 'messagesReceived', value: '89' },
+    { key: 'activeRooms', value: String(ALL_CHATS.length) },
+    { key: 'activeContributors', value: '22' },
+    { key: 'activeReaders', value: '61' },
+  ];
+  broadcastMetricsEl.innerHTML = broadcastSecondary.map(renderHome3SplitMetric).join('');
+  conversationMetricsEl.innerHTML = conversationSecondary.map(renderHome3SplitMetric).join('');
+  renderHomeRecentChatList(chatListEl3);
+}
+
+function setHomeOption(option) {
+  const opt = String(option);
+  document.getElementById('home-option-1')?.classList.toggle('hidden', opt !== '1');
+  document.getElementById('home-option-2')?.classList.toggle('hidden', opt !== '2');
+  document.getElementById('home-option-3')?.classList.toggle('hidden', opt !== '3');
+  document.querySelectorAll('[data-home-option]').forEach((btn) => {
+    const active = btn.dataset.homeOption === opt;
+    btn.classList.toggle('is-active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+}
+
+function renderHome() {
+  renderHome2();
+  const priorityList = document.getElementById('home-priority-list');
+  if (!priorityList) return;
+  const open = ALL_CHATS.filter((chat) => !chat.done);
+  const awaiting = open.filter((chat) => chat.unread > 0);
+  const priority = [...awaiting, ...open.filter((chat) => chat.escalated && !chat.unread)]
+    .filter((chat, index, list) => list.findIndex((item) => item.id === chat.id) === index)
+    .slice(0, 4);
+  const openCountEl = document.getElementById('home-open-count');
+  const awaitingCountEl = document.getElementById('home-awaiting-count');
+  const unreadActionEl = document.getElementById('home-unread-action');
+  const contactCountEl = document.getElementById('home-contact-count');
+  const broadcastCountEl = document.getElementById('home-broadcast-count');
+  if (openCountEl) openCountEl.textContent = open.length;
+  if (awaitingCountEl) awaitingCountEl.textContent = awaiting.length;
+  if (unreadActionEl) unreadActionEl.textContent = awaiting.length;
+  if (contactCountEl) contactCountEl.textContent = CONTACTS.length;
+  if (broadcastCountEl) broadcastCountEl.textContent = (BROADCASTS.sent || []).length;
+  priorityList.innerHTML = priority.length ? priority.map((chat) => `
+    <button class="home-priority-row" type="button" data-home-chat="${chat.id}">
+      <span class="home-priority-avatar" style="background:${AVATAR_COLORS[chat.initials] || '#8b9dc3'}">${chat.initials}</span>
+      <span class="home-priority-copy"><strong>${escapePreviewText(chat.name)}</strong><small>${escapePreviewText(chat.preview || 'New conversation')}</small></span>
+      <span class="home-priority-time">${chat.time || 'Now'}</span><span class="material-icons">arrow_forward</span>
+    </button>`).join('') : '<div class="home-priority-row"><span></span><span class="home-priority-copy"><strong>All caught up</strong><small>There are no open conversations that need attention.</small></span></div>';
+  priorityList.querySelectorAll('[data-home-chat]').forEach((button) => button.addEventListener('click', () => {
+    const chatId = button.dataset.homeChat;
+    const match = findChatById(chatId);
+    if (!match) return;
+    activeChatId = chatId;
+    switchView('chats');
+    renderChatList();
+    renderMessages();
+    renderReassignMenu();
+  }));
 }
 
 function operatorMiniAvatar(op) {
@@ -5731,7 +6004,7 @@ chatAskHelpBtn?.addEventListener('click', () => {
   updateHeaderActions();
 });
 
-const validViews = ['broadcasts', 'contacts', 'chats', 'licenses'];
+const validViews = ['home', 'broadcasts', 'contacts', 'chats', 'licenses'];
 
 function getBroadcastWizardStepFromLocation() {
   const step = Number(new URLSearchParams(window.location.search).get('step'));
@@ -5762,7 +6035,7 @@ function getViewFromLocation() {
   const hashView = window.location.hash.replace('#', '');
   return validViews.includes(queryView)
     ? queryView
-    : (validViews.includes(hashView) ? hashView : 'chats');
+    : (validViews.includes(hashView) ? hashView : 'home');
 }
 
 function syncViewUrl(view, { replace = false } = {}) {
@@ -5785,11 +6058,15 @@ function switchView(view, { updateUrl = true, replaceUrl = false } = {}) {
     btn.classList.toggle('active', btn.dataset.view === view);
   });
 
+  if (viewHomeEl) viewHomeEl.classList.toggle('hidden', view !== 'home');
   viewChatsEl.classList.toggle('hidden', view !== 'chats');
   viewBroadcastsEl.classList.toggle('hidden', view !== 'broadcasts');
   viewContactsEl.classList.toggle('hidden', view !== 'contacts');
   if (viewLicensesEl) viewLicensesEl.classList.toggle('hidden', view !== 'licenses');
 
+  if (view === 'home') {
+    renderHome();
+  }
   if (view === 'chats') {
     renderChatList();
     renderMessages();
@@ -5808,6 +6085,57 @@ function switchView(view, { updateUrl = true, replaceUrl = false } = {}) {
 
 document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
   btn.addEventListener('click', () => switchView(btn.dataset.view));
+});
+
+document.querySelectorAll('[data-home-action]').forEach((btn) => {
+  btn.addEventListener('click', () => switchView(btn.dataset.homeAction));
+});
+
+document.querySelectorAll('[data-home-option]').forEach((btn) => {
+  btn.addEventListener('click', () => setHomeOption(btn.dataset.homeOption));
+});
+
+document.getElementById('home2-view-all-chats')?.addEventListener('click', () => switchView('chats'));
+document.getElementById('home3-view-all-chats')?.addEventListener('click', () => switchView('chats'));
+
+document.getElementById('home2-chat-list')?.addEventListener('click', (event) => {
+  const row = event.target.closest('[data-home2-chat]');
+  if (!row) return;
+  const conv = findChatById(row.dataset.home2Chat);
+  if (!conv) return;
+  conv.unread = 0;
+  openChatFromContact(conv.id);
+});
+
+document.getElementById('home3-chat-list')?.addEventListener('click', (event) => {
+  const row = event.target.closest('[data-home2-chat]');
+  if (!row) return;
+  const conv = findChatById(row.dataset.home2Chat);
+  if (!conv) return;
+  conv.unread = 0;
+  openChatFromContact(conv.id);
+});
+
+document.querySelectorAll('[data-home3-action]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    if (btn.dataset.home3Action === 'broadcast') {
+      switchView('broadcasts');
+      if (!broadcastWizardOpen) openBroadcastWizard();
+      return;
+    }
+    switchView('contacts');
+  });
+});
+
+document.querySelectorAll('[data-home2-action]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    if (btn.dataset.home2Action === 'broadcast') {
+      switchView('broadcasts');
+      if (!broadcastWizardOpen) openBroadcastWizard();
+      return;
+    }
+    switchView('contacts');
+  });
 });
 
 window.addEventListener('popstate', () => {
