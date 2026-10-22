@@ -137,7 +137,7 @@ const I18N_STRINGS = {
     'home3.reach.caption': 'Unique contacts in this project',
     'home3.sparklineNote': 'Trend lines compare to the previous 30 days (sample data in this MVP).',
     'home3.trendAria': 'Change vs previous 30 days: {{change}}',
-    'home3.reach.newContacts': '+{{count}} new',
+    'home3.reach.newContacts': '+{{count}}',
     'home3.reach.newContactsAria': '{{count}} new contacts vs last month',
     'home3.broadcasts.periodCaption': '{{current}} this month · {{previous}} last month',
     'home3.metric.clickCaption': 'Recipients who clicked a link in a broadcast',
@@ -518,7 +518,7 @@ const I18N_STRINGS = {
     'home3.reach.caption': 'このプロジェクトのユニークな連絡先',
     'home3.sparklineNote': 'トレンドは直前の30日間との比較です（このMVPではサンプルデータ）。',
     'home3.trendAria': '前の30日間との変化: {{change}}',
-    'home3.reach.newContacts': '+{{count}} 新規',
+    'home3.reach.newContacts': '+{{count}}',
     'home3.reach.newContactsAria': '先月比 {{count}} 件の新しい連絡先',
     'home3.broadcasts.periodCaption': '今月 {{current}} 件 · 先月 {{previous}} 件',
     'home3.metric.clickCaption': '配信内リンクをクリックした受信者の割合',
@@ -1921,17 +1921,22 @@ function applyHomeV2TrendPercent(trendEl, current, previous) {
   trendEl.setAttribute('aria-label', t('home3.trendAria', { change: formatted }));
 }
 
+function renderHomeV2TrendContactsIcon() {
+  return '<span class="material-icons home-v2-trend-contacts-icon" aria-hidden="true">groups</span>';
+}
+
 function applyHomeV2TrendNewContacts(trendEl, newCount) {
   if (!trendEl) return;
   const count = Math.max(0, newCount);
   trendEl.classList.remove('is-up', 'is-down', 'is-flat', 'home-v2-metric-card__trend--hidden');
+  trendEl.classList.add('home-v2-metric-card__trend--contacts');
   trendEl.hidden = false;
   const valueEl = trendEl.querySelector('.home-v2-metric-card__trend-value');
   const label = t('home3.reach.newContacts', { count });
   if (count > 0) {
     trendEl.classList.add('is-up');
     if (valueEl) {
-      valueEl.innerHTML = `<span class="home-v2-trend-arrow" aria-hidden="true">↑</span><span>${escapePreviewText(label)}</span>`;
+      valueEl.innerHTML = `${renderHomeV2TrendContactsIcon()}<span>${escapePreviewText(label)}</span>`;
     }
   } else {
     trendEl.classList.add('is-flat');
@@ -6768,6 +6773,11 @@ document.querySelectorAll('[data-home3-action]').forEach((btn) => {
 document.querySelectorAll('[data-home2v-action]').forEach((btn) => {
   btn.addEventListener('click', () => {
     const action = btn.dataset.home2vAction;
+    const inOption2Home = Boolean(btn.closest('#home-option-4'));
+    if (inOption2Home) {
+      if (action === 'contacts') switchView('contacts');
+      return;
+    }
     if (action === 'broadcast') {
       switchView('broadcasts');
       if (!broadcastWizardOpen) openBroadcastWizard();
