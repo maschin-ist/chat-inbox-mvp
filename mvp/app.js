@@ -1841,6 +1841,14 @@ const HOME_V2_DEMO_CLICK_RATE = 38;
 const HOME_V2_DEMO_CLICK_RATE_PREV = 29;
 const HOME_V2_DEMO_BROADCASTS_SENT = 8;
 const HOME_V2_DEMO_BROADCASTS_PREV = 5;
+const HOME_V2_DEMO_DELIVERY_RATE = 96;
+const HOME_V2_DEMO_DELIVERY_RATE_PREV = 92;
+const HOME_V2_DEMO_READ_RATE = 72;
+const HOME_V2_DEMO_READ_RATE_PREV = 65;
+const HOME_V2_DEMO_RESPONSE_RATE = 18;
+const HOME_V2_DEMO_RESPONSE_RATE_PREV = 12;
+/** Slightly >3 slots so the next card peeks into view. */
+const HOME_V2_METRICS_CAROUSEL_SLOT_COUNT = 3.35;
 
 function hashSeed(input) {
   let h = 2166136261;
@@ -1953,6 +1961,89 @@ function renderHomeV2Spark(wrapEl, values) {
     </svg>`;
 }
 
+function getHomeV2MetricsCarouselEls() {
+  const shell = document.querySelector('#home-option-2 .home-v2-metrics-carousel-shell');
+  if (!shell) return null;
+  return {
+    shell,
+    carousel: shell.querySelector('.home-v2-metrics-carousel'),
+    track: shell.querySelector('.home-v2-metrics--carousel'),
+    prev: shell.querySelector('.home-v2-metrics-carousel__nav--prev'),
+    next: shell.querySelector('.home-v2-metrics-carousel__nav--next'),
+  };
+}
+
+function updateHomeV2MetricsCarouselNav() {
+  const els = getHomeV2MetricsCarouselEls();
+  if (!els?.carousel) return;
+  const { shell, carousel, prev, next, track } = els;
+  const cardCount = track?.querySelectorAll('.home-v2-metric-card').length || 0;
+  const maxScroll = Math.max(0, carousel.scrollWidth - carousel.clientWidth);
+  const canScroll = cardCount > 3 && maxScroll > 8;
+  const slop = 6;
+  const atStart = carousel.scrollLeft <= slop;
+  const atEnd = !canScroll || carousel.scrollLeft >= maxScroll - slop;
+  if (prev) {
+    prev.hidden = !canScroll || atStart;
+    prev.disabled = !canScroll || atStart;
+  }
+  if (next) {
+    next.hidden = !canScroll || atEnd;
+    next.disabled = !canScroll || atEnd;
+  }
+  shell.classList.toggle('is-at-end', atEnd || !canScroll);
+}
+
+function getHomeV2MetricsCarouselStepPx(els) {
+  if (!els?.track) return 252;
+  const styles = getComputedStyle(els.track);
+  const gap = parseFloat(styles.columnGap || styles.gap || '12') || 12;
+  const firstCard = els.track.querySelector('.home-v2-metric-card');
+  const cardWidth = firstCard?.offsetWidth
+    || parseFloat(styles.getPropertyValue('--home-v2-metric-carousel-card-width')) 
+    || 240;
+  return cardWidth + gap;
+}
+
+function scrollHomeV2MetricsCarousel(direction) {
+  const els = getHomeV2MetricsCarouselEls();
+  if (!els?.carousel) return;
+  const step = getHomeV2MetricsCarouselStepPx(els);
+  els.carousel.scrollBy({ left: direction * step, behavior: 'smooth' });
+  window.setTimeout(updateHomeV2MetricsCarouselNav, 320);
+}
+
+function initHomeV2MetricsCarousel() {
+  const els = getHomeV2MetricsCarouselEls();
+  if (!els || els.shell.dataset.carouselInit === '1') return;
+  els.shell.dataset.carouselInit = '1';
+  els.prev?.addEventListener('click', () => scrollHomeV2MetricsCarousel(-1));
+  els.next?.addEventListener('click', () => scrollHomeV2MetricsCarousel(1));
+  els.carousel?.addEventListener('scroll', () => updateHomeV2MetricsCarouselNav(), { passive: true });
+}
+
+function syncHomeV2MetricsCarouselWidth() {
+  const els = getHomeV2MetricsCarouselEls();
+  if (!els?.carousel || !els.track) return;
+  const viewport = els.carousel.clientWidth;
+  if (viewport < 48) return;
+  const styles = getComputedStyle(els.track);
+  const gap = parseFloat(styles.columnGap || styles.gap || '12') || 12;
+  const slots = HOME_V2_METRICS_CAROUSEL_SLOT_COUNT;
+  const gapCount = Math.max(0, slots - 1);
+  const cardWidth = Math.max(168, (viewport - gap * gapCount) / slots);
+  els.track.style.setProperty('--home-v2-metric-carousel-card-width', `${cardWidth}px`);
+  updateHomeV2MetricsCarouselNav();
+}
+
+function refreshHomeV2MetricsCarouselLayout() {
+  syncHomeV2MetricsCarouselWidth();
+  requestAnimationFrame(() => {
+    syncHomeV2MetricsCarouselWidth();
+    updateHomeV2MetricsCarouselNav();
+  });
+}
+
 function animateHomeV2Metrics(panelId = 'home-option-2') {
   const panel = document.getElementById(panelId);
   if (!panel || panel.classList.contains('hidden')) return;
@@ -2037,6 +2128,45 @@ function renderHomeV2Panel(panelId, idPrefix) {
     renderHomeV2Spark(clicksSparkEl, clickSparkValues);
   }
 
+  if (panelId === 'home-option-2') {
+    const deliveryRateEl = panel.querySelector('#home2v-delivery-rate');
+    const readRateEl = panel.querySelector('#home2v-read-rate');
+    const responseRateEl = panel.querySelector('#home2v-response-rate');
+    if (deliveryRateEl) deliveryRateEl.textContent = `${HOME_V2_DEMO_DELIVERY_RATE}%`;
+    if (readRateEl) readRateEl.textContent = `${HOME_V2_DEMO_READ_RATE}%`;
+    if (responseRateEl) responseRateEl.textContent = `${HOME_V2_DEMO_RESPONSE_RATE}%`;
+
+    applyHomeV2TrendPercent(
+      panel.querySelector('#home2v-delivery-trend'),
+      HOME_V2_DEMO_DELIVERY_RATE,
+      HOME_V2_DEMO_DELIVERY_RATE_PREV,
+    );
+    applyHomeV2TrendPercent(
+      panel.querySelector('#home2v-read-trend'),
+      HOME_V2_DEMO_READ_RATE,
+      HOME_V2_DEMO_READ_RATE_PREV,
+    );
+    applyHomeV2TrendPercent(
+      panel.querySelector('#home2v-response-trend'),
+      HOME_V2_DEMO_RESPONSE_RATE,
+      HOME_V2_DEMO_RESPONSE_RATE_PREV,
+    );
+
+    renderHomeV2Spark(
+      panel.querySelector('[data-spark-id="delivery"]'),
+      buildDemoSparkSeries(HOME_V2_DEMO_DELIVERY_RATE_PREV, HOME_V2_DEMO_DELIVERY_RATE),
+    );
+    renderHomeV2Spark(
+      panel.querySelector('[data-spark-id="read"]'),
+      buildDemoSparkSeries(HOME_V2_DEMO_READ_RATE_PREV, HOME_V2_DEMO_READ_RATE),
+    );
+    renderHomeV2Spark(
+      panel.querySelector('[data-spark-id="response"]'),
+      buildDemoSparkSeries(HOME_V2_DEMO_RESPONSE_RATE_PREV, HOME_V2_DEMO_RESPONSE_RATE),
+    );
+    refreshHomeV2MetricsCarouselLayout();
+  }
+
   renderHomeAwaitingChatList(chatListEl);
 }
 
@@ -2096,6 +2226,7 @@ function setHomeOption(option, { updateUrl = true } = {}) {
   } catch (_) { /* ignore */ }
   if (updateUrl && activeView === 'home') syncHomeOptionUrl(opt);
   if (opt === '2' || opt === '3' || opt === '4') animateHomeV2Metrics(`home-option-${opt}`);
+  if (opt === '2') refreshHomeV2MetricsCarouselLayout();
 }
 
 function renderHome() {
@@ -6932,4 +7063,7 @@ if (homeFromUrl) {
     setHomeOption('1', { updateUrl: false });
   }
 }
+
+initHomeV2MetricsCarousel();
+window.addEventListener('resize', () => refreshHomeV2MetricsCarouselLayout(), { passive: true });
 

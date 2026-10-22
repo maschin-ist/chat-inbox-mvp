@@ -1320,7 +1320,12 @@
                 <div class="home2-section__head">
                   <h2 id="home-v2-overview-title" data-i18n="home3.overviewTitle">Overview</h2>
                 </div>
-                <div class="home-v2-metrics">
+                <div class="home-v2-metrics-carousel-shell" data-od-id="home-v2-metrics-carousel-shell">
+                  <button type="button" class="home-v2-metrics-carousel__nav home-v2-metrics-carousel__nav--prev" aria-label="Previous metrics" hidden>
+                    <span class="material-icons" aria-hidden="true">chevron_left</span>
+                  </button>
+                  <div class="home-v2-metrics-carousel" data-od-id="home-v2-metrics-carousel" tabindex="-1">
+                <div class="home-v2-metrics home-v2-metrics--carousel">
                   <article class="home-v2-metric-card" id="home2v-metric-reach" aria-labelledby="home-v2-reach-label" data-spark-index="0">
                     <header class="home-v2-metric-card__head">
                       <div class="home-v2-metric-card__title-block">
@@ -1372,6 +1377,65 @@
                       <div class="home-v2-spark-wrap" data-spark-id="clicks" aria-hidden="true"></div>
                     </div>
                   </article>
+
+                  <article class="home-v2-metric-card" id="home2v-metric-delivery" aria-labelledby="home-v2-delivery-label" data-spark-index="2">
+                    <header class="home-v2-metric-card__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label" id="home-v2-delivery-label">
+                          <span data-i18n="home2.metric.deliveryRate">Delivery rate</span>
+                          <span class="home-v2-metric-card__period" data-i18n="home2.period">Last 30 days</span>
+                        </p>
+                      </div>
+                      <p class="home-v2-metric-card__trend is-up" id="home2v-delivery-trend">
+                        <span class="home-v2-metric-card__trend-value"></span>
+                      </p>
+                    </header>
+                    <div class="home-v2-metric-card__body">
+                      <p class="home-v2-metric-card__value" id="home2v-delivery-rate">—</p>
+                      <div class="home-v2-spark-wrap" data-spark-id="delivery" aria-hidden="true"></div>
+                    </div>
+                  </article>
+
+                  <article class="home-v2-metric-card" id="home2v-metric-read" aria-labelledby="home-v2-read-label" data-spark-index="3">
+                    <header class="home-v2-metric-card__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label" id="home-v2-read-label">
+                          <span data-i18n="home2.metric.readRate">Read rate</span>
+                          <span class="home-v2-metric-card__period" data-i18n="home2.period">Last 30 days</span>
+                        </p>
+                      </div>
+                      <p class="home-v2-metric-card__trend is-up" id="home2v-read-trend">
+                        <span class="home-v2-metric-card__trend-value"></span>
+                      </p>
+                    </header>
+                    <div class="home-v2-metric-card__body">
+                      <p class="home-v2-metric-card__value" id="home2v-read-rate">—</p>
+                      <div class="home-v2-spark-wrap" data-spark-id="read" aria-hidden="true"></div>
+                    </div>
+                  </article>
+
+                  <article class="home-v2-metric-card" id="home2v-metric-response" aria-labelledby="home-v2-response-label" data-spark-index="4">
+                    <header class="home-v2-metric-card__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label" id="home-v2-response-label">
+                          <span data-i18n="home2.metric.responseRate">Response rate</span>
+                          <span class="home-v2-metric-card__period" data-i18n="home2.period">Last 30 days</span>
+                        </p>
+                      </div>
+                      <p class="home-v2-metric-card__trend is-up" id="home2v-response-trend">
+                        <span class="home-v2-metric-card__trend-value"></span>
+                      </p>
+                    </header>
+                    <div class="home-v2-metric-card__body">
+                      <p class="home-v2-metric-card__value" id="home2v-response-rate">—</p>
+                      <div class="home-v2-spark-wrap" data-spark-id="response" aria-hidden="true"></div>
+                    </div>
+                  </article>
+                </div>
+                  </div>
+                  <button type="button" class="home-v2-metrics-carousel__nav home-v2-metrics-carousel__nav--next" aria-label="More metrics">
+                    <span class="material-icons" aria-hidden="true">chevron_right</span>
+                  </button>
                 </div>
               </section>
 
