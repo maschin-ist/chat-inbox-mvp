@@ -43,9 +43,19 @@ const SUPERVISOR_PROFILE = {
 };
 
 const I18N_STORAGE_KEY = 'mvp-locale';
-// Japanese is the product default. A language explicitly chosen by the user
-// remains stored so English is still available as a persistent preference.
-let currentLocale = localStorage.getItem(I18N_STORAGE_KEY) || 'ja';
+
+function resolveInitialLocale() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = (params.get('lang') || params.get('locale') || '').toLowerCase();
+    if (fromUrl === 'en' || fromUrl === 'ja') return fromUrl;
+    const stored = localStorage.getItem(I18N_STORAGE_KEY);
+    if (stored === 'en' || stored === 'ja') return stored;
+  } catch (_) { /* ignore */ }
+  return 'en';
+}
+
+let currentLocale = resolveInitialLocale();
 
 const I18N_STRINGS = {
   en: {
