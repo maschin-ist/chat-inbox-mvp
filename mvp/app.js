@@ -95,6 +95,56 @@ const I18N_STRINGS = {
     'home2.news.item1.date': 'Oct 20',
     'home2.news.item2.title': 'New guide: Managing audience tags',
     'home2.news.item2.date': 'Oct 9',
+    'home3.overviewTitle': 'Overview',
+    'home3.welcomeTitle': 'Welcome to the ABC project 👋',
+    'home3.subtitle':
+      'Manage Your Contacts · Track Engagement · Send Broadcast Messages',
+    'home3.stepper.title': 'How to send a broadcast',
+    'home3.stepper.step1Label': 'Step 1',
+    'home3.stepper.step1Title': 'Set up your contacts',
+    'home3.stepper.step1Desc': 'Create a group tag for the people you want to message.',
+    'home3.stepper.step2Label': 'Step 2',
+    'home3.stepper.step2Title': 'Compose your broadcast',
+    'home3.stepper.step2Desc': 'Choose a tag and write the message you want to send.',
+    'home3.reach.current': 'Current',
+    'home3.reach.contactsUnit': 'contacts',
+    'home3.reach.roleNote':
+      'By role tag (may overlap): {{resident}} residents · {{worker}} workers · {{visitor}} visitors — not added to the total above.',
+    'home3.periodSection': 'Activity',
+    'home3.metric.awaitingReply': 'Awaiting your reply',
+    'home3.metric.projectParticipants': 'Contacts',
+    'home3.awaitingEmpty': 'Nothing waiting on your reply.',
+    'home3.awaitingStatusAria': 'Awaiting your reply: {{count}} conversations',
+    'home3.metric.awaitingHint': 'Open conversations with unread messages',
+    'home3.metric.broadcastsHint': 'From this project workspace',
+    'home3.openInbox': 'Open chats inbox',
+    'home3.prototypeNote':
+      'Counts use demo data in this MVP. Delivery and engagement rates are hidden until analytics are confirmed.',
+    'home3.viewDetails': 'View details',
+    'home3.quickStart.title': 'Quick Start',
+    'home3.quickStart.desc': 'Common navigation shortcuts from home.',
+    'home3.quickStart.broadcastDesc': 'Send a message to selected contacts.',
+    'home3.reach.caption': 'Unique contacts in this project',
+    'home3.sparklineNote': 'Trend lines compare to the previous 30 days (sample data in this MVP).',
+    'home3.trendAria': 'Change vs previous 30 days: {{change}}',
+    'home3.reach.newContacts': '+{{count}} new',
+    'home3.reach.newContactsAria': '{{count}} new contacts vs last month',
+    'home3.broadcasts.periodCaption': '{{current}} this month · {{previous}} last month',
+    'home3.metric.clickCaption': 'Recipients who clicked a link in a broadcast',
+    'home3.news.maintenanceDesc': 'Platform updates on Oct 20 — brief read-only window.',
+    'home3.news.tagsGuideDesc': 'Step-by-step walkthrough for tagging your participants.',
+    'home3.news.featuredDate': 'Today',
+    'home3.action.contactsDesc': 'Create group tags for the people you want to message.',
+    'home3.broadcastGuide.title': 'How to send a broadcast',
+    'home3.broadcastGuide.step2Hint': 'Choose a tag and write your message.',
+    'home3.announcements.title': 'Announcements',
+    'home.option.draft': 'PRD Draft',
+    'home.option.two': 'Option 2',
+    'home.option.firstTime': 'Option 2 First time user',
+    'home.option.three': 'Option 3',
+    'home4.metricCta.manageContacts': 'Manage contacts',
+    'home4.metricCta.viewAllBroadcasts': 'View all broadcasts',
+    'home4.metricCta.viewAllAnalytics': 'View all analytics',
     'nav.contacts': 'Manage contacts',
     'nav.chats': 'Chats',
     'nav.broadcasts': 'Send broadcast',
@@ -137,10 +187,18 @@ const I18N_STRINGS = {
     'communityChat.selectedMany': '{{count}} selected',
     'communityChat.systemCreated': 'Community chat created. Invitations sent to selected participants.',
     'communityChat.defaultPreview': 'Community chat started',
-    'chat.community.preview': 'Looking forward to seeing everyone at the next meetup!',
-    'chat.community.date1': 'Today, 12:05 PM',
-    'chat.community.in1': 'Looking forward to seeing everyone at the next meetup!',
-    'chat.community.out1': 'Welcome to the project community chat. Feel free to introduce yourselves.',
+    'chat.community.preview': 'Welcome!',
+    'chat.community.out1':
+      'Welcome to the UCC Coffee Feedback Chat! Here, you can share your thoughts, ask questions, and help us brew a better coffee experience for everyone.',
+    'chat.community.in1': 'Thanks!',
+    'chat.community.in2': 'Welcome!',
+    'chats.attachPdf': 'PDF',
+    'chats.attachAria': 'Attach image or PDF',
+    'communityRoom.title': 'Room settings',
+    'communityRoom.openAria': 'Open room settings',
+    'communityRoom.closeAria': 'Close room settings',
+    'communityRoom.membersCount': '{{count}} Members',
+    'communityRoom.admin': 'Admin',
     'broadcasts.title': 'Broadcasts',
     'broadcasts.createNew': 'Create new',
     'broadcasts.createNewAria': 'Create new broadcast',
@@ -418,6 +476,56 @@ const I18N_STRINGS = {
     'home2.news.item1.date': '10月20日',
     'home2.news.item2.title': '新しいガイド：オーディエンスタグの管理',
     'home2.news.item2.date': '10月9日',
+    'home3.overviewTitle': '概要',
+    'home3.welcomeTitle': 'ABCプロジェクトへようこそ 👋',
+    'home3.subtitle':
+      '連絡先を管理 · エンゲージメントを追跡 · 配信メッセージを送信',
+    'home3.stepper.title': '配信の送り方',
+    'home3.stepper.step1Label': 'ステップ 1',
+    'home3.stepper.step1Title': '連絡先を整える',
+    'home3.stepper.step1Desc': '配信したい人のグループタグを作成します。',
+    'home3.stepper.step2Label': 'ステップ 2',
+    'home3.stepper.step2Title': '配信を作成する',
+    'home3.stepper.step2Desc': 'タグを選び、送るメッセージを書きます。',
+    'home3.reach.current': '現在',
+    'home3.reach.contactsUnit': '件の連絡先',
+    'home3.reach.roleNote':
+      'ロール別（重複あり）: 住民 {{resident}} · ワーカー {{worker}} · ビジター {{visitor}} — 上の合計には含めません。',
+    'home3.periodSection': 'アクティビティ',
+    'home3.metric.awaitingReply': '返信待ち',
+    'home3.metric.projectParticipants': '連絡先',
+    'home3.awaitingEmpty': '返信待ちの会話はありません。',
+    'home3.awaitingStatusAria': '返信待ち：{{count}}件の会話',
+    'home3.metric.awaitingHint': '未読メッセージがある進行中の会話',
+    'home3.metric.broadcastsHint': 'このプロジェクトワークスペースでの配信',
+    'home3.openInbox': 'チャット受信箱を開く',
+    'home3.prototypeNote':
+      'このMVPの数値はデモデータです。分析が確定するまで配信率などのエンゲージメント指標は表示しません。',
+    'home3.viewDetails': '詳細を見る',
+    'home3.quickStart.title': 'クイックスタート',
+    'home3.quickStart.desc': 'ホームからよく使う画面へのショートカットです。',
+    'home3.quickStart.broadcastDesc': '選択した連絡先にメッセージを送信します。',
+    'home3.reach.caption': 'このプロジェクトのユニークな連絡先',
+    'home3.sparklineNote': 'トレンドは直前の30日間との比較です（このMVPではサンプルデータ）。',
+    'home3.trendAria': '前の30日間との変化: {{change}}',
+    'home3.reach.newContacts': '+{{count}} 新規',
+    'home3.reach.newContactsAria': '先月比 {{count}} 件の新しい連絡先',
+    'home3.broadcasts.periodCaption': '今月 {{current}} 件 · 先月 {{previous}} 件',
+    'home3.metric.clickCaption': '配信内リンクをクリックした受信者の割合',
+    'home3.news.maintenanceDesc': '10月20日のプラットフォーム更新 — 短時間の読み取り専用ウィンドウがあります。',
+    'home3.news.tagsGuideDesc': '参加者へのタグ付けの手順を順を追って説明します。',
+    'home3.news.featuredDate': '今日',
+    'home3.action.contactsDesc': 'メッセージを送りたい相手のグループタグを作成します。',
+    'home3.broadcastGuide.title': '配信の送り方',
+    'home3.broadcastGuide.step2Hint': 'タグを選び、メッセージを作成します。',
+    'home3.announcements.title': 'お知らせ',
+    'home.option.draft': 'PRD Draft',
+    'home.option.two': 'Option 2',
+    'home.option.firstTime': 'Option 2 初回ユーザー',
+    'home.option.three': 'Option 3',
+    'home4.metricCta.manageContacts': '連絡先を管理',
+    'home4.metricCta.viewAllBroadcasts': 'すべての配信を見る',
+    'home4.metricCta.viewAllAnalytics': 'すべての分析を見る',
     'nav.contacts': '配信先の管理',
     'nav.chats': 'チャット',
     'nav.broadcasts': '配信',
@@ -460,10 +568,18 @@ const I18N_STRINGS = {
     'communityChat.selectedMany': '{{count}}人選択中',
     'communityChat.systemCreated': 'コミュニティチャットを作成しました。選択した参加者に招待を送信しました。',
     'communityChat.defaultPreview': 'コミュニティチャットを開始しました',
-    'chat.community.preview': '次回のミートアップで皆さんにお会いできるのを楽しみにしています！',
-    'chat.community.date1': '今日 12:05',
-    'chat.community.in1': '次回のミートアップで皆さんにお会いできるのを楽しみにしています！',
-    'chat.community.out1': 'プロジェクトのコミュニティチャットへようこそ。ぜひ自己紹介してください。',
+    'chat.community.preview': 'Welcome!',
+    'chat.community.out1':
+      'UCC Coffee フィードバックチャットへようこそ。ご意見やご質問をお寄せいただき、より良いコーヒー体験づくりにご協力ください。',
+    'chat.community.in1': 'Thanks!',
+    'chat.community.in2': 'Welcome!',
+    'chats.attachPdf': 'PDF',
+    'chats.attachAria': '画像またはPDFを添付',
+    'communityRoom.title': 'ルーム設定',
+    'communityRoom.openAria': 'ルーム設定を開く',
+    'communityRoom.closeAria': 'ルーム設定を閉じる',
+    'communityRoom.membersCount': '{{count}}人のメンバー',
+    'communityRoom.admin': '管理者',
     'broadcasts.title': '配信',
     'broadcasts.createNew': '新規作成',
     'broadcasts.createNewAria': '新規配信を作成',
@@ -937,33 +1053,68 @@ const RSVP_EVENTS = [
 const ALL_CHATS = [
     {
       id: 'community-brooklyn',
-      name: 'Brooklyn Simmons',
+      name: 'UCC Coffee Feedback Chat',
       status: 'Community',
       kind: 'community',
-      projectId: 'project-a',
-      projectTitle: 'Latte Art Making Class',
-      initials: 'BS',
-      avatar: 'community-avatar-sample.png',
+      projectId: 'ucc-coffee',
+      projectTitle: 'UCC Coffee Project',
+      initials: 'UC',
+      avatar: 'community-chat-avatar.svg',
       badgeIcon: 'community-badge-icon.png',
       participantIds: ['alice', 'sarah', 'marcus', 'emma', 'james'],
+      members: [
+        {
+          name: 'Alex Wright',
+          roleKey: 'communityRoom.admin',
+          photo:
+            'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
+          communityBadge: true,
+        },
+        {
+          name: 'Jane Wright',
+        },
+        {
+          name: 'Bessie Cooper',
+          photo:
+            'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face',
+        },
+        {
+          name: 'Sabrina Russell',
+        },
+        {
+          name: 'Mina Lee',
+          photo:
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face',
+        },
+      ],
       operatorId: 'you',
       escalated: false,
       previewKey: 'chat.community.preview',
-      time: '1m',
+      time: '10:52',
       unread: 0,
       messages: [
-        { type: 'date', textKey: 'chat.community.date1' },
         {
           type: 'outgoing',
           textKey: 'chat.community.out1',
-          status: 'Sent 12:00',
+          status: 'Sent 10:45',
         },
         {
           type: 'incoming',
           textKey: 'chat.community.in1',
-          time: '12:05',
-          senderName: 'Brooklyn Simmons',
-          senderInitials: 'BS',
+          time: '10:52',
+          senderName: 'Bessie Cooper',
+          senderInitials: 'BC',
+          senderPhoto:
+            'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face',
+        },
+        {
+          type: 'incoming',
+          textKey: 'chat.community.in2',
+          time: '10:52',
+          senderName: "Liam O'Conor",
+          senderInitials: 'LO',
+          senderPhoto:
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face',
         },
       ],
     },
@@ -1406,7 +1557,7 @@ const CONTACTS = buildContactsList();
 let activeView = 'home';
 let activeTab = 'assigned';
 let supervisorTab = 'escalated';
-let activeChatId = 'alice';
+let activeChatId = ALL_CHATS[0]?.id ?? null;
 let activeBroadcastTab = 'sent';
 let supervisorBroadcastTab = 'scheduled';
 let activeBroadcastId = null;
@@ -1445,9 +1596,7 @@ const profileMenuWrap = document.querySelector('.profile-menu-wrap');
 const profileMenuEl = document.getElementById('profile-menu');
 const profileAvatarBtn = document.getElementById('profile-avatar-btn');
 const attachMenuWrap = document.querySelector('.attach-menu-wrap');
-const attachMenuEl = document.getElementById('chat-attach-menu');
-const attachBtn = document.getElementById('chat-attach-btn');
-const chatImageInput = document.getElementById('chat-image-input');
+const chatAttachInput = document.getElementById('chat-attach-input');
 const composerEl = document.querySelector('.composer');
 const appShellEl = document.querySelector('.app');
 const chatsSearchEl = document.getElementById('chats-search');
@@ -1590,6 +1739,32 @@ function getHome3ReachRoleCounts() {
 }
 
 const HOME_RECENT_CHAT_LIMIT = 6;
+const HOME_AWAITING_CHAT_LIMIT = 10;
+
+function getChatsAwaitingReply() {
+  return ALL_CHATS.filter((chat) => !chat.done && chat.unread > 0);
+}
+
+function renderHomeAwaitingChatList(listEl) {
+  if (!listEl) return;
+  const awaiting = getChatsAwaitingReply().slice(0, HOME_AWAITING_CHAT_LIMIT);
+  if (!awaiting.length) {
+    listEl.innerHTML = `<li class="home2-chat-empty">${escapePreviewText(t('home3.awaitingEmpty'))}</li>`;
+    return;
+  }
+  listEl.innerHTML = awaiting.map((chat) => `
+    <li>
+      <button class="home2-chat-row" type="button" data-home2-chat="${escapePreviewText(chat.id)}">
+        ${renderChatListAvatar(chat)}
+        <span class="home2-chat-copy"><strong>${escapePreviewText(chat.name)}</strong><small>${escapePreviewText(getChatPreviewText(chat))}</small></span>
+        <span class="home2-chat-time">${escapePreviewText(chat.time || '')}</span>
+        ${chat.unread > 0
+          ? `<span class="home2-unread" aria-label="${escapePreviewText(t('home2.recent.unreadAria', { count: chat.unread }))}">${chat.unread}</span>`
+          : '<span class="home2-unread-spacer" aria-hidden="true"></span>'}
+      </button>
+    </li>`).join('');
+}
+const HOME_OPTION_STORAGE_KEY = 'mvp-home-option';
 
 function renderHomeRecentChatList(listEl) {
   if (!listEl) return;
@@ -1648,8 +1823,249 @@ function renderHome3() {
   renderHomeRecentChatList(chatListEl3);
 }
 
+const HOME_V2_SPARK_W = 240;
+const HOME_V2_SPARK_H = 52;
+const HOME_V2_SPARK_BLUE = '#2b67b5';
+const HOME_V2_DEMO_NEW_CONTACTS = 2;
+const HOME_V2_DEMO_CLICK_RATE = 38;
+const HOME_V2_DEMO_CLICK_RATE_PREV = 29;
+const HOME_V2_DEMO_BROADCASTS_SENT = 8;
+const HOME_V2_DEMO_BROADCASTS_PREV = 5;
+
+function hashSeed(input) {
+  let h = 2166136261;
+  for (let i = 0; i < input.length; i += 1) {
+    h ^= input.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function buildDemoSparkSeries(start, end, points = 14) {
+  const values = [];
+  const from = Math.max(0, start);
+  const to = Math.max(from, end);
+  for (let i = 0; i < points; i += 1) {
+    const t = points <= 1 ? 1 : i / (points - 1);
+    const base = from + (to - from) * t;
+    const wobble = Math.sin(i * 0.85) * 0.08 * Math.max(1, to - from);
+    values.push(Math.max(0, Math.round(base + wobble)));
+  }
+  values[values.length - 1] = to;
+  return values;
+}
+
+function buildSparkPaths(values, width, height, padding = 4) {
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+  const innerW = width - padding * 2;
+  const innerH = height - padding * 2;
+  const coords = values.map((val, i) => {
+    const x = padding + (i / Math.max(1, values.length - 1)) * innerW;
+    const y = padding + innerH - ((val - min) / range) * innerH;
+    return { x, y };
+  });
+  const line = coords.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join(' ');
+  const area = `${line} L ${coords[coords.length - 1].x.toFixed(2)} ${(height - padding).toFixed(2)} L ${coords[0].x.toFixed(2)} ${(height - padding).toFixed(2)} Z`;
+  return { line, area };
+}
+
+function formatTrendPercent(pct) {
+  const abs = Math.abs(pct);
+  const rounded = abs >= 10 ? abs.toFixed(1) : abs.toFixed(1);
+  const sign = pct > 0 ? '+' : pct < 0 ? '-' : '';
+  return `${sign}${rounded.replace(/\.0$/, '')}%`;
+}
+
+function renderHomeV2TrendValue(arrow, formatted) {
+  return `<span class="home-v2-trend-arrow" aria-hidden="true">${arrow}</span><span>${formatted}</span>`;
+}
+
+function applyHomeV2TrendPercent(trendEl, current, previous) {
+  if (!trendEl) return;
+  const prev = Math.max(0, previous);
+  const pct = prev === 0 ? (current > 0 ? 100 : 0) : ((current - prev) / prev) * 100;
+  trendEl.classList.remove('is-up', 'is-down', 'is-flat', 'home-v2-metric-card__trend--hidden');
+  trendEl.hidden = false;
+  const valueEl = trendEl.querySelector('.home-v2-metric-card__trend-value');
+  const formatted = formatTrendPercent(pct);
+  if (Math.abs(pct) < 0.5) {
+    trendEl.classList.add('is-flat');
+    if (valueEl) valueEl.innerHTML = renderHomeV2TrendValue('→', '0%');
+  } else if (pct > 0) {
+    trendEl.classList.add('is-up');
+    if (valueEl) valueEl.innerHTML = renderHomeV2TrendValue('↑', formatted);
+  } else {
+    trendEl.classList.add('is-down');
+    if (valueEl) valueEl.innerHTML = renderHomeV2TrendValue('↓', formatted);
+  }
+  trendEl.setAttribute('aria-label', t('home3.trendAria', { change: formatted }));
+}
+
+function applyHomeV2TrendNewContacts(trendEl, newCount) {
+  if (!trendEl) return;
+  const count = Math.max(0, newCount);
+  trendEl.classList.remove('is-up', 'is-down', 'is-flat', 'home-v2-metric-card__trend--hidden');
+  trendEl.hidden = false;
+  const valueEl = trendEl.querySelector('.home-v2-metric-card__trend-value');
+  const label = t('home3.reach.newContacts', { count });
+  if (count > 0) {
+    trendEl.classList.add('is-up');
+    if (valueEl) {
+      valueEl.innerHTML = `<span class="home-v2-trend-arrow" aria-hidden="true">↑</span><span>${escapePreviewText(label)}</span>`;
+    }
+  } else {
+    trendEl.classList.add('is-flat');
+    if (valueEl) valueEl.innerHTML = renderHomeV2TrendValue('→', '0');
+  }
+  trendEl.setAttribute('aria-label', t('home3.reach.newContactsAria', { count }));
+}
+
+function renderHomeV2Spark(wrapEl, values) {
+  if (!wrapEl || !values?.length) return;
+  const { line, area } = buildSparkPaths(values, HOME_V2_SPARK_W, HOME_V2_SPARK_H);
+  const panelId = wrapEl.closest('.home-panel')?.id || 'home';
+  const sparkId = wrapEl.getAttribute('data-spark-id') || 'spark';
+  const gradId = `${panelId}-${sparkId}-grad-${hashSeed(values.join(','))}`;
+  wrapEl.innerHTML = `
+    <svg viewBox="0 0 ${HOME_V2_SPARK_W} ${HOME_V2_SPARK_H}" preserveAspectRatio="none" role="presentation">
+      <defs>
+        <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${HOME_V2_SPARK_BLUE}" stop-opacity=".32"/>
+          <stop offset="100%" stop-color="${HOME_V2_SPARK_BLUE}" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <g class="home-v2-spark-area-wrap">
+        <path class="home-v2-spark-area" d="${area}" fill="url(#${gradId})"/>
+      </g>
+      <path class="home-v2-spark-line" d="${line}"/>
+    </svg>`;
+}
+
+function animateHomeV2Metrics(panelId = 'home-option-2') {
+  const panel = document.getElementById(panelId);
+  if (!panel || panel.classList.contains('hidden')) return;
+  const cards = [...panel.querySelectorAll('.home-v2-metric-card')];
+  cards.forEach((card) => {
+    card.classList.remove('is-visible', 'is-spark-animate');
+    card.style.removeProperty('--spark-delay');
+    card.style.removeProperty('transition-delay');
+  });
+  requestAnimationFrame(() => {
+    cards.forEach((card, index) => {
+      const sparkDelayMs = index * 220;
+      card.style.setProperty('--spark-delay', `${sparkDelayMs}ms`);
+      card.style.transitionDelay = `${index * 90}ms`;
+      card.classList.add('is-visible');
+      if (card.querySelector('.home-v2-spark-wrap')) {
+        window.setTimeout(() => card.classList.add('is-spark-animate'), 80 + sparkDelayMs);
+      }
+    });
+  });
+}
+
+function renderHomeV2Panel(panelId, idPrefix) {
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+
+  const reachTotalEl = panel.querySelector(`#home${idPrefix}-reach-total`);
+  const awaitingCountEl = panel.querySelector(`#home${idPrefix}-awaiting-count`);
+  const broadcastsSentEl = panel.querySelector(`#home${idPrefix}-broadcasts-sent`);
+  const clickRateEl = panel.querySelector(`#home${idPrefix}-click-rate`);
+  const chatListEl = panel.querySelector(`#home${idPrefix}-chat-list`);
+  const awaitingTitleEl = panel.querySelector('.home-v2-awaiting-title');
+  if (!reachTotalEl) return;
+
+  const reachCount = CONTACTS.length;
+  const newContacts = HOME_V2_DEMO_NEW_CONTACTS;
+  reachTotalEl.textContent = String(reachCount);
+
+  const isStarterHome = panelId === 'home-option-3';
+  const isMetricCtaHome = panelId === 'home-option-4';
+  const awaitingCount = getChatsAwaitingReply().length;
+  const clickRate = isStarterHome ? 0 : HOME_V2_DEMO_CLICK_RATE;
+  const clickRatePrev = isStarterHome ? 0 : HOME_V2_DEMO_CLICK_RATE_PREV;
+  const broadcastsSent = isStarterHome ? 0 : HOME_V2_DEMO_BROADCASTS_SENT;
+
+  if (awaitingCountEl) {
+    awaitingCountEl.textContent = String(awaitingCount);
+    awaitingCountEl.hidden = awaitingCount === 0;
+    awaitingCountEl.setAttribute('aria-hidden', awaitingCount === 0 ? 'true' : 'false');
+  }
+  if (awaitingTitleEl) {
+    awaitingTitleEl.setAttribute(
+      'aria-label',
+      t('home3.awaitingStatusAria', { count: awaitingCount }),
+    );
+  }
+  if (broadcastsSentEl) broadcastsSentEl.textContent = String(broadcastsSent);
+  if (clickRateEl) clickRateEl.textContent = `${clickRate}%`;
+
+  const reachTrendEl = panel.querySelector(`#home${idPrefix}-reach-trend`);
+  if (reachTrendEl && !isMetricCtaHome) {
+    applyHomeV2TrendNewContacts(reachTrendEl, newContacts);
+  } else if (reachTrendEl && isMetricCtaHome) {
+    reachTrendEl.classList.add('home-v2-metric-card__trend--hidden');
+  }
+
+  const clicksTrendEl = panel.querySelector(`#home${idPrefix}-clicks-trend`);
+  if (clicksTrendEl) {
+    applyHomeV2TrendPercent(clicksTrendEl, clickRate, clickRatePrev);
+  }
+
+  const reachSparkEl = panel.querySelector('[data-spark-id="reach"]');
+  if (reachSparkEl && !isMetricCtaHome) {
+    const reachSparkStart = Math.max(0, reachCount - newContacts);
+    renderHomeV2Spark(reachSparkEl, buildDemoSparkSeries(reachSparkStart, reachCount));
+  }
+  const clicksSparkEl = panel.querySelector('[data-spark-id="clicks"]');
+  if (clicksSparkEl) {
+    const clickSparkValues = isStarterHome
+      ? buildDemoSparkSeries(10, 12)
+      : buildDemoSparkSeries(clickRatePrev, clickRate);
+    renderHomeV2Spark(clicksSparkEl, clickSparkValues);
+  }
+
+  renderHomeAwaitingChatList(chatListEl);
+}
+
+function renderHomeV2() {
+  renderHomeV2Panel('home-option-2', '2v');
+  renderHomeV2Panel('home-option-3', '3v');
+  renderHomeV2Panel('home-option-4', '4v');
+  ['home-option-2', 'home-option-3', 'home-option-4'].forEach((panelId) => {
+    if (!document.getElementById(panelId)?.classList.contains('hidden')) {
+      animateHomeV2Metrics(panelId);
+    }
+  });
+}
+
+function normalizeHomeOption(option) {
+  if (option === '4' || option === '3' || option === '2') return option;
+  return '1';
+}
+
+function setHomeOption(option) {
+  const opt = normalizeHomeOption(option);
+  document.getElementById('home-option-1')?.classList.toggle('hidden', opt !== '1');
+  document.getElementById('home-option-2')?.classList.toggle('hidden', opt !== '2');
+  document.getElementById('home-option-3')?.classList.toggle('hidden', opt !== '3');
+  document.getElementById('home-option-4')?.classList.toggle('hidden', opt !== '4');
+  document.querySelectorAll('[data-home-option]').forEach((btn) => {
+    const active = btn.dataset.homeOption === opt;
+    btn.classList.toggle('is-active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+  try {
+    localStorage.setItem(HOME_OPTION_STORAGE_KEY, opt);
+  } catch (_) { /* ignore */ }
+  if (opt === '2' || opt === '3' || opt === '4') animateHomeV2Metrics(`home-option-${opt}`);
+}
+
 function renderHome() {
   renderHome3();
+  renderHomeV2();
 }
 
 function operatorMiniAvatar(op) {
@@ -1693,6 +2109,13 @@ function avatarHtml(initials, size) {
   return `<div class="${cls}"><div class="avatar-placeholder" style="background:${color};font-size:${fontSize}">${initials}</div></div>`;
 }
 
+function renderMsgAvatar(msg, conv) {
+  if (msg.senderPhoto) {
+    return `<div class="msg-avatar"><img src="${msg.senderPhoto}" alt="" /></div>`;
+  }
+  return avatarHtml(msg.senderInitials || conv.initials, 'msg');
+}
+
 function renderAvatar(conv, className) {
   if (conv.avatar) {
     return `<div class="${className}"><img src="${conv.avatar}" alt="${conv.name}" /></div>`;
@@ -1703,6 +2126,103 @@ function renderAvatar(conv, className) {
 
 function isCommunityChat(chat) {
   return chat?.kind === 'community';
+}
+
+let chatRoomSettingsOpen = false;
+
+function getCommunityRoomMembers(conv) {
+  if (!conv) return [];
+  if (Array.isArray(conv.members) && conv.members.length) return conv.members;
+  return (conv.participantIds || [])
+    .map((id) => CONTACTS.find((c) => c.id === id))
+    .filter(Boolean)
+    .map((contact) => ({ name: contact.name }));
+}
+
+function renderCommunityMemberRow(member) {
+  const initials = member.initials || contactInitials(member.name);
+  const color = AVATAR_COLORS[initials] || '#b0b0b0';
+  const avatarInner = member.photo
+    ? `<img src="${member.photo}" alt="" loading="lazy" decoding="async" />`
+    : `<div class="avatar-placeholder" style="background:${color};font-size:11px">${initials}</div>`;
+  const badge = member.communityBadge
+    ? `<span class="chat-avatar__badge" aria-hidden="true"><img src="community-badge-icon.png" alt="" /></span>`
+    : '';
+  const role = member.roleKey
+    ? `<span class="chat-room-member__role">${escapePreviewText(t(member.roleKey))}</span>`
+    : '';
+  return `
+    <li class="chat-room-member">
+      <div class="chat-avatar-wrap${member.communityBadge ? ' chat-avatar-wrap--community' : ''}">
+        <div class="chat-avatar">${avatarInner}</div>
+        ${badge}
+      </div>
+      <div class="chat-room-member__text">
+        <span class="chat-room-member__name">${escapePreviewText(member.name)}</span>
+        ${role}
+      </div>
+    </li>`;
+}
+
+function renderChatRoomSettings() {
+  const conv = getActiveConversation();
+  const countEl = document.getElementById('chat-room-members-count');
+  const listEl = document.getElementById('chat-room-members-list');
+  if (!listEl) return;
+
+  if (!conv || !isCommunityChat(conv)) {
+    listEl.innerHTML = '';
+    if (countEl) countEl.textContent = '';
+    return;
+  }
+
+  const members = getCommunityRoomMembers(conv);
+  if (countEl) countEl.textContent = t('communityRoom.membersCount', { count: members.length });
+  listEl.innerHTML = members.map(renderCommunityMemberRow).join('');
+}
+
+function setChatRoomSettingsOpen(open) {
+  const conv = getActiveConversation();
+  const isCommunity = Boolean(conv && isCommunityChat(conv));
+  const shouldOpen = open && isCommunity;
+
+  chatRoomSettingsOpen = shouldOpen;
+  const rail = document.getElementById('chat-panel-rail');
+  const panel = document.getElementById('chat-room-settings');
+  const toggleBtn = document.getElementById('chat-community-settings-btn');
+
+  rail?.classList.toggle('is-settings-open', shouldOpen);
+  panel?.setAttribute('aria-hidden', shouldOpen ? 'false' : 'true');
+  toggleBtn?.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+  toggleBtn?.classList.toggle('is-active', shouldOpen);
+
+  if (shouldOpen) renderChatRoomSettings();
+}
+
+function updateCommunityChatChrome() {
+  const conv = getActiveConversation();
+  const toggleBtn = document.getElementById('chat-community-settings-btn');
+  const panel = document.getElementById('chat-room-settings');
+  const isCommunity = Boolean(conv && isCommunityChat(conv));
+
+  if (toggleBtn) {
+    toggleBtn.hidden = !isCommunity;
+  }
+  if (panel) {
+    panel.hidden = !isCommunity;
+  }
+  if (!isCommunity) {
+    if (chatRoomSettingsOpen) {
+      chatRoomSettingsOpen = false;
+      document.getElementById('chat-panel-rail')?.classList.remove('is-settings-open');
+      panel?.setAttribute('aria-hidden', 'true');
+      toggleBtn?.setAttribute('aria-expanded', 'false');
+      toggleBtn?.classList.remove('is-active');
+    }
+  } else {
+    panel.hidden = false;
+    renderChatRoomSettings();
+  }
 }
 
 function renderChatListAvatar(chat) {
@@ -1764,6 +2284,7 @@ function renderChatList() {
       activeChatId = item.dataset.id;
       const conv = findChatById(activeChatId);
       if (conv) conv.unread = 0;
+      setChatRoomSettingsOpen(false);
       setComposerNoteMode(false);
       messageInput.value = '';
       updateComposerSendState();
@@ -2156,7 +2677,7 @@ function createCommunityChatFromModal() {
     projectId: project.id,
     projectTitle: project.title,
     initials: contactInitials(name),
-    avatar: 'community-avatar-sample.png',
+    avatar: 'community-chat-avatar.svg',
     badgeIcon: 'community-badge-icon.png',
     participantIds: selected.map((c) => c.id),
     operatorId: 'you',
@@ -2494,10 +3015,9 @@ function renderMessages() {
       }
 
       if (msg.type === 'incoming') {
-        const initials = msg.senderInitials || conv.initials;
         return `
         <div class="message-row incoming">
-          ${avatarHtml(initials, 'msg')}
+          ${renderMsgAvatar(msg, conv)}
           <div class="message-content">
             <div class="bubble incoming">${msg.senderName && isCommunityChat(conv) ? `<span class="msg-sender-name">${escapePreviewText(msg.senderName)}</span>` : ''}${getLocalizedMessageText(msg)}</div>
             <span class="msg-time">${msg.time}</span>
@@ -2570,9 +3090,25 @@ function renderMessages() {
 
       if (msg.type === 'image') {
         return `
-        <div class="message-image">
-          <div class="message-image__frame">
-            <img src="${msg.src}" alt="${msg.alt || 'Attached image'}">
+        <div class="message-row outgoing message-row--attachment">
+          <div class="message-content">
+            <div class="message-image__frame">
+              <img src="${msg.src}" alt="${escapePreviewText(msg.alt || 'Attached image')}">
+            </div>
+          </div>
+          <span class="msg-status">${formatMessageStatus(msg.status)}</span>
+        </div>`;
+      }
+
+      if (msg.type === 'pdf') {
+        const label = escapePreviewText(msg.fileName || 'Document.pdf');
+        return `
+        <div class="message-row outgoing message-row--attachment">
+          <div class="message-content">
+            <a class="message-file" href="${msg.src}" download="${label}" target="_blank" rel="noopener">
+              <span class="material-icons message-file__icon" aria-hidden="true">picture_as_pdf</span>
+              <span class="message-file__name">${label}</span>
+            </a>
           </div>
           <span class="msg-status">${formatMessageStatus(msg.status)}</span>
         </div>`;
@@ -2626,6 +3162,7 @@ function updateHeaderActions() {
     chatReassignWrap.classList.add('hidden');
     chatReassignWrap.hidden = true;
   }
+  updateCommunityChatChrome();
 }
 
 function setComposerNoteMode(on) {
@@ -2690,7 +3227,44 @@ function appendImageMessage(file) {
     status: `Sent ${timeStr}`,
   });
 
+  conv.preview = file.name;
+  conv.previewDynamic = true;
+  conv.time = 'Just now';
+  renderChatList();
   renderMessages();
+}
+
+function appendPdfMessage(file) {
+  const conv = getActiveConversation();
+  if (!conv || !file) return;
+
+  const timeStr = getTimeStr();
+  const src = URL.createObjectURL(file);
+
+  conv.messages.push({
+    type: 'pdf',
+    src,
+    fileName: file.name,
+    status: `Sent ${timeStr}`,
+  });
+
+  conv.preview = file.name;
+  conv.previewDynamic = true;
+  conv.time = 'Just now';
+  renderChatList();
+  renderMessages();
+}
+
+function appendChatAttachment(file) {
+  if (!file) return;
+  const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+  if (isPdf) {
+    appendPdfMessage(file);
+    return;
+  }
+  if (file.type.startsWith('image/')) {
+    appendImageMessage(file);
+  }
 }
 
 function applyMessageTemplate(templateId) {
@@ -5453,6 +6027,7 @@ function renderContactsTable() {
 }
 
 function openChatFromContact(chatId) {
+  setChatRoomSettingsOpen(false);
   const match = findChatById(chatId);
   if (!match) return;
 
@@ -5725,52 +6300,13 @@ function closeAllFilterMenus() {
   setAddTagsMenuOpen(false);
 }
 
-function setAttachMenuOpen(open) {
-  attachMenuWrap?.classList.toggle('is-open', open);
-  attachMenuEl?.setAttribute('aria-hidden', open ? 'false' : 'true');
-  attachBtn?.setAttribute('aria-expanded', open ? 'true' : 'false');
-}
-
 function closeAttachMenu() {
-  setAttachMenuOpen(false);
+  /* attach menu removed — + opens native file picker */
 }
 
-attachBtn?.addEventListener('click', (e) => {
-  e.stopPropagation();
-  const isOpen = attachMenuWrap?.classList.contains('is-open');
-  closeAllFilterMenus();
-  setProfileMenuOpen(false);
-  setAttachMenuOpen(!isOpen);
-});
-
-attachMenuEl?.querySelectorAll('[data-attach-action]').forEach((item) => {
-  item.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const action = item.dataset.attachAction;
-
-    if (action === 'image') {
-      chatImageInput?.click();
-      closeAttachMenu();
-      return;
-    }
-
-    if (action === 'template') {
-      closeAttachMenu();
-      openTemplateModal('chat');
-      return;
-    }
-
-    if (action === 'note') {
-      setComposerNoteMode(true);
-      messageInput?.focus();
-      closeAttachMenu();
-    }
-  });
-});
-
-chatImageInput?.addEventListener('change', (e) => {
+chatAttachInput?.addEventListener('change', (e) => {
   const file = e.target.files?.[0];
-  if (file) appendImageMessage(file);
+  if (file) appendChatAttachment(file);
   e.target.value = '';
 });
 
@@ -5779,8 +6315,17 @@ document.addEventListener('click', (e) => {
   if (!profileMenuWrap?.contains(e.target)) {
     closeProfileMenu();
   }
-  if (!attachMenuWrap?.contains(e.target)) {
-    closeAttachMenu();
+});
+
+document.getElementById('chat-community-settings-btn')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (!getActiveConversation() || !isCommunityChat(getActiveConversation())) return;
+  setChatRoomSettingsOpen(!chatRoomSettingsOpen);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && chatRoomSettingsOpen) {
+    setChatRoomSettingsOpen(false);
   }
 });
 
@@ -5811,7 +6356,7 @@ function updateSupervisorUI() {
   } else {
     supervisorOperatorFilter = '';
     document.getElementById('chats-operator-filter-label').textContent = 'All operators';
-    activeChatId = ALL_CHATS[0]?.id || 'alice';
+    activeChatId = ALL_CHATS[0]?.id ?? null;
     activeBroadcastTab = 'scheduled';
     activeBroadcastId = null;
     broadcastTabsOperatorEl?.querySelectorAll('.tab').forEach((t) => {
@@ -5998,9 +6543,43 @@ document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
   btn.addEventListener('click', () => switchView(btn.dataset.view));
 });
 
+document.querySelectorAll('[data-home-option]').forEach((btn) => {
+  btn.addEventListener('click', () => setHomeOption(btn.dataset.homeOption));
+});
+
 document.getElementById('home3-view-all-chats')?.addEventListener('click', () => switchView('chats'));
+document.getElementById('home2v-view-all-chats')?.addEventListener('click', () => switchView('chats'));
+document.getElementById('home3v-view-all-chats')?.addEventListener('click', () => switchView('chats'));
+document.getElementById('home4v-view-all-chats')?.addEventListener('click', () => switchView('chats'));
 
 document.getElementById('home3-chat-list')?.addEventListener('click', (event) => {
+  const row = event.target.closest('[data-home2-chat]');
+  if (!row) return;
+  const conv = findChatById(row.dataset.home2Chat);
+  if (!conv) return;
+  conv.unread = 0;
+  openChatFromContact(conv.id);
+});
+
+document.getElementById('home2v-chat-list')?.addEventListener('click', (event) => {
+  const row = event.target.closest('[data-home2-chat]');
+  if (!row) return;
+  const conv = findChatById(row.dataset.home2Chat);
+  if (!conv) return;
+  conv.unread = 0;
+  openChatFromContact(conv.id);
+});
+
+document.getElementById('home3v-chat-list')?.addEventListener('click', (event) => {
+  const row = event.target.closest('[data-home2-chat]');
+  if (!row) return;
+  const conv = findChatById(row.dataset.home2Chat);
+  if (!conv) return;
+  conv.unread = 0;
+  openChatFromContact(conv.id);
+});
+
+document.getElementById('home4v-chat-list')?.addEventListener('click', (event) => {
   const row = event.target.closest('[data-home2-chat]');
   if (!row) return;
   const conv = findChatById(row.dataset.home2Chat);
@@ -6014,6 +6593,26 @@ document.querySelectorAll('[data-home3-action]').forEach((btn) => {
     if (btn.dataset.home3Action === 'broadcast') {
       switchView('broadcasts');
       if (!broadcastWizardOpen) openBroadcastWizard();
+      return;
+    }
+    switchView('contacts');
+  });
+});
+
+document.querySelectorAll('[data-home2v-action]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const action = btn.dataset.home2vAction;
+    if (action === 'broadcast') {
+      switchView('broadcasts');
+      if (!broadcastWizardOpen) openBroadcastWizard();
+      return;
+    }
+    if (action === 'broadcasts' || action === 'analytics') {
+      switchView('broadcasts');
+      return;
+    }
+    if (action === 'chats') {
+      switchView('chats');
       return;
     }
     switchView('contacts');
@@ -6281,4 +6880,10 @@ if (initialView === 'broadcasts' && initialWizardStep) {
   startFreshBroadcastWizard(initialWizardStep, { replaceUrl: true });
 }
 refreshLocalizedUI();
+try {
+  const savedHome = localStorage.getItem(HOME_OPTION_STORAGE_KEY);
+  setHomeOption(normalizeHomeOption(savedHome));
+} catch (_) {
+  setHomeOption('1');
+}
 

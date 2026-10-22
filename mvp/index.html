@@ -1161,13 +1161,20 @@
 
     <!-- Home view -->
     <div class="view view--home" id="view-home" data-od-id="view-home">
-      <main class="home-panel home3" id="home-panel" data-od-id="home-panel">
+      <!-- Draft (option 1): original overview layout for comparison -->
+      <main class="home-panel home3" id="home-option-1" data-od-id="home-panel">
         <header class="home-header mvp-panel-header mvp-panel-header--stacked" data-od-id="home-header">
           <div class="mvp-panel-header__top home-header__top">
             <h2>Welcome to the ABC project 👋</h2>
+            <div class="home-option-toggle" role="group" aria-label="Home design option">
+              <button type="button" class="home-option-toggle__btn is-active" data-home-option="1" aria-pressed="true" data-i18n="home.option.draft">PRD Draft</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="2" aria-pressed="false" data-i18n="home.option.two">Option 2</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="3" aria-pressed="false" data-i18n="home.option.firstTime">Option 2 First time user</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="4" aria-pressed="false" data-i18n="home.option.three">Option 3</button>
+            </div>
           </div>
           <div class="mvp-panel-header__meta home-header__meta">
-            <p class="home-header__subtitle">Connect with participants · Share messages and images at scale · Monitor activity</p>
+            <p class="home-header__subtitle" data-i18n="home3.subtitle">Manage Your Contacts · Track Engagement · Send Broadcast Messages</p>
           </div>
         </header>
 
@@ -1184,7 +1191,7 @@
             <article class="home3-overview-card home3-split-card" aria-labelledby="home3-reach-title">
               <header class="home3-overview-card__head">
                 <span class="material-icons-outlined" aria-hidden="true">groups</span>
-                <h3 id="home3-reach-title">Reachable audience</h3>
+                <h3 id="home3-reach-title" data-i18n="home3.metric.projectParticipants">Contacts</h3>
               </header>
               <div class="home3-split-card__body">
                 <div class="home3-split-card__hero">
@@ -1288,6 +1295,586 @@
         </section>
         </div>
       </main>
+
+      <!-- Option 2: manager feedback revision (focused metrics + terminology) -->
+      <main class="home-panel home-v2 hidden" id="home-option-2" data-od-id="home-v2-panel">
+        <header class="home-header mvp-panel-header mvp-panel-header--stacked" data-od-id="home-v2-header">
+          <div class="mvp-panel-header__top home-header__top">
+            <h2 data-i18n="home3.welcomeTitle">Welcome to the ABC project 👋</h2>
+            <div class="home-option-toggle" role="group" aria-label="Home design option">
+              <button type="button" class="home-option-toggle__btn" data-home-option="1" aria-pressed="false" data-i18n="home.option.draft">PRD Draft</button>
+              <button type="button" class="home-option-toggle__btn is-active" data-home-option="2" aria-pressed="true" data-i18n="home.option.two">Option 2</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="3" aria-pressed="false" data-i18n="home.option.firstTime">Option 2 First time user</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="4" aria-pressed="false" data-i18n="home.option.three">Option 3</button>
+            </div>
+          </div>
+          <div class="mvp-panel-header__meta home-header__meta">
+            <p class="home-header__subtitle" data-i18n="home3.subtitle">Manage Your Contacts · Track Engagement · Send Broadcast Messages</p>
+          </div>
+        </header>
+
+        <div class="home-v2-scroll" data-od-id="home-v2-scroll">
+          <div class="home-v2-layout">
+            <div class="home-v2-main">
+              <section class="home-section home-v2-section home-v2-metrics-section" aria-labelledby="home-v2-overview-title">
+                <div class="home2-section__head">
+                  <h2 id="home-v2-overview-title" data-i18n="home3.overviewTitle">Overview</h2>
+                </div>
+                <div class="home-v2-metrics">
+                  <article class="home-v2-metric-card" id="home2v-metric-reach" aria-labelledby="home-v2-reach-label" data-spark-index="0">
+                    <header class="home-v2-metric-card__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label" id="home-v2-reach-label">
+                          <span data-i18n="home3.metric.projectParticipants">Contacts</span>
+                        </p>
+                      </div>
+                      <p class="home-v2-metric-card__trend is-up" id="home2v-reach-trend">
+                        <span class="home-v2-metric-card__trend-value"></span>
+                      </p>
+                    </header>
+                    <div class="home-v2-metric-card__body">
+                      <p class="home-v2-metric-card__value" id="home2v-reach-total">—</p>
+                      <div class="home-v2-spark-wrap" data-spark-id="reach" aria-hidden="true"></div>
+                    </div>
+                  </article>
+
+                  <article class="home-v2-metric-card home-v2-metric-card--broadcasts" id="home2v-metric-broadcasts" aria-labelledby="home-v2-broadcasts-label">
+                    <span class="home-v2-metric-card__decor" aria-hidden="true">
+                      <span class="material-icons">campaign</span>
+                    </span>
+                    <header class="home-v2-metric-card__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label" id="home-v2-broadcasts-label">
+                          <span data-i18n="home2.metric.broadcastsSent">Broadcasts sent</span>
+                          <span class="home-v2-metric-card__period" data-i18n="home2.period">Last 30 days</span>
+                        </p>
+                      </div>
+                    </header>
+                    <div class="home-v2-metric-card__body home-v2-metric-card__body--solo">
+                      <p class="home-v2-metric-card__value" id="home2v-broadcasts-sent">—</p>
+                    </div>
+                  </article>
+
+                  <article class="home-v2-metric-card" id="home2v-metric-clicks" aria-labelledby="home-v2-clicks-label" data-spark-index="1">
+                    <header class="home-v2-metric-card__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label" id="home-v2-clicks-label">
+                          <span data-i18n="home2.metric.clickRate">Click rate</span>
+                          <span class="home-v2-metric-card__period" data-i18n="home2.period">Last 30 days</span>
+                        </p>
+                      </div>
+                      <p class="home-v2-metric-card__trend is-up" id="home2v-clicks-trend">
+                        <span class="home-v2-metric-card__trend-value"></span>
+                      </p>
+                    </header>
+                    <div class="home-v2-metric-card__body">
+                      <p class="home-v2-metric-card__value" id="home2v-click-rate">—</p>
+                      <div class="home-v2-spark-wrap" data-spark-id="clicks" aria-hidden="true"></div>
+                    </div>
+                  </article>
+                </div>
+              </section>
+
+              <section class="home-section home-v2-section home-v2-guide-section hidden" aria-labelledby="home-v2-guide-title" hidden aria-hidden="true">
+                <div class="home2-section__head">
+                  <h2 id="home-v2-guide-title" data-i18n="home3.broadcastGuide.title">How to send a broadcast</h2>
+                </div>
+                <div class="home-v2-broadcast-path" data-i18n-aria="broadcasts.emptyPathAria" aria-label="Two steps to send a broadcast">
+                  <article class="home-v2-step-card">
+                    <div class="home-v2-step-card__head">
+                      <span class="home-v2-step-card__num" aria-hidden="true">1</span>
+                      <div class="home-v2-step-card__titles">
+                        <strong data-i18n="broadcasts.emptyStep1Title">Create a tag</strong>
+                        <span data-i18n="broadcasts.emptyStep1Helper">Skip if you already have one</span>
+                      </div>
+                    </div>
+                    <button type="button" class="home-v2-step-card__link" data-home2v-action="contacts">
+                      <span data-i18n="broadcasts.emptyStep1Cta">Open contacts</span>
+                      <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                    </button>
+                  </article>
+                  <span class="home-v2-broadcast-path__arrow material-icons" aria-hidden="true">arrow_forward</span>
+                  <article class="home-v2-step-card">
+                    <div class="home-v2-step-card__head">
+                      <span class="home-v2-step-card__num" aria-hidden="true">2</span>
+                      <div class="home-v2-step-card__titles">
+                        <strong data-i18n="broadcasts.emptyStep2Title">Create your broadcast</strong>
+                        <span data-i18n="home3.broadcastGuide.step2Hint">Choose a tag and write your message.</span>
+                      </div>
+                    </div>
+                    <button type="button" class="home-v2-step-card__link home-v2-step-card__link--primary" data-home2v-action="broadcast">
+                      <span data-i18n="broadcasts.emptyCta">Create broadcast</span>
+                      <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                    </button>
+                  </article>
+                </div>
+              </section>
+
+              <section class="home-section home-v2-section home-v2-chats-section" aria-labelledby="home-v2-recent-title">
+                <div class="home2-section__head">
+                  <h2 id="home-v2-recent-title" class="home-v2-awaiting-title">
+                    <span data-i18n="home3.metric.awaitingReply">Awaiting your reply</span>
+                    <span class="home-v2-awaiting-badge" id="home2v-awaiting-count" aria-hidden="true">0</span>
+                  </h2>
+                  <button class="home-text-link" type="button" id="home2v-view-all-chats">
+                    <span data-i18n="home2.recent.viewAll">View all conversations</span>
+                    <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                  </button>
+                </div>
+                <ul class="home2-chat-list" id="home2v-chat-list"></ul>
+              </section>
+            </div>
+
+            <aside class="home-v2-aside">
+              <section class="home-section home-v2-section home-v2-quick-section" aria-labelledby="home-v2-quick-title">
+                <div class="home-section__heading home-v2-quick-heading">
+                  <h2 id="home-v2-quick-title" data-i18n="home3.quickStart.title">Quick Start</h2>
+                </div>
+                <div class="home-v2-quick-stack">
+                  <button class="home-v2-quick-card" type="button" data-home2v-action="broadcast">
+                    <span class="home-v2-quick-card__icon" aria-hidden="true"><span class="material-icons">campaign</span></span>
+                    <span class="home-v2-quick-card__copy">
+                      <span class="home-v2-quick-card__title" data-i18n="home2.actions.broadcast.title">Broadcast Message</span>
+                      <span class="home-v2-quick-card__desc" data-i18n="home3.quickStart.broadcastDesc">Send a message to selected contacts.</span>
+                    </span>
+                    <span class="material-icons home-v2-quick-card__arrow" aria-hidden="true">arrow_forward</span>
+                  </button>
+                  <button class="home-v2-quick-card" type="button" data-home2v-action="contacts">
+                    <span class="home-v2-quick-card__icon" aria-hidden="true"><span class="material-icons">sell</span></span>
+                    <span class="home-v2-quick-card__copy">
+                      <span class="home-v2-quick-card__title" data-i18n="nav.contacts">Manage contacts</span>
+                      <span class="home-v2-quick-card__desc" data-i18n="home2.actions.tags.desc">Organize your audience using tags.</span>
+                    </span>
+                    <span class="material-icons home-v2-quick-card__arrow" aria-hidden="true">arrow_forward</span>
+                  </button>
+                </div>
+              </section>
+
+              <section class="home-section home-v2-section home-v2-announce-section" aria-labelledby="home-v2-announce-title">
+                <div class="home2-section__head">
+                  <h2 id="home-v2-announce-title" data-i18n="home3.announcements.title">Announcements</h2>
+                  <button class="home-text-link" type="button" data-home2-news="all">
+                    <span data-i18n="home2.news.viewAll">View all</span>
+                    <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                  </button>
+                </div>
+                <ul class="home-v2-announce-list">
+                  <li>
+                    <button class="home-v2-announce-row" type="button" data-home2-news="featured">
+                      <span class="home-v2-announce-row__main">
+                        <span class="home-v2-announce-row__title" data-i18n="home2.news.featured.title">Targeted Messaging</span>
+                        <span class="home-v2-announce-row__excerpt" data-i18n="home2.news.featured.desc">Learn how to prepare your first broadcast.</span>
+                      </span>
+                      <time class="home-v2-announce-row__date" data-i18n="home3.news.featuredDate">Today</time>
+                    </button>
+                  </li>
+                  <li>
+                    <button class="home-v2-announce-row" type="button" data-home2-news="maintenance">
+                      <span class="home-v2-announce-row__main">
+                        <span class="home-v2-announce-row__title" data-i18n="home2.news.item1.title">Scheduled maintenance</span>
+                        <span class="home-v2-announce-row__excerpt" data-i18n="home3.news.maintenanceDesc">Platform updates on Oct 20 — brief read-only window.</span>
+                      </span>
+                      <time class="home-v2-announce-row__date" data-i18n="home2.news.item1.date">Oct 20</time>
+                    </button>
+                  </li>
+                  <li>
+                    <button class="home-v2-announce-row" type="button" data-home2-news="tags-guide">
+                      <span class="home-v2-announce-row__main">
+                        <span class="home-v2-announce-row__title" data-i18n="home2.news.item2.title">New guide: Managing audience tags</span>
+                        <span class="home-v2-announce-row__excerpt" data-i18n="home3.news.tagsGuideDesc">Step-by-step walkthrough for tagging your participants.</span>
+                      </span>
+                      <time class="home-v2-announce-row__date" data-i18n="home2.news.item2.date">Oct 9</time>
+                    </button>
+                  </li>
+                </ul>
+              </section>
+            </aside>
+          </div>
+        </div>
+      </main>
+
+      <!-- Option 4: Option 2 layout with in-card metric CTAs -->
+      <main class="home-panel home-v2 home-v4 hidden" id="home-option-4" data-od-id="home-v4-panel">
+        <header class="home-header mvp-panel-header mvp-panel-header--stacked" data-od-id="home-v4-header">
+          <div class="mvp-panel-header__top home-header__top">
+            <h2 data-i18n="home3.welcomeTitle">Welcome to the ABC project 👋</h2>
+            <div class="home-option-toggle" role="group" aria-label="Home design option">
+              <button type="button" class="home-option-toggle__btn" data-home-option="1" aria-pressed="false" data-i18n="home.option.draft">PRD Draft</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="2" aria-pressed="false" data-i18n="home.option.two">Option 2</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="3" aria-pressed="false" data-i18n="home.option.firstTime">Option 2 First time user</button>
+              <button type="button" class="home-option-toggle__btn is-active" data-home-option="4" aria-pressed="true" data-i18n="home.option.three">Option 3</button>
+            </div>
+          </div>
+          <div class="mvp-panel-header__meta home-header__meta">
+            <p class="home-header__subtitle" data-i18n="home3.subtitle">Manage Your Contacts · Track Engagement · Send Broadcast Messages</p>
+          </div>
+        </header>
+
+        <div class="home-v2-scroll" data-od-id="home-v4-scroll">
+          <div class="home-v2-layout">
+            <div class="home-v2-main">
+              <section class="home-section home-v2-section home-v2-metrics-section" aria-labelledby="home-v4-overview-title">
+                <div class="home2-section__head">
+                  <h2 id="home-v4-overview-title" data-i18n="home3.overviewTitle">Overview</h2>
+                </div>
+                <div class="home-v2-metrics home-v2-metrics--with-cta">
+                  <article class="home-v2-metric-card home-v2-metric-card--has-cta home-v2-metric-card--contacts" id="home4v-metric-reach" aria-labelledby="home-v4-reach-label">
+                    <span class="home-v2-metric-card__decor" aria-hidden="true">
+                      <span class="material-icons">groups</span>
+                    </span>
+                    <header class="home-v2-metric-card__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label" id="home-v4-reach-label">
+                          <span data-i18n="home3.metric.projectParticipants">Contacts</span>
+                        </p>
+                        <p class="home-v2-metric-card__caption" data-i18n="home2.reach.label">Reachable audience</p>
+                      </div>
+                    </header>
+                    <div class="home-v2-metric-card__main">
+                      <div class="home-v2-metric-card__body home-v2-metric-card__body--solo">
+                        <p class="home-v2-metric-card__value" id="home4v-reach-total">—</p>
+                      </div>
+                    </div>
+                    <footer class="home-v2-metric-card__foot">
+                      <button type="button" class="home-v2-metric-card__cta" data-home2v-action="contacts">
+                        <span data-i18n="home4.metricCta.manageContacts">Manage contacts</span>
+                      </button>
+                    </footer>
+                  </article>
+
+                  <article class="home-v2-metric-card home-v2-metric-card--broadcasts home-v2-metric-card--has-cta" id="home4v-metric-broadcasts" aria-labelledby="home-v4-broadcasts-label">
+                    <span class="home-v2-metric-card__decor" aria-hidden="true">
+                      <span class="material-icons">campaign</span>
+                    </span>
+                    <header class="home-v2-metric-card__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label" id="home-v4-broadcasts-label">
+                          <span data-i18n="home2.metric.broadcastsSent">Broadcasts sent</span>
+                          <span class="home-v2-metric-card__period" data-i18n="home2.period">Last 30 days</span>
+                        </p>
+                      </div>
+                    </header>
+                    <div class="home-v2-metric-card__main">
+                      <div class="home-v2-metric-card__body home-v2-metric-card__body--solo">
+                        <p class="home-v2-metric-card__value" id="home4v-broadcasts-sent">—</p>
+                      </div>
+                    </div>
+                    <footer class="home-v2-metric-card__foot">
+                      <button type="button" class="home-v2-metric-card__cta" data-home2v-action="broadcasts">
+                        <span data-i18n="home4.metricCta.viewAllBroadcasts">View all broadcasts</span>
+                      </button>
+                    </footer>
+                  </article>
+
+                  <article class="home-v2-metric-card home-v2-metric-card--has-cta" id="home4v-metric-clicks" aria-labelledby="home-v4-clicks-label" data-spark-index="1">
+                    <header class="home-v2-metric-card__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label" id="home-v4-clicks-label">
+                          <span data-i18n="home2.metric.clickRate">Click rate</span>
+                          <span class="home-v2-metric-card__period" data-i18n="home2.period">Last 30 days</span>
+                        </p>
+                      </div>
+                      <p class="home-v2-metric-card__trend is-up" id="home4v-clicks-trend">
+                        <span class="home-v2-metric-card__trend-value"></span>
+                      </p>
+                    </header>
+                    <div class="home-v2-metric-card__main">
+                      <div class="home-v2-metric-card__body">
+                        <p class="home-v2-metric-card__value" id="home4v-click-rate">—</p>
+                        <div class="home-v2-spark-wrap" data-spark-id="clicks" aria-hidden="true"></div>
+                      </div>
+                    </div>
+                    <footer class="home-v2-metric-card__foot">
+                      <button type="button" class="home-v2-metric-card__cta" data-home2v-action="analytics">
+                        <span data-i18n="home4.metricCta.viewAllAnalytics">View all analytics</span>
+                      </button>
+                    </footer>
+                  </article>
+                </div>
+              </section>
+
+              <section class="home-section home-v2-section home-v2-guide-section hidden" aria-labelledby="home-v2-guide-title" hidden aria-hidden="true">
+                <div class="home2-section__head">
+                  <h2 id="home-v2-guide-title" data-i18n="home3.broadcastGuide.title">How to send a broadcast</h2>
+                </div>
+                <div class="home-v2-broadcast-path" data-i18n-aria="broadcasts.emptyPathAria" aria-label="Two steps to send a broadcast">
+                  <article class="home-v2-step-card">
+                    <div class="home-v2-step-card__head">
+                      <span class="home-v2-step-card__num" aria-hidden="true">1</span>
+                      <div class="home-v2-step-card__titles">
+                        <strong data-i18n="broadcasts.emptyStep1Title">Create a tag</strong>
+                        <span data-i18n="broadcasts.emptyStep1Helper">Skip if you already have one</span>
+                      </div>
+                    </div>
+                    <button type="button" class="home-v2-step-card__link" data-home2v-action="contacts">
+                      <span data-i18n="broadcasts.emptyStep1Cta">Open contacts</span>
+                      <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                    </button>
+                  </article>
+                  <span class="home-v2-broadcast-path__arrow material-icons" aria-hidden="true">arrow_forward</span>
+                  <article class="home-v2-step-card">
+                    <div class="home-v2-step-card__head">
+                      <span class="home-v2-step-card__num" aria-hidden="true">2</span>
+                      <div class="home-v2-step-card__titles">
+                        <strong data-i18n="broadcasts.emptyStep2Title">Create your broadcast</strong>
+                        <span data-i18n="home3.broadcastGuide.step2Hint">Choose a tag and write your message.</span>
+                      </div>
+                    </div>
+                    <button type="button" class="home-v2-step-card__link home-v2-step-card__link--primary" data-home2v-action="broadcast">
+                      <span data-i18n="broadcasts.emptyCta">Create broadcast</span>
+                      <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                    </button>
+                  </article>
+                </div>
+              </section>
+
+              <section class="home-section home-v2-section home-v2-chats-section" aria-labelledby="home-v4-recent-title">
+                <div class="home2-section__head">
+                  <h2 id="home-v4-recent-title" class="home-v2-awaiting-title">
+                    <span data-i18n="home3.metric.awaitingReply">Awaiting your reply</span>
+                    <span class="home-v2-awaiting-badge" id="home4v-awaiting-count" aria-hidden="true">0</span>
+                  </h2>
+                  <button class="home-text-link" type="button" id="home4v-view-all-chats">
+                    <span data-i18n="home2.recent.viewAll">View all conversations</span>
+                    <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                  </button>
+                </div>
+                <ul class="home2-chat-list" id="home4v-chat-list"></ul>
+              </section>
+            </div>
+
+            <aside class="home-v2-aside">
+              <section class="home-section home-v2-section home-v2-quick-section" aria-labelledby="home-v4-quick-title">
+                <div class="home-section__heading home-v2-quick-heading">
+                  <h2 id="home-v4-quick-title" data-i18n="home3.quickStart.title">Quick Start</h2>
+                </div>
+                <div class="home-v2-quick-stack">
+                  <button class="home-v2-quick-card" type="button" data-home2v-action="broadcast">
+                    <span class="home-v2-quick-card__icon" aria-hidden="true"><span class="material-icons">campaign</span></span>
+                    <span class="home-v2-quick-card__copy">
+                      <span class="home-v2-quick-card__title" data-i18n="home2.actions.broadcast.title">Broadcast Message</span>
+                      <span class="home-v2-quick-card__desc" data-i18n="home3.quickStart.broadcastDesc">Send a message to selected contacts.</span>
+                    </span>
+                    <span class="material-icons home-v2-quick-card__arrow" aria-hidden="true">arrow_forward</span>
+                  </button>
+                  <button class="home-v2-quick-card" type="button" data-home2v-action="contacts">
+                    <span class="home-v2-quick-card__icon" aria-hidden="true"><span class="material-icons">sell</span></span>
+                    <span class="home-v2-quick-card__copy">
+                      <span class="home-v2-quick-card__title" data-i18n="nav.contacts">Manage contacts</span>
+                      <span class="home-v2-quick-card__desc" data-i18n="home2.actions.tags.desc">Organize your audience using tags.</span>
+                    </span>
+                    <span class="material-icons home-v2-quick-card__arrow" aria-hidden="true">arrow_forward</span>
+                  </button>
+                </div>
+              </section>
+
+              <section class="home-section home-v2-section home-v2-announce-section" aria-labelledby="home-v4-announce-title">
+                <div class="home2-section__head">
+                  <h2 id="home-v4-announce-title" data-i18n="home3.announcements.title">Announcements</h2>
+                  <button class="home-text-link" type="button" data-home2-news="all">
+                    <span data-i18n="home2.news.viewAll">View all</span>
+                    <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                  </button>
+                </div>
+                <ul class="home-v2-announce-list">
+                  <li>
+                    <button class="home-v2-announce-row" type="button" data-home2-news="featured">
+                      <span class="home-v2-announce-row__main">
+                        <span class="home-v2-announce-row__title" data-i18n="home2.news.featured.title">Targeted Messaging</span>
+                        <span class="home-v2-announce-row__excerpt" data-i18n="home2.news.featured.desc">Learn how to prepare your first broadcast.</span>
+                      </span>
+                      <time class="home-v2-announce-row__date" data-i18n="home3.news.featuredDate">Today</time>
+                    </button>
+                  </li>
+                  <li>
+                    <button class="home-v2-announce-row" type="button" data-home2-news="maintenance">
+                      <span class="home-v2-announce-row__main">
+                        <span class="home-v2-announce-row__title" data-i18n="home2.news.item1.title">Scheduled maintenance</span>
+                        <span class="home-v2-announce-row__excerpt" data-i18n="home3.news.maintenanceDesc">Platform updates on Oct 20 — brief read-only window.</span>
+                      </span>
+                      <time class="home-v2-announce-row__date" data-i18n="home2.news.item1.date">Oct 20</time>
+                    </button>
+                  </li>
+                  <li>
+                    <button class="home-v2-announce-row" type="button" data-home2-news="tags-guide">
+                      <span class="home-v2-announce-row__main">
+                        <span class="home-v2-announce-row__title" data-i18n="home2.news.item2.title">New guide: Managing audience tags</span>
+                        <span class="home-v2-announce-row__excerpt" data-i18n="home3.news.tagsGuideDesc">Step-by-step walkthrough for tagging your participants.</span>
+                      </span>
+                      <time class="home-v2-announce-row__date" data-i18n="home2.news.item2.date">Oct 9</time>
+                    </button>
+                  </li>
+                </ul>
+              </section>
+            </aside>
+          </div>
+        </div>
+      </main>
+
+      <!-- Option 3: Option 2 layout + broadcast stepper (first-time guidance) -->
+      <main class="home-panel home-v2 home-v3 hidden" id="home-option-3" data-od-id="home-v3-panel">
+        <header class="home-header mvp-panel-header mvp-panel-header--stacked" data-od-id="home-v3-header">
+          <div class="mvp-panel-header__top home-header__top">
+            <h2 data-i18n="home3.welcomeTitle">Welcome to the ABC project 👋</h2>
+            <div class="home-option-toggle" role="group" aria-label="Home design option">
+              <button type="button" class="home-option-toggle__btn" data-home-option="1" aria-pressed="false" data-i18n="home.option.draft">PRD Draft</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="2" aria-pressed="false" data-i18n="home.option.two">Option 2</button>
+              <button type="button" class="home-option-toggle__btn is-active" data-home-option="3" aria-pressed="true" data-i18n="home.option.firstTime">Option 2 First time user</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="4" aria-pressed="false" data-i18n="home.option.three">Option 3</button>
+            </div>
+          </div>
+          <div class="mvp-panel-header__meta home-header__meta">
+            <p class="home-header__subtitle" data-i18n="home3.subtitle">Manage Your Contacts · Track Engagement · Send Broadcast Messages</p>
+          </div>
+        </header>
+
+        <div class="home-v2-scroll" data-od-id="home-v3-scroll">
+          <div class="home-v2-layout">
+            <div class="home-v2-main">
+              <section class="home-section home-v2-section home-v2-metrics-section" aria-labelledby="home-v3-overview-title">
+                <div class="home2-section__head">
+                  <h2 id="home-v3-overview-title" data-i18n="home3.overviewTitle">Overview</h2>
+                </div>
+                <div class="home-v2-metrics home-v2-metrics--starter">
+                  <article class="home-v2-metric-card" id="home3v-metric-reach" aria-labelledby="home-v3-reach-label" data-spark-index="0">
+                    <header class="home-v2-metric-card__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label" id="home-v3-reach-label">
+                          <span data-i18n="home3.metric.projectParticipants">Contacts</span>
+                        </p>
+                      </div>
+                      <p class="home-v2-metric-card__trend is-up" id="home3v-reach-trend">
+                        <span class="home-v2-metric-card__trend-value"></span>
+                      </p>
+                    </header>
+                    <div class="home-v2-metric-card__body">
+                      <p class="home-v2-metric-card__value" id="home3v-reach-total">—</p>
+                      <div class="home-v2-spark-wrap" data-spark-id="reach" aria-hidden="true"></div>
+                    </div>
+                  </article>
+
+                  <article class="home-v2-metric-card home-v2-metric-card--broadcasts" id="home3v-metric-broadcasts" aria-labelledby="home-v3-broadcasts-label">
+                    <span class="home-v2-metric-card__decor" aria-hidden="true">
+                      <span class="material-icons">campaign</span>
+                    </span>
+                    <header class="home-v2-metric-card__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label" id="home-v3-broadcasts-label">
+                          <span data-i18n="home2.metric.broadcastsSent">Broadcasts sent</span>
+                          <span class="home-v2-metric-card__period" data-i18n="home2.period">Last 30 days</span>
+                        </p>
+                      </div>
+                    </header>
+                    <div class="home-v2-metric-card__body home-v2-metric-card__body--solo">
+                      <p class="home-v2-metric-card__value" id="home3v-broadcasts-sent">—</p>
+                    </div>
+                  </article>
+                </div>
+              </section>
+
+              <section class="home-section home-v2-section home-v2-chats-section" aria-labelledby="home-v3-awaiting-title">
+                <div class="home2-section__head">
+                  <h2 id="home-v3-awaiting-title" class="home-v2-awaiting-title">
+                    <span data-i18n="home3.metric.awaitingReply">Awaiting your reply</span>
+                    <span class="home-v2-awaiting-badge" id="home3v-awaiting-count" aria-hidden="true">0</span>
+                  </h2>
+                  <button class="home-text-link" type="button" id="home3v-view-all-chats">
+                    <span data-i18n="home2.recent.viewAll">View all conversations</span>
+                    <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                  </button>
+                </div>
+                <ul class="home2-chat-list" id="home3v-chat-list"></ul>
+              </section>
+            </div>
+
+            <aside class="home-v2-aside">
+              <section class="home-section home-v2-section home-v3-stepper-section" aria-labelledby="home-v3-stepper-title">
+                <div class="home-section__heading home-v2-quick-heading">
+                  <h2 id="home-v3-stepper-title" data-i18n="home3.stepper.title">How to send a broadcast</h2>
+                </div>
+                <div class="home-v3-stepper-panel">
+                  <ol class="home-v3-stepper">
+                    <li class="home-v3-stepper__item">
+                      <div class="home-v3-stepper__rail" aria-hidden="true">
+                        <span class="home-v3-stepper__node">
+                          <span class="home-v3-stepper__num">1</span>
+                        </span>
+                        <span class="home-v3-stepper__line"></span>
+                      </div>
+                      <div class="home-v3-stepper__content">
+                        <header class="home-v3-stepper__head">
+                          <strong class="home-v3-stepper__title" data-i18n="home3.stepper.step1Title">Set up your contacts</strong>
+                        </header>
+                        <p class="home-v3-stepper__desc" data-i18n="home3.stepper.step1Desc">Create a group tag for the people you want to message.</p>
+                        <button type="button" class="home-v3-stepper__cta" data-home2v-action="contacts">
+                          <span data-i18n="broadcasts.emptyStep1Cta">Open contacts</span>
+                          <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                        </button>
+                      </div>
+                    </li>
+                    <li class="home-v3-stepper__item">
+                      <div class="home-v3-stepper__rail" aria-hidden="true">
+                        <span class="home-v3-stepper__node">
+                          <span class="home-v3-stepper__num">2</span>
+                        </span>
+                      </div>
+                      <div class="home-v3-stepper__content">
+                        <header class="home-v3-stepper__head">
+                          <strong class="home-v3-stepper__title" data-i18n="home3.stepper.step2Title">Compose your broadcast</strong>
+                        </header>
+                        <p class="home-v3-stepper__desc" data-i18n="home3.stepper.step2Desc">Choose a tag and write the message you want to send.</p>
+                        <button type="button" class="home-v3-stepper__cta home-v3-stepper__cta--primary" data-home2v-action="broadcast">
+                          <span data-i18n="broadcasts.emptyCta">Create broadcast</span>
+                          <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                        </button>
+                      </div>
+                    </li>
+                  </ol>
+                </div>
+              </section>
+
+              <section class="home-section home-v2-section home-v2-announce-section" aria-labelledby="home-v3-announce-title">
+                <div class="home2-section__head">
+                  <h2 id="home-v3-announce-title" data-i18n="home3.announcements.title">Announcements</h2>
+                  <button class="home-text-link" type="button" data-home2-news="all">
+                    <span data-i18n="home2.news.viewAll">View all</span>
+                    <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                  </button>
+                </div>
+                <ul class="home-v2-announce-list">
+                  <li>
+                    <button class="home-v2-announce-row" type="button" data-home2-news="featured">
+                      <span class="home-v2-announce-row__main">
+                        <span class="home-v2-announce-row__title" data-i18n="home2.news.featured.title">Targeted Messaging</span>
+                        <span class="home-v2-announce-row__excerpt" data-i18n="home2.news.featured.desc">Learn how to prepare your first broadcast.</span>
+                      </span>
+                      <time class="home-v2-announce-row__date" data-i18n="home3.news.featuredDate">Today</time>
+                    </button>
+                  </li>
+                  <li>
+                    <button class="home-v2-announce-row" type="button" data-home2-news="maintenance">
+                      <span class="home-v2-announce-row__main">
+                        <span class="home-v2-announce-row__title" data-i18n="home2.news.item1.title">Scheduled maintenance</span>
+                        <span class="home-v2-announce-row__excerpt" data-i18n="home3.news.maintenanceDesc">Platform updates on Oct 20 — brief read-only window.</span>
+                      </span>
+                      <time class="home-v2-announce-row__date" data-i18n="home2.news.item1.date">Oct 20</time>
+                    </button>
+                  </li>
+                  <li>
+                    <button class="home-v2-announce-row" type="button" data-home2-news="tags-guide">
+                      <span class="home-v2-announce-row__main">
+                        <span class="home-v2-announce-row__title" data-i18n="home2.news.item2.title">New guide: Managing audience tags</span>
+                        <span class="home-v2-announce-row__excerpt" data-i18n="home3.news.tagsGuideDesc">Step-by-step walkthrough for tagging your participants.</span>
+                      </span>
+                      <time class="home-v2-announce-row__date" data-i18n="home2.news.item2.date">Oct 9</time>
+                    </button>
+                  </li>
+                </ul>
+              </section>
+            </aside>
+          </div>
+        </div>
+      </main>
     </div>
 
     <!-- Chats view -->
@@ -1336,12 +1923,16 @@
     </div>
 
     <!-- Active Chat -->
-    <div class="panel-rail panel-rail--chat" data-od-id="chat-panel-rail">
+    <div class="panel-rail panel-rail--chat chats-room-rail" id="chat-panel-rail" data-od-id="chat-panel-rail">
+      <div class="chats-room-stack">
       <main class="chat-panel panel" data-od-id="chat-panel">
       <header class="chat-header mvp-panel-header mvp-panel-header--single" data-od-id="chat-header">
         <div class="chat-header__content" data-od-id="chat-title-group">
-          <h2 id="chat-title" data-od-id="chat-title">Alice Reynolds</h2>
+          <h2 id="chat-title" data-od-id="chat-title">UCC Coffee Feedback Chat</h2>
         </div>
+        <button type="button" class="icon-btn chat-community-settings-btn" id="chat-community-settings-btn" hidden aria-label="Room settings" aria-expanded="false" aria-controls="chat-room-settings" data-i18n-aria="communityRoom.openAria">
+          <span class="material-icons" aria-hidden="true">menu</span>
+        </button>
         <div class="chat-header-actions hidden" id="chat-operator-actions" data-od-id="chat-assist-btn" hidden="" aria-hidden="true">
           <button class="assist-btn" type="button" aria-label="Mark conversation as done" id="chat-done-btn" data-od-id="chat-done-btn">
             <span class="assist-btn__icon assist-btn__icon--done" aria-hidden="true">
@@ -1373,16 +1964,10 @@
 
       <footer class="composer" data-od-id="chat-composer">
         <div class="attach-menu-wrap" data-od-id="chat-attach-wrap">
-          <button class="attach-btn" type="button" id="chat-attach-btn" aria-label="Attach" aria-haspopup="menu" aria-expanded="false" aria-controls="chat-attach-menu" data-od-id="chat-attach-btn">
+          <input type="file" id="chat-attach-input" class="visually-hidden" accept="image/*,application/pdf,.pdf" tabindex="-1">
+          <label class="attach-btn" for="chat-attach-input" id="chat-attach-btn" data-i18n-aria="chats.attachAria" aria-label="Attach file" data-od-id="chat-attach-btn">
             <span class="material-symbols-outlined composer-icon" aria-hidden="true">add</span>
-          </button>
-          <div class="attach-menu" id="chat-attach-menu" role="menu" aria-hidden="true">
-            <button class="attach-menu__item" type="button" data-attach-action="image" role="menuitem">
-              <span class="material-symbols-outlined composer-icon" aria-hidden="true">image</span>
-              <span data-i18n="chats.attachImage">Image</span>
-            </button>
-          </div>
-          <input type="file" id="chat-image-input" class="visually-hidden" accept="image/*" tabindex="-1">
+          </label>
         </div>
         <input type="text" class="message-input" id="message-input" placeholder="Message" autocomplete="off" data-od-id="chat-message-input" data-i18n-placeholder="chats.messagePlaceholder">
         <button type="button" class="composer-send-btn" id="chat-send-btn" disabled="" aria-label="Send message" data-od-id="chat-send-btn" data-i18n="chats.send" data-i18n-aria="chats.sendAria">
@@ -1390,6 +1975,17 @@
         </button>
       </footer>
       </main>
+
+      <aside class="chat-room-settings panel" id="chat-room-settings" aria-hidden="true" aria-labelledby="chat-room-settings-title">
+        <header class="chat-room-settings__header">
+          <h2 class="chat-room-settings__title" id="chat-room-settings-title" data-i18n="communityRoom.title">Room settings</h2>
+        </header>
+        <div class="chat-room-settings__body">
+          <p class="chat-room-settings__count" id="chat-room-members-count">5 Members</p>
+          <ul class="chat-room-members" id="chat-room-members-list" role="list"></ul>
+        </div>
+      </aside>
+      </div>
     </div>
     </div>
 
