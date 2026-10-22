@@ -2046,7 +2046,31 @@ function normalizeHomeOption(option) {
   return '1';
 }
 
-function setHomeOption(option) {
+const HOME_OPTION_URL_ALIASES = {
+  draft: '1',
+  prd: '1',
+  'first-time': '3',
+  firsttime: '3',
+  'first-time-user': '3',
+};
+
+function parseHomeOptionFromLocation() {
+  const params = new URLSearchParams(window.location.search);
+  const raw = (params.get('home') || params.get('homeOption') || '').trim().toLowerCase();
+  if (!raw) return null;
+  if (HOME_OPTION_URL_ALIASES[raw]) return HOME_OPTION_URL_ALIASES[raw];
+  return normalizeHomeOption(raw);
+}
+
+function syncHomeOptionUrl(opt, { replace = false } = {}) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('view', 'home');
+  url.searchParams.set('home', opt);
+  url.hash = '';
+  window.history[replace ? 'replaceState' : 'pushState']({}, '', url);
+}
+
+function setHomeOption(option, { updateUrl = true } = {}) {
   const opt = normalizeHomeOption(option);
   document.getElementById('home-option-1')?.classList.toggle('hidden', opt !== '1');
   document.getElementById('home-option-2')?.classList.toggle('hidden', opt !== '2');
@@ -2060,6 +2084,7 @@ function setHomeOption(option) {
   try {
     localStorage.setItem(HOME_OPTION_STORAGE_KEY, opt);
   } catch (_) { /* ignore */ }
+  if (updateUrl && activeView === 'home') syncHomeOptionUrl(opt);
   if (opt === '2' || opt === '3' || opt === '4') animateHomeV2Metrics(`home-option-${opt}`);
 }
 
@@ -6625,6 +6650,10 @@ window.addEventListener('popstate', () => {
   if (getViewFromLocation() === 'broadcasts' && step) {
     startFreshBroadcastWizard(step, { replaceUrl: true });
   }
+  const homeFromUrl = parseHomeOptionFromLocation();
+  if (homeFromUrl && getViewFromLocation() === 'home') {
+    setHomeOption(homeFromUrl, { updateUrl: false });
+  }
 });
 
 document.getElementById('contacts-broadcasts-link')?.addEventListener('click', (event) => {
@@ -6880,10 +6909,17 @@ if (initialView === 'broadcasts' && initialWizardStep) {
   startFreshBroadcastWizard(initialWizardStep, { replaceUrl: true });
 }
 refreshLocalizedUI();
-try {
-  const savedHome = localStorage.getItem(HOME_OPTION_STORAGE_KEY);
-  setHomeOption(normalizeHomeOption(savedHome));
-} catch (_) {
-  setHomeOption('1');
+const homeFromUrl = parseHomeOptionFromLocation();
+if (homeFromUrl) {
+  if (initialView !== 'home') switchView('home', { updateUrl: false });
+  setHomeOption(homeFromUrl, { updateUrl: false });
+  syncHomeOptionUrl(homeFromUrl, { replace: true });
+} else {
+  try {
+    const savedHome = localStorage.getItem(HOME_OPTION_STORAGE_KEY);
+    setHomeOption(normalizeHomeOption(savedHome), { updateUrl: false });
+  } catch (_) {
+    setHomeOption('1', { updateUrl: false });
+  }
 }
 
