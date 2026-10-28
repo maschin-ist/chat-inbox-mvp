@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/mvp/chats",
+      "destination": "/mvp/?view=chats",
+      "permanent": false
+    },
+    {
+      "source": "/mvp/chats/:chatId",
+      "destination": "/mvp/?view=chats&chat=:chatId",
+      "permanent": false
+    }
+  ]
+}

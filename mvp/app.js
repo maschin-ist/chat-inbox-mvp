@@ -927,7 +927,10 @@ function handleCopyMessage(msgIndex) {
   const text = getMessageCopyText(msg);
   if (!text) return;
   if (navigator.clipboard?.writeText) {
-    navigator.clipboard.writeText(text).catch(() => {});
+    navigator.clipboard
+      .writeText(text)
+      .then(() => showToast(t('licenses.copied')))
+      .catch(() => {});
   }
 }
 
@@ -2704,6 +2707,9 @@ function renderChatList() {
       renderMessages();
       renderReassignMenu();
       updateTabBadges();
+      if (activeView === 'chats') {
+        syncViewUrl('chats', { chatId: activeChatId });
+      }
     });
   });
 
@@ -6906,11 +6912,38 @@ function getViewFromLocation() {
     : (validViews.includes(hashView) ? hashView : 'home');
 }
 
-function syncViewUrl(view, { replace = false } = {}) {
+function getChatIdFromLocation() {
+  const chatId = new URLSearchParams(window.location.search).get('chat');
+  return chatId || null;
+}
+
+function applyChatIdFromLocation({ updateUrl = false } = {}) {
+  if (activeView !== 'chats') return;
+  const chatId = getChatIdFromLocation();
+  if (chatId && findChatById(chatId)) {
+    activeChatId = chatId;
+    const conv = findChatById(chatId);
+    if (conv) conv.unread = 0;
+  }
+  renderChatList();
+  renderMessages();
+  renderReassignMenu();
+  if (updateUrl && activeChatId) {
+    syncViewUrl('chats', { replace: true, chatId: activeChatId });
+  }
+}
+
+function syncViewUrl(view, { replace = false, chatId = null } = {}) {
   const url = new URL(window.location.href);
   url.searchParams.set('view', view);
+  if (view === 'chats' && chatId) {
+    url.searchParams.set('chat', chatId);
+  } else {
+    url.searchParams.delete('chat');
+  }
   if (view !== 'contacts') url.searchParams.delete('tag');
   if (view !== 'broadcasts') url.searchParams.delete('step');
+  if (view !== 'home') url.searchParams.delete('home');
   url.hash = '';
   window.history[replace ? 'replaceState' : 'pushState']({}, '', url);
 }
@@ -6920,7 +6953,12 @@ function switchView(view, { updateUrl = true, replaceUrl = false } = {}) {
   if (view !== 'broadcasts' && broadcastWizardOpen) hideBroadcastWizard();
   activeView = view;
 
-  if (updateUrl) syncViewUrl(view, { replace: replaceUrl });
+  if (updateUrl) {
+    syncViewUrl(view, {
+      replace: replaceUrl,
+      chatId: view === 'chats' ? activeChatId : null,
+    });
+  }
 
   document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.view === view);
@@ -6936,8 +6974,7 @@ function switchView(view, { updateUrl = true, replaceUrl = false } = {}) {
     renderHome();
   }
   if (view === 'chats') {
-    renderChatList();
-    renderMessages();
+    applyChatIdFromLocation();
   }
   if (view === 'broadcasts') {
     renderBroadcastList();
@@ -7037,14 +7074,18 @@ document.querySelectorAll('[data-home2v-action]').forEach((btn) => {
 });
 
 window.addEventListener('popstate', () => {
-  switchView(getViewFromLocation(), { updateUrl: false });
+  const view = getViewFromLocation();
+  switchView(view, { updateUrl: false });
   const step = getBroadcastWizardStepFromLocation();
-  if (getViewFromLocation() === 'broadcasts' && step) {
+  if (view === 'broadcasts' && step) {
     startFreshBroadcastWizard(step, { replaceUrl: true });
   }
   const homeFromUrl = parseHomeOptionFromLocation();
-  if (homeFromUrl && getViewFromLocation() === 'home') {
+  if (homeFromUrl && view === 'home') {
     setHomeOption(homeFromUrl, { updateUrl: false });
+  }
+  if (view === 'chats') {
+    applyChatIdFromLocation();
   }
 });
 
@@ -7296,6 +7337,12 @@ if (launchView === 'contacts' && launchTag && contactTagCatalog.includes(launchT
 }
 const initialView = getViewFromLocation();
 switchView(initialView, { updateUrl: false });
+if (initialView !== 'home') {
+  syncViewUrl(initialView, {
+    replace: true,
+    chatId: initialView === 'chats' ? activeChatId : null,
+  });
+}
 const initialWizardStep = getBroadcastWizardStepFromLocation();
 if (initialView === 'broadcasts' && initialWizardStep) {
   startFreshBroadcastWizard(initialWizardStep, { replaceUrl: true });
