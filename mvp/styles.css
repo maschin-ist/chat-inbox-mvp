@@ -30,11 +30,16 @@
   --shadow-card: var(--shadow-panel);
   --panel-border: none;
   --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
+  --chats-inbox-max: 320px;
+  --chats-inbox-min: 160px;
+  --chats-inbox-width: 320px;
 }
 
 html,
 body {
   height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   font-family: var(--font);
   font-size: 14px;
   color: var(--text-primary);
@@ -52,6 +57,8 @@ button {
 
 .app {
   display: flex;
+  width: 100%;
+  max-width: 100%;
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
@@ -69,6 +76,57 @@ button {
 
 .panel-rail--inbox {
   padding-left: var(--panel-gap);
+  min-width: 0;
+}
+
+/* ── Viewport fit: stay inside the window (no horizontal page scroll) ── */
+.app > .view {
+  flex: 1 1 0%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.view.view--chats > .panel-rail {
+  min-width: 0;
+}
+
+.view.view--chats > .panel-rail--inbox {
+  flex: 0 0 var(--chats-inbox-width, 320px);
+  width: var(--chats-inbox-width, 320px);
+  max-width: var(--chats-inbox-max, 320px);
+  min-width: 0;
+}
+
+.view.view--chats > .panel-rail--chat,
+.view.view--chats > .panel-rail--chat.chats-room-rail {
+  flex: 1;
+  min-width: 0;
+}
+
+.view--chats .inbox {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.view--chats .inbox-header h2[data-od-id="chats-inbox-title"] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.view.view--broadcasts > .panel-rail--inbox {
+  flex: 0 1 320px;
+  max-width: min(320px, 38vw);
+  min-width: 0;
+}
+
+.view.view--broadcasts > .panel-rail--chat {
+  flex: 1 1 0%;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .panel-rail--chat {
@@ -280,8 +338,9 @@ button {
   box-shadow: var(--shadow-panel);
 }
 
-/* ── Sidebar Rail ── */
+/* ── Sidebar Rail (never shrink) ── */
 .sidebar-rail {
+  flex: 0 0 auto;
   flex-shrink: 0;
   padding: var(--panel-margin) 0 var(--panel-margin) var(--panel-margin);
   display: flex;
@@ -293,6 +352,7 @@ button {
 .sidebar {
   width: 76px;
   min-width: 76px;
+  flex-shrink: 0;
   background: var(--sidebar-bg);
   border-radius: var(--panel-radius);
   display: flex;
@@ -832,7 +892,14 @@ button {
 /* ── Inbox ── */
 .inbox {
   width: 320px;
-  min-width: 280px;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.view--chats .inbox {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .inbox-header {
@@ -1930,9 +1997,11 @@ button {
 /* ── View switching ── */
 .view {
   display: flex;
-  flex: 1;
+  flex: 1 1 0%;
   min-width: 0;
   min-height: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .view.hidden {

@@ -2545,6 +2545,51 @@ function isCommunityChat(chat) {
 
 let chatRoomSettingsOpen = false;
 
+const CHATS_INBOX_WIDTH_MAX = 320;
+const CHATS_INBOX_WIDTH_MIN = 160;
+const CHATS_INBOX_WIDTH_WIDE_AT = 920;
+const CHATS_INBOX_WIDTH_NARROW_AT = 560;
+
+let chatsLayoutLastViewWidth = 0;
+
+function measureChatsInboxWidth(viewWidthPx) {
+  if (viewWidthPx >= CHATS_INBOX_WIDTH_WIDE_AT) return CHATS_INBOX_WIDTH_MAX;
+  if (viewWidthPx <= CHATS_INBOX_WIDTH_NARROW_AT) return CHATS_INBOX_WIDTH_MIN;
+  const t =
+    (viewWidthPx - CHATS_INBOX_WIDTH_NARROW_AT) /
+    (CHATS_INBOX_WIDTH_WIDE_AT - CHATS_INBOX_WIDTH_NARROW_AT);
+  return Math.round(
+    CHATS_INBOX_WIDTH_MIN + t * (CHATS_INBOX_WIDTH_MAX - CHATS_INBOX_WIDTH_MIN)
+  );
+}
+
+function syncChatsInboxLayout() {
+  if (!viewChatsEl || viewChatsEl.classList.contains('hidden')) return;
+
+  const viewWidth = viewChatsEl.clientWidth;
+  if (viewWidth <= 0) return;
+
+  const inboxPx = measureChatsInboxWidth(viewWidth);
+  viewChatsEl.style.setProperty('--chats-inbox-width', `${inboxPx}px`);
+
+  if (chatRoomSettingsOpen && viewWidth < chatsLayoutLastViewWidth - 1) {
+    setChatRoomSettingsOpen(false);
+  }
+
+  chatsLayoutLastViewWidth = viewWidth;
+}
+
+function initChatsResponsiveLayout() {
+  if (!viewChatsEl) return;
+  const run = () => syncChatsInboxLayout();
+  if (typeof ResizeObserver !== 'undefined') {
+    const observer = new ResizeObserver(run);
+    observer.observe(viewChatsEl);
+  }
+  window.addEventListener('resize', run, { passive: true });
+  run();
+}
+
 function getCommunityRoomMembers(conv) {
   if (!conv) return [];
   if (Array.isArray(conv.members) && conv.members.length) return conv.members;
@@ -2612,6 +2657,7 @@ function setChatRoomSettingsOpen(open) {
   toggleBtn?.classList.toggle('is-active', shouldOpen);
 
   if (shouldOpen) renderChatRoomSettings();
+  requestAnimationFrame(() => syncChatsInboxLayout());
 }
 
 function updateCommunityChatChrome() {
@@ -6975,6 +7021,7 @@ function switchView(view, { updateUrl = true, replaceUrl = false } = {}) {
   }
   if (view === 'chats') {
     applyChatIdFromLocation();
+    syncChatsInboxLayout();
   }
   if (view === 'broadcasts') {
     renderBroadcastList();
@@ -7364,5 +7411,6 @@ if (homeFromUrl) {
 
 initHomeV2MetricsCarousel();
 initMessageActions();
+initChatsResponsiveLayout();
 window.addEventListener('resize', () => refreshHomeV2MetricsCarouselLayout(), { passive: true });
 
