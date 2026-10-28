@@ -375,6 +375,9 @@ const I18N_STRINGS = {
     'tag.VIP': 'VIP',
     'page.title': 'Chats inbox — MVP',
     'chat.sent': 'Sent',
+    'chat.copyText': 'Copy text',
+    'chat.unsend': 'Unsend',
+    'chat.messageActionsAria': 'Message actions',
     'chat.alice.preview':
       'Hi, I read your post about Latte Art. Can you tell me how I can join',
     'chat.alice.date1': 'Today, 11:30 AM',
@@ -756,6 +759,9 @@ const I18N_STRINGS = {
     'tag.VIP': 'VIP',
     'page.title': 'チャット — MVP',
     'chat.sent': '送信済み',
+    'chat.copyText': 'テキストをコピー',
+    'chat.unsend': '送信取消',
+    'chat.messageActionsAria': 'メッセージの操作',
     'chat.alice.preview': 'ラテアートの投稿を見ました。参加方法を教えてください',
     'chat.alice.date1': '今日 11:30',
     'chat.alice.in1': 'ラテアートの投稿を拝見しました。参加方法を教えていただけますか',
@@ -851,6 +857,266 @@ function formatMessageStatus(status) {
     return `<span class="msg-status__label">${t('chat.sent')}</span><span class="msg-status__time">${match[1]}</span>`;
   }
   return `<span class="msg-status__label">${status}</span>`;
+}
+
+function renderMessageActionsMenu(msgIndex, { allowCopy = true } = {}) {
+  const copyItem = allowCopy
+    ? `<button type="button" class="msg-actions-menu__item msg-actions-menu__item--copy" role="menuitem" data-msg-action="copy" data-msg-index="${msgIndex}">
+        <span class="material-symbols-outlined composer-icon msg-actions-menu__icon" aria-hidden="true">content_copy</span>
+        <span>${escapePreviewText(t('chat.copyText'))}</span>
+      </button>`
+    : '';
+  return `
+    <div class="msg-actions-wrap">
+      <button type="button" class="msg-actions-trigger" aria-label="${escapePreviewText(t('chat.messageActionsAria'))}" aria-haspopup="menu" data-msg-index="${msgIndex}">
+        <span class="material-symbols-outlined composer-icon msg-actions-menu__icon" aria-hidden="true">more_vert</span>
+      </button>
+      <div class="msg-actions-menu" role="menu">
+        ${copyItem}
+        <button type="button" class="msg-actions-menu__item msg-actions-menu__item--unsend" role="menuitem" data-msg-action="unsend" data-msg-index="${msgIndex}">
+          <span class="material-symbols-outlined composer-icon msg-actions-menu__icon" aria-hidden="true">delete</span>
+          <span>${escapePreviewText(t('chat.unsend'))}</span>
+        </button>
+      </div>
+    </div>`;
+}
+
+function renderOutgoingMessageMeta(msgIndex, status, { allowCopy = true } = {}) {
+  if (!status) return renderMessageActionsMenu(msgIndex, { allowCopy });
+  return `
+    <div class="msg-meta">
+      ${renderMessageActionsMenu(msgIndex, { allowCopy })}
+      <div class="msg-status">${formatMessageStatus(status)}</div>
+    </div>`;
+}
+
+function getMessageCopyText(msg) {
+  if (!msg) return '';
+  if (msg.type === 'outgoing') return getLocalizedMessageText(msg);
+  return '';
+}
+
+function refreshConversationPreviewAfterMessageChange(conv) {
+  if (!conv) return;
+  const visible = [...conv.messages].reverse().find((m) => {
+    if (m.type === 'date' || m.type === 'system' || m.type === 'note') return false;
+    return true;
+  });
+  if (!visible) {
+    conv.preview = '';
+    conv.previewDynamic = false;
+    return;
+  }
+  if (visible.type === 'outgoing') {
+    conv.preview = getLocalizedMessageText(visible);
+    conv.previewDynamic = !!visible.textKey;
+  } else if (visible.type === 'image') {
+    conv.preview = visible.alt || 'Image';
+    conv.previewDynamic = true;
+  } else if (visible.type === 'incoming') {
+    conv.preview = getLocalizedMessageText(visible);
+    conv.previewDynamic = !!visible.textKey;
+  } else {
+    conv.preview = conv.preview || '';
+  }
+}
+
+function handleCopyMessage(msgIndex) {
+  const conv = getActiveConversation();
+  const msg = conv?.messages[msgIndex];
+  const text = getMessageCopyText(msg);
+  if (!text) return;
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(text).catch(() => {});
+  }
+}
+
+function handleUnsendMessage(msgIndex) {
+  const conv = getActiveConversation();
+  if (!conv) return;
+  const msg = conv.messages[msgIndex];
+  if (!msg || !['outgoing', 'image'].includes(msg.type)) return;
+  if (msg.type === 'image' && msg.src?.startsWith('blob:')) {
+    try {
+      URL.revokeObjectURL(msg.src);
+    } catch (_) {
+      /* ignore */
+    }
+  }
+  conv.messages.splice(msgIndex, 1);
+  refreshConversationPreviewAfterMessageChange(conv);
+  renderChatList();
+  renderMessages();
+}
+
+function measureMessageActionsMenu(menu) {
+  const prev = {
+    visibility: menu.style.visibility,
+    opacity: menu.style.opacity,
+    pointerEvents: menu.style.pointerEvents,
+    display: menu.style.display,
+    top: menu.style.top,
+    left: menu.style.left,
+  };
+  menu.style.visibility = 'hidden';
+  menu.style.opacity = '0';
+  menu.style.pointerEvents = 'none';
+  menu.style.display = 'block';
+  menu.style.top = '-9999px';
+  menu.style.left = '0';
+  const height = menu.offsetHeight;
+  const width = menu.offsetWidth;
+  menu.style.visibility = prev.visibility;
+  menu.style.opacity = prev.opacity;
+  menu.style.pointerEvents = prev.pointerEvents;
+  menu.style.display = prev.display;
+  menu.style.top = prev.top;
+  menu.style.left = prev.left;
+  return { height, width };
+}
+
+function positionMessageActionsMenu(wrap) {
+  const menu = wrap.querySelector('.msg-actions-menu');
+  const trigger = wrap.querySelector('.msg-actions-trigger');
+  if (!menu || !trigger || !messagesEl) return;
+
+  const gap = 6;
+  const edgePad = 8;
+  const { height: menuHeight, width: menuWidth } = measureMessageActionsMenu(menu);
+  const triggerRect = trigger.getBoundingClientRect();
+  const bounds = messagesEl.getBoundingClientRect();
+  const viewportTop = bounds.top + edgePad;
+  const viewportBottom = bounds.bottom - edgePad;
+
+  const spaceAbove = triggerRect.top - viewportTop;
+  const spaceBelow = viewportBottom - triggerRect.bottom;
+  const openAbove = spaceAbove >= menuHeight + gap || spaceAbove >= spaceBelow;
+
+  menu.classList.toggle('is-below', !openAbove);
+  menu.classList.toggle('is-above', openAbove);
+
+  let top = openAbove ? triggerRect.top - menuHeight - gap : triggerRect.bottom + gap;
+  top = Math.min(Math.max(top, viewportTop), Math.max(viewportTop, viewportBottom - menuHeight));
+
+  let left = triggerRect.right - menuWidth;
+  const minLeft = bounds.left + edgePad;
+  const maxLeft = bounds.right - menuWidth - edgePad;
+  left = Math.min(Math.max(left, minLeft), Math.max(minLeft, maxLeft));
+
+  menu.style.top = `${Math.round(top)}px`;
+  menu.style.left = `${Math.round(left)}px`;
+  menu.style.visibility = '';
+  menu.style.opacity = '';
+  menu.style.pointerEvents = '';
+  menu.style.display = '';
+}
+
+function clearMessageActionsMenuPosition(wrap) {
+  const menu = wrap?.querySelector('.msg-actions-menu');
+  if (!menu) return;
+  menu.style.top = '';
+  menu.style.left = '';
+  menu.style.visibility = '';
+  menu.style.opacity = '';
+  menu.style.pointerEvents = '';
+  menu.style.display = '';
+  menu.classList.remove('is-above', 'is-below');
+}
+
+function closeAllMessageActionMenus() {
+  if (!messagesEl) return;
+  messagesEl.querySelectorAll('.msg-actions-wrap.is-open').forEach((wrap) => {
+    wrap.classList.remove('is-open');
+    clearMessageActionsMenuPosition(wrap);
+  });
+}
+
+function initMessageActions() {
+  if (!messagesEl) return;
+  messagesEl.addEventListener('click', (event) => {
+    const trigger = event.target.closest('.msg-actions-trigger');
+    if (trigger) {
+      event.preventDefault();
+      event.stopPropagation();
+      const wrap = trigger.closest('.msg-actions-wrap');
+      if (!wrap) return;
+      const wasOpen = wrap.classList.contains('is-open');
+      closeAllMessageActionMenus();
+      if (!wasOpen) {
+        wrap.classList.add('is-open');
+        positionMessageActionsMenu(wrap);
+      }
+      return;
+    }
+
+    const actionBtn = event.target.closest('[data-msg-action]');
+    if (!actionBtn) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const msgIndex = Number.parseInt(actionBtn.dataset.msgIndex, 10);
+    if (Number.isNaN(msgIndex)) return;
+    if (actionBtn.dataset.msgAction === 'copy') handleCopyMessage(msgIndex);
+    if (actionBtn.dataset.msgAction === 'unsend') handleUnsendMessage(msgIndex);
+    closeAllMessageActionMenus();
+  });
+
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('.msg-actions-wrap')) return;
+    closeAllMessageActionMenus();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeAllMessageActionMenus();
+  });
+
+  let activeActionsWrap = null;
+
+  messagesEl.addEventListener(
+    'mouseover',
+    (event) => {
+      const wrap = event.target.closest('.msg-actions-wrap');
+      if (!wrap || wrap === activeActionsWrap) return;
+      activeActionsWrap = wrap;
+      positionMessageActionsMenu(wrap);
+    },
+    true,
+  );
+
+  messagesEl.addEventListener(
+    'mouseout',
+    (event) => {
+      const wrap = event.target.closest('.msg-actions-wrap');
+      if (!wrap || wrap.classList.contains('is-open')) return;
+      const related = event.relatedTarget;
+      if (related instanceof Node && wrap.contains(related)) return;
+      clearMessageActionsMenuPosition(wrap);
+      if (activeActionsWrap === wrap) activeActionsWrap = null;
+    },
+    true,
+  );
+
+  messagesEl.addEventListener(
+    'focusin',
+    (event) => {
+      const wrap = event.target.closest('.msg-actions-wrap');
+      if (!wrap) return;
+      positionMessageActionsMenu(wrap);
+    },
+    true,
+  );
+
+  messagesEl.addEventListener(
+    'scroll',
+    () => {
+      messagesEl.querySelectorAll('.msg-actions-wrap.is-open').forEach((wrap) => {
+        positionMessageActionsMenu(wrap);
+      });
+      if (activeActionsWrap && !activeActionsWrap.classList.contains('is-open')) {
+        positionMessageActionsMenu(activeActionsWrap);
+      }
+    },
+    { passive: true },
+  );
 }
 
 function getLocalizedTemplateOptions() {
@@ -1099,8 +1365,9 @@ const ALL_CHATS = [
       ],
       operatorId: 'you',
       escalated: false,
-      previewKey: 'chat.community.preview',
-      time: '10:52',
+      preview: 'Photo',
+      previewDynamic: true,
+      time: '11:15',
       unread: 0,
       messages: [
         {
@@ -1126,6 +1393,12 @@ const ALL_CHATS = [
           senderPhoto:
             'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face',
         },
+        {
+          type: 'image',
+          src: 'demo-sent-image.jpg',
+          alt: 'Demo image',
+          status: 'Sent 11:15',
+        },
       ],
     },
     {
@@ -1136,8 +1409,9 @@ const ALL_CHATS = [
       avatar: null,
       operatorId: 'you',
       escalated: false,
-      previewKey: 'chat.alice.preview',
-      time: 'Just now',
+      preview: 'Photo',
+      previewDynamic: true,
+      time: '11:15',
       unread: 0,
       messages: [
         { type: 'date', textKey: 'chat.alice.date1' },
@@ -1155,6 +1429,12 @@ const ALL_CHATS = [
           type: 'outgoing',
           textKey: 'chat.alice.out2',
           status: 'Sent 10:45',
+        },
+        {
+          type: 'image',
+          src: 'demo-sent-image.jpg',
+          alt: 'Demo image',
+          status: 'Sent 11:15',
         },
       ],
     },
@@ -3180,7 +3460,7 @@ function renderMessages() {
   chatTitleEl.textContent = conv.name;
 
   messagesEl.innerHTML = conv.messages
-    .map((msg) => {
+    .map((msg, msgIndex) => {
       if (msg.type === 'date') {
         return `<div class="date-divider">${getLocalizedMessageText(msg)}</div>`;
       }
@@ -3206,7 +3486,7 @@ function renderMessages() {
           <div class="message-content">
             <div class="bubble outgoing">${getLocalizedMessageText(msg)}</div>
           </div>
-          <span class="msg-status">${formatMessageStatus(msg.status)}</span>
+          ${renderOutgoingMessageMeta(msgIndex, msg.status, { allowCopy: true })}
         </div>`;
       }
 
@@ -3267,7 +3547,7 @@ function renderMessages() {
               <img src="${msg.src}" alt="${escapePreviewText(msg.alt || 'Attached image')}">
             </div>
           </div>
-          <span class="msg-status">${formatMessageStatus(msg.status)}</span>
+          ${renderOutgoingMessageMeta(msgIndex, msg.status, { allowCopy: false })}
         </div>`;
       }
 
@@ -7075,5 +7355,6 @@ if (homeFromUrl) {
 }
 
 initHomeV2MetricsCarousel();
+initMessageActions();
 window.addEventListener('resize', () => refreshHomeV2MetricsCarouselLayout(), { passive: true });
 
