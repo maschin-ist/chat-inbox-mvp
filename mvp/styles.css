@@ -1471,18 +1471,14 @@ button {
   transform: translateY(-4px);
 }
 
-.msg-actions-wrap.is-open .msg-actions-menu,
-.msg-actions-wrap:hover .msg-actions-menu,
-.msg-actions-wrap:focus-within .msg-actions-menu {
+.msg-actions-wrap.is-open .msg-actions-menu {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transform: translateY(0);
 }
 
-.msg-actions-wrap.is-open .msg-actions-menu.is-below,
-.msg-actions-wrap:hover .msg-actions-menu.is-below,
-.msg-actions-wrap:focus-within .msg-actions-menu.is-below {
+.msg-actions-wrap.is-open .msg-actions-menu.is-below {
   transform: translateY(0);
 }
 

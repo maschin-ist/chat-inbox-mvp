@@ -1069,51 +1069,12 @@ function initMessageActions() {
     if (event.key === 'Escape') closeAllMessageActionMenus();
   });
 
-  let activeActionsWrap = null;
-
-  messagesEl.addEventListener(
-    'mouseover',
-    (event) => {
-      const wrap = event.target.closest('.msg-actions-wrap');
-      if (!wrap || wrap === activeActionsWrap) return;
-      activeActionsWrap = wrap;
-      positionMessageActionsMenu(wrap);
-    },
-    true,
-  );
-
-  messagesEl.addEventListener(
-    'mouseout',
-    (event) => {
-      const wrap = event.target.closest('.msg-actions-wrap');
-      if (!wrap || wrap.classList.contains('is-open')) return;
-      const related = event.relatedTarget;
-      if (related instanceof Node && wrap.contains(related)) return;
-      clearMessageActionsMenuPosition(wrap);
-      if (activeActionsWrap === wrap) activeActionsWrap = null;
-    },
-    true,
-  );
-
-  messagesEl.addEventListener(
-    'focusin',
-    (event) => {
-      const wrap = event.target.closest('.msg-actions-wrap');
-      if (!wrap) return;
-      positionMessageActionsMenu(wrap);
-    },
-    true,
-  );
-
   messagesEl.addEventListener(
     'scroll',
     () => {
       messagesEl.querySelectorAll('.msg-actions-wrap.is-open').forEach((wrap) => {
         positionMessageActionsMenu(wrap);
       });
-      if (activeActionsWrap && !activeActionsWrap.classList.contains('is-open')) {
-        positionMessageActionsMenu(activeActionsWrap);
-      }
     },
     { passive: true },
   );
