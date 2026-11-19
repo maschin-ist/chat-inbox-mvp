@@ -3579,7 +3579,8 @@ function scoreCommunityPersonToken(token, name, email) {
 }
 
 function contactSearchTexts(contact) {
-  return [contact.name, contact.nameJa, contact.nameRomaji, contact.email].filter(Boolean);
+  const email = contact.email || contactEmailFromName(contact.name, contact.id);
+  return [contact.name, contact.nameJa, contact.nameRomaji, email].filter(Boolean);
 }
 
 function getCommunityTagCatalog() {

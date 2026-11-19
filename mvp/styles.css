@@ -6135,6 +6135,10 @@ a.message-pdf-card {
   max-width: 100%;
 }
 
+.view--contacts .contact-email {
+  display: none;
+}
+
 .contact-tags {
   display: flex;
   flex-wrap: wrap;
