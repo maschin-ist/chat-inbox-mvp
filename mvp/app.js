@@ -152,6 +152,11 @@ const I18N_STRINGS = {
     'home.option.two': 'Option 1',
     'home.option.firstTime': 'Option 1 First time user',
     'home.option.three': 'Option 2',
+    'home.option.contactsSplit': 'Option 3',
+    'home5.contactsTitle': 'Contacts',
+    'home5.analyticsTitle': 'Analytics',
+    'home5.recentTags': 'Recent tags',
+    'home5.manageContacts': 'Manage contacts',
     'home4.metricCta.manageContacts': 'Manage contacts',
     'home4.metricCta.viewAllBroadcasts': 'View all broadcasts',
     'home4.metricCta.viewAllAnalytics': 'View all analytics',
@@ -170,6 +175,7 @@ const I18N_STRINGS = {
     'chats.noSearchResults': 'No conversations match your search.',
     'chats.attachImage': 'Image',
     'chats.template': 'Template',
+    'chats.leaveNote': 'Leave a note',
     'chats.messagePlaceholder': 'Message',
     'chats.send': 'Send',
     'chats.sendAria': 'Send message',
@@ -204,6 +210,16 @@ const I18N_STRINGS = {
     'chat.community.in2': 'Welcome!',
     'chats.attachPdf': 'PDF',
     'chats.attachAria': 'Attach image or PDF',
+    'chats.attachErrUnsupported': 'This file type isn’t supported.',
+    'chats.attachErrImageSize': 'This image is too large. Maximum size is 10 MB.',
+    'chats.attachErrPdfSize': 'This PDF is too large. Maximum size is 32 MB.',
+    'chats.attachErrUploadRejected':
+      'Some of your files could not be uploaded due to the large size or unsupported format',
+    'chats.attachErrPdfMax': 'You can attach up to 10 PDFs',
+    'chats.attachTooltipRemovePdf': 'Remove PDFs to add images',
+    'chats.attachTooltipImageMax': 'You can attach up to 4 images',
+    'chats.attachTooltipRemoveImages': 'Remove images to attach a PDF',
+    'chats.attachTooltipPdfMax': 'You can attach up to 10 PDFs',
     'communityRoom.title': 'Room settings',
     'communityRoom.openAria': 'Open room settings',
     'communityRoom.closeAria': 'Close room settings',
@@ -211,24 +227,36 @@ const I18N_STRINGS = {
     'communityRoom.admin': 'Admin',
     'broadcasts.title': 'Broadcasts',
     'broadcasts.createNew': 'Create new',
+    'broadcasts.composeNew': 'New',
     'broadcasts.createNewAria': 'Create new broadcast',
-    'broadcasts.emptyTitle': 'Broadcasts',
+    'broadcasts.search': 'Search broadcasts',
+    'broadcasts.searchPlaceholder': 'Search broadcasts',
+    'broadcasts.noSearchResults': 'No broadcasts match your search.',
+    'broadcasts.filterAria': 'Filter broadcasts',
+    'broadcasts.filterAll': 'All broadcasts',
+    'broadcasts.filterSent': 'Sent broadcasts',
+    'broadcasts.filterDraft': 'Draft broadcasts',
+    'broadcasts.statusDraft': 'Draft',
+    'broadcasts.statusSent': 'Sent',
+    'broadcasts.emptyAll': 'No broadcasts yet.',
+    'broadcasts.emptySent': 'No sent broadcasts.',
+    'broadcasts.emptyDraft': 'No drafts.',
+    'broadcasts.emptyHint': 'Select a broadcast from the list or create new',
+    'broadcasts.newBroadcast': 'New broadcast',
     'broadcasts.wizardSubtitle': 'Send message to multiple users.',
-    'broadcasts.emptyPathAria': 'Two steps to send a broadcast',
-    'broadcasts.emptyStep1Label': 'Step 1',
-    'broadcasts.emptyStep1Title': 'Create a tag',
-    'broadcasts.emptyStep1Helper': 'Skip if you already have one',
-    'broadcasts.emptyStep1Body':
-      'Create a group tag on the Contacts page for the people you want to message.',
-    'broadcasts.emptyStep1Cta': 'Open contacts',
-    'broadcasts.emptyStep2Label': 'Step 2',
-    'broadcasts.emptyStep2Title': 'Create your broadcast',
-    'broadcasts.emptyStep2Body':
-      'Start your broadcast, choose the prepared tag, and write the message you want to send.',
-    'broadcasts.emptyCta': 'Create broadcast',
     'broadcasts.wizardTitle': 'Send broadcast',
     'broadcasts.noTitle': 'No title',
+    'broadcasts.draftListPreviewFallback': 'Thanks for being part of the community.',
+    'broadcasts.deletedTagTooltip': 'Deleted tag',
+    'broadcasts.typeTooltipTextOnly': 'Text only',
+    'broadcasts.typeTooltipMessageWithLink': 'With link',
     'broadcasts.sentSuccess': 'Message successfully sent',
+    'broadcasts.metric.people': 'Recipients',
+    'broadcasts.metric.thisSend': 'This send',
+    'broadcasts.metric.peopleClicked': '{{count}} people clicked',
+    'broadcasts.metric.peopleDelivered': '{{count}} people delivered',
+    'broadcasts.metric.peopleRead': '{{count}} people read',
+    'broadcasts.metric.peopleReplied': '{{count}} people replied',
     'wizard.stepTemplate': 'Select message type',
     'wizard.stepCompose': 'Compose message',
     'wizard.stepAudience': 'Select contacts',
@@ -272,6 +300,7 @@ const I18N_STRINGS = {
     'wizard.summary': 'Summary',
     'wizard.summaryTemplate': 'Message Type',
     'wizard.summaryRecipients': 'Recipients',
+    'wizard.summaryTag': 'Tag',
     'wizard.summaryLink': 'Link',
     'wizard.summaryViewList': 'View list',
     'wizard.learnMore': 'Learn more',
@@ -299,6 +328,7 @@ const I18N_STRINGS = {
     'contacts.addTagsSubtitleMany': '{{count}} contacts selected',
     'contacts.addTagsHint': 'Type to search existing tags',
     'contacts.createNewLabel': 'Create new',
+    'contacts.createAction': 'Create',
     'contacts.addTagsOrCreate': 'or create new',
     'contacts.createNewTag': 'Create new tag',
     'contacts.newTagPlaceholder': 'New tag name',
@@ -320,6 +350,7 @@ const I18N_STRINGS = {
     'contacts.roleWorker': 'Worker',
     'contacts.roleVisitor': 'Visitor',
     'contacts.searchContacts': 'Search contacts',
+    'contacts.noSearchResults': 'No contacts match your search.',
     'contacts.searchChipPrefix': 'Search',
     'contacts.clearFilters': 'Clear filters',
     'contacts.clearAll': 'Clear all',
@@ -345,8 +376,40 @@ const I18N_STRINGS = {
     'contacts.selectRowAria': 'Select {{name}}',
     'contacts.applyTags': 'Apply tags',
     'contacts.cancel': 'Cancel',
+    'contacts.permissionTitle': 'You don’t have permission to add tags',
+    'contacts.permissionTitleDelete': 'You don’t have permission to delete tags',
+    'contacts.permissionDesc': 'Contact your Project Leader or administrator if you need this permission.',
+    'contacts.permissionClose': 'OK',
+    'contacts.manageTags': 'Create/delete tags',
+    'contacts.createDeleteTags': 'Create/delete tags',
+    'contacts.manageTagsHint': 'Create or delete tags here.',
+    'contacts.newTagAction': 'New tag',
+    'contacts.manageAllTags': 'Manage all tags',
+    'contacts.manageTagsAria': 'Open create/delete tags',
+    'contacts.manageTagsCloseAria': 'Close create/delete tags',
+    'contacts.tagsCount': '{{count}} tags',
+    'contacts.tagsCountOne': '1 tag',
+    'contacts.tagUsage': '{{count}} contacts',
+    'contacts.tagUsageOne': '1 contact',
+    'contacts.tagUsageZero': '0 contacts',
+    'contacts.deleteTag': 'Delete',
+    'contacts.deleteTagAria': 'Delete {{name}}',
+    'contacts.deleteTagTitle': 'Delete “{{name}}”?',
+    'contacts.deleteTagDesc': 'This tag will be removed from {{count}} contacts. Your contacts will not be deleted.',
+    'contacts.deleteTagDescOne': 'This tag will be removed from 1 contact. Your contacts will not be deleted.',
+    'contacts.deleteTagDescZero': 'This tag isn’t assigned to any contacts.',
+    'contacts.deleteTagConfirm': 'Delete tag',
+    'contacts.deleteTagCancel': 'Cancel',
+    'contacts.deleteTagDescBroadcastZero': 'This tag will be removed from 1 in-progress broadcast. Your contacts will not be deleted.',
+    'contacts.deleteTagDescBroadcastOne': 'This tag will be removed from 1 contact and 1 in-progress broadcast. Your contacts will not be deleted.',
+    'contacts.deleteTagDescBroadcastMany': 'This tag will be removed from {{count}} contacts and 1 in-progress broadcast. Your contacts will not be deleted.',
+    'contacts.tagDeletedBroadcastToast': 'Deleted “{{name}}”. In-progress broadcast audience was cleared.',
+    'contacts.defaultTag': 'Default',
+    'contacts.noTags': 'No tags',
     'contacts.searchTags': 'Search tags',
     'contacts.noTagsMatch': 'No tags match your search',
+    'contacts.tagCreatedToast': 'Created “{{name}}”',
+    'contacts.tagExistsToast': 'A tag named “{{name}}” already exists',
     'contacts.applied': 'Applied',
     'contacts.sortBy': 'Sort by',
     'contacts.sortAria': 'Sort contacts',
@@ -377,7 +440,11 @@ const I18N_STRINGS = {
     'chat.sent': 'Sent',
     'chat.copyText': 'Copy text',
     'chat.unsend': 'Unsend',
+    'chat.delete': 'Delete',
     'chat.messageActionsAria': 'Message actions',
+    'chat.retryDeliveryAria': 'Retry sending message',
+    'chat.deliveryFailedToast': 'Message could not be delivered. Tap retry to send again.',
+    'chat.deliveryRetrySuccess': 'Message sent',
     'chat.alice.preview':
       'Hi, I read your post about Latte Art. Can you tell me how I can join',
     'chat.alice.date1': 'Today, 11:30 AM',
@@ -536,6 +603,11 @@ const I18N_STRINGS = {
     'home.option.two': 'Option 1',
     'home.option.firstTime': 'Option 1 初回ユーザー',
     'home.option.three': 'Option 2',
+    'home.option.contactsSplit': 'Option 3',
+    'home5.contactsTitle': '連絡先',
+    'home5.analyticsTitle': '分析',
+    'home5.recentTags': '最近のタグ',
+    'home5.manageContacts': '連絡先を管理',
     'home4.metricCta.manageContacts': '連絡先を管理',
     'home4.metricCta.viewAllBroadcasts': 'すべての配信を見る',
     'home4.metricCta.viewAllAnalytics': 'すべての分析を見る',
@@ -554,6 +626,7 @@ const I18N_STRINGS = {
     'chats.noSearchResults': '検索条件に一致する会話はありません。',
     'chats.attachImage': '画像',
     'chats.template': 'テンプレート',
+    'chats.leaveNote': 'メモを残す',
     'chats.messagePlaceholder': 'メッセージ',
     'chats.send': '送信する',
     'chats.sendAria': 'メッセージを送信',
@@ -588,6 +661,16 @@ const I18N_STRINGS = {
     'chat.community.in2': 'Welcome!',
     'chats.attachPdf': 'PDF',
     'chats.attachAria': '画像またはPDFを添付',
+    'chats.attachErrUnsupported': 'このファイル形式には対応していません。',
+    'chats.attachErrImageSize': '画像が大きすぎます。上限は10 MBです。',
+    'chats.attachErrPdfSize': 'PDFが大きすぎます。上限は32 MBです。',
+    'chats.attachErrUploadRejected':
+      '一部のファイルはサイズが大きすぎるか、対応していない形式のためアップロードできませんでした。',
+    'chats.attachErrPdfMax': 'PDFは最大10件まで添付できます',
+    'chats.attachTooltipRemovePdf': 'PDFを削除すると画像を追加できます',
+    'chats.attachTooltipImageMax': '画像は最大4枚まで添付できます',
+    'chats.attachTooltipRemoveImages': '画像を削除するとPDFを添付できます',
+    'chats.attachTooltipPdfMax': 'PDFは最大10件まで添付できます',
     'communityRoom.title': 'ルーム設定',
     'communityRoom.openAria': 'ルーム設定を開く',
     'communityRoom.closeAria': 'ルーム設定を閉じる',
@@ -595,24 +678,36 @@ const I18N_STRINGS = {
     'communityRoom.admin': '管理者',
     'broadcasts.title': '配信',
     'broadcasts.createNew': '新規作成',
+    'broadcasts.composeNew': '新規',
     'broadcasts.createNewAria': '新規配信を作成',
-    'broadcasts.emptyTitle': '配信',
+    'broadcasts.search': '配信を検索',
+    'broadcasts.searchPlaceholder': '配信を検索',
+    'broadcasts.noSearchResults': '検索条件に一致する配信はありません。',
+    'broadcasts.filterAria': '配信を絞り込む',
+    'broadcasts.filterAll': 'すべての配信',
+    'broadcasts.filterSent': '送信済みの配信',
+    'broadcasts.filterDraft': '下書きの配信',
+    'broadcasts.statusDraft': '下書き',
+    'broadcasts.statusSent': '送信済み',
+    'broadcasts.emptyAll': '配信はまだありません。',
+    'broadcasts.emptySent': '送信済みの配信はありません。',
+    'broadcasts.emptyDraft': '下書きはありません。',
+    'broadcasts.emptyHint': 'リストから配信を選ぶか、新規作成してください',
+    'broadcasts.newBroadcast': '新規配信',
     'broadcasts.wizardSubtitle': '複数のユーザーに一括でメッセージを配信できます。',
-    'broadcasts.emptyPathAria': '配信までの2つのステップ',
-    'broadcasts.emptyStep1Label': 'ステップ 1',
-    'broadcasts.emptyStep1Title': 'タグを作成する',
-    'broadcasts.emptyStep1Helper': 'すでにタグがある場合はスキップできます',
-    'broadcasts.emptyStep1Body':
-      'メッセージを送りたい相手のグループタグを、連絡先ページで作成します。',
-    'broadcasts.emptyStep1Cta': '連絡先を開く',
-    'broadcasts.emptyStep2Label': 'ステップ 2',
-    'broadcasts.emptyStep2Title': '配信を作成する',
-    'broadcasts.emptyStep2Body':
-      '配信を開始し、準備したタグを選んで、届けたいメッセージを作成します。',
-    'broadcasts.emptyCta': '配信を作成',
     'broadcasts.wizardTitle': '配信',
     'broadcasts.noTitle': 'タイトル未入力',
+    'broadcasts.draftListPreviewFallback': 'コミュニティへのご参加ありがとうございます。',
+    'broadcasts.deletedTagTooltip': '削除されたタグ',
+    'broadcasts.typeTooltipTextOnly': 'テキストのみ',
+    'broadcasts.typeTooltipMessageWithLink': 'リンク付き',
     'broadcasts.sentSuccess': '送信しました',
+    'broadcasts.metric.people': '送信先',
+    'broadcasts.metric.thisSend': 'この配信',
+    'broadcasts.metric.peopleClicked': '{{count}}人がクリック',
+    'broadcasts.metric.peopleDelivered': '{{count}}人に配信',
+    'broadcasts.metric.peopleRead': '{{count}}人が既読',
+    'broadcasts.metric.peopleReplied': '{{count}}人が返信',
     'wizard.stepTemplate': 'メッセージの種類を選択',
     'wizard.stepCompose': 'メッセージ作成',
     'wizard.stepAudience': '配信先の選択',
@@ -656,6 +751,7 @@ const I18N_STRINGS = {
     'wizard.summary': '概要',
     'wizard.summaryTemplate': 'テンプレート',
     'wizard.summaryRecipients': '送信先',
+    'wizard.summaryTag': 'タグ',
     'wizard.summaryLink': 'リンク',
     'wizard.summaryViewList': '一覧を見る',
     'wizard.learnMore': '詳しく見る',
@@ -683,6 +779,7 @@ const I18N_STRINGS = {
     'contacts.addTagsSubtitleMany': '{{count}}件選択中',
     'contacts.addTagsHint': '入力して既存のタグを検索',
     'contacts.createNewLabel': '新規作成',
+    'contacts.createAction': '作成',
     'contacts.addTagsOrCreate': 'または新規作成',
     'contacts.createNewTag': '新規タグを作成',
     'contacts.newTagPlaceholder': 'タグ名',
@@ -704,6 +801,7 @@ const I18N_STRINGS = {
     'contacts.roleWorker': 'ワーカー',
     'contacts.roleVisitor': 'ビジター',
     'contacts.searchContacts': '連絡先を検索',
+    'contacts.noSearchResults': '検索条件に一致する連絡先はありません。',
     'contacts.searchChipPrefix': '検索',
     'contacts.clearFilters': 'フィルターを解除',
     'contacts.clearAll': 'すべてクリア',
@@ -729,8 +827,40 @@ const I18N_STRINGS = {
     'contacts.selectRowAria': '{{name}}を選択',
     'contacts.applyTags': 'タグを適用',
     'contacts.cancel': 'キャンセル',
+    'contacts.permissionTitle': 'タグを追加する権限がありません。',
+    'contacts.permissionTitleDelete': 'タグを削除する権限がありません。',
+    'contacts.permissionDesc': 'この権限が必要な場合は、Project Leaderまたは管理者にお問い合わせください。',
+    'contacts.permissionClose': 'OK',
+    'contacts.manageTags': 'タグの作成と削除',
+    'contacts.createDeleteTags': 'タグの作成と削除',
+    'contacts.manageTagsHint': 'ここでタグの作成と削除ができます。',
+    'contacts.newTagAction': '新規',
+    'contacts.manageAllTags': 'すべてのタグを管理',
+    'contacts.manageTagsAria': 'タグの作成と削除を開く',
+    'contacts.manageTagsCloseAria': 'タグの作成と削除を閉じる',
+    'contacts.tagsCount': '{{count}}件のタグ',
+    'contacts.tagsCountOne': '1件のタグ',
+    'contacts.tagUsage': '{{count}}件',
+    'contacts.tagUsageOne': '1件',
+    'contacts.tagUsageZero': '0件',
+    'contacts.deleteTag': '削除',
+    'contacts.deleteTagAria': '{{name}}を削除',
+    'contacts.deleteTagTitle': '「{{name}}」を削除しますか？',
+    'contacts.deleteTagDesc': 'このタグは{{count}}件の連絡先から外されます。連絡先は削除されません。',
+    'contacts.deleteTagDescOne': 'このタグは1件の連絡先から外されます。連絡先は削除されません。',
+    'contacts.deleteTagDescZero': 'このタグはどの連絡先にも付いていません。',
+    'contacts.deleteTagConfirm': 'タグを削除',
+    'contacts.deleteTagCancel': 'キャンセル',
+    'contacts.deleteTagDescBroadcastZero': 'このタグは作成中の配信1件から外されます。連絡先は削除されません。',
+    'contacts.deleteTagDescBroadcastOne': 'このタグは連絡先1件と作成中の配信1件から外されます。連絡先は削除されません。',
+    'contacts.deleteTagDescBroadcastMany': 'このタグは連絡先{{count}}件と作成中の配信1件から外されます。連絡先は削除されません。',
+    'contacts.tagDeletedBroadcastToast': '「{{name}}」を削除しました。作成中の配信のオーディエンスを解除しました。',
+    'contacts.defaultTag': '標準',
+    'contacts.noTags': 'タグはありません',
     'contacts.searchTags': 'タグを検索',
     'contacts.noTagsMatch': '該当するタグがありません',
+    'contacts.tagCreatedToast': '「{{name}}」を作成しました',
+    'contacts.tagExistsToast': '「{{name}}」は既に存在します',
     'contacts.applied': '適用済み',
     'contacts.sortBy': '並び順',
     'contacts.sortAria': '連絡先の並び順',
@@ -761,7 +891,11 @@ const I18N_STRINGS = {
     'chat.sent': '送信済み',
     'chat.copyText': 'テキストをコピー',
     'chat.unsend': '送信取消',
+    'chat.delete': '削除',
     'chat.messageActionsAria': 'メッセージの操作',
+    'chat.retryDeliveryAria': 'メッセージを再送信',
+    'chat.deliveryFailedToast': 'メッセージを配信できませんでした。再送信をタップしてください。',
+    'chat.deliveryRetrySuccess': '送信しました',
     'chat.alice.preview': 'ラテアートの投稿を見ました。参加方法を教えてください',
     'chat.alice.date1': '今日 11:30',
     'chat.alice.in1': 'ラテアートの投稿を拝見しました。参加方法を教えていただけますか',
@@ -850,6 +984,105 @@ function getLocalizedMessageText(msg) {
   return msg.text || '';
 }
 
+const MESSAGE_DELIVERY_RETRY_ICON = 'message-delivery-retry.png?v=20251111-retry';
+
+function isMessageDeliveryFailed(msg) {
+  return Boolean(msg?.deliveryFailed);
+}
+
+function getMessageStatusTime(status) {
+  if (!status) return '';
+  const match = String(status).match(/^Sent\s+(.+)$/i);
+  return match ? match[1] : String(status);
+}
+
+function getMessageErrorText(msg) {
+  if (!msg?.errorKey) return '';
+  return t(msg.errorKey);
+}
+
+function renderMessageDeliveryRetry(msgIndex, msg) {
+  const errorText = getMessageErrorText(msg);
+  const label = escapePreviewText(errorText || t('chat.retryDeliveryAria'));
+  const titleAttr = errorText ? ` title="${escapePreviewText(errorText)}"` : '';
+  return `<button type="button" class="msg-delivery-retry" data-msg-retry="${msgIndex}" aria-label="${label}"${titleAttr}>
+    <img class="msg-delivery-retry__icon" src="${MESSAGE_DELIVERY_RETRY_ICON}" width="24" height="24" alt="">
+  </button>`;
+}
+
+function renderMessageFailedGutter(msgIndex, msg) {
+  const showTime = !msg?.errorKey;
+  const time = showTime ? getMessageStatusTime(msg?.status) : '';
+  return `<div class="message-failed-gutter">
+    ${time ? `<span class="msg-failed-time">${escapePreviewText(time)}</span>` : ''}
+    <div class="message-failed-gutter__actions">
+      ${renderMessageActionsMenu(msgIndex, { allowCopy: false, destructiveLabel: 'delete' })}
+      ${renderMessageDeliveryRetry(msgIndex, msg)}
+    </div>
+  </div>`;
+}
+
+function renderMessagePdfAttachment(msg) {
+  const fileName = msg.fileName || 'Document.pdf';
+  const label = escapePreviewText(fileName);
+  const inner = `
+      <div class="message-pdf-card__icon" aria-hidden="true">
+        <span class="material-icons">picture_as_pdf</span>
+      </div>
+      <div class="message-pdf-card__text">
+        <span class="message-pdf-card__name" title="${label}">${label}</span>
+        <span class="message-pdf-card__meta">${escapePreviewText(t('chats.attachPdf'))}</span>
+      </div>`;
+  if (isMessageDeliveryFailed(msg) || !msg.src) {
+    return `<div class="message-pdf-card">${inner}</div>`;
+  }
+  return `<a class="message-pdf-card message-pdf-card--link" href="${msg.src}" download="${label}" target="_blank" rel="noopener">${inner}</a>`;
+}
+
+function getMessageImages(msg) {
+  if (Array.isArray(msg?.images) && msg.images.length) return msg.images;
+  if (msg?.src) return [{ src: msg.src, alt: msg.alt }];
+  return [];
+}
+
+function renderMessageImageAttachment(msg) {
+  const images = getMessageImages(msg);
+  if (!images.length) return '';
+  if (images.length === 1) {
+    const img = images[0];
+    return `<div class="message-image__frame">
+              <img src="${img.src}" alt="${escapePreviewText(img.alt || 'Attached image')}">
+            </div>`;
+  }
+  const count = Math.min(images.length, 4);
+  const cells = images
+    .slice(0, 4)
+    .map(
+      (img) =>
+        `<div class="message-image-grid__cell"><img src="${img.src}" alt="${escapePreviewText(img.alt || 'Attached image')}"></div>`
+    )
+    .join('');
+  return `<div class="message-image-grid message-image-grid--${count}">${cells}</div>`;
+}
+
+function renderOutgoingMessageRow(msgIndex, msg, contentHtml, { allowCopy = true, attachment = false } = {}) {
+  const failed = isMessageDeliveryFailed(msg);
+  const rowClass = `message-row outgoing${attachment ? ' message-row--attachment' : ''}${failed ? ' message-row--delivery-failed' : ''}`;
+  if (failed) {
+    return `
+        <div class="${rowClass}">
+          <div class="message-content">${contentHtml}</div>
+          ${renderMessageFailedGutter(msgIndex, msg)}
+        </div>`;
+  }
+  const meta = renderOutgoingMessageMeta(msgIndex, msg.status, { allowCopy });
+  return `
+        <div class="${rowClass}">
+          <div class="message-content">${contentHtml}</div>
+          ${meta}
+        </div>`;
+}
+
 function formatMessageStatus(status) {
   if (!status) return '';
   const match = status.match(/^Sent\s+(.+)$/);
@@ -859,13 +1092,14 @@ function formatMessageStatus(status) {
   return `<span class="msg-status__label">${status}</span>`;
 }
 
-function renderMessageActionsMenu(msgIndex, { allowCopy = true } = {}) {
+function renderMessageActionsMenu(msgIndex, { allowCopy = true, destructiveLabel = 'unsend' } = {}) {
   const copyItem = allowCopy
     ? `<button type="button" class="msg-actions-menu__item msg-actions-menu__item--copy" role="menuitem" data-msg-action="copy" data-msg-index="${msgIndex}">
         <span class="material-symbols-outlined composer-icon msg-actions-menu__icon" aria-hidden="true">content_copy</span>
         <span>${escapePreviewText(t('chat.copyText'))}</span>
       </button>`
     : '';
+  const destructiveKey = destructiveLabel === 'delete' ? 'chat.delete' : 'chat.unsend';
   return `
     <div class="msg-actions-wrap">
       <button type="button" class="msg-actions-trigger" aria-label="${escapePreviewText(t('chat.messageActionsAria'))}" aria-haspopup="menu" data-msg-index="${msgIndex}">
@@ -875,7 +1109,7 @@ function renderMessageActionsMenu(msgIndex, { allowCopy = true } = {}) {
         ${copyItem}
         <button type="button" class="msg-actions-menu__item msg-actions-menu__item--unsend" role="menuitem" data-msg-action="unsend" data-msg-index="${msgIndex}">
           <span class="material-symbols-outlined composer-icon msg-actions-menu__icon" aria-hidden="true">delete</span>
-          <span>${escapePreviewText(t('chat.unsend'))}</span>
+          <span>${escapePreviewText(t(destructiveKey))}</span>
         </button>
       </div>
     </div>`;
@@ -934,11 +1168,26 @@ function handleCopyMessage(msgIndex) {
   }
 }
 
+function handleRetryMessageDelivery(msgIndex) {
+  const conv = getActiveConversation();
+  const msg = conv?.messages[msgIndex];
+  if (!msg?.deliveryFailed) return;
+  if (msg.errorKey) {
+    showAttachFileError(msg.errorKey);
+    return;
+  }
+  msg.deliveryFailed = false;
+  const timePart = getMessageStatusTime(msg.status) || getTimeStr();
+  msg.status = `Sent ${timePart}`;
+  renderMessages();
+  showToast(t('chat.deliveryRetrySuccess'));
+}
+
 function handleUnsendMessage(msgIndex) {
   const conv = getActiveConversation();
   if (!conv) return;
   const msg = conv.messages[msgIndex];
-  if (!msg || !['outgoing', 'image'].includes(msg.type)) return;
+  if (!msg || !['outgoing', 'image', 'pdf'].includes(msg.type)) return;
   if (msg.type === 'image' && msg.src?.startsWith('blob:')) {
     try {
       URL.revokeObjectURL(msg.src);
@@ -1049,6 +1298,15 @@ function initMessageActions() {
         wrap.classList.add('is-open');
         positionMessageActionsMenu(wrap);
       }
+      return;
+    }
+
+    const retryBtn = event.target.closest('[data-msg-retry]');
+    if (retryBtn) {
+      event.preventDefault();
+      event.stopPropagation();
+      const msgIndex = Number.parseInt(retryBtn.dataset.msgRetry, 10);
+      if (!Number.isNaN(msgIndex)) handleRetryMessageDelivery(msgIndex);
       return;
     }
 
@@ -1168,10 +1426,12 @@ function refreshLocalizedUI() {
     if (broadcastWizardState.step === 3) renderBroadcastWizardTemplateChip();
     if (broadcastWizardState.step === 4) renderBroadcastWizardPreview();
     updateBroadcastWizardFooter();
-  } else if (activeBroadcastId) {
+  } else {
     renderBroadcastDetail();
   }
   renderContactsTable();
+  renderManageTagsList();
+  updateManageAllTagsVisibility();
   updateContactsSelectionBar();
   updateRoleFilterMenuSelection();
   updateStatusFilterMenuSelection();
@@ -1189,6 +1449,7 @@ function refreshLocalizedUI() {
       () => {}
     );
   }
+  updateAttachMenuValidation();
 }
 
 function setLocale(locale) {
@@ -1310,22 +1571,38 @@ const ALL_CHATS = [
             'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
           communityBadge: true,
         },
-        {
-          name: 'Jane Wright',
-        },
+        { name: 'Jane Wright' },
         {
           name: 'Bessie Cooper',
           photo:
             'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face',
         },
-        {
-          name: 'Sabrina Russell',
-        },
+        { name: 'Sabrina Russell' },
         {
           name: 'Mina Lee',
           photo:
             'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face',
         },
+        { name: 'Kenji Nakamura' },
+        { name: 'Priya Shah' },
+        { name: 'Tom Hughes' },
+        { name: 'Elena Popov' },
+        { name: 'Chris Patel' },
+        { name: 'Yuki Tanaka' },
+        { name: 'Laura Bennett' },
+        { name: 'Omar Haddad' },
+        { name: 'Sofia Rossi' },
+        { name: 'Daniel Cho' },
+        { name: 'Amelia Brooks' },
+        { name: 'Noah Kim' },
+        { name: 'Hana Suzuki' },
+        { name: 'Luis Ortega' },
+        { name: 'Claire Dubois' },
+        { name: 'Ryan Mitchell' },
+        { name: 'Aisha Rahman' },
+        { name: 'Peter Novak' },
+        { name: 'Mei Chen' },
+        { name: 'Jonas Berg' },
       ],
       operatorId: 'you',
       escalated: false,
@@ -1643,8 +1920,58 @@ const ALL_CHATS = [
 
 const BROADCASTS = {
   scheduled: [],
-  drafts: [],
   sent: [
+    {
+      id: 'parking-closure-may',
+      title: 'Parking lot closure — May 22',
+      meta: 'Tag: Member',
+      time: '20/05 09:15',
+      status: 'Sent',
+      statusClass: 'sent',
+      datetime: 'May 20, 2026 · 9:15 AM',
+      template: 'Simple message',
+      templateType: 'free',
+      recipients: 'Tag: Member',
+      scheduledAt: 'May 20, 2026 at 9:15 AM',
+      timezone: 'America/New_York (GMT-5)',
+      preview:
+        'Hi [Name], the north parking lot will be closed May 22 for resurfacing. Please use the south lot or street parking that day.',
+      showActions: false,
+      createdBy: 'you',
+      audienceTag: 'Member',
+      metrics: {
+        delivered: 116,
+        read: 88,
+        clicked: 21,
+        replied: 11,
+      },
+    },
+    {
+      id: 'spring-satisfaction-survey',
+      title: 'Spring satisfaction survey',
+      meta: 'Tag: Community member',
+      time: '18/05 16:00',
+      status: 'Sent',
+      statusClass: 'sent',
+      datetime: 'May 18, 2026 · 4:00 PM',
+      template: 'Message with link',
+      templateType: 'welcome_bridge',
+      recipients: 'Tag: Community member',
+      scheduledAt: 'May 18, 2026 at 4:00 PM',
+      timezone: 'America/New_York (GMT-5)',
+      preview:
+        'We would love your feedback on recent community programs. The survey takes about 3 minutes.',
+      showActions: false,
+      createdBy: 'jane',
+      audienceTag: 'Community member',
+      surveyLink: 'https://woven.city/survey/spring-2026',
+      metrics: {
+        delivered: 54,
+        read: 39,
+        clicked: 24,
+        replied: 8,
+      },
+    },
     {
       id: 'welcome-series',
       title: 'New Customer Welcome',
@@ -1653,27 +1980,215 @@ const BROADCASTS = {
       status: 'Sent',
       statusClass: 'sent',
       datetime: 'May 15, 2026 · 2:30 PM',
-      template: 'Message with link',
-      templateType: 'welcome_bridge',
+      template: 'Simple message',
+      templateType: 'free',
       recipients: 'Tag: Member',
       scheduledAt: 'May 15, 2026 at 2:30 PM',
       timezone: 'America/New_York (GMT-5)',
       preview:
         'Welcome to the family, [Name]! We are glad you chose us. Reply anytime if you have questions about your new vehicle.',
-      footnote: 'Delivered via operator broadcast — send now.',
       showActions: false,
       createdBy: 'mike',
       audienceTag: 'Member',
-      audit: {
-        source: 'operator',
-        initiator: 'Mike Torres',
-        callingSystem: 'Business Chat',
-        targetReference: 'Tag: Member',
-        templateType: 'welcome_bridge',
-        payloadRef: 'msg-welcome-001',
-        outcome: 'Accepted',
-        failureReason: '—',
+      metrics: {
+        delivered: 118,
+        read: 97,
+        clicked: 14,
+        replied: 22,
       },
+    },
+    {
+      id: 'pilot-program-wrap-up',
+      title: 'Pilot program wrap-up',
+      meta: 'Tag: Pilot group',
+      time: '21/05 13:20',
+      status: 'Sent',
+      statusClass: 'sent',
+      datetime: 'May 21, 2026 · 1:20 PM',
+      template: 'Simple message',
+      templateType: 'free',
+      recipients: 'Tag: Pilot group',
+      scheduledAt: 'May 21, 2026 at 1:20 PM',
+      timezone: 'America/New_York (GMT-5)',
+      preview:
+        'Thank you to everyone who joined the pilot program. We are closing enrollment this week and will share next steps by email.',
+      showActions: false,
+      createdBy: 'you',
+      audienceTag: 'Pilot group',
+      metrics: {
+        delivered: 42,
+        read: 31,
+        clicked: 8,
+        replied: 4,
+      },
+    },
+    {
+      id: 'vip-lounge-hours',
+      title: 'VIP lounge summer hours',
+      meta: 'Tag: VIP',
+      time: '12/05 11:00',
+      status: 'Sent',
+      statusClass: 'sent',
+      datetime: 'May 12, 2026 · 11:00 AM',
+      template: 'Message with link',
+      templateType: 'welcome_bridge',
+      recipients: 'Tag: VIP',
+      scheduledAt: 'May 12, 2026 at 11:00 AM',
+      timezone: 'America/New_York (GMT-5)',
+      preview:
+        'Starting June 1, the VIP lounge opens at 8 AM on weekdays. Weekend hours stay 10 AM–6 PM.',
+      showActions: false,
+      createdBy: 'mike',
+      audienceTag: 'VIP',
+      surveyLink: 'https://woven.city/vip-lounge',
+      metrics: {
+        delivered: 14,
+        read: 12,
+        clicked: 6,
+        replied: 2,
+      },
+    },
+    {
+      id: 'may-community-digest',
+      title: 'May community digest',
+      meta: 'Tag: Member',
+      time: '08/05 08:30',
+      status: 'Sent',
+      statusClass: 'sent',
+      datetime: 'May 8, 2026 · 8:30 AM',
+      template: 'Simple message',
+      templateType: 'free',
+      recipients: 'Tag: Member',
+      scheduledAt: 'May 8, 2026 at 8:30 AM',
+      timezone: 'America/New_York (GMT-5)',
+      preview:
+        'Here is what is happening in May: farmers market every Saturday, bike safety workshop on the 14th, and movie night on the 28th.',
+      showActions: false,
+      createdBy: 'jane',
+      audienceTag: 'Member',
+      metrics: {
+        delivered: 109,
+        read: 74,
+        clicked: 31,
+        replied: 9,
+      },
+    },
+    {
+      id: 'pool-hours-update',
+      title: 'Pool hours this summer',
+      meta: 'Tag: Member',
+      time: '06/05 10:00',
+      status: 'Sent',
+      statusClass: 'sent',
+      datetime: 'May 6, 2026 · 10:00 AM',
+      template: 'Simple message',
+      templateType: 'free',
+      recipients: 'Tag: Member',
+      scheduledAt: 'May 6, 2026 at 10:00 AM',
+      timezone: 'America/New_York (GMT-5)',
+      preview:
+        'The community pool opens May 15. Weekday hours are 7 AM–8 PM; weekend hours are 8 AM–6 PM.',
+      showActions: false,
+      createdBy: 'you',
+      audienceTag: 'Member',
+      metrics: {
+        delivered: 112,
+        read: 81,
+        clicked: 9,
+        replied: 6,
+      },
+    },
+    {
+      id: 'farmers-market-reminder',
+      title: 'Saturday farmers market',
+      meta: 'Tag: Community member',
+      time: '03/05 17:20',
+      status: 'Sent',
+      statusClass: 'sent',
+      datetime: 'May 3, 2026 · 5:20 PM',
+      template: 'Message with link',
+      templateType: 'welcome_bridge',
+      recipients: 'Tag: Community member',
+      scheduledAt: 'May 3, 2026 at 5:20 PM',
+      timezone: 'America/New_York (GMT-5)',
+      preview:
+        'The farmers market is this Saturday from 9 AM. See the stall map and bring a reusable bag.',
+      showActions: false,
+      createdBy: 'jane',
+      audienceTag: 'Community member',
+      surveyLink: 'https://woven.city/market/may',
+      metrics: {
+        delivered: 51,
+        read: 38,
+        clicked: 19,
+        replied: 4,
+      },
+    },
+    {
+      id: 'bike-safety-workshop',
+      title: 'Bike safety workshop',
+      meta: 'Tag: Member',
+      time: '28/04 09:00',
+      status: 'Sent',
+      statusClass: 'sent',
+      datetime: 'April 28, 2026 · 9:00 AM',
+      template: 'Simple message',
+      templateType: 'free',
+      recipients: 'Tag: Member',
+      scheduledAt: 'April 28, 2026 at 9:00 AM',
+      timezone: 'America/New_York (GMT-5)',
+      preview:
+        'Join the bike safety workshop on May 14 at the north plaza. Helmets are provided; please RSVP if you plan to come.',
+      showActions: false,
+      createdBy: 'mike',
+      audienceTag: 'Member',
+      metrics: {
+        delivered: 104,
+        read: 67,
+        clicked: 28,
+        replied: 15,
+      },
+    },
+  ],
+  drafts: [
+    {
+      id: 'quiet-hours-draft',
+      title: 'Quiet hours reminder',
+      meta: 'Tag: Member',
+      time: 'Draft',
+      status: 'Draft',
+      statusClass: 'draft',
+      datetime: 'May 24, 2026 · 3:40 PM',
+      template: 'Simple message',
+      templateType: 'free',
+      recipients: 'Tag: Member',
+      scheduledAt: '',
+      timezone: 'America/New_York (GMT-5)',
+      preview:
+        'A reminder that quiet hours start at 10 PM on weeknights. Please keep hallway conversations and music down after that.',
+      showActions: true,
+      createdBy: 'you',
+      audienceTag: 'Member',
+    },
+    {
+      id: 'winter-gathering-draft',
+      title: 'Winter gathering invite',
+      meta: 'Tag: Event invite',
+      time: 'Draft',
+      status: 'Draft',
+      statusClass: 'draft',
+      datetime: 'May 23, 2026 · 11:05 AM',
+      template: 'Message with link',
+      templateType: 'welcome_bridge',
+      recipients: 'Tag: Event invite',
+      scheduledAt: '',
+      timezone: 'America/New_York (GMT-5)',
+      preview:
+        'Save the date for our winter gathering on December 12. RSVP so we can plan food and seating.',
+      showActions: true,
+      createdBy: 'you',
+      audienceTag: 'Event invite',
+      surveyLink: 'https://woven.city/events/winter-gathering',
     },
   ],
 };
@@ -1714,6 +2229,97 @@ const STATUS_DEFINITIONS = {
     theme: 'green',
   },
 };
+
+const CONTACT_KANJI = {
+  'Tanaka Haruto': '田中 陽翔',
+  'Yamamoto Aiko': '山本 愛子',
+  'Nakamura Ren': '中村 蓮',
+  'Kobayashi Aoi': '小林 葵',
+  'Sato Yuki': '佐藤 優希',
+  'Watanabe Mei': '渡辺 芽衣',
+  'Ito Kenji': '伊藤 健司',
+  'Fujita Hana': '藤田 花',
+  'Mori Sakura': '森 さくら',
+  'Hayashi Taro': '林 太郎',
+  'Shimizu Yui': '清水 結衣',
+  'Okada Ryo': '岡田 涼',
+  'Kudo Nana': '工藤 奈々',
+  'Endo Hiro': '遠藤 ひろ',
+  'Aoki Mika': '青木 美香',
+  'Kaneko Sora': '金子 空',
+  'Ishikawa Leo': '石川 玲央',
+  'Matsumoto Rin': '松本 凛',
+  'Inoue Daiki': '井上 大輝',
+  'Kimura Yuna': '木村 優奈',
+  'Suzuki Kenta': '鈴木 健太',
+  'Takahashi Mio': '高橋 美桜',
+  'Kobayashi Ren': '小林 蓮',
+  'Yamada Hina': '山田 陽菜',
+  'Nakajima Sota': '中島 颯太',
+  'Kawasaki Emi': '川崎 絵美',
+  'Honda Akira': '本田 晶',
+  'Miyazaki Noa': '宮崎 乃愛',
+  'Fukuda Tetsu': '福田 鉄',
+  'Ogawa Maki': '小川 真紀',
+  'Hasegawa Yuto': '長谷川 悠斗',
+  'Goto Aya': '後藤 彩',
+  'Murata Shun': '村田 駿',
+  'Saito Koharu': '斎藤 小春',
+  'Ueda Riku': '上田 陸',
+  'Shibata Mei': '柴田 芽衣',
+  'Chiba Haru': '千葉 陽',
+  'Ando Kaito': '安藤 海斗',
+  'Maeda Saki': '前田 咲',
+  'Fujiwara Toma': '藤原 斗真',
+  'Okamoto Nao': '岡本 奈央',
+  'Nishimura Yui': '西村 結',
+  'Ono Ren': '小野 蓮',
+  'Tamura Hana': '田村 花',
+  'Watanabe Koji': '渡辺 浩二',
+  'Ishii Mika': '石井 美香',
+  'Ota Sora': '太田 空',
+  'Sakamoto Yuki': '坂本 優希',
+  'Abe Nanami': '阿部 七海',
+  'Kojima Daichi': '小島 大地',
+  'Yoshida Rina': '吉田 里奈',
+  'Matsuda Hiro': '松田 ひろ',
+  'Ikeda Ayaka': '池田 彩香',
+  'Hashimoto Ken': '橋本 健',
+  'Yamaguchi Sae': '山口 紗英',
+  'Imai Tsubasa': '今井 翼',
+  'Sugiyama Miu': '杉山 美羽',
+  'Nomura Kazuki': '野村 一樹',
+  'Kawano Yoko': '川野 陽子',
+  'Hirano Rei': '平野 玲',
+  'Asano Tomo': '浅野 智',
+  'Mizuno Kana': '水野 佳奈',
+  'Nakano Jun': '中野 淳',
+  'Kikuchi Sara': '菊地 沙羅',
+  'Otsuka Yuma': '大塚 悠真',
+  'Sano Natsumi': '佐野 夏美',
+  'Rina Yoshimura': '吉村 里奈',
+};
+
+const CONTACT_DISPLAY_KANJI = {
+  'Tanaka Haruto': true,
+  'Yamamoto Aiko': false,
+  'Nakamura Ren': true,
+  'Kobayashi Aoi': false,
+  'Sato Yuki': true,
+  'Watanabe Mei': false,
+};
+
+function shouldDisplayKanji(romaji) {
+  if (!CONTACT_KANJI[romaji]) return false;
+  if (Object.prototype.hasOwnProperty.call(CONTACT_DISPLAY_KANJI, romaji)) {
+    return CONTACT_DISPLAY_KANJI[romaji];
+  }
+  let hash = 0;
+  for (let i = 0; i < romaji.length; i += 1) {
+    hash = (hash + romaji.charCodeAt(i) * (i + 3)) % 2;
+  }
+  return hash === 0;
+}
 
 const CONTACTS_SEED = [
   { id: 'tanaka', name: 'Tanaka Haruto', role: 'Resident', status: 'active', tags: [UNIVERSAL_TAG, 'Head of Household', '1 room', 'VIP'], chatId: null },
@@ -1788,11 +2394,19 @@ function buildContactsList() {
     });
     extraIdx += 1;
   }
-  return list.map((contact, index) => ({
-    ...contact,
-    email: contact.email || contactEmailFromName(contact.name, contact.id),
-    tagAppliedOrder: CONTACTS_TOTAL - index,
-  }));
+  return list.map((contact, index) => {
+    const romaji = contact.nameRomaji || contact.name;
+    const kanji = contact.nameJa || CONTACT_KANJI[romaji] || '';
+    const displayKanji = Boolean(kanji) && shouldDisplayKanji(romaji);
+    return {
+      ...contact,
+      nameRomaji: romaji,
+      nameJa: kanji,
+      name: displayKanji ? kanji : romaji,
+      email: contact.email || contactEmailFromName(romaji, contact.id),
+      tagAppliedOrder: CONTACTS_TOTAL - index,
+    };
+  });
 }
 
 function contactEmailFromName(name, id) {
@@ -1813,6 +2427,7 @@ let activeTab = 'assigned';
 let supervisorTab = 'escalated';
 let activeChatId = ALL_CHATS[0]?.id ?? null;
 let activeBroadcastTab = 'sent';
+let broadcastStatusFilter = 'all';
 let supervisorBroadcastTab = 'scheduled';
 let activeBroadcastId = null;
 let isSupervisorMode = false;
@@ -1850,7 +2465,17 @@ const profileMenuWrap = document.querySelector('.profile-menu-wrap');
 const profileMenuEl = document.getElementById('profile-menu');
 const profileAvatarBtn = document.getElementById('profile-avatar-btn');
 const attachMenuWrap = document.querySelector('.attach-menu-wrap');
-const chatAttachInput = document.getElementById('chat-attach-input');
+const attachMenuEl = document.getElementById('chat-attach-menu');
+const attachBtn = document.getElementById('chat-attach-btn');
+const chatImageInput = document.getElementById('chat-image-input');
+const chatPdfInput = document.getElementById('chat-pdf-input');
+const composerAttachPreviewEl = document.getElementById('composer-attach-preview');
+const attachLabEl = document.getElementById('attach-lab');
+const attachLabFab = document.getElementById('attach-lab-fab');
+const attachLabMenu = document.getElementById('attach-lab-menu');
+const contactsTagsLabEl = document.getElementById('contacts-tags-lab');
+const contactsTagsLabFab = document.getElementById('contacts-tags-lab-fab');
+const contactsTagsLabMenu = document.getElementById('contacts-tags-lab-menu');
 const composerEl = document.querySelector('.composer');
 const appShellEl = document.querySelector('.app');
 const chatsSearchEl = document.getElementById('chats-search');
@@ -1867,6 +2492,10 @@ let contactsPage = 1;
 let contactsRowsPerPage = CONTACTS_TOTAL;
 let contactsSelectedIds = new Set();
 let contactsSelectAllMode = false;
+let contactsCanManageTags = true;
+let manageTagsOpen = false;
+let manageTagsQuery = '';
+let pendingDeleteTag = null;
 let contactTagCatalog = [
   UNIVERSAL_TAG,
   UNIVERSAL_TAG_SECONDARY,
@@ -2210,8 +2839,8 @@ function renderHomeV2Spark(wrapEl, values) {
     </svg>`;
 }
 
-function getHomeV2MetricsCarouselEls() {
-  const shell = document.querySelector('#home-option-2 .home-v2-metrics-carousel-shell');
+function getHomeV2MetricsCarouselEls(panelId = 'home-option-2') {
+  const shell = document.querySelector(`#${panelId} .home-v2-metrics-carousel-shell`);
   if (!shell) return null;
   return {
     shell,
@@ -2222,8 +2851,8 @@ function getHomeV2MetricsCarouselEls() {
   };
 }
 
-function updateHomeV2MetricsCarouselNav() {
-  const els = getHomeV2MetricsCarouselEls();
+function updateHomeV2MetricsCarouselNav(panelId = 'home-option-2') {
+  const els = getHomeV2MetricsCarouselEls(panelId);
   if (!els?.carousel) return;
   const { shell, carousel, prev, next, track } = els;
   const cardCount = track?.querySelectorAll('.home-v2-metric-card').length || 0;
@@ -2254,8 +2883,8 @@ function getHomeV2MetricsCarouselStepPx(els) {
   return cardWidth + gap;
 }
 
-function scrollHomeV2MetricsCarousel(direction) {
-  const els = getHomeV2MetricsCarouselEls();
+function scrollHomeV2MetricsCarousel(direction, panelId = 'home-option-2') {
+  const els = getHomeV2MetricsCarouselEls(panelId);
   if (!els?.carousel) return;
   const step = getHomeV2MetricsCarouselStepPx(els);
   els.carousel.scrollBy({ left: direction * step, behavior: 'smooth' });
@@ -2263,16 +2892,18 @@ function scrollHomeV2MetricsCarousel(direction) {
 }
 
 function initHomeV2MetricsCarousel() {
-  const els = getHomeV2MetricsCarouselEls();
-  if (!els || els.shell.dataset.carouselInit === '1') return;
-  els.shell.dataset.carouselInit = '1';
-  els.prev?.addEventListener('click', () => scrollHomeV2MetricsCarousel(-1));
-  els.next?.addEventListener('click', () => scrollHomeV2MetricsCarousel(1));
-  els.carousel?.addEventListener('scroll', () => updateHomeV2MetricsCarouselNav(), { passive: true });
+  ['home-option-2', 'home-option-5'].forEach((panelId) => {
+    const els = getHomeV2MetricsCarouselEls(panelId);
+    if (!els || els.shell.dataset.carouselInit === '1') return;
+    els.shell.dataset.carouselInit = '1';
+    els.prev?.addEventListener('click', () => scrollHomeV2MetricsCarousel(-1, panelId));
+    els.next?.addEventListener('click', () => scrollHomeV2MetricsCarousel(1, panelId));
+    els.carousel?.addEventListener('scroll', () => updateHomeV2MetricsCarouselNav(panelId), { passive: true });
+  });
 }
 
-function syncHomeV2MetricsCarouselWidth() {
-  const els = getHomeV2MetricsCarouselEls();
+function syncHomeV2MetricsCarouselWidth(panelId = 'home-option-2') {
+  const els = getHomeV2MetricsCarouselEls(panelId);
   if (!els?.carousel || !els.track) return;
   const viewport = els.carousel.clientWidth;
   if (viewport < 48) return;
@@ -2282,14 +2913,14 @@ function syncHomeV2MetricsCarouselWidth() {
   const gapCount = Math.max(0, slots - 1);
   const cardWidth = Math.max(168, (viewport - gap * gapCount) / slots);
   els.track.style.setProperty('--home-v2-metric-carousel-card-width', `${cardWidth}px`);
-  updateHomeV2MetricsCarouselNav();
+  updateHomeV2MetricsCarouselNav(panelId);
 }
 
-function refreshHomeV2MetricsCarouselLayout() {
-  syncHomeV2MetricsCarouselWidth();
+function refreshHomeV2MetricsCarouselLayout(panelId = 'home-option-2') {
+  syncHomeV2MetricsCarouselWidth(panelId);
   requestAnimationFrame(() => {
-    syncHomeV2MetricsCarouselWidth();
-    updateHomeV2MetricsCarouselNav();
+    syncHomeV2MetricsCarouselWidth(panelId);
+    updateHomeV2MetricsCarouselNav(panelId);
   });
 }
 
@@ -2313,6 +2944,27 @@ function animateHomeV2Metrics(panelId = 'home-option-2') {
       }
     });
   });
+}
+
+const HOME_V5_TAG_DISPLAY_MAX = 7;
+
+function renderHomeV5LatestTags() {
+  const grid = document.getElementById('home5v-tags-grid');
+  if (!grid) return;
+  const tags = [...contactTagCatalog];
+  const visible = tags.slice(0, HOME_V5_TAG_DISPLAY_MAX);
+  const hiddenCount = Math.max(0, tags.length - visible.length);
+  const chips = visible
+    .map(
+      (tag) =>
+        `<span class="filter-chip filter-chip--tag home-v5-tag-chip"><span class="filter-chip__label">${escapePreviewText(tag)}</span></span>`,
+    )
+    .join('');
+  const overflow =
+    hiddenCount > 0
+      ? `<span class="filter-chip filter-chip--tag home-v5-tag-chip home-v5-tag-chip--more" title="${escapePreviewText(t('home5.manageContacts'))}"><span class="filter-chip__label">+${hiddenCount}</span></span>`
+      : '';
+  grid.innerHTML = chips + overflow;
 }
 
 function renderHomeV2Panel(panelId, idPrefix) {
@@ -2377,26 +3029,27 @@ function renderHomeV2Panel(panelId, idPrefix) {
     renderHomeV2Spark(clicksSparkEl, clickSparkValues);
   }
 
-  if (panelId === 'home-option-2') {
-    const deliveryRateEl = panel.querySelector('#home2v-delivery-rate');
-    const readRateEl = panel.querySelector('#home2v-read-rate');
-    const responseRateEl = panel.querySelector('#home2v-response-rate');
+  if (panelId === 'home-option-2' || panelId === 'home-option-5') {
+    const metricsPrefix = panelId === 'home-option-5' ? '5v' : '2v';
+    const deliveryRateEl = panel.querySelector(`#home${metricsPrefix}-delivery-rate`);
+    const readRateEl = panel.querySelector(`#home${metricsPrefix}-read-rate`);
+    const responseRateEl = panel.querySelector(`#home${metricsPrefix}-response-rate`);
     if (deliveryRateEl) deliveryRateEl.textContent = `${HOME_V2_DEMO_DELIVERY_RATE}%`;
     if (readRateEl) readRateEl.textContent = `${HOME_V2_DEMO_READ_RATE}%`;
     if (responseRateEl) responseRateEl.textContent = `${HOME_V2_DEMO_RESPONSE_RATE}%`;
 
     applyHomeV2TrendPercent(
-      panel.querySelector('#home2v-delivery-trend'),
+      panel.querySelector(`#home${metricsPrefix}-delivery-trend`),
       HOME_V2_DEMO_DELIVERY_RATE,
       HOME_V2_DEMO_DELIVERY_RATE_PREV,
     );
     applyHomeV2TrendPercent(
-      panel.querySelector('#home2v-read-trend'),
+      panel.querySelector(`#home${metricsPrefix}-read-trend`),
       HOME_V2_DEMO_READ_RATE,
       HOME_V2_DEMO_READ_RATE_PREV,
     );
     applyHomeV2TrendPercent(
-      panel.querySelector('#home2v-response-trend'),
+      panel.querySelector(`#home${metricsPrefix}-response-trend`),
       HOME_V2_DEMO_RESPONSE_RATE,
       HOME_V2_DEMO_RESPONSE_RATE_PREV,
     );
@@ -2413,7 +3066,8 @@ function renderHomeV2Panel(panelId, idPrefix) {
       panel.querySelector('[data-spark-id="response"]'),
       buildDemoSparkSeries(HOME_V2_DEMO_RESPONSE_RATE_PREV, HOME_V2_DEMO_RESPONSE_RATE),
     );
-    refreshHomeV2MetricsCarouselLayout();
+    refreshHomeV2MetricsCarouselLayout(panelId);
+    if (panelId === 'home-option-5') renderHomeV5LatestTags();
   }
 
   renderHomeAwaitingChatList(chatListEl);
@@ -2423,7 +3077,8 @@ function renderHomeV2() {
   renderHomeV2Panel('home-option-2', '2v');
   renderHomeV2Panel('home-option-3', '3v');
   renderHomeV2Panel('home-option-4', '4v');
-  ['home-option-2', 'home-option-3', 'home-option-4'].forEach((panelId) => {
+  renderHomeV2Panel('home-option-5', '5v');
+  ['home-option-2', 'home-option-3', 'home-option-4', 'home-option-5'].forEach((panelId) => {
     if (!document.getElementById(panelId)?.classList.contains('hidden')) {
       animateHomeV2Metrics(panelId);
     }
@@ -2431,7 +3086,7 @@ function renderHomeV2() {
 }
 
 function normalizeHomeOption(option) {
-  if (option === '4' || option === '3' || option === '2') return option;
+  if (option === '5' || option === '4' || option === '3' || option === '2') return option;
   return '1';
 }
 
@@ -2441,6 +3096,8 @@ const HOME_OPTION_URL_ALIASES = {
   'first-time': '3',
   firsttime: '3',
   'first-time-user': '3',
+  'option-3': '5',
+  'contacts-analytics': '5',
 };
 
 function parseHomeOptionFromLocation() {
@@ -2465,6 +3122,7 @@ function setHomeOption(option, { updateUrl = true } = {}) {
   document.getElementById('home-option-2')?.classList.toggle('hidden', opt !== '2');
   document.getElementById('home-option-3')?.classList.toggle('hidden', opt !== '3');
   document.getElementById('home-option-4')?.classList.toggle('hidden', opt !== '4');
+  document.getElementById('home-option-5')?.classList.toggle('hidden', opt !== '5');
   document.querySelectorAll('[data-home-option]').forEach((btn) => {
     const active = btn.dataset.homeOption === opt;
     btn.classList.toggle('is-active', active);
@@ -2474,8 +3132,9 @@ function setHomeOption(option, { updateUrl = true } = {}) {
     localStorage.setItem(HOME_OPTION_STORAGE_KEY, opt);
   } catch (_) { /* ignore */ }
   if (updateUrl && activeView === 'home') syncHomeOptionUrl(opt);
-  if (opt === '2' || opt === '3' || opt === '4') animateHomeV2Metrics(`home-option-${opt}`);
-  if (opt === '2') refreshHomeV2MetricsCarouselLayout();
+  if (opt === '2' || opt === '3' || opt === '4' || opt === '5') animateHomeV2Metrics(`home-option-${opt}`);
+  if (opt === '2') refreshHomeV2MetricsCarouselLayout('home-option-2');
+  if (opt === '5') refreshHomeV2MetricsCarouselLayout('home-option-5');
 }
 
 function renderHome() {
@@ -2639,6 +3298,7 @@ function renderChatRoomSettings() {
   const members = getCommunityRoomMembers(conv);
   if (countEl) countEl.textContent = t('communityRoom.membersCount', { count: members.length });
   listEl.innerHTML = members.map(renderCommunityMemberRow).join('');
+  refreshOverlayScrollbars();
 }
 
 function setChatRoomSettingsOpen(open) {
@@ -2657,7 +3317,10 @@ function setChatRoomSettingsOpen(open) {
   toggleBtn?.classList.toggle('is-active', shouldOpen);
 
   if (shouldOpen) renderChatRoomSettings();
-  requestAnimationFrame(() => syncChatsInboxLayout());
+  requestAnimationFrame(() => {
+    syncChatsInboxLayout();
+    refreshOverlayScrollbars();
+  });
 }
 
 function updateCommunityChatChrome() {
@@ -2701,6 +3364,76 @@ function renderChatListAvatar(chat) {
         ${badgeInner}
       </span>
     </div>`;
+}
+
+const overlayScrollbarBinds = [];
+
+function overlayScrollbarTrackHeight(clientHeight) {
+  return Math.max(1, clientHeight - 4);
+}
+
+function overlayScrollbarThumbMetrics(scroller) {
+  const { scrollTop, scrollHeight, clientHeight } = scroller;
+  const trackH = overlayScrollbarTrackHeight(clientHeight);
+  const thumbH = Math.max(24, (clientHeight / scrollHeight) * trackH);
+  const maxThumbTravel = Math.max(1, trackH - thumbH);
+  const range = Math.max(1, scrollHeight - clientHeight);
+  return { thumbH, maxThumbTravel, range, scrollTop };
+}
+
+function updateOverlayScrollbar(bind) {
+  const { scroller, rail, thumb } = bind;
+  const { scrollHeight, clientHeight } = scroller;
+  const canScroll = scrollHeight > clientHeight + 1;
+  rail.hidden = !canScroll;
+  if (!canScroll) return;
+  const { thumbH, maxThumbTravel, range, scrollTop } = overlayScrollbarThumbMetrics(scroller);
+  thumb.style.height = `${thumbH}px`;
+  thumb.style.transform = `translateY(${(scrollTop / range) * maxThumbTravel}px)`;
+}
+
+function refreshOverlayScrollbars() {
+  overlayScrollbarBinds.forEach(updateOverlayScrollbar);
+}
+
+function bindOverlayScrollbar(viewport) {
+  const scroller = viewport.querySelector('[data-overlay-scroller]');
+  const rail = viewport.querySelector('.overlay-scrollbar');
+  const thumb = viewport.querySelector('.overlay-scrollbar__thumb');
+  if (!scroller || !rail || !thumb) return;
+
+  const bind = { scroller, rail, thumb };
+  overlayScrollbarBinds.push(bind);
+  const update = () => updateOverlayScrollbar(bind);
+  scroller.addEventListener('scroll', update, { passive: true });
+  if (typeof ResizeObserver !== 'undefined') {
+    const observer = new ResizeObserver(update);
+    observer.observe(scroller);
+    observer.observe(viewport);
+  }
+  new MutationObserver(update).observe(scroller, { childList: true, subtree: true });
+
+  thumb.addEventListener('pointerdown', (event) => {
+    event.preventDefault();
+    const startY = event.clientY;
+    const startTop = scroller.scrollTop;
+    const onMove = (moveEvent) => {
+      const { maxThumbTravel, range } = overlayScrollbarThumbMetrics(scroller);
+      scroller.scrollTop = startTop + ((moveEvent.clientY - startY) / maxThumbTravel) * range;
+    };
+    const onUp = () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+    };
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+  });
+
+  update();
+}
+
+function initOverlayScrollbars() {
+  document.querySelectorAll('.list-scroll').forEach(bindOverlayScrollbar);
 }
 
 function renderChatList() {
@@ -2747,7 +3480,9 @@ function renderChatList() {
       if (conv) conv.unread = 0;
       setChatRoomSettingsOpen(false);
       setComposerNoteMode(false);
+      clearComposerStagedAttachments();
       messageInput.value = '';
+      resetMessageInputHeight();
       updateComposerSendState();
       renderChatList();
       renderMessages();
@@ -2760,6 +3495,7 @@ function renderChatList() {
   });
 
   updateTabBadges();
+  refreshOverlayScrollbars();
 }
 
 function setChatsSearchOpen(open) {
@@ -2842,6 +3578,10 @@ function scoreCommunityPersonToken(token, name, email) {
   return null;
 }
 
+function contactSearchTexts(contact) {
+  return [contact.name, contact.nameJa, contact.nameRomaji, contact.email].filter(Boolean);
+}
+
 function getCommunityTagCatalog() {
   const map = new Map();
   getCommunityParticipantPool().forEach((contact) => {
@@ -2867,7 +3607,7 @@ function getCommunitySearchMatches() {
   getCommunityParticipantPool().forEach((contact) => {
     if (communityChatState.selectedIds.has(contact.id)) return;
 
-    const name = String(contact.name || '').toLocaleLowerCase();
+    const name = contactSearchTexts(contact).join(' ').toLocaleLowerCase();
     const email = String(contact.email || '').toLocaleLowerCase();
     const tokenRanks = tokens.map((token) => scoreCommunityPersonToken(token, name, email));
     if (tokenRanks.some((rank) => rank == null)) return;
@@ -3494,13 +4234,8 @@ function renderMessages() {
       }
 
       if (msg.type === 'outgoing') {
-        return `
-        <div class="message-row outgoing">
-          <div class="message-content">
-            <div class="bubble outgoing">${getLocalizedMessageText(msg)}</div>
-          </div>
-          ${renderOutgoingMessageMeta(msgIndex, msg.status, { allowCopy: true })}
-        </div>`;
+        const bubble = `<div class="bubble outgoing">${getLocalizedMessageText(msg)}</div>`;
+        return renderOutgoingMessageRow(msgIndex, msg, bubble, { allowCopy: true });
       }
 
       if (msg.type === 'event') {
@@ -3553,29 +4288,17 @@ function renderMessages() {
       }
 
       if (msg.type === 'image') {
-        return `
-        <div class="message-row outgoing message-row--attachment">
-          <div class="message-content">
-            <div class="message-image__frame">
-              <img src="${msg.src}" alt="${escapePreviewText(msg.alt || 'Attached image')}">
-            </div>
-          </div>
-          ${renderOutgoingMessageMeta(msgIndex, msg.status, { allowCopy: false })}
-        </div>`;
+        return renderOutgoingMessageRow(msgIndex, msg, renderMessageImageAttachment(msg), {
+          allowCopy: false,
+          attachment: true,
+        });
       }
 
       if (msg.type === 'pdf') {
-        const label = escapePreviewText(msg.fileName || 'Document.pdf');
-        return `
-        <div class="message-row outgoing message-row--attachment">
-          <div class="message-content">
-            <a class="message-file" href="${msg.src}" download="${label}" target="_blank" rel="noopener">
-              <span class="material-icons message-file__icon" aria-hidden="true">picture_as_pdf</span>
-              <span class="message-file__name">${label}</span>
-            </a>
-          </div>
-          <span class="msg-status">${formatMessageStatus(msg.status)}</span>
-        </div>`;
+        return renderOutgoingMessageRow(msgIndex, msg, renderMessagePdfAttachment(msg), {
+          allowCopy: false,
+          attachment: true,
+        });
       }
 
       return '';
@@ -3637,22 +4360,885 @@ function setComposerNoteMode(on) {
   }
 }
 
+function resizeMessageInput() {
+  if (!messageInput) return;
+  messageInput.style.height = 'auto';
+  const maxHeight = 120;
+  const next = Math.min(messageInput.scrollHeight, maxHeight);
+  messageInput.style.height = `${Math.max(36, next)}px`;
+}
+
+function resetMessageInputHeight() {
+  if (!messageInput) return;
+  messageInput.style.height = '';
+  resizeMessageInput();
+}
+
 function updateComposerSendState() {
   if (!chatSendBtn || !messageInput) return;
   const hasText = messageInput.value.trim().length > 0;
-  chatSendBtn.disabled = !hasText;
+  const hasAttachments = hasComposerStagedAttachments();
+  chatSendBtn.disabled = !hasText && !hasAttachments;
+}
+
+const COMPOSER_ATTACH_LIMITS = { images: 4, pdf: 10 };
+const COMPOSER_ATTACH_MAX_BYTES = { image: 10 * 1024 * 1024, pdf: 32 * 1024 * 1024 };
+/** Same asset as Alice / community demo chat image bubbles (attach lab preview). */
+const COMPOSER_ATTACH_DEMO_IMAGE_SRC = 'demo-sent-image.jpg';
+
+let composerStaged = { images: [], pdfs: [] };
+let composerAttachObjectUrls = [];
+
+function hasComposerStagedAttachments() {
+  return composerStaged.images.length > 0 || composerStaged.pdfs.length > 0;
+}
+
+function truncateComposerFileName(name, maxLen = 16) {
+  const base = String(name || 'File');
+  if (base.length <= maxLen) return base;
+  return `${base.slice(0, maxLen - 1)}…`;
+}
+
+function trackComposerObjectUrl(url) {
+  if (url && String(url).startsWith('blob:')) composerAttachObjectUrls.push(url);
+}
+
+function revokeComposerObjectUrls() {
+  composerAttachObjectUrls.forEach((url) => {
+    try {
+      URL.revokeObjectURL(url);
+    } catch (_) {
+      /* ignore */
+    }
+  });
+  composerAttachObjectUrls = [];
+}
+
+function showAttachFileError(messageKey) {
+  const message = typeof messageKey === 'string' && messageKey.startsWith('chats.')
+    ? t(messageKey)
+    : messageKey;
+  showToast(message, { variant: 'error', duration: 5000 });
+}
+
+function toastUploadRejected() {
+  showAttachFileError('chats.attachErrUploadRejected');
+}
+
+function isAllowedImageFile(file) {
+  return Boolean(file?.type?.startsWith('image/'));
+}
+
+function isAllowedPdfFile(file) {
+  if (!file) return false;
+  return file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+}
+
+function clearComposerStagedAttachments() {
+  composerStaged = { images: [], pdfs: [] };
+  revokeComposerObjectUrls();
+  renderComposerAttachPreview();
+  updateAttachMenuValidation();
+  updateComposerSendState();
+}
+
+function bindComposerPdfCarousel(root) {
+  const track = root?.querySelector('.composer-attach-carousel__track');
+  const prev = root?.querySelector('.composer-attach-carousel__btn--prev');
+  const next = root?.querySelector('.composer-attach-carousel__btn--next');
+  if (!track || !prev || !next) return;
+
+  const step = () => Math.max(176, Math.round(track.clientWidth * 0.75));
+
+  const updateNav = () => {
+    const max = track.scrollWidth - track.clientWidth;
+    const overflow = max > 4;
+    prev.hidden = next.hidden = !overflow;
+    if (!overflow) return;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max - 2;
+  };
+
+  prev.addEventListener('click', (e) => {
+    e.stopPropagation();
+    track.scrollBy({ left: -step(), behavior: 'smooth' });
+  });
+  next.addEventListener('click', (e) => {
+    e.stopPropagation();
+    track.scrollBy({ left: step(), behavior: 'smooth' });
+  });
+  track.addEventListener('scroll', updateNav, { passive: true });
+  requestAnimationFrame(() => {
+    updateNav();
+    requestAnimationFrame(updateNav);
+  });
+}
+
+function renderComposerAttachPreview() {
+  if (!composerAttachPreviewEl) return;
+  const parts = [];
+
+  if (composerStaged.pdfs.length) {
+    const pdfChips = composerStaged.pdfs
+      .map((pdf) => {
+        const label = escapePreviewText(pdf.name || 'Document.pdf');
+        return `
+      <div class="message-pdf-card message-pdf-card--composer" data-staged-pdf="${escapePreviewText(pdf.id)}">
+        <div class="message-pdf-card__icon" aria-hidden="true">
+          <span class="material-icons">picture_as_pdf</span>
+        </div>
+        <div class="message-pdf-card__text">
+          <span class="message-pdf-card__name" title="${label}">${label}</span>
+          <span class="message-pdf-card__meta">${escapePreviewText(t('chats.attachPdf'))}</span>
+        </div>
+        <button type="button" class="composer-attach-chip__remove" data-remove-staged="pdf" data-remove-id="${escapePreviewText(pdf.id)}" aria-label="Remove ${label}">
+          <span class="material-icons" aria-hidden="true">close</span>
+        </button>
+      </div>`;
+      })
+      .join('');
+    parts.push(`
+      <div class="composer-attach-carousel">
+        <button type="button" class="composer-attach-carousel__btn composer-attach-carousel__btn--prev" aria-label="Previous files">
+          <span class="material-icons" aria-hidden="true">chevron_left</span>
+        </button>
+        <div class="composer-attach-carousel__track">${pdfChips}</div>
+        <button type="button" class="composer-attach-carousel__btn composer-attach-carousel__btn--next" aria-label="Next files">
+          <span class="material-icons" aria-hidden="true">chevron_right</span>
+        </button>
+      </div>`);
+  }
+
+  composerStaged.images.forEach((img) => {
+    parts.push(`
+      <div class="composer-attach-chip composer-attach-chip--image" data-staged-image="${escapePreviewText(img.id)}">
+        <img class="composer-attach-chip__thumb" src="${img.previewUrl}" alt="">
+        <button type="button" class="composer-attach-chip__remove" data-remove-staged="image" data-remove-id="${escapePreviewText(img.id)}" aria-label="Remove image">
+          <span class="material-icons" aria-hidden="true">close</span>
+        </button>
+      </div>`);
+  });
+
+  if (!parts.length) {
+    composerAttachPreviewEl.innerHTML = '';
+    composerAttachPreviewEl.classList.add('hidden');
+    return;
+  }
+
+  composerAttachPreviewEl.innerHTML = parts.join('');
+  composerAttachPreviewEl.classList.remove('hidden');
+  bindComposerPdfCarousel(composerAttachPreviewEl);
+
+  composerAttachPreviewEl.querySelectorAll('[data-remove-staged]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const kind = btn.dataset.removeStaged;
+      if (kind === 'pdf') {
+        const id = btn.dataset.removeId;
+        const item = composerStaged.pdfs.find((entry) => entry.id === id);
+        if (item?.previewUrl && String(item.previewUrl).startsWith('blob:')) {
+          URL.revokeObjectURL(item.previewUrl);
+          composerAttachObjectUrls = composerAttachObjectUrls.filter((u) => u !== item.previewUrl);
+        }
+        composerStaged.pdfs = composerStaged.pdfs.filter((entry) => entry.id !== id);
+      } else if (kind === 'image') {
+        const id = btn.dataset.removeId;
+        const item = composerStaged.images.find((entry) => entry.id === id);
+        if (item?.previewUrl && String(item.previewUrl).startsWith('blob:')) {
+          URL.revokeObjectURL(item.previewUrl);
+          composerAttachObjectUrls = composerAttachObjectUrls.filter((u) => u !== item.previewUrl);
+        }
+        composerStaged.images = composerStaged.images.filter((entry) => entry.id !== id);
+      }
+      renderComposerAttachPreview();
+      updateAttachMenuValidation();
+      updateComposerSendState();
+    });
+  });
+}
+
+function updateAttachMenuValidation() {
+  if (!attachMenuEl) return;
+  const imageBtn = attachMenuEl.querySelector('[data-attach-action="image"]');
+  const pdfBtn = attachMenuEl.querySelector('[data-attach-action="pdf"]');
+
+  const hasPdfs = composerStaged.pdfs.length > 0;
+  const pdfAtMax = composerStaged.pdfs.length >= COMPOSER_ATTACH_LIMITS.pdf;
+  const imageBlocked = hasPdfs || composerStaged.images.length >= COMPOSER_ATTACH_LIMITS.images;
+  const pdfBlocked = composerStaged.images.length > 0 || pdfAtMax;
+
+  let imageTitle = '';
+  if (hasPdfs) imageTitle = t('chats.attachTooltipRemovePdf');
+  else if (composerStaged.images.length >= COMPOSER_ATTACH_LIMITS.images) {
+    imageTitle = t('chats.attachTooltipImageMax');
+  }
+
+  let pdfTitle = '';
+  if (composerStaged.images.length > 0) pdfTitle = t('chats.attachTooltipRemoveImages');
+  else if (pdfAtMax) pdfTitle = t('chats.attachTooltipPdfMax');
+
+  if (imageBtn) {
+    imageBtn.classList.toggle('is-disabled', imageBlocked);
+    imageBtn.setAttribute('aria-disabled', imageBlocked ? 'true' : 'false');
+    setAttachMenuItemTooltip(imageBtn, imageBlocked ? imageTitle : '');
+  }
+  if (pdfBtn) {
+    pdfBtn.classList.toggle('is-disabled', pdfBlocked);
+    pdfBtn.setAttribute('aria-disabled', pdfBlocked ? 'true' : 'false');
+    setAttachMenuItemTooltip(pdfBtn, pdfBlocked ? pdfTitle : '');
+  }
+}
+
+function setAttachMenuItemTooltip(btn, text) {
+  if (!btn) return;
+  btn.removeAttribute('title');
+  let tip = btn.querySelector('.attach-menu__tooltip');
+  if (!text) {
+    btn.removeAttribute('aria-describedby');
+    if (tip) tip.remove();
+    return;
+  }
+  if (!tip) {
+    tip = document.createElement('span');
+    tip.className = 'attach-menu__tooltip';
+    tip.setAttribute('role', 'tooltip');
+    tip.id = `attach-tip-${btn.dataset.attachAction || 'item'}`;
+    btn.appendChild(tip);
+  }
+  tip.textContent = text;
+  btn.setAttribute('aria-describedby', tip.id);
+}
+
+function validateAndStageImage(file) {
+  if (!file) return false;
+  if (composerStaged.pdfs.length > 0 || composerStaged.images.length >= COMPOSER_ATTACH_LIMITS.images) {
+    return false;
+  }
+  if (file.size === 0) {
+    return false;
+  }
+  if (file.size > COMPOSER_ATTACH_MAX_BYTES.image || !isAllowedImageFile(file)) {
+    return 'rejected';
+  }
+  const previewUrl = URL.createObjectURL(file);
+  trackComposerObjectUrl(previewUrl);
+  composerStaged.images.push({
+    id: `img-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+    file,
+    name: file.name,
+    previewUrl,
+  });
+  renderComposerAttachPreview();
+  updateAttachMenuValidation();
+  updateComposerSendState();
+  return true;
+}
+
+function validateAndStagePdf(file) {
+  if (!file) return false;
+  if (composerStaged.images.length > 0) {
+    return false;
+  }
+  if (composerStaged.pdfs.length >= COMPOSER_ATTACH_LIMITS.pdf) {
+    showAttachFileError('chats.attachErrPdfMax');
+    return false;
+  }
+  if (file.size === 0) {
+    return false;
+  }
+  if (file.size > COMPOSER_ATTACH_MAX_BYTES.pdf || !isAllowedPdfFile(file)) {
+    return 'rejected';
+  }
+  const previewUrl = URL.createObjectURL(file);
+  trackComposerObjectUrl(previewUrl);
+  composerStaged.pdfs.push({
+    id: `pdf-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+    file,
+    name: file.name,
+    previewUrl,
+  });
+  renderComposerAttachPreview();
+  updateAttachMenuValidation();
+  updateComposerSendState();
+  return true;
+}
+
+function flushComposerStagedAttachments(conv, timeStr) {
+  if (!conv) return;
+  composerStaged.pdfs.forEach((pdf) => {
+    const file = pdf.file;
+    const src = pdf.previewUrl || (file ? URL.createObjectURL(file) : '');
+    conv.messages.push({
+      type: 'pdf',
+      src,
+      fileName: file?.name || pdf.name,
+      status: `Sent ${timeStr}`,
+    });
+  });
+  if (composerStaged.images.length === 1) {
+    const item = composerStaged.images[0];
+    conv.messages.push({
+      type: 'image',
+      src: item.previewUrl || URL.createObjectURL(item.file),
+      alt: item.name,
+      status: `Sent ${timeStr}`,
+    });
+  } else if (composerStaged.images.length > 1) {
+    conv.messages.push({
+      type: 'image',
+      images: composerStaged.images.map((item) => ({
+        src: item.previewUrl || URL.createObjectURL(item.file),
+        alt: item.name,
+      })),
+      status: `Sent ${timeStr}`,
+    });
+  }
+  if (hasComposerStagedAttachments()) {
+    const lastPdf = composerStaged.pdfs[composerStaged.pdfs.length - 1];
+    const lastName =
+      lastPdf?.name || composerStaged.images[composerStaged.images.length - 1]?.name || 'Attachment';
+    conv.preview = lastName;
+    conv.previewDynamic = true;
+    conv.time = 'Just now';
+  }
+}
+
+function createMockImageAttachment(name, index = 1) {
+  const previewUrl = COMPOSER_ATTACH_DEMO_IMAGE_SRC;
+  const file = new File([new Blob([], { type: 'image/jpeg' })], name, { type: 'image/jpeg' });
+  return { id: `mock-img-${index}`, file, name, previewUrl };
+}
+
+function createMockPdfAttachment(name, index = 1) {
+  const file = new File([new Blob(['%PDF-1.4\n% Mock preview\n'], { type: 'application/pdf' })], name, {
+    type: 'application/pdf',
+  });
+  const previewUrl = URL.createObjectURL(file);
+  trackComposerObjectUrl(previewUrl);
+  return { id: `mock-pdf-${index}`, file, name, previewUrl };
+}
+
+function setContactsNoAccess(enabled) {
+  contactsCanManageTags = !enabled;
+  const checkbox = document.getElementById('contacts-lab-no-access');
+  if (checkbox) checkbox.checked = Boolean(enabled);
+  if (enabled) {
+    setAddTagsMenuOpen(false);
+    setManageTagsOpen(false);
+  }
+  updateManageAllTagsVisibility();
+  renderContactsTable();
+}
+
+function runContactsLabScenario(scenario) {
+  setContactsNoAccess(scenario === 'contacts-no-access');
+  switchView('contacts');
+}
+
+function openPermissionDeniedDialog(kind = 'add') {
+  const dialog = document.getElementById('permission-denied-dialog');
+  if (!dialog) return;
+  const title = document.getElementById('permission-denied-dialog-title');
+  const desc = document.getElementById('permission-denied-dialog-desc');
+  const closeBtn = document.getElementById('permission-denied-dialog-close');
+  if (title) {
+    title.textContent = t(kind === 'delete' ? 'contacts.permissionTitleDelete' : 'contacts.permissionTitle');
+  }
+  if (desc) desc.textContent = t('contacts.permissionDesc');
+  if (closeBtn) closeBtn.textContent = t('contacts.permissionClose');
+  dialog.hidden = false;
+  dialog.setAttribute('aria-hidden', 'false');
+  closeBtn?.focus();
+}
+
+function closePermissionDeniedDialog() {
+  const dialog = document.getElementById('permission-denied-dialog');
+  if (!dialog || dialog.hidden) return;
+  dialog.hidden = true;
+  dialog.setAttribute('aria-hidden', 'true');
+}
+
+function initPermissionDeniedDialog() {
+  const dialog = document.getElementById('permission-denied-dialog');
+  const backdrop = document.getElementById('permission-denied-dialog-backdrop');
+  const closeBtn = document.getElementById('permission-denied-dialog-close');
+  closeBtn?.addEventListener('click', closePermissionDeniedDialog);
+  backdrop?.addEventListener('click', closePermissionDeniedDialog);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && dialog && !dialog.hidden) {
+      e.preventDefault();
+      closePermissionDeniedDialog();
+    }
+  });
+}
+
+function runAttachLabScenario(scenario) {
+  if (scenario === 'contacts-no-access') {
+    runContactsLabScenario(scenario);
+    return;
+  }
+
+  clearComposerStagedAttachments();
+  closeAttachMenu();
+
+  if (scenario === 'empty') {
+    updateAttachMenuValidation();
+    updateComposerSendState();
+    return;
+  }
+
+  if (scenario === 'pdf-one') {
+    composerStaged.pdfs = [createMockPdfAttachment('Fables de La Fontaine.pdf', 1)];
+    renderComposerAttachPreview();
+    updateAttachMenuValidation();
+    updateComposerSendState();
+    return;
+  }
+
+  if (scenario === 'image-one') {
+    composerStaged.images = [createMockImageAttachment('photo.jpg', 1)];
+    renderComposerAttachPreview();
+    updateAttachMenuValidation();
+    updateComposerSendState();
+    return;
+  }
+
+  if (scenario === 'error-image-with-pdf') {
+    composerStaged.pdfs = [createMockPdfAttachment('Fables de La Fontaine.pdf', 1)];
+    renderComposerAttachPreview();
+    updateAttachMenuValidation();
+    updateComposerSendState();
+    setAttachMenuOpen(true);
+    return;
+  }
+
+  if (scenario === 'error-pdf-max') {
+    composerStaged.pdfs = Array.from({ length: COMPOSER_ATTACH_LIMITS.pdf }, (_, i) =>
+      createMockPdfAttachment(`Document ${i + 1}.pdf`, i + 1)
+    );
+    renderComposerAttachPreview();
+    updateAttachMenuValidation();
+    updateComposerSendState();
+    setAttachMenuOpen(true);
+    return;
+  }
+
+  if (scenario === 'error-pdf-with-images') {
+    composerStaged.images = [createMockImageAttachment('photo-1.jpg', 1)];
+    renderComposerAttachPreview();
+    updateAttachMenuValidation();
+    updateComposerSendState();
+    setAttachMenuOpen(true);
+    return;
+  }
+
+  if (scenario === 'error-fifth-image') {
+    composerStaged.images = Array.from({ length: COMPOSER_ATTACH_LIMITS.images }, (_, i) =>
+      createMockImageAttachment(`photo-${i + 1}.jpg`, i + 1)
+    );
+    renderComposerAttachPreview();
+    updateAttachMenuValidation();
+    updateComposerSendState();
+    setAttachMenuOpen(true);
+    return;
+  }
+
+  if (scenario === 'delivery-failed-pdf') {
+    const conv = getActiveConversation();
+    if (!conv) return;
+    const timeStr = getTimeStr();
+    const fileName = 'Fyodor Dostoevsky — Crime and Punishment.pdf';
+    conv.messages.push({
+      type: 'pdf',
+      src: '',
+      fileName,
+      status: `Sent ${timeStr}`,
+      deliveryFailed: true,
+    });
+    conv.preview = truncateComposerFileName(fileName, 14);
+    conv.previewDynamic = true;
+    conv.time = 'Just now';
+    renderChatList();
+    renderMessages();
+    showToast(t('chat.deliveryFailedToast'), { variant: 'error', duration: 5000 });
+    return;
+  }
+
+  if (scenario === 'delivery-failed-one-of-two') {
+    const conv = getActiveConversation();
+    if (!conv) return;
+    const timeStr = getTimeStr();
+    const ok = createMockPdfAttachment('Fables de La Fontaine.pdf', 1);
+    conv.messages.push({
+      type: 'pdf',
+      src: ok.previewUrl,
+      fileName: ok.name,
+      status: `Sent ${timeStr}`,
+    });
+    const failedName = 'Crime and Punishment.pdf';
+    conv.messages.push({
+      type: 'pdf',
+      src: '',
+      fileName: failedName,
+      status: `Sent ${timeStr}`,
+      deliveryFailed: true,
+    });
+    conv.preview = truncateComposerFileName(failedName, 14);
+    conv.previewDynamic = true;
+    conv.time = 'Just now';
+    renderChatList();
+    renderMessages();
+    showToast(t('chat.deliveryFailedToast'), { variant: 'error', duration: 5000 });
+    return;
+  }
+
+  if (scenario === 'error-file-too-large') {
+    const big = new File([new Blob(['%PDF-1.4\n'], { type: 'application/pdf' })], 'Crime and Punishment.pdf', {
+      type: 'application/pdf',
+    });
+    Object.defineProperty(big, 'size', { value: COMPOSER_ATTACH_MAX_BYTES.pdf + 1 });
+    if (validateAndStagePdf(big) === 'rejected') toastUploadRejected();
+    return;
+  }
+
+  if (scenario === 'error-wrong-type') {
+    if (validateAndStagePdf(new File([new Blob(['hello'])], 'notes.txt', { type: 'text/plain' })) === 'rejected') {
+      toastUploadRejected();
+    }
+  }
+}
+
+function setLabMenuOpen(root, fab, menu, open) {
+  root?.classList.toggle('is-open', open);
+  fab?.setAttribute('aria-expanded', open ? 'true' : 'false');
+  menu?.setAttribute('aria-hidden', open ? 'false' : 'true');
+}
+
+function closeLabsExcept(keep) {
+  if (keep !== 'attach') setLabMenuOpen(attachLabEl, attachLabFab, attachLabMenu, false);
+  if (keep !== 'search') setLabMenuOpen(contactsSearchLabEl, contactsSearchLabFab, contactsSearchLabMenu, false);
+  if (keep !== 'tags') setLabMenuOpen(contactsTagsLabEl, contactsTagsLabFab, contactsTagsLabMenu, false);
+}
+
+function setAttachLabOpen(open) {
+  if (open) closeLabsExcept('attach');
+  setLabMenuOpen(attachLabEl, attachLabFab, attachLabMenu, open);
+}
+
+const contactsSearchLabEl = document.getElementById('contacts-search-lab');
+const contactsSearchLabFab = document.getElementById('contacts-search-lab-fab');
+const contactsSearchLabMenu = document.getElementById('contacts-search-lab-menu');
+
+function setContactsSearchLabOpen(open) {
+  if (open) closeLabsExcept('search');
+  setLabMenuOpen(contactsSearchLabEl, contactsSearchLabFab, contactsSearchLabMenu, open);
+}
+
+function setContactsTagsLabOpen(open) {
+  if (open) closeLabsExcept('tags');
+  setLabMenuOpen(contactsTagsLabEl, contactsTagsLabFab, contactsTagsLabMenu, open);
+}
+
+function updateAttachLabVisibility() {
+  if (attachLabEl) {
+    const show = activeView === 'chats' || activeView === 'contacts';
+    attachLabEl.hidden = !show;
+    if (!show) setAttachLabOpen(false);
+    attachLabMenu?.querySelectorAll('[data-lab-view]').forEach((block) => {
+      block.hidden = block.dataset.labView !== activeView;
+    });
+  }
+  if (contactsSearchLabEl) {
+    const showSearchLab = activeView === 'contacts';
+    contactsSearchLabEl.hidden = !showSearchLab;
+    if (!showSearchLab) setContactsSearchLabOpen(false);
+  }
+  if (contactsTagsLabEl) {
+    const showTagsLab = activeView === 'contacts';
+    contactsTagsLabEl.hidden = !showTagsLab;
+    if (!showTagsLab) setContactsTagsLabOpen(false);
+  }
+}
+
+const ATTACH_LAB_POS_KEY = 'attach-lab-pos';
+const CONTACTS_SEARCH_LAB_POS_KEY = 'contacts-search-lab-pos';
+const CONTACTS_TAGS_LAB_POS_KEY = 'contacts-tags-lab-pos';
+
+function clampLabPosition(left, top) {
+  const size = 40;
+  const pad = 8;
+  const maxLeft = Math.max(pad, window.innerWidth - size - pad);
+  const maxTop = Math.max(pad, window.innerHeight - size - pad);
+  return {
+    left: Math.min(Math.max(pad, left), maxLeft),
+    top: Math.min(Math.max(pad, top), maxTop),
+  };
+}
+
+function applyLabPosition(root, left, top) {
+  if (!root) return;
+  const pos = clampLabPosition(left, top);
+  root.style.left = `${pos.left}px`;
+  root.style.top = `${pos.top}px`;
+  root.style.right = 'auto';
+  root.style.bottom = 'auto';
+  return pos;
+}
+
+function restoreLabPosition(root, storageKey) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+    if (saved && Number.isFinite(saved.left) && Number.isFinite(saved.top)) {
+      applyLabPosition(root, saved.left, saved.top);
+    }
+  } catch (_) {
+    /* ignore */
+  }
+}
+
+function initDraggableLab(root, fab, storageKey, onClick) {
+  if (!root || !fab) return;
+  restoreLabPosition(root, storageKey);
+
+  let drag = null;
+  let skipClick = false;
+
+  fab.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    const rect = root.getBoundingClientRect();
+    drag = {
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      origLeft: rect.left,
+      origTop: rect.top,
+      moved: false,
+    };
+    fab.setPointerCapture(e.pointerId);
+  });
+
+  fab.addEventListener('pointermove', (e) => {
+    if (!drag || e.pointerId !== drag.pointerId) return;
+    const dx = e.clientX - drag.startX;
+    const dy = e.clientY - drag.startY;
+    if (!drag.moved && dx * dx + dy * dy < 36) return;
+    drag.moved = true;
+    skipClick = true;
+    root.classList.add('is-dragging');
+    applyLabPosition(root, drag.origLeft + dx, drag.origTop + dy);
+  });
+
+  const endDrag = (e) => {
+    if (!drag || e.pointerId !== drag.pointerId) return;
+    if (drag.moved) {
+      const pos = applyLabPosition(
+        root,
+        drag.origLeft + (e.clientX - drag.startX),
+        drag.origTop + (e.clientY - drag.startY)
+      );
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(pos));
+      } catch (_) {
+        /* ignore */
+      }
+    }
+    root.classList.remove('is-dragging');
+    drag = null;
+  };
+
+  fab.addEventListener('pointerup', endDrag);
+  fab.addEventListener('pointercancel', endDrag);
+
+  fab.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (skipClick) {
+      skipClick = false;
+      return;
+    }
+    onClick?.();
+  });
+
+  window.addEventListener('resize', () => {
+    const rect = root.getBoundingClientRect();
+    if (root.style.left) applyLabPosition(root, rect.left, rect.top);
+  });
+}
+
+function applyContactsSearchExample(value) {
+  const searchEl = document.getElementById('contacts-search');
+  contactsSearchQuery = value;
+  if (searchEl) {
+    searchEl.value = value;
+    searchEl.focus();
+  }
+  contactsPage = 1;
+  renderContactsTable();
+}
+
+function initContactsSearchLab() {
+  initDraggableLab(contactsSearchLabEl, contactsSearchLabFab, CONTACTS_SEARCH_LAB_POS_KEY, () => {
+    setContactsSearchLabOpen(!contactsSearchLabEl?.classList.contains('is-open'));
+  });
+
+  const examples = {
+    email: 'alice.reynolds',
+    romanized: 'Tanaka',
+    kanji: '田中',
+    latinJp: 'Yamamoto',
+    empty: 'zzzz-not-a-contact',
+    clear: '',
+  };
+
+  contactsSearchLabMenu?.querySelectorAll('[data-search-lab]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const key = btn.dataset.searchLab;
+      if (key in examples) applyContactsSearchExample(examples[key]);
+      setContactsSearchLabOpen(false);
+    });
+  });
+}
+
+function broadcastWizardTargetsTag(tag) {
+  return (
+    Boolean(tag) &&
+    broadcastWizardState.audienceTags[0] === tag &&
+    wizardSessionHasProgress(broadcastWizardState)
+  );
+}
+
+function seedInProgressBroadcastWithTag(tag) {
+  broadcastWizardState = createDefaultBroadcastWizardState();
+  broadcastWizardState.audienceTags = [tag];
+  broadcastWizardState.templateId = 'free-text';
+  broadcastWizardState.step = 3;
+  broadcastWizardState.message = 'Quiet hours start at 10 PM on weeknights.';
+  broadcastWizardState.maxReachableStep = getBroadcastWizardMaxReachableStep(broadcastWizardState);
+  activeBroadcastId = BROADCAST_WIZARD_DRAFT_ID;
+  if (broadcastWizardOpen) setBroadcastWizardOpen(false);
+  if (activeView === 'broadcasts') renderBroadcastList();
+  refreshWizardDraftListRow();
+}
+
+function detachTagFromBroadcastWizard(tag) {
+  if (broadcastWizardState.audienceTags[0] !== tag) return false;
+  broadcastWizardState.audienceTags = [];
+  if (broadcastWizardState.step > 1) broadcastWizardState.step = 1;
+  broadcastWizardState.maxReachableStep = getBroadcastWizardMaxReachableStep(broadcastWizardState);
+  if (broadcastWizardOpen) {
+    renderBroadcastWizardAudienceTags();
+    updateBroadcastWizardAudienceCount();
+    updateBroadcastWizardAudienceTrigger();
+    updateBroadcastWizardFooter();
+    showBroadcastWizardStep(broadcastWizardState.step);
+  }
+  refreshWizardDraftListRow();
+  return true;
+}
+
+function runTagsLabScenario(scenario) {
+  setContactsNoAccess(false);
+  if (scenario === 'show-deleted-tag') {
+    setManageTagsOpen(false);
+    switchView('broadcasts');
+    setBroadcastStatusFilter('all');
+    activeBroadcastId = 'pilot-program-wrap-up';
+    renderBroadcastList();
+    renderBroadcastDetail();
+    return;
+  }
+  if (scenario === 'delete-broadcast-draft') {
+    seedInProgressBroadcastWithTag('VIP');
+  }
+  switchView('contacts');
+  setManageTagsOpen(true);
+  if (scenario === 'delete-unused') {
+    requestDeleteCatalogTag('Loyalty member');
+  } else if (scenario === 'delete-in-use') {
+    requestDeleteCatalogTag('Member');
+  } else if (scenario === 'delete-broadcast-draft') {
+    requestDeleteCatalogTag('VIP');
+  }
+}
+
+function initContactsTagsLab() {
+  initDraggableLab(contactsTagsLabEl, contactsTagsLabFab, CONTACTS_TAGS_LAB_POS_KEY, () => {
+    setContactsTagsLabOpen(!contactsTagsLabEl?.classList.contains('is-open'));
+  });
+  contactsTagsLabMenu?.querySelectorAll('[data-tags-lab]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      runTagsLabScenario(btn.dataset.tagsLab);
+      setContactsTagsLabOpen(false);
+    });
+  });
+}
+
+function initAttachLab() {
+  initDraggableLab(attachLabEl, attachLabFab, ATTACH_LAB_POS_KEY, () => {
+    setAttachLabOpen(!attachLabEl?.classList.contains('is-open'));
+  });
+  initContactsSearchLab();
+  initContactsTagsLab();
+  initPermissionDeniedDialog();
+
+  document.querySelectorAll('.attach-lab__ticket').forEach((link) => {
+    link.addEventListener('click', (e) => e.stopPropagation());
+  });
+
+  attachLabMenu?.querySelectorAll('[data-attach-scenario], [data-lab-scenario]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      runAttachLabScenario(btn.dataset.attachScenario || btn.dataset.labScenario);
+      setAttachLabOpen(false);
+    });
+  });
+
+  const noAccessEl = document.getElementById('contacts-lab-no-access');
+  noAccessEl?.addEventListener('click', (e) => e.stopPropagation());
+  noAccessEl?.addEventListener('change', (e) => {
+    e.stopPropagation();
+    setContactsNoAccess(noAccessEl.checked);
+  });
+  if (noAccessEl) noAccessEl.checked = !contactsCanManageTags;
+
+  document.addEventListener('click', (e) => {
+    if (attachLabEl && !attachLabEl.hidden && !attachLabEl.contains(e.target)) {
+      setAttachLabOpen(false);
+    }
+    if (contactsSearchLabEl && !contactsSearchLabEl.hidden && !contactsSearchLabEl.contains(e.target)) {
+      setContactsSearchLabOpen(false);
+    }
+    if (contactsTagsLabEl && !contactsTagsLabEl.hidden && !contactsTagsLabEl.contains(e.target)) {
+      setContactsTagsLabOpen(false);
+    }
+  });
+
+  updateAttachLabVisibility();
 }
 
 function sendMessage() {
   const text = messageInput.value.trim();
-  if (!text) return;
+  const hasAttachments = hasComposerStagedAttachments();
+  if (!text && !hasAttachments) return;
 
   const conv = getActiveConversation();
   if (!conv) return;
 
   const timeStr = getTimeStr();
 
+  if (hasAttachments) {
+    flushComposerStagedAttachments(conv, timeStr);
+    clearComposerStagedAttachments();
+  }
+
   if (composerNoteMode) {
+    if (!text) {
+      renderChatList();
+      renderMessages();
+      updateComposerSendState();
+      return;
+    }
     conv.messages.push({
       type: 'note',
       text,
@@ -3660,7 +5246,7 @@ function sendMessage() {
       time: timeStr,
     });
     setComposerNoteMode(false);
-  } else {
+  } else if (text) {
     conv.messages.push({
       type: 'outgoing',
       text,
@@ -3672,6 +5258,7 @@ function sendMessage() {
   }
 
   messageInput.value = '';
+  resetMessageInputHeight();
   updateComposerSendState();
   renderChatList();
   renderMessages();
@@ -4086,7 +5673,10 @@ function renderTemplateGrid(container, selectedId, onSelect) {
   });
 }
 
-messageInput.addEventListener('input', updateComposerSendState);
+messageInput.addEventListener('input', () => {
+  updateComposerSendState();
+  resizeMessageInput();
+});
 
 messageInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && !e.shiftKey) {
@@ -4100,17 +5690,95 @@ chatSendBtn?.addEventListener('click', () => {
 });
 
 updateComposerSendState();
+resizeMessageInput();
 
 function getBroadcastTabKey() {
   if (isSupervisorMode) return supervisorBroadcastTab;
   return activeBroadcastTab;
 }
 
+function broadcastSortValue(item) {
+  if (item?.sortAt) {
+    const fromSortAt = Date.parse(item.sortAt);
+    if (Number.isFinite(fromSortAt)) return fromSortAt;
+  }
+  const parsed = Date.parse(String(item?.datetime || '').replace(' · ', ' '));
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function getBroadcastItemsForFilter(filter) {
+  const sent = BROADCASTS.sent || [];
+  const drafts = BROADCASTS.drafts || [];
+  if (filter === 'sent') return sent;
+  if (filter === 'draft') return drafts;
+  return [...drafts, ...sent].sort((a, b) => broadcastSortValue(b) - broadcastSortValue(a));
+}
+
+function getBroadcastListSource() {
+  if (isSupervisorMode) return BROADCASTS[getBroadcastTabKey()] || [];
+  return getBroadcastItemsForFilter(broadcastStatusFilter);
+}
+
+function findBroadcastById(id) {
+  if (!id) return null;
+  return (
+    (BROADCASTS.sent || []).find((b) => b.id === id) ||
+    (BROADCASTS.drafts || []).find((b) => b.id === id) ||
+    (BROADCASTS.scheduled || []).find((b) => b.id === id) ||
+    null
+  );
+}
+
 function getActiveBroadcast() {
   if (!activeBroadcastId) return null;
-  const key = getBroadcastTabKey();
-  const list = BROADCASTS[key] || [];
-  return list.find((b) => b.id === activeBroadcastId) || null;
+  if (isSupervisorMode) {
+    const list = BROADCASTS[getBroadcastTabKey()] || [];
+    return list.find((b) => b.id === activeBroadcastId) || null;
+  }
+  return findBroadcastById(activeBroadcastId);
+}
+
+function shouldShowWizardDraftRow() {
+  if (!broadcastWizardOpen) return false;
+  if (isSupervisorMode) return getBroadcastTabKey() === 'drafts';
+  return broadcastStatusFilter !== 'sent';
+}
+
+function getBroadcastEmptyLabel() {
+  if (broadcastsSearchQuery.trim()) return t('broadcasts.noSearchResults');
+  if (isSupervisorMode) return t('broadcasts.emptyAll');
+  if (broadcastStatusFilter === 'sent') return t('broadcasts.emptySent');
+  if (broadcastStatusFilter === 'draft') return t('broadcasts.emptyDraft');
+  return t('broadcasts.emptyAll');
+}
+
+function updateBroadcastStatusFilterButton() {
+  const btn = document.getElementById('broadcasts-status-filter-btn');
+  const valueEl = document.getElementById('broadcasts-status-filter-value');
+  const menu = document.getElementById('broadcasts-status-filter-menu');
+  const labels = {
+    all: t('broadcasts.filterAll'),
+    sent: t('broadcasts.filterSent'),
+    draft: t('broadcasts.filterDraft'),
+  };
+  if (valueEl) valueEl.textContent = labels[broadcastStatusFilter] || labels.all;
+  menu?.querySelectorAll('.filter-radio-item[data-value]').forEach((item) => {
+    item.classList.toggle('is-selected', item.dataset.value === broadcastStatusFilter);
+  });
+  btn?.classList.toggle('is-active', broadcastStatusFilter !== 'all');
+}
+
+function setBroadcastStatusFilter(value) {
+  const next = value === 'sent' || value === 'draft' ? value : 'all';
+  if (broadcastWizardOpen && next === 'sent') hideBroadcastWizard();
+  broadcastStatusFilter = next;
+  activeBroadcastTab = next === 'draft' ? 'drafts' : 'sent';
+  if (next !== 'all' && activeBroadcastId && activeBroadcastId !== BROADCAST_WIZARD_DRAFT_ID) {
+    const stillVisible = getBroadcastItemsForFilter(next).some((item) => item.id === activeBroadcastId);
+    if (!stillVisible) activeBroadcastId = null;
+  }
+  updateBroadcastStatusFilterButton();
+  renderBroadcastList();
 }
 
 const broadcastEmptyStateEl = document.getElementById('broadcast-empty-state');
@@ -4160,14 +5828,74 @@ function getTemplateDisplayName(templateId) {
   return getLocalizedTemplateTitle(templateId);
 }
 
+function getBroadcastTemplateIcon(templateId) {
+  const option = CONTACT_TEMPLATE_OPTIONS.find((t) => t.id === templateId);
+  return option?.icon || 'edit_note';
+}
+
+function getBroadcastItemTemplateId(item) {
+  if (item?.templateId) return item.templateId;
+  if (item?.templateType === 'free') return 'free-text';
+  if (item?.templateType === 'welcome_bridge' || item?.templateType === 'light_card') {
+    return 'project-updates';
+  }
+  const label = String(item?.template || '').toLocaleLowerCase();
+  if (label.includes('link') || label.includes('card')) return 'project-updates';
+  return 'free-text';
+}
+
+function getBroadcastTypeTooltip(templateId) {
+  if (templateId === 'project-updates') return t('broadcasts.typeTooltipMessageWithLink');
+  return t('broadcasts.typeTooltipTextOnly');
+}
+
+function isTagInContactCatalog(tag) {
+  return Boolean(tag) && contactTagCatalog.includes(tag);
+}
+
+function renderBroadcastTypeMarkHtml(templateId) {
+  if (!templateId) return '';
+  const icon = getBroadcastTemplateIcon(templateId);
+  const tip = getBroadcastTypeTooltip(templateId);
+  return `<span class="broadcast-type-mark" data-tooltip="${escapePreviewText(tip)}" tabindex="0" aria-label="${escapePreviewText(tip)}"><span class="material-icons" aria-hidden="true">${icon}</span></span>`;
+}
+
+function renderBroadcastMetaRow({ templateId, tagKeys = [] }) {
+  const typeHtml = renderBroadcastTypeMarkHtml(templateId);
+  const tagPart = tagKeys.length
+    ? tagKeys.map((tag) => broadcastTagPillHtml(tag)).join('')
+    : '';
+  if (!typeHtml && !tagPart) return '';
+  return `<div class="broadcast-meta-row">${typeHtml}${
+    tagPart ? `<span class="broadcast-meta broadcast-meta--tags">${tagPart}</span>` : ''
+  }</div>`;
+}
+
+function renderBroadcastListMeta(item) {
+  return renderBroadcastMetaRow({
+    templateId: getBroadcastItemTemplateId(item),
+    tagKeys: getBroadcastAudienceTags(item),
+  });
+}
+
+function renderWizardDraftMetaRow() {
+  const templateId = broadcastWizardState.templateId;
+  const { showAudience } = getWizardDraftListData();
+  const tags =
+    showAudience && broadcastWizardState.audienceTags[0]
+      ? [broadcastWizardState.audienceTags[0]]
+      : [];
+  return renderBroadcastMetaRow({ templateId, tagKeys: tags });
+}
+
 function getWizardDraftListData() {
   syncBroadcastWizardComposeFromInputs();
   const needsTitle = broadcastTemplateNeedsTitle(broadcastWizardState.templateId);
-  const hasTitle = needsTitle ? Boolean(broadcastWizardState.title.trim()) : Boolean(broadcastWizardState.message.trim());
+  const messagePreview = broadcastWizardState.message.trim().slice(0, 60);
   const title = needsTitle
-    ? (broadcastWizardState.title.trim() || 'No title')
-    : (broadcastWizardState.message.trim().slice(0, 60) || 'No message');
-  const titleEmpty = !hasTitle;
+    ? (broadcastWizardState.title.trim() || t('broadcasts.noTitle'))
+    : (messagePreview || t('broadcasts.draftListPreviewFallback'));
+  const titleEmpty = needsTitle ? !broadcastWizardState.title.trim() : false;
   const recipientCount = countContactsByTags(broadcastWizardState.audienceTags);
   const showAudience =
     broadcastWizardState.audienceTags.length > 0 && recipientCount > 0;
@@ -4181,56 +5909,99 @@ function getWizardDraftListData() {
   };
 }
 
-function renderWizardDraftMetaHtml() {
-  const { templateDisplayName, showAudience, recipientCount } = getWizardDraftListData();
-  const step = broadcastWizardState.step;
-  const totalSteps = BROADCAST_WIZARD_STEPS.length;
-  const leftParts = [];
-
-  if (templateDisplayName) {
-    leftParts.push(
-      `<span class="broadcast-meta__type">${templateDisplayName}</span>`
-    );
-  }
-
-  if (showAudience) {
-    leftParts.push(
-      `<span class="broadcast-meta__audience">${recipientCount} ${recipientCount === 1 ? 'person' : 'people'}</span>`
-    );
-  }
-
-  const progressHtml = `<span class="broadcast-meta__progress">Progress: ${step}/${totalSteps}</span>`;
-
-  return `<span class="broadcast-meta broadcast-meta--creating"><span class="broadcast-meta__left">${leftParts.join('')}</span>${progressHtml}</span>`;
-}
-
 function renderWizardDraftListItem() {
   const { title, titleEmpty } = getWizardDraftListData();
   const isSelected = activeBroadcastId === BROADCAST_WIZARD_DRAFT_ID;
   const titleClass = titleEmpty ? 'broadcast-title broadcast-title--empty' : 'broadcast-title';
+  const metaHtml = renderWizardDraftMetaRow();
   return `
     <li class="broadcast-item broadcast-item--creating ${isSelected ? 'selected' : ''}" data-id="${BROADCAST_WIZARD_DRAFT_ID}" role="listitem" aria-current="${isSelected ? 'true' : 'false'}">
       <div class="broadcast-item-top">
-        <span class="${titleClass}">${title}</span>
-        <span class="broadcast-time">Draft</span>
+        <span class="${titleClass}">${escapePreviewText(title)}</span>
+        <span class="status-pill status-pill--draft">${escapePreviewText(t('broadcasts.statusDraft'))}</span>
       </div>
-      ${renderWizardDraftMetaHtml()}
+      ${metaHtml}
     </li>`;
 }
 
 function refreshWizardDraftListRow() {
-  if (!broadcastWizardOpen || getBroadcastTabKey() !== 'drafts') return;
+  if (!shouldShowWizardDraftRow()) return;
   renderBroadcastList();
 }
 
-function renderBroadcastList() {
-  const key = getBroadcastTabKey();
-  const list = BROADCASTS[key] || [];
+let broadcastsSearchQuery = '';
+const broadcastsSearchEl = document.getElementById('broadcasts-search');
+const broadcastsSearchInput = document.getElementById('broadcasts-search-input');
+const broadcastsSearchButton = document.getElementById('broadcasts-search-button');
+const broadcastsSearchClose = document.getElementById('broadcasts-search-close');
 
-  if (!list.length) {
-    broadcastListEl.innerHTML =
-      '<li class="broadcast-empty">No broadcasts sent yet.</li>';
+function setBroadcastsSearchOpen(open) {
+  broadcastsSearchEl?.classList.toggle('is-open', open);
+  broadcastsSearchButton?.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (open) {
+    broadcastsSearchInput?.focus();
+    return;
+  }
+  broadcastsSearchQuery = '';
+  if (broadcastsSearchInput) broadcastsSearchInput.value = '';
+  renderBroadcastList();
+}
+
+broadcastsSearchButton?.addEventListener('click', () => {
+  setBroadcastsSearchOpen(!broadcastsSearchEl?.classList.contains('is-open'));
+});
+
+broadcastsSearchClose?.addEventListener('click', () => {
+  setBroadcastsSearchOpen(false);
+});
+
+broadcastsSearchInput?.addEventListener('input', () => {
+  broadcastsSearchQuery = broadcastsSearchInput.value;
+  renderBroadcastList();
+});
+
+broadcastsSearchInput?.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') setBroadcastsSearchOpen(false);
+});
+
+function isDraftBroadcast(item) {
+  return item?.statusClass === 'draft' || item?.status === 'Draft';
+}
+
+function renderBroadcastListTrailing(item) {
+  if (isDraftBroadcast(item)) {
+    return `<span class="status-pill status-pill--draft">${escapePreviewText(t('broadcasts.statusDraft'))}</span>`;
+  }
+  const sentLabel = t('broadcasts.statusSent');
+  return `<span class="broadcast-item-status">
+      <span class="broadcast-time">${escapePreviewText(item.time)}</span>
+      <span class="broadcast-sent-mark" title="${escapePreviewText(sentLabel)}" aria-label="${escapePreviewText(sentLabel)}">
+        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+      </span>
+    </span>`;
+}
+
+function renderBroadcastList() {
+  updateBroadcastStatusFilterButton();
+  const query = broadcastsSearchQuery.trim().toLocaleLowerCase();
+  const source = getBroadcastListSource();
+  const showWizardRow = shouldShowWizardDraftRow();
+  const list = source.filter((item) => {
+    if (!query) return true;
+    return [item.title, item.meta, item.recipients, item.template, item.preview]
+      .some((value) => String(value || '').toLocaleLowerCase().includes(query));
+  });
+
+  if (!source.length && !showWizardRow) {
+    broadcastListEl.innerHTML = `<li class="broadcast-empty">${getBroadcastEmptyLabel()}</li>`;
     activeBroadcastId = null;
+    renderBroadcastDetail();
+    updateTabBadges();
+    return;
+  }
+
+  if (!list.length && !showWizardRow) {
+    broadcastListEl.innerHTML = `<li class="broadcast-empty">${getBroadcastEmptyLabel()}</li>`;
     renderBroadcastDetail();
     updateTabBadges();
     return;
@@ -4249,21 +6020,27 @@ function renderBroadcastList() {
       (item) => `
     <li class="broadcast-item ${item.id === activeBroadcastId ? 'selected' : ''}" data-id="${item.id}" role="listitem">
       <div class="broadcast-item-top">
-        <span class="broadcast-title">${item.title}</span>
-        <span class="broadcast-time">${item.time}</span>
+        <span class="broadcast-title">${escapePreviewText(getBroadcastListTitle(item))}</span>
+        ${renderBroadcastListTrailing(item)}
       </div>
-      <span class="broadcast-meta">${item.meta}</span>
+      ${renderBroadcastListMeta(item)}
       ${renderCreatorRow(item.createdBy)}
     </li>`
     )
     .join('');
 
-  broadcastListEl.innerHTML = listHtml;
+  broadcastListEl.innerHTML = `${showWizardRow ? renderWizardDraftListItem() : ''}${listHtml}`;
 
   broadcastListEl.querySelectorAll('.broadcast-item').forEach((item) => {
     item.addEventListener('click', () => {
+      const id = item.dataset.id;
+      if (id === BROADCAST_WIZARD_DRAFT_ID) {
+        activeBroadcastId = id;
+        renderBroadcastList();
+        return;
+      }
       if (broadcastWizardOpen) hideBroadcastWizard();
-      activeBroadcastId = item.dataset.id;
+      activeBroadcastId = id;
       renderBroadcastList();
       renderBroadcastDetail();
     });
@@ -4271,9 +6048,10 @@ function renderBroadcastList() {
 
   renderBroadcastDetail();
   updateTabBadges();
+  refreshOverlayScrollbars();
 }
 
-const MVP_BROADCAST_LIST_HIDDEN = true;
+const MVP_BROADCAST_LIST_HIDDEN = false;
 
 function ensureBroadcastWizardVisible() {
   if (broadcastWizardOpen) return;
@@ -4282,6 +6060,223 @@ function ensureBroadcastWizardVisible() {
   } else {
     startFreshBroadcastWizard();
   }
+}
+
+function countContactsWithTag(tag) {
+  if (!tag) return 0;
+  return CONTACTS.filter((c) => Array.isArray(c.tags) && c.tags.includes(tag)).length;
+}
+
+function peopleFromRate(total, rate) {
+  return Math.round((Math.max(0, total) * Math.max(0, rate)) / 100);
+}
+
+function rateFromCount(count, total) {
+  if (!total) return 0;
+  return Math.round((100 * Math.max(0, count)) / total);
+}
+
+const BROADCAST_UNTITLED_NAV_MAX = 30;
+
+function isUntitledBroadcast(item) {
+  return item?.templateType === 'free';
+}
+
+function getBroadcastMessageTitleSource(item) {
+  return String(item?.preview || item?.title || '')
+    .split('\n')[0]
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function getBroadcastListTitle(item) {
+  if (!isUntitledBroadcast(item)) return item.title || '';
+  return getBroadcastMessageTitleSource(item) || item.title || '';
+}
+
+function getBroadcastNavTitle(item) {
+  const title = isUntitledBroadcast(item)
+    ? getBroadcastMessageTitleSource(item) || item.title || ''
+    : item.title || '';
+  if (!isUntitledBroadcast(item) || title.length <= BROADCAST_UNTITLED_NAV_MAX) return title;
+  return `${title.slice(0, BROADCAST_UNTITLED_NAV_MAX).trimEnd()}…`;
+}
+
+function getBroadcastMetricCounts(item) {
+  const recipients = countContactsWithTag(item.audienceTag);
+  const metrics = item.metrics || {};
+  const delivered = Math.min(
+    recipients,
+    metrics.delivered ?? peopleFromRate(recipients, metrics.deliveryRate),
+  );
+  const read = Math.min(delivered, metrics.read ?? peopleFromRate(recipients, metrics.readRate));
+  const clicked = Math.min(read, metrics.clicked ?? peopleFromRate(recipients, metrics.clickRate));
+  const replied = Math.min(read, metrics.replied ?? peopleFromRate(recipients, metrics.responseRate));
+  return {
+    recipients,
+    delivered,
+    read,
+    clicked,
+    replied,
+    deliveryRate: rateFromCount(delivered, recipients),
+    readRate: rateFromCount(read, recipients),
+    clickRate: rateFromCount(clicked, recipients),
+    responseRate: rateFromCount(replied, recipients),
+  };
+}
+
+function renderBroadcastMetricCard({ id, label, caption, icon }) {
+  const decor = icon
+    ? `<span class="home-v2-metric-card__decor" aria-hidden="true">
+        <span class="material-icons">${escapePreviewText(icon)}</span>
+      </span>`
+    : '';
+  return `<article class="home-v2-metric-card home-v2-metric-card--broadcasts is-visible" data-bc-metric="${escapePreviewText(id)}">
+      ${decor}
+      <header class="home-v2-metric-card__head">
+        <div class="home-v2-metric-card__title-block">
+          <p class="home-v2-metric-card__label">${escapePreviewText(label)}</p>
+          <p class="home-v2-metric-card__caption">${escapePreviewText(caption)}</p>
+        </div>
+      </header>
+      <div class="home-v2-metric-card__body home-v2-metric-card__body--solo">
+        <p class="home-v2-metric-card__value" data-bc-value="${escapePreviewText(id)}">—</p>
+      </div>
+    </article>`;
+}
+
+function renderBroadcastDetailMetrics(item) {
+  const metrics = item && item.metrics;
+  if (!metrics) return '';
+  const peopleCaption = getBroadcastDetailRecipientsLabel(item);
+  const counts = getBroadcastMetricCounts(item);
+  return `<aside class="broadcast-detail-performance" aria-label="${escapePreviewText(t('home2.broadcast.title'))}">
+      <h3>${t('home2.broadcast.title')}</h3>
+      <div class="broadcast-metrics-stack">
+        ${renderBroadcastMetricCard({
+          id: 'people',
+          label: t('broadcasts.metric.people'),
+          caption: peopleCaption,
+          icon: 'groups',
+        })}
+        ${renderBroadcastMetricCard({
+          id: 'click',
+          label: t('home2.metric.clickRate'),
+          caption: t('broadcasts.metric.peopleClicked', { count: counts.clicked }),
+          icon: 'touch_app',
+        })}
+        ${renderBroadcastMetricCard({
+          id: 'delivery',
+          label: t('home2.metric.deliveryRate'),
+          caption: t('broadcasts.metric.peopleDelivered', { count: counts.delivered }),
+          icon: 'send',
+        })}
+        ${renderBroadcastMetricCard({
+          id: 'read',
+          label: t('home2.metric.readRate'),
+          caption: t('broadcasts.metric.peopleRead', { count: counts.read }),
+          icon: 'visibility',
+        })}
+        ${renderBroadcastMetricCard({
+          id: 'response',
+          label: t('home2.metric.responseRate'),
+          caption: t('broadcasts.metric.peopleReplied', { count: counts.replied }),
+          icon: 'reply',
+        })}
+      </div>
+    </aside>`;
+}
+
+function hydrateBroadcastDetailMetrics(root, item) {
+  const panel = root?.querySelector?.('.broadcast-detail-performance');
+  if (!panel || !item?.metrics) return;
+
+  const counts = getBroadcastMetricCounts(item);
+  const setValue = (id, text) => {
+    const el = panel.querySelector(`[data-bc-value="${id}"]`);
+    if (el) el.textContent = text;
+  };
+
+  setValue('people', String(counts.recipients));
+  setValue('click', `${counts.clickRate}%`);
+  setValue('delivery', `${counts.deliveryRate}%`);
+  setValue('read', `${counts.readRate}%`);
+  setValue('response', `${counts.responseRate}%`);
+}
+
+function getBroadcastAudienceTags(item) {
+  if (Array.isArray(item.audienceTags) && item.audienceTags.length) return item.audienceTags;
+  if (item.audienceTag) return [item.audienceTag];
+  const raw = item.recipients || item.meta || '';
+  if (typeof raw === 'string' && raw.startsWith('Tag: ')) return [raw.slice(5).trim()].filter(Boolean);
+  if (typeof raw === 'string' && raw.startsWith('Tags: ')) {
+    return raw
+      .slice(6)
+      .split(',')
+      .map((part) => part.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
+function getBroadcastDetailRecipientsLabel(item) {
+  const tags = getBroadcastAudienceTags(item);
+  if (tags.length) return tags.map((tag) => translateTag(tag)).join(', ');
+  return item.recipients || item.meta || '—';
+}
+
+function getBroadcastRecipientCount(item) {
+  const tags = getBroadcastAudienceTags(item);
+  if (tags.includes(ALL_CONTACTS_AUDIENCE_TAG)) return CONTACTS.length;
+  if (tags.length) return countContactsByTags(tags);
+  return getBroadcastMetricCounts(item).recipients;
+}
+
+function renderBroadcastDetailMessage(item) {
+  if (item.templateType === 'welcome_bridge') {
+    return `<div class="broadcast-detail-preview broadcast-detail-preview--card">
+      ${renderProjectUpdatePreviewCard(item.title, item.preview)}
+    </div>`;
+  }
+  if (item.templateType === 'light_card') {
+    return `<div class="broadcast-detail-preview broadcast-detail-preview--card">
+      ${renderLightCardPreview(item.title, item.preview, item.surveyLink)}
+    </div>`;
+  }
+  return `<div class="broadcast-detail-preview">
+    <div class="broadcast-detail-preview__bubble">${escapePreviewText(item.preview || '')}</div>
+  </div>`;
+}
+
+function renderBroadcastDetailSummaryRows(item) {
+  const templateLabel = item.template || '—';
+  const tags = getBroadcastAudienceTags(item);
+  const recipientCount = getBroadcastRecipientCount(item);
+  const tagRow = tags.length
+    ? `<div class="summary-row">
+      <dt class="summary-label">${t('wizard.summaryTag')}</dt>
+      <dd class="summary-value summary-value--tags">${tags.map(broadcastTagPillHtml).join('')}</dd>
+    </div>`
+    : '';
+  const link = (item.surveyLink || item.link || '').trim();
+  const linkRow = link
+    ? `<div class="summary-row">
+          <dt class="summary-label">${t('wizard.summaryLink')}</dt>
+          <dd class="summary-value">${escapePreviewText(link)}</dd>
+        </div>`
+    : '';
+
+  return `
+    <div class="summary-row">
+      <dt class="summary-label">${t('wizard.summaryTemplate')}</dt>
+      <dd class="summary-value">${escapePreviewText(templateLabel)}</dd>
+    </div>
+    <div class="summary-row">
+      <dt class="summary-label">${t('wizard.summaryRecipients')}</dt>
+      <dd class="summary-value">${recipientCount}</dd>
+    </div>
+    ${tagRow}
+    ${linkRow}`;
 }
 
 function renderBroadcastDetail() {
@@ -4300,8 +6295,7 @@ function renderBroadcastDetail() {
   const item = getActiveBroadcast();
   if (!item) {
     if (broadcastDetailEl) broadcastDetailEl.innerHTML = '';
-    setBroadcastRightPanel({ showDetail: false, showEmpty: false });
-    ensureBroadcastWizardVisible();
+    setBroadcastRightPanel({ showDetail: false, showEmpty: true });
     return;
   }
 
@@ -4320,42 +6314,18 @@ function renderBroadcastDetail() {
     }
   }
 
-  const audit = item.audit || {};
-  const auditRows = item.audit
-    ? `
-          <div class="summary-row">
-            <dt class="summary-label">Source</dt>
-            <dd class="summary-value">${audit.source || 'operator'} · ${audit.initiator || '—'}</dd>
-          </div>
-          <div class="summary-row">
-            <dt class="summary-label">Calling system</dt>
-            <dd class="summary-value">${audit.callingSystem || 'Business Chat'}</dd>
-          </div>
-          <div class="summary-row">
-            <dt class="summary-label">Target reference</dt>
-            <dd class="summary-value">${audit.targetReference || item.recipients}</dd>
-          </div>
-          <div class="summary-row">
-            <dt class="summary-label">Template type</dt>
-            <dd class="summary-value">${item.template} (${audit.templateType || item.templateType || '—'})</dd>
-          </div>
-          <div class="summary-row">
-            <dt class="summary-label">Payload reference</dt>
-            <dd class="summary-value">${audit.payloadRef || '—'}</dd>
-          </div>
-          <div class="summary-row">
-            <dt class="summary-label">Sent at</dt>
-            <dd class="summary-value">${item.datetime}</dd>
-          </div>
-          <div class="summary-row">
-            <dt class="summary-label">Outcome</dt>
-            <dd class="summary-value">${audit.outcome || 'Accepted'}</dd>
-          </div>
-          <div class="summary-row">
-            <dt class="summary-label">Failure reason</dt>
-            <dd class="summary-value">${audit.failureReason || '—'}</dd>
-          </div>`
-    : '';
+  const summaryRows = renderBroadcastDetailSummaryRows(item);
+  const hasMetrics = Boolean(item.metrics);
+  const mainHtml = `
+      <section class="broadcast-section">
+        <h3>Summary</h3>
+        <dl class="summary-list">${summaryRows}
+        </dl>
+      </section>
+      <section class="broadcast-section">
+        <h3>Message</h3>
+        ${renderBroadcastDetailMessage(item)}
+      </section>`;
 
   setBroadcastRightPanel({ showDetail: true, showEmpty: false });
 
@@ -4363,7 +6333,7 @@ function renderBroadcastDetail() {
     <header class="broadcast-detail-header">
       <div class="broadcast-detail-header__content">
         <div class="broadcast-detail-header__top">
-          <h2>${item.title}</h2>
+          <h2 class="${isUntitledBroadcast(item) ? 'is-untitled' : ''}">${escapePreviewText(getBroadcastNavTitle(item))}</h2>
         </div>
         <div class="broadcast-detail-header__meta">
           <span class="${statusPillClass(item.statusClass)}">${item.status}</span>
@@ -4371,19 +6341,12 @@ function renderBroadcastDetail() {
         </div>
       </div>
     </header>
-    <div class="broadcast-detail-body">
-      <section class="broadcast-section">
-        <h3>Delivery record</h3>
-        <dl class="summary-list">${auditRows}
-        </dl>
-      </section>
-      <section class="broadcast-section">
-        <h3>Message</h3>
-        <div class="message-preview-box">${item.preview}</div>
-        <p class="broadcast-footnote">${item.footnote}</p>
-      </section>
+    <div class="broadcast-detail-body${hasMetrics ? ' broadcast-detail-body--split' : ''}">
+      ${hasMetrics ? `<div class="broadcast-detail-main">${mainHtml}</div>${renderBroadcastDetailMetrics(item)}` : mainHtml}
     </div>
     ${actionsHtml}`;
+
+  if (hasMetrics) hydrateBroadcastDetailMetrics(broadcastDetailEl, item);
 
 }
 
@@ -4431,11 +6394,99 @@ broadcastTabsSupervisorEl?.querySelectorAll('.tab').forEach((tab) => {
   tab.addEventListener('click', () => switchSupervisorBroadcastTab(tab.dataset.sbtab));
 });
 
+function initBroadcastStatusFilter() {
+  setupFilterDropdown('broadcasts-status-filter-btn', 'broadcasts-status-filter-menu', (value) => {
+    setBroadcastStatusFilter(value);
+  });
+  updateBroadcastStatusFilterButton();
+}
+
+let broadcastListFloatingTooltipAnchor = null;
+
+function positionBroadcastListFloatingTooltip() {
+  const tip = document.getElementById('broadcast-list-floating-tooltip');
+  const anchor = broadcastListFloatingTooltipAnchor;
+  if (!tip || tip.hidden || !anchor) return;
+  const rect = anchor.getBoundingClientRect();
+  tip.style.left = `${rect.left + rect.width / 2}px`;
+  tip.style.top = `${rect.top}px`;
+}
+
+function showBroadcastListFloatingTooltip(anchor) {
+  const tip = document.getElementById('broadcast-list-floating-tooltip');
+  if (!tip || !anchor) return;
+  const label = anchor.getAttribute('data-tooltip');
+  if (!label) return;
+  broadcastListFloatingTooltipAnchor = anchor;
+  tip.textContent = label;
+  tip.hidden = false;
+  positionBroadcastListFloatingTooltip();
+}
+
+function hideBroadcastListFloatingTooltip() {
+  const tip = document.getElementById('broadcast-list-floating-tooltip');
+  broadcastListFloatingTooltipAnchor = null;
+  if (tip) tip.hidden = true;
+}
+
+function initBroadcastListTooltips() {
+  const list = broadcastListEl;
+  const tip = document.getElementById('broadcast-list-floating-tooltip');
+  if (!list || !tip) return;
+
+  list.addEventListener('mouseover', (e) => {
+    const anchor = e.target.closest('[data-tooltip]');
+    if (!anchor || !list.contains(anchor)) return;
+    showBroadcastListFloatingTooltip(anchor);
+  });
+
+  list.addEventListener('mouseleave', () => {
+    hideBroadcastListFloatingTooltip();
+  });
+
+  list.addEventListener('mouseout', (e) => {
+    const anchor = e.target.closest('[data-tooltip]');
+    if (!anchor) return;
+    const next = e.relatedTarget;
+    if (next && anchor.contains(next)) return;
+    if (next?.closest?.('[data-tooltip]') === anchor) return;
+    hideBroadcastListFloatingTooltip();
+  });
+
+  list.addEventListener('focusin', (e) => {
+    const anchor = e.target.closest('[data-tooltip]');
+    if (anchor && list.contains(anchor)) showBroadcastListFloatingTooltip(anchor);
+  });
+
+  list.addEventListener('focusout', (e) => {
+    const anchor = e.target.closest('[data-tooltip]');
+    if (!anchor) return;
+    const next = e.relatedTarget;
+    if (next?.closest?.('[data-tooltip]') === anchor) return;
+    hideBroadcastListFloatingTooltip();
+  });
+
+  list.addEventListener('scroll', positionBroadcastListFloatingTooltip, { passive: true });
+  window.addEventListener('scroll', positionBroadcastListFloatingTooltip, { passive: true });
+  window.addEventListener('resize', positionBroadcastListFloatingTooltip);
+}
+
+initBroadcastStatusFilter();
+initBroadcastListTooltips();
+
 const CONTACT_TAGS_VISIBLE_MAX = 3;
 const contactsExpandedTagIds = new Set();
 
 function tagPillHtml(tag) {
   return `<span class="contact-tag contact-tag--blue">${escapePreviewText(translateTag(tag))}</span>`;
+}
+
+function broadcastTagPillHtml(tag) {
+  const name = translateTag(tag);
+  if (!isTagInContactCatalog(tag)) {
+    return `<span class="contact-tag contact-tag--deleted" data-tooltip="${escapePreviewText(t('broadcasts.deletedTagTooltip'))}" tabindex="0" aria-label="${escapePreviewText(`${name} — ${t('broadcasts.deletedTagTooltip')}`)}">${escapePreviewText(name)}</span>`;
+  }
+  return tagPillHtml(tag);
 }
 
 function contactTagsHtml(tags, contactId) {
@@ -4473,34 +6524,33 @@ function contactStatusBadgeHtml(statusId) {
 }
 
 function sortContactsForDisplay(contacts) {
+  const byName = (a, b) =>
+    String(a.name || '').localeCompare(String(b.name || ''), 'ja', { sensitivity: 'base' });
   if (contactsSort === 'alphabetical') {
-    return [...contacts].sort((a, b) => a.name.localeCompare(b.name));
+    return [...contacts].sort(byName);
   }
 
   return [...contacts].sort((a, b) => {
     const order = (b.tagAppliedOrder || 0) - (a.tagAppliedOrder || 0);
-    return order || a.name.localeCompare(b.name);
+    return order || byName(a, b);
+  });
+}
+
+function contactMatchesSearch(contact, rawQuery) {
+  const q = String(rawQuery || '').trim();
+  if (!q) return true;
+  const qLower = q.toLocaleLowerCase();
+  const qCompact = qLower.replace(/\s+/g, '');
+  return contactSearchTexts(contact).some((text) => {
+    const lower = String(text).toLocaleLowerCase();
+    return lower.includes(qLower) || lower.replace(/\s+/g, '').includes(qCompact);
   });
 }
 
 function getFilteredContacts() {
   let list = CONTACTS;
   if (contactsSearchQuery.trim()) {
-    const q = contactsSearchQuery.trim().toLowerCase();
-    list = list.filter((c) => {
-      const meta = STATUS_DEFINITIONS[c.status];
-      const statusLabel = meta?.labelKey ? t(meta.labelKey).toLowerCase() : '';
-      const statusDesc = meta?.descKey ? t(meta.descKey).toLowerCase() : '';
-      const roleLabel = c.role.toLowerCase();
-      return (
-        c.name.toLowerCase().includes(q) ||
-        (c.email && c.email.toLowerCase().includes(q)) ||
-        (c.tags && c.tags.some((t) => t.toLowerCase().includes(q))) ||
-        roleLabel.includes(q) ||
-        statusLabel.includes(q) ||
-        statusDesc.includes(q)
-      );
-    });
+    list = list.filter((c) => contactMatchesSearch(c, contactsSearchQuery));
   }
 
   if (contactsRoleFilter) {
@@ -4534,7 +6584,6 @@ function updateStatusFilterMenuSelection() {
 
 function getContactsActiveFilterCount() {
   let count = 0;
-  if (contactsSearchQuery.trim()) count += 1;
   if (contactsRoleFilter) count += 1;
   if (contactsStatusFilter) count += 1;
   if (contactsTagFilters.length > 0) count += 1;
@@ -4554,6 +6603,7 @@ function clearContactsFilters() {
   updateStatusFilterMenuSelection();
   syncTagsFilterCheckboxes();
   updateTagsFilterButton();
+  resetContactsTableScroll();
   renderContactsTable();
 }
 
@@ -4604,22 +6654,9 @@ function bindFilterChipRemoveHandlers(container) {
 function renderContactsFilterChips() {
   const rowEl = document.getElementById('contacts-active-filters');
   const chipsContainer = document.getElementById('contacts-active-tags');
-  const clearFiltersBtn = document.getElementById('contacts-clear-filters');
   if (!chipsContainer || !rowEl) return;
 
   const chips = [];
-  const searchQuery = contactsSearchQuery.trim();
-
-  if (searchQuery) {
-    chips.push(`
-      <span class="filter-chip filter-chip--search">
-        <span class="filter-chip__prefix">${t('contacts.searchChipPrefix')}</span>
-        <span class="filter-chip__label">${escapePreviewText(searchQuery)}</span>
-        <button class="filter-chip__remove" type="button" data-remove="search" aria-label="Remove search filter">
-          <span class="material-icons">close</span>
-        </button>
-      </span>`);
-  }
 
   if (contactsRoleFilter) {
     let roleLabel = contactsRoleFilter;
@@ -4664,12 +6701,6 @@ function renderContactsFilterChips() {
   chipsContainer.innerHTML = chips.join('');
   const hasFilters = chips.length > 0;
   rowEl.hidden = !hasFilters;
-
-  const clearAllBtn = document.getElementById('contacts-clear-all-btn');
-  if (clearAllBtn) {
-    clearAllBtn.classList.toggle('hidden', !hasFilters);
-  }
-
   if (hasFilters) bindFilterChipRemoveHandlers(chipsContainer);
 }
 
@@ -4733,7 +6764,7 @@ function positionAddTagsPopover(anchorEl) {
 
   menu.classList.add('add-tags-popover--floating');
   const rect = anchorEl.getBoundingClientRect();
-  const menuWidth = 280;
+  const menuWidth = menu.offsetWidth || 312;
   let left = rect.right - menuWidth;
   let top = rect.bottom + 8;
   left = Math.max(8, Math.min(left, window.innerWidth - menuWidth - 8));
@@ -4744,7 +6775,7 @@ function positionAddTagsPopover(anchorEl) {
   menu.style.top = `${top}px`;
   menu.style.left = `${left}px`;
   menu.style.right = 'auto';
-  menu.style.zIndex = '50';
+  menu.style.zIndex = '1200';
 }
 
 function openAddTagsForContact(contactId, anchorEl) {
@@ -4757,7 +6788,7 @@ function openAddTagsForContact(contactId, anchorEl) {
 
   closeAllFilterMenus();
   closeAttachMenu();
-  setProfileMenuOpen(false);
+  closeProfileMenu();
   addTagsSingleContactId = contactId;
   addTagsAnchorEl = anchorEl;
   setAddTagsMenuOpen(true);
@@ -4795,12 +6826,25 @@ function syncTagCatalogToFilterMenu() {
       contactsPage = 1;
       contactsSelectAllMode = false;
       updateTagsFilterButton();
+      resetContactsTableScroll();
       renderContactsTable();
     });
   });
 }
 
+function updateManageAllTagsVisibility() {
+  const el = document.getElementById('contacts-manage-all-tags');
+  if (el) el.hidden = !contactsCanManageTags;
+  const toolbarLink = document.getElementById('contacts-toolbar-manage-tags');
+  if (toolbarLink) toolbarLink.hidden = !contactsCanManageTags;
+}
+
 function setAddTagsMenuOpen(open) {
+  if (open && !contactsCanManageTags) {
+    openPermissionDeniedDialog();
+    return;
+  }
+  updateManageAllTagsVisibility();
   const wrap = document.getElementById('contacts-add-tags-wrap');
   const menu = document.getElementById('contacts-add-tags-menu');
   const btn = document.getElementById('contacts-add-tags-btn');
@@ -4818,19 +6862,13 @@ function setAddTagsMenuOpen(open) {
     addTagsAnchorEl = null;
     restoreAddTagsMenu();
     const searchEl = document.getElementById('contacts-add-tags-search');
-    const newEl = document.getElementById('contacts-add-tags-new');
     if (searchEl) searchEl.value = '';
-    if (newEl) newEl.value = '';
-    const createBtn = document.getElementById('contacts-add-tags-create-btn');
-    if (createBtn) createBtn.disabled = true;
     updateAddTagsApplyButton();
   } else {
     renderAddTagsList();
-    if (addTagsSingleContactId && addTagsAnchorEl) {
-      positionAddTagsPopover(addTagsAnchorEl);
-    } else {
-      restoreAddTagsMenu();
-    }
+    const anchor =
+      addTagsSingleContactId && addTagsAnchorEl ? addTagsAnchorEl : btn;
+    positionAddTagsPopover(anchor);
     document.getElementById('contacts-add-tags-search')?.focus();
   }
 }
@@ -4878,6 +6916,17 @@ function renderAddTagsSelected() {
   });
 }
 
+function tagMatchesAddTagsSearch(tag, q) {
+  if (!q) return true;
+  const needle = q.toLowerCase();
+  return (
+    tag.toLowerCase().includes(needle) ||
+    String(translateTag(tag) || '')
+      .toLowerCase()
+      .includes(needle)
+  );
+}
+
 function renderAddTagsList() {
   const listEl = document.getElementById('contacts-add-tags-list');
   if (!listEl) return;
@@ -4888,14 +6937,7 @@ function renderAddTagsList() {
   renderAddTagsSelected();
 
   const q = addTagsSearchQuery.trim().toLowerCase();
-
-  if (!q) {
-    listEl.classList.add('hidden');
-    listEl.innerHTML = '';
-    return;
-  }
-
-  const tags = contactTagCatalog.filter((tag) => tag.toLowerCase().includes(q));
+  const tags = contactTagCatalog.filter((tag) => tagMatchesAddTagsSearch(tag, q));
 
   listEl.classList.remove('hidden');
 
@@ -4940,28 +6982,42 @@ function renderAddTagsList() {
   });
 }
 
-function createContactTag(tagName) {
+function findCatalogTag(tagName) {
+  const needle = String(tagName || '').trim().toLocaleLowerCase();
+  if (!needle) return null;
+  return contactTagCatalog.find((tag) => String(tag).toLocaleLowerCase() === needle) || null;
+}
+
+function createContactTag(tagName, { assignPending = false } = {}) {
+  if (!contactsCanManageTags) {
+    openPermissionDeniedDialog();
+    return false;
+  }
   const tag = tagName.trim();
   if (!tag) return false;
-  if (!contactTagCatalog.includes(tag)) {
+  const existing = findCatalogTag(tag);
+  if (!existing) {
     contactTagCatalog.push(tag);
     syncTagCatalogToFilterMenu();
+    renderManageTagsList();
   }
-  addTagsPending.add(tag);
-  addTagsSearchQuery = '';
-  const searchEl = document.getElementById('contacts-add-tags-search');
-  const newEl = document.getElementById('contacts-add-tags-new');
-  if (searchEl) searchEl.value = '';
-  if (newEl) newEl.value = '';
-  const createBtn = document.getElementById('contacts-add-tags-create-btn');
-  if (createBtn) createBtn.disabled = true;
-  renderAddTagsSelected();
-  renderAddTagsList();
-  updateAddTagsApplyButton();
+  if (assignPending) {
+    addTagsPending.add(existing || tag);
+    addTagsSearchQuery = '';
+    const searchEl = document.getElementById('contacts-add-tags-search');
+    if (searchEl) searchEl.value = '';
+    renderAddTagsSelected();
+    renderAddTagsList();
+    updateAddTagsApplyButton();
+  }
   return true;
 }
 
 function applyTagsToSelected() {
+  if (!contactsCanManageTags) {
+    openPermissionDeniedDialog();
+    return;
+  }
   if (addTagsPending.size === 0) return;
 
   const selected = getAddTagsTargetContacts();
@@ -4980,6 +7036,284 @@ function applyTagsToSelected() {
 
   setAddTagsMenuOpen(false);
   renderContactsTable();
+  renderManageTagsList();
+}
+
+function tagUsageCount(tag) {
+  return CONTACTS.filter((c) => Array.isArray(c.tags) && c.tags.includes(tag)).length;
+}
+
+function formatTagUsage(count) {
+  if (count === 0) return t('contacts.tagUsageZero');
+  if (count === 1) return t('contacts.tagUsageOne');
+  return t('contacts.tagUsage', { count });
+}
+
+function setManageTagsOpen(open) {
+  manageTagsOpen = Boolean(open) && contactsCanManageTags;
+  const rail = document.getElementById('contacts-panel-rail');
+  const panel = document.getElementById('manage-tags-panel');
+  const toggleBtn = document.getElementById('contacts-manage-all-tags');
+
+  rail?.classList.toggle('is-manage-tags-open', manageTagsOpen);
+  panel?.setAttribute('aria-hidden', manageTagsOpen ? 'false' : 'true');
+  toggleBtn?.setAttribute('aria-expanded', manageTagsOpen ? 'true' : 'false');
+  document.getElementById('contacts-toolbar-manage-tags')?.setAttribute('aria-expanded', manageTagsOpen ? 'true' : 'false');
+
+  if (manageTagsOpen) {
+    setAddTagsMenuOpen(false);
+    manageTagsQuery = '';
+    const searchEl = document.getElementById('manage-tags-search');
+    if (searchEl) searchEl.value = '';
+    setManageTagsCreateOpen(false);
+    renderManageTagsList();
+    requestAnimationFrame(() => refreshOverlayScrollbars());
+  } else {
+    setManageTagsCreateOpen(false);
+    closeDeleteTagDialog();
+  }
+}
+
+function removeTagFromFilterMenu(tag) {
+  const menu = document.getElementById('filter-tags-menu');
+  if (menu) {
+    menu.querySelectorAll('input[type="checkbox"]').forEach((input) => {
+      if (input.value === tag) input.closest('li')?.remove();
+    });
+  }
+  contactsTagFilters = contactsTagFilters.filter((value) => value !== tag);
+  addTagsPending.delete(tag);
+  updateTagsFilterButton();
+}
+
+function deleteCatalogTag(tag) {
+  if (!tag) return false;
+  contactTagCatalog = contactTagCatalog.filter((item) => item !== tag);
+  CONTACTS.forEach((contact) => {
+    if (!Array.isArray(contact.tags)) return;
+    contact.tags = contact.tags.filter((item) => item !== tag);
+  });
+  const recentIndex = recentlyUsedBroadcastTags.indexOf(tag);
+  if (recentIndex >= 0) recentlyUsedBroadcastTags.splice(recentIndex, 1);
+  const clearedBroadcastAudience = detachTagFromBroadcastWizard(tag);
+  removeTagFromFilterMenu(tag);
+  renderContactsTable();
+  renderManageTagsList();
+  renderAddTagsList();
+  if (clearedBroadcastAudience) {
+    const name = translateTag(tag);
+    showToast(t('contacts.tagDeletedBroadcastToast', { name }));
+  }
+  if (activeView === 'broadcasts') renderBroadcastList();
+  return true;
+}
+
+function renderManageTagsList() {
+  const listEl = document.getElementById('manage-tags-list');
+  if (!listEl) return;
+
+  const tags = [...contactTagCatalog]
+    .filter((tag) => tagMatchesAddTagsSearch(tag, manageTagsQuery))
+    .sort((a, b) =>
+      String(translateTag(a)).localeCompare(String(translateTag(b)), undefined, { sensitivity: 'base' })
+    );
+
+  if (tags.length === 0) {
+    const emptyKey = contactTagCatalog.length === 0 ? 'contacts.noTags' : 'contacts.noTagsMatch';
+    listEl.innerHTML = `<li class="manage-tags-list__empty">${escapePreviewText(t(emptyKey))}</li>`;
+    refreshOverlayScrollbars();
+    return;
+  }
+
+  listEl.innerHTML = tags
+    .map((tag) => {
+      const name = translateTag(tag);
+      const count = tagUsageCount(tag);
+      const usage = formatTagUsage(count);
+      const action = `<button type="button" class="manage-tags-row__delete" data-tag="${escapePreviewText(tag)}" aria-label="${escapePreviewText(t('contacts.deleteTagAria', { name }))}"><span class="material-symbols-outlined composer-icon" aria-hidden="true">delete</span></button>`;
+      return `<li class="manage-tags-row">
+        <div class="manage-tags-row__main">
+          <span class="contact-tag contact-tag--blue manage-tags-row__chip" title="${escapePreviewText(name)}">${escapePreviewText(name)}</span>
+          <span class="manage-tags-row__usage">${escapePreviewText(usage)}</span>
+        </div>
+        ${action}
+      </li>`;
+    })
+    .join('');
+
+  listEl.querySelectorAll('.manage-tags-row__delete').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      requestDeleteCatalogTag(btn.getAttribute('data-tag'));
+    });
+  });
+  refreshOverlayScrollbars();
+}
+
+function requestDeleteCatalogTag(tag) {
+  if (!tag) return;
+  if (!contactsCanManageTags) {
+    openPermissionDeniedDialog('delete');
+    return;
+  }
+  openDeleteTagDialog(tag);
+}
+
+function openDeleteTagDialog(tag) {
+  const dialog = document.getElementById('delete-tag-dialog');
+  if (!dialog) return;
+  pendingDeleteTag = tag;
+  const name = translateTag(tag);
+  const count = tagUsageCount(tag);
+  const title = document.getElementById('delete-tag-dialog-title');
+  const desc = document.getElementById('delete-tag-dialog-desc');
+  const confirmBtn = document.getElementById('delete-tag-dialog-confirm');
+  const cancelBtn = document.getElementById('delete-tag-dialog-cancel');
+  if (title) title.textContent = t('contacts.deleteTagTitle', { name });
+  if (desc) {
+    let body;
+    if (broadcastWizardTargetsTag(tag)) {
+      if (count === 0) body = t('contacts.deleteTagDescBroadcastZero');
+      else if (count === 1) body = t('contacts.deleteTagDescBroadcastOne');
+      else body = t('contacts.deleteTagDescBroadcastMany', { count });
+    } else if (count === 0) body = t('contacts.deleteTagDescZero');
+    else if (count === 1) body = t('contacts.deleteTagDescOne');
+    else body = t('contacts.deleteTagDesc', { count });
+    desc.textContent = body;
+  }
+  if (confirmBtn) confirmBtn.textContent = t('contacts.deleteTagConfirm');
+  if (cancelBtn) cancelBtn.textContent = t('contacts.deleteTagCancel');
+  dialog.hidden = false;
+  dialog.setAttribute('aria-hidden', 'false');
+  cancelBtn?.focus();
+}
+
+function closeDeleteTagDialog() {
+  const dialog = document.getElementById('delete-tag-dialog');
+  pendingDeleteTag = null;
+  if (!dialog || dialog.hidden) return;
+  dialog.hidden = true;
+  dialog.setAttribute('aria-hidden', 'true');
+}
+
+function confirmDeleteCatalogTag() {
+  const tag = pendingDeleteTag;
+  closeDeleteTagDialog();
+  if (!tag) return;
+  if (!contactsCanManageTags) {
+    openPermissionDeniedDialog('delete');
+    return;
+  }
+  deleteCatalogTag(tag);
+}
+
+function syncManageTagsCreateAction() {
+  const input = document.getElementById('manage-tags-create-input');
+  const btn = document.getElementById('manage-tags-create-btn');
+  if (!btn) return;
+  btn.disabled = !(input?.value.trim());
+}
+
+function clearManageTagsCreateInput() {
+  const input = document.getElementById('manage-tags-create-input');
+  if (input) input.value = '';
+  syncManageTagsCreateAction();
+}
+
+function setManageTagsCreateOpen(open) {
+  const field = document.getElementById('manage-tags-create-field');
+  const trigger = document.getElementById('manage-tags-create-trigger');
+  const input = document.getElementById('manage-tags-create-input');
+  field?.classList.toggle('is-open', open);
+  trigger?.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (!open) {
+    clearManageTagsCreateInput();
+    return;
+  }
+  syncManageTagsCreateAction();
+  input?.focus();
+}
+
+function submitManageTagsCreate() {
+  const input = document.getElementById('manage-tags-create-input');
+  const value = input?.value.trim() || '';
+  if (!value) return;
+  const existing = findCatalogTag(value);
+  if (existing) {
+    showToast(t('contacts.tagExistsToast', { name: existing }), { variant: 'error' });
+    return;
+  }
+  if (!createContactTag(value, { assignPending: false })) return;
+  setManageTagsCreateOpen(false);
+  renderManageTagsList();
+  showToast(t('contacts.tagCreatedToast', { name: value }));
+}
+
+function initManageTagsPanel() {
+  const toggleBtn = document.getElementById('contacts-manage-all-tags');
+  toggleBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!contactsCanManageTags) return;
+    setManageTagsOpen(true);
+  });
+  document.getElementById('contacts-toolbar-manage-tags')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!contactsCanManageTags) return;
+    setManageTagsOpen(!manageTagsOpen);
+  });
+  document.getElementById('manage-tags-close-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setManageTagsOpen(false);
+  });
+  updateManageAllTagsVisibility();
+
+  const searchEl = document.getElementById('manage-tags-search');
+  searchEl?.addEventListener('input', () => {
+    manageTagsQuery = searchEl.value;
+    renderManageTagsList();
+  });
+  searchEl?.addEventListener('click', (e) => e.stopPropagation());
+
+  const createField = document.getElementById('manage-tags-create-field');
+  const createTrigger = document.getElementById('manage-tags-create-trigger');
+  const createInput = document.getElementById('manage-tags-create-input');
+  const createBtn = document.getElementById('manage-tags-create-btn');
+  createTrigger?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setManageTagsCreateOpen(true);
+  });
+  createInput?.addEventListener('input', syncManageTagsCreateAction);
+  createInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      submitManageTagsCreate();
+    }
+  });
+  createInput?.addEventListener('click', (e) => e.stopPropagation());
+  createInput?.addEventListener('blur', () => {
+    requestAnimationFrame(() => {
+      if (createField?.contains(document.activeElement)) return;
+      if (createInput.value.trim()) return;
+      setManageTagsCreateOpen(false);
+    });
+  });
+  createBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    submitManageTagsCreate();
+  });
+  setManageTagsCreateOpen(false);
+
+  const dialog = document.getElementById('delete-tag-dialog');
+  document.getElementById('delete-tag-dialog-backdrop')?.addEventListener('click', closeDeleteTagDialog);
+  document.getElementById('delete-tag-dialog-cancel')?.addEventListener('click', closeDeleteTagDialog);
+  document.getElementById('delete-tag-dialog-confirm')?.addEventListener('click', confirmDeleteCatalogTag);
+  dialog?.addEventListener('click', (e) => e.stopPropagation());
+  renderManageTagsList();
 }
 
 function initAddTagsMenu() {
@@ -4989,17 +7323,16 @@ function initAddTagsMenu() {
   const cancelBtn = document.getElementById('contacts-add-tags-cancel');
   const applyBtn = document.getElementById('contacts-add-tags-apply');
   const searchEl = document.getElementById('contacts-add-tags-search');
-  const newEl = document.getElementById('contacts-add-tags-new');
-  const createBtn = document.getElementById('contacts-add-tags-create-btn');
 
   btn?.addEventListener('click', (e) => {
+    e.preventDefault();
     e.stopPropagation();
     if (btn.disabled) return;
     const isOpen = wrap?.classList.contains('is-open') && !addTagsSingleContactId;
     if (!isOpen) {
       closeAllFilterMenus();
       closeAttachMenu();
-      setProfileMenuOpen(false);
+      closeProfileMenu();
       addTagsSingleContactId = null;
       addTagsAnchorEl = null;
       restoreAddTagsMenu();
@@ -5025,22 +7358,6 @@ function initAddTagsMenu() {
   });
 
   searchEl?.addEventListener('click', (e) => e.stopPropagation());
-
-  newEl?.addEventListener('input', () => {
-    createBtn.disabled = !newEl.value.trim();
-  });
-
-  newEl?.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      if (!createBtn?.disabled && createContactTag(newEl.value)) newEl.focus();
-    }
-  });
-
-  createBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (createContactTag(newEl?.value || '')) newEl?.focus();
-  });
 
   wrap?.addEventListener('click', (e) => e.stopPropagation());
 }
@@ -6108,7 +8425,9 @@ function tryRestoreBroadcastWizardOnEnter() {
 
 let toastDismissTimer = null;
 
-function showToast(message, duration = 5000) {
+function showToast(message, options = {}) {
+  const duration = typeof options === 'number' ? options : options.duration ?? 5000;
+  const variant = typeof options === 'object' && options !== null ? options.variant ?? 'success' : 'success';
   const container = document.getElementById('toast-container');
   if (!container) return;
 
@@ -6120,10 +8439,11 @@ function showToast(message, duration = 5000) {
   container.innerHTML = '';
 
   const toast = document.createElement('div');
-  toast.className = 'toast toast--success';
+  toast.className = variant === 'error' ? 'toast toast--error' : 'toast';
   toast.setAttribute('role', 'status');
+  const iconName = variant === 'error' ? 'error' : 'check_circle';
   toast.innerHTML = `
-    <span class="toast__icon material-icons" aria-hidden="true">check_circle</span>
+    <span class="toast__icon material-icons" aria-hidden="true">${iconName}</span>
     <span class="toast__message"></span>
     <button type="button" class="toast__close" aria-label="Dismiss notification">
       <span class="material-icons" aria-hidden="true">close</span>
@@ -6155,7 +8475,6 @@ function submitBroadcastWizard() {
   const tagsLabel = audienceTags.length ? audienceTags.map((tag) => translateTag(tag)).join(', ') : '—';
   const tagsRef = audienceTags.length ? `Tags: ${tagsLabel}` : '—';
   const id = `broadcast-${Date.now()}`;
-  const payloadRef = `msg-${Date.now().toString(36)}`;
   const now = new Date();
 
   let preview = broadcastWizardState.message;
@@ -6165,7 +8484,7 @@ function submitBroadcastWizard() {
 
   const sentTitle = broadcastTemplateNeedsTitle(broadcastWizardState.templateId)
     ? broadcastWizardState.title || 'Untitled broadcast'
-    : broadcastWizardState.message.slice(0, 60) || 'Simple message';
+    : broadcastWizardState.message.replace(/\s+/g, ' ').trim().slice(0, 60) || 'Simple message';
 
   const item = {
     id,
@@ -6181,24 +8500,17 @@ function submitBroadcastWizard() {
     scheduledAt: formatBroadcastLongDate(now),
     timezone: 'America/New_York (GMT-5)',
     preview,
-    footnote: `Delivered on ${now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} — send now.`,
     showActions: false,
     createdBy: 'you',
     audienceTags: [...audienceTags],
-    audit: {
-      source: 'operator',
-      initiator: OPERATORS.you.name,
-      callingSystem: 'Business Chat',
-      targetReference: tagsRef,
-      templateType,
-      payloadRef,
-      outcome: 'Accepted',
-      failureReason: '—',
-    },
+    ...(broadcastWizardState.surveyLink.trim()
+      ? { surveyLink: broadcastWizardState.surveyLink.trim() }
+      : {}),
   };
 
   BROADCASTS.sent.unshift(item);
   activeBroadcastTab = 'sent';
+  broadcastStatusFilter = 'sent';
 
   deliverBroadcastToRecipientChats(audienceTags, broadcastWizardState);
 
@@ -6243,9 +8555,6 @@ function initBroadcastWizard() {
 
   document.getElementById('broadcast-empty-new-btn')?.addEventListener('click', () =>
     openBroadcastWizard()
-  );
-  document.getElementById('broadcast-manage-tags-btn')?.addEventListener('click', () =>
-    switchView('contacts')
   );
   document.getElementById('broadcast-wizard-manage-tags-link')?.addEventListener('click', () =>
     switchView('contacts')
@@ -6414,10 +8723,17 @@ function renderContactsTable() {
   const startIdx = (contactsPage - 1) * contactsRowsPerPage;
   const pageItems = filtered.slice(startIdx, startIdx + contactsRowsPerPage);
 
+  if (!pageItems.length) {
+    const emptyLabel = contactsSearchQuery.trim()
+      ? t('contacts.noSearchResults')
+      : t('contacts.weavers', { count: 0 });
+    tbody.innerHTML = `<tr class="contacts-empty-row"><td colspan="6">${emptyLabel}</td></tr>`;
+  } else {
   tbody.innerHTML = pageItems
     .map((contact) => {
       const isSelected = contactsSelectAllMode || contactsSelectedIds.has(contact.id);
       const tagsHtml = contactTagsHtml(contact.tags, contact.id);
+      const email = contact.email || contactEmailFromName(contact.name, contact.id);
       return `
     <tr class="${isSelected ? 'is-selected' : ''}" data-id="${contact.id}">
       <td class="col-check">
@@ -6426,7 +8742,12 @@ function renderContactsTable() {
           <span class="contacts-checkbox__mark"></span>
         </label>
       </td>
-      <td class="col-name"><span class="contact-name">${contact.name}</span></td>
+      <td class="col-name">
+        <span class="contact-identity">
+          <span class="contact-name">${escapePreviewText(contact.name)}</span>
+          <span class="contact-email" title="${escapePreviewText(email)}">${escapePreviewText(email)}</span>
+        </span>
+      </td>
       <td class="col-role">${contactRoleHtml(contact.role)}</td>
       <td class="col-status">${contactStatusBadgeHtml(contact.status)}</td>
       <td class="col-tags">
@@ -6443,6 +8764,7 @@ function renderContactsTable() {
     </tr>`;
     })
     .join('');
+  }
 
   if (showingEl) showingEl.textContent = t('contacts.weavers', { count: displayTotal });
 
@@ -6488,6 +8810,12 @@ function renderContactsTable() {
       renderContactsTable();
     });
   });
+  refreshOverlayScrollbars();
+}
+
+function resetContactsTableScroll() {
+  const wrap = document.querySelector('.contacts-table-wrap');
+  if (wrap) wrap.scrollTop = 0;
 }
 
 function openChatFromContact(chatId) {
@@ -6507,7 +8835,6 @@ function initContactsView() {
   const searchEl = document.getElementById('contacts-search');
   const checkAllEl = document.getElementById('contacts-check-all');
   const selectAllBtn = document.getElementById('contacts-select-all-btn');
-  const clearFiltersBtn = document.getElementById('contacts-clear-filters');
   const prevBtn = document.getElementById('contacts-prev-page');
   const nextBtn = document.getElementById('contacts-next-page');
 
@@ -6515,6 +8842,7 @@ function initContactsView() {
     contactsSearchQuery = searchEl.value;
     contactsPage = 1;
     contactsSelectAllMode = false;
+    resetContactsTableScroll();
     renderContactsTable();
   });
 
@@ -6546,7 +8874,6 @@ function initContactsView() {
 
   document.getElementById('contacts-selection-clear')?.addEventListener('click', clearContactsSelection);
 
-  clearFiltersBtn?.addEventListener('click', clearContactsFilters);
   document.getElementById('contacts-clear-all-btn')?.addEventListener('click', clearContactsFilters);
 
   prevBtn?.addEventListener('click', () => {
@@ -6569,6 +8896,7 @@ function initContactsView() {
     contactsPage = 1;
     contactsSelectAllMode = false;
     updateRoleFilterMenuSelection();
+    resetContactsTableScroll();
     renderContactsTable();
   });
 
@@ -6577,6 +8905,7 @@ function initContactsView() {
     contactsPage = 1;
     contactsSelectAllMode = false;
     updateStatusFilterMenuSelection();
+    resetContactsTableScroll();
     renderContactsTable();
   });
 
@@ -6584,6 +8913,7 @@ function initContactsView() {
   initContactsSortDropdown();
   syncTagCatalogToFilterMenu();
   initAddTagsMenu();
+  initManageTagsPanel();
   initTemplateModal();
 
   setupFilterDropdown('rows-per-page-btn', 'rows-per-page-menu', (value) => {
@@ -6761,23 +9091,88 @@ function closeAllFilterMenus() {
   document.querySelectorAll(
     '.filter-btn[aria-expanded], .reassign-btn[aria-expanded], .broadcast-wizard__tag-trigger[aria-expanded]'
   ).forEach((b) => b.setAttribute('aria-expanded', 'false'));
-  setAddTagsMenuOpen(false);
+}
+
+function isAddTagsMenuTarget(target) {
+  if (!target) return false;
+  const menu = document.getElementById('contacts-add-tags-menu');
+  const wrap = document.getElementById('contacts-add-tags-wrap');
+  return Boolean(
+    (menu && menu.contains(target)) || (wrap && wrap.contains(target))
+  );
+}
+
+function setAttachMenuOpen(open) {
+  attachMenuWrap?.classList.toggle('is-open', open);
+  attachMenuEl?.setAttribute('aria-hidden', open ? 'false' : 'true');
+  attachBtn?.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
 function closeAttachMenu() {
-  /* attach menu removed — + opens native file picker */
+  setAttachMenuOpen(false);
 }
 
-chatAttachInput?.addEventListener('change', (e) => {
-  const file = e.target.files?.[0];
-  if (file) appendChatAttachment(file);
+attachBtn?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const isOpen = attachMenuWrap?.classList.contains('is-open');
+  closeAllFilterMenus();
+  closeProfileMenu();
+  setAttachMenuOpen(!isOpen);
+});
+
+attachMenuEl?.querySelectorAll('[data-attach-action]').forEach((item) => {
+  item.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const action = item.dataset.attachAction;
+
+    if (item.classList.contains('is-disabled')) {
+      return;
+    }
+
+    if (action === 'image') {
+      chatImageInput?.click();
+      closeAttachMenu();
+      return;
+    }
+
+    if (action === 'pdf') {
+      chatPdfInput?.click();
+      closeAttachMenu();
+      return;
+    }
+  });
+});
+
+chatImageInput?.addEventListener('change', (e) => {
+  const files = Array.from(e.target.files || []);
+  let rejected = false;
+  files.forEach((file) => {
+    if (validateAndStageImage(file) === 'rejected') rejected = true;
+  });
+  if (rejected) toastUploadRejected();
+  e.target.value = '';
+});
+
+chatPdfInput?.addEventListener('change', (e) => {
+  const files = Array.from(e.target.files || []);
+  let rejected = false;
+  files.forEach((file) => {
+    if (validateAndStagePdf(file) === 'rejected') rejected = true;
+  });
+  if (rejected) toastUploadRejected();
   e.target.value = '';
 });
 
 document.addEventListener('click', (e) => {
   closeAllFilterMenus();
+  if (!isAddTagsMenuTarget(e.target)) {
+    setAddTagsMenuOpen(false);
+  }
   if (!profileMenuWrap?.contains(e.target)) {
     closeProfileMenu();
+  }
+  if (!attachMenuWrap?.contains(e.target)) {
+    closeAttachMenu();
   }
 });
 
@@ -6788,7 +9183,29 @@ document.getElementById('chat-community-settings-btn')?.addEventListener('click'
 });
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && chatRoomSettingsOpen) {
+  if (e.key !== 'Escape') return;
+  const permissionDialog = document.getElementById('permission-denied-dialog');
+  if (permissionDialog && !permissionDialog.hidden) return;
+  const deleteDialog = document.getElementById('delete-tag-dialog');
+  if (deleteDialog && !deleteDialog.hidden) {
+    e.preventDefault();
+    closeDeleteTagDialog();
+    return;
+  }
+  const createField = document.getElementById('manage-tags-create-field');
+  const createInput = document.getElementById('manage-tags-create-input');
+  if (manageTagsOpen && createField?.classList.contains('is-open')) {
+    e.preventDefault();
+    if (createInput?.value) clearManageTagsCreateInput();
+    else setManageTagsCreateOpen(false);
+    return;
+  }
+  if (manageTagsOpen) {
+    e.preventDefault();
+    setManageTagsOpen(false);
+    return;
+  }
+  if (chatRoomSettingsOpen) {
     setChatRoomSettingsOpen(false);
   }
 });
@@ -6864,7 +9281,7 @@ chatReassignBtn?.addEventListener('click', (e) => {
   const isOpen = !menu.classList.contains('hidden');
   closeAllFilterMenus();
   closeAttachMenu();
-  setProfileMenuOpen(false);
+  closeProfileMenu();
   if (!isOpen) {
     menu.classList.remove('hidden');
     chatReassignBtn.setAttribute('aria-expanded', 'true');
@@ -7026,6 +9443,7 @@ function switchView(view, { updateUrl = true, replaceUrl = false } = {}) {
   if (view === 'broadcasts') {
     renderBroadcastList();
     tryRestoreBroadcastWizardOnEnter();
+    if (!broadcastWizardOpen) renderBroadcastDetail();
   }
   if (view === 'contacts') {
     renderContactsTable();
@@ -7033,6 +9451,7 @@ function switchView(view, { updateUrl = true, replaceUrl = false } = {}) {
   if (view === 'licenses') {
     renderLicensesView();
   }
+  updateAttachLabVisibility();
 }
 
 document.querySelectorAll('.nav-item[data-view]').forEach((btn) => {
@@ -7047,6 +9466,7 @@ document.getElementById('home3-view-all-chats')?.addEventListener('click', () =>
 document.getElementById('home2v-view-all-chats')?.addEventListener('click', () => switchView('chats'));
 document.getElementById('home3v-view-all-chats')?.addEventListener('click', () => switchView('chats'));
 document.getElementById('home4v-view-all-chats')?.addEventListener('click', () => switchView('chats'));
+document.getElementById('home5v-view-all-chats')?.addEventListener('click', () => switchView('chats'));
 
 document.getElementById('home3-chat-list')?.addEventListener('click', (event) => {
   const row = event.target.closest('[data-home2-chat]');
@@ -7368,6 +9788,8 @@ renderMessages();
 updateProfileAvatar();
 initLanguageSwitcher();
 initProfileMenu();
+initAttachLab();
+updateAttachMenuValidation();
 initLicensesView();
 initContactsView();
 initBroadcastDiscardDialog();
@@ -7412,5 +9834,12 @@ if (homeFromUrl) {
 initHomeV2MetricsCarousel();
 initMessageActions();
 initChatsResponsiveLayout();
-window.addEventListener('resize', () => refreshHomeV2MetricsCarouselLayout(), { passive: true });
+initOverlayScrollbars();
+window.addEventListener('resize', () => {
+  refreshHomeV2MetricsCarouselLayout('home-option-2');
+  refreshHomeV2MetricsCarouselLayout('home-option-5');
+}, { passive: true });
+
+document.getElementById('home5v-manage-contacts')?.addEventListener('click', () => switchView('contacts'));
+document.getElementById('home5v-contacts-metric')?.addEventListener('click', () => switchView('contacts'));
 

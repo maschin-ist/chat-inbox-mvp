@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chats inbox — MVP</title>
-  <link rel="stylesheet" href="styles.css?v=20251028-chats-inbox-shrink">
+  <link rel="stylesheet" href="styles.css?v=20251119-home-construction">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0">
@@ -184,13 +184,12 @@
       border-bottom: var(--mvp-h-border);
     }
 
-    .view--chats .inbox-header,
-    .view--broadcasts .inbox-header {
-      padding: var(--mvp-h-single-pad);
+    .view--chats .inbox-header {
+      padding: 8px 4px 8px 20px;
       display: flex;
       align-items: center;
-      min-height: var(--mvp-h-min);
-      height: var(--mvp-h-min);
+      min-height: 57px;
+      height: 57px;
       box-sizing: border-box;
       background: var(--inbox-bg);
       border-bottom: var(--mvp-h-border);
@@ -234,8 +233,11 @@
     }
 
     .view--broadcasts .broadcast-detail-header {
-      display: block;
-      padding: 0;
+      display: flex;
+      align-items: center;
+      min-height: 57px;
+      height: 57px;
+      padding: 8px 12px 8px 20px;
       box-sizing: border-box;
       background: var(--inbox-bg);
       border-bottom: var(--mvp-h-border);
@@ -250,7 +252,12 @@
     }
 
     .view--broadcasts .broadcast-detail-header__content {
-      display: contents;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+      min-width: 0;
     }
 
     .view--chats .chat-header__content h2 {
@@ -258,15 +265,12 @@
     }
 
     .view--broadcasts .broadcast-detail-header__top {
-      grid-column: 1;
-      grid-row: 1;
-      padding: var(--mvp-h-title-pad);
       display: flex;
       align-items: center;
       gap: 10px;
-      box-sizing: border-box;
-      min-height: 0;
-      flex-wrap: nowrap;
+      min-width: 0;
+      flex: 1;
+      padding: 0;
     }
 
     .view--broadcasts .broadcast-detail-header__top h2 {
@@ -277,16 +281,20 @@
       text-overflow: ellipsis;
     }
 
+    .view--broadcasts .broadcast-detail-header__top h2.is-untitled {
+      flex: 0 1 auto;
+      max-width: 30%;
+    }
+
     .view--broadcasts .broadcast-detail-header__meta {
-      grid-column: 1;
-      grid-row: 2;
-      padding: var(--mvp-h-meta-pad);
-      min-height: 0;
-      box-sizing: border-box;
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       gap: 8px;
-      flex-wrap: wrap;
+      flex: 0 0 auto;
+      margin-left: auto;
+      padding: 0;
+      min-width: 0;
     }
 
     .view--broadcasts .broadcast-detail-header__meta .status-pill {
@@ -323,6 +331,7 @@
       color: var(--text-secondary);
       line-height: 1.45;
       margin: 0;
+      white-space: nowrap;
     }
 
     /* Stacked panel header — title + subtext (Contacts, broadcast detail meta) */
@@ -450,6 +459,8 @@
 
     .view--contacts .contacts-card__top {
       padding: 18px 20px 0;
+      z-index: 8;
+      overflow: visible;
     }
 
     /* Full-width action row — flush with table header (no floating bar) */
@@ -458,8 +469,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      min-height: 44px;
-      padding: 8px 20px;
+      min-height: 56px;
+      padding: 10px 20px;
       margin: 8px 0 0 0;
       border-radius: 0;
       border-top: 1px solid var(--border);
@@ -467,6 +478,8 @@
       background: #2B67B5;
       box-sizing: border-box;
       width: 100%;
+      overflow: visible;
+      z-index: 6;
     }
 
     .view--contacts .contacts-selection-bar.is-disabled {
@@ -477,6 +490,13 @@
     .view--contacts .contacts-selection-bar__left,
     .view--contacts .contacts-selection-bar__summary {
       min-width: 0;
+      overflow: visible;
+    }
+
+    .view--contacts .contacts-table-shell,
+    .view--contacts .contacts-table-wrap {
+      position: relative;
+      z-index: 1;
     }
 
     .view--contacts .contacts-selection-pill {
@@ -510,9 +530,22 @@
     }
 
     .view--contacts .contacts-selection-btn {
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 12px;
+      height: 36px;
+      padding: 0 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .view--contacts #contacts-add-tags-btn {
+      min-width: 118px;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .view--contacts .contacts-selection-btn .material-icons {
+      font-size: 18px;
     }
 
     .view--contacts .contacts-selection-bar.is-disabled .contacts-selection-btn--outline {
@@ -539,7 +572,7 @@
       position: absolute;
       left: 0;
       top: calc(100% + 6px);
-      z-index: 20;
+      z-index: 7;
       width: max-content;
       max-width: 280px;
       padding: 6px 10px;
@@ -650,68 +683,25 @@
     }
 
     .view--broadcasts .inbox-header {
+      display: flex;
+      align-items: center;
       justify-content: flex-start;
+      gap: 8px;
+      height: 57px;
+      min-height: 57px;
+      padding: 8px 4px 8px 20px;
+      box-sizing: border-box;
+      background: var(--inbox-bg);
+      border-bottom: var(--mvp-h-border);
     }
 
     .view--broadcasts .inbox-header__title-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+      justify-content: flex-start;
+      gap: 10px;
       min-width: 0;
-      width: 100%;
-    }
-
-    [data-od-id="broadcasts-compose-btn"] {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-left: auto;
-      padding: 0;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      border-radius: 10px;
-      transition: background 0.15s;
-    }
-
-    [data-od-id="broadcasts-compose-btn"] .broadcasts-compose-icon-wrap {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      transition: background 0.15s;
-    }
-
-    [data-od-id="broadcasts-compose-btn"]:hover .broadcasts-compose-icon-wrap,
-    [data-od-id="broadcasts-compose-btn"]:focus-visible .broadcasts-compose-icon-wrap {
-      background: rgba(0, 0, 0, 0.06);
-    }
-
-    [data-od-id="broadcasts-compose-btn"] .material-icons-outlined {
-      font-size: 22px;
-      color: var(--text-secondary);
-      line-height: 1;
-    }
-
-    [data-od-id="broadcasts-compose-btn"]:hover .material-icons-outlined,
-    [data-od-id="broadcasts-compose-btn"]:focus-visible .material-icons-outlined {
-      color: var(--text-primary);
-    }
-
-    .view--broadcasts [data-od-id="broadcasts-inbox-header"] {
-      padding: 12px 4px 12px 20px;
-    }
-
-    .view--broadcasts [data-od-id="broadcasts-inbox-header"] .inbox-header__title-row {
-      width: 100%;
-    }
-
-    .view--broadcasts [data-od-id="broadcasts-compose-btn"] {
-      margin-right: 0;
+      flex: 1;
     }
 
     /* MVP: broadcast list panel hidden — remove hidden on broadcasts-inbox-rail to restore */
@@ -721,33 +711,6 @@
 
     .view--broadcasts.view--broadcasts-list-hidden .panel-rail--chat {
       padding-left: var(--panel-gap);
-    }
-
-    #broadcast-empty-new-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      margin-top: 4px;
-      padding: 12px 20px;
-      background: #2b67b5;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: 10px;
-      transition: background 0.15s ease;
-    }
-
-    #broadcast-empty-new-btn:hover {
-      background: #245a9e;
-    }
-
-    #broadcast-empty-new-btn .material-symbols-outlined {
-      font-size: 20px;
-      color: #fff;
-      line-height: 1;
-      font-variation-settings: 'wght' 400;
     }
 
     /* Wizard panel header — title row + stepper below */
@@ -1170,6 +1133,7 @@
               <button type="button" class="home-option-toggle__btn is-active" data-home-option="1" aria-pressed="true" data-i18n="home.option.draft">PRD Draft</button>
               <button type="button" class="home-option-toggle__btn" data-home-option="2" aria-pressed="false" data-i18n="home.option.two">Option 1</button>
               <button type="button" class="home-option-toggle__btn" data-home-option="3" aria-pressed="false" data-i18n="home.option.firstTime">Option 1 First time user</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="5" aria-pressed="false" data-i18n="home.option.contactsSplit">Option 3</button>
               <button type="button" class="home-option-toggle__btn" data-home-option="4" aria-pressed="false" data-i18n="home.option.three">Option 2</button>
             </div>
           </div>
@@ -1305,6 +1269,7 @@
               <button type="button" class="home-option-toggle__btn" data-home-option="1" aria-pressed="false" data-i18n="home.option.draft">PRD Draft</button>
               <button type="button" class="home-option-toggle__btn is-active" data-home-option="2" aria-pressed="true" data-i18n="home.option.two">Option 1</button>
               <button type="button" class="home-option-toggle__btn" data-home-option="3" aria-pressed="false" data-i18n="home.option.firstTime">Option 1 First time user</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="5" aria-pressed="false" data-i18n="home.option.contactsSplit">Option 3</button>
               <button type="button" class="home-option-toggle__btn" data-home-option="4" aria-pressed="false" data-i18n="home.option.three">Option 2</button>
             </div>
           </div>
@@ -1567,6 +1532,7 @@
               <button type="button" class="home-option-toggle__btn" data-home-option="1" aria-pressed="false" data-i18n="home.option.draft">PRD Draft</button>
               <button type="button" class="home-option-toggle__btn" data-home-option="2" aria-pressed="false" data-i18n="home.option.two">Option 1</button>
               <button type="button" class="home-option-toggle__btn" data-home-option="3" aria-pressed="false" data-i18n="home.option.firstTime">Option 1 First time user</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="5" aria-pressed="false" data-i18n="home.option.contactsSplit">Option 3</button>
               <button type="button" class="home-option-toggle__btn is-active" data-home-option="4" aria-pressed="true" data-i18n="home.option.three">Option 2</button>
             </div>
           </div>
@@ -1785,6 +1751,7 @@
               <button type="button" class="home-option-toggle__btn" data-home-option="1" aria-pressed="false" data-i18n="home.option.draft">PRD Draft</button>
               <button type="button" class="home-option-toggle__btn" data-home-option="2" aria-pressed="false" data-i18n="home.option.two">Option 1</button>
               <button type="button" class="home-option-toggle__btn is-active" data-home-option="3" aria-pressed="true" data-i18n="home.option.firstTime">Option 1 First time user</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="5" aria-pressed="false" data-i18n="home.option.contactsSplit">Option 3</button>
               <button type="button" class="home-option-toggle__btn" data-home-option="4" aria-pressed="false" data-i18n="home.option.three">Option 2</button>
             </div>
           </div>
@@ -1941,6 +1908,144 @@
           </div>
         </div>
       </main>
+
+      <!-- Option 5: IA split — Contacts + Analytics (Option 3) -->
+      <main class="home-panel home-v2 home-v5 hidden" id="home-option-5" data-od-id="home-v5-panel">
+        <header class="home-header mvp-panel-header mvp-panel-header--stacked" data-od-id="home-v5-header">
+          <div class="mvp-panel-header__top home-header__top">
+            <h2 data-i18n="home3.welcomeTitle">Welcome to the ABC project 👋</h2>
+            <div class="home-option-toggle" role="group" aria-label="Home design option">
+              <button type="button" class="home-option-toggle__btn" data-home-option="1" aria-pressed="false" data-i18n="home.option.draft">PRD Draft</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="2" aria-pressed="false" data-i18n="home.option.two">Option 1</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="3" aria-pressed="false" data-i18n="home.option.firstTime">Option 1 First time user</button>
+              <button type="button" class="home-option-toggle__btn is-active" data-home-option="5" aria-pressed="true" data-i18n="home.option.contactsSplit">Option 3</button>
+              <button type="button" class="home-option-toggle__btn" data-home-option="4" aria-pressed="false" data-i18n="home.option.three">Option 2</button>
+            </div>
+          </div>
+          <div class="mvp-panel-header__meta home-header__meta">
+            <p class="home-header__subtitle" data-i18n="home3.subtitle">Manage Your Contacts · Track Engagement · Send Broadcast Messages</p>
+          </div>
+        </header>
+        <div class="home-v2-scroll" data-od-id="home-v5-scroll">
+          <div class="home-v2-layout">
+            <div class="home-v2-main">
+              <section class="home-section home-v2-section home-v5-contacts-section" aria-labelledby="home-v5-contacts-title">
+                <div class="home2-section__head">
+                  <h2 id="home-v5-contacts-title" data-i18n="home5.contactsTitle">Contacts</h2>
+                  <button class="home-text-link" type="button" id="home5v-manage-contacts">
+                    <span data-i18n="home5.manageContacts">Manage contacts</span>
+                    <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                  </button>
+                </div>
+                <div class="home-v5-contacts-row">
+                  <button type="button" class="home-v2-metric-card home-v5-contacts-metric" id="home5v-contacts-metric" aria-labelledby="home-v5-reach-label">
+                    <header class="home-v2-metric-card__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label" id="home-v5-reach-label"><span data-i18n="home3.metric.projectParticipants">Contacts</span></p>
+                        <p class="home-v2-metric-card__caption" data-i18n="home2.reach.label">Reachable audience</p>
+                      </div>
+                      <p class="home-v2-metric-card__trend is-up home-v2-metric-card__trend--contacts" id="home5v-reach-trend"><span class="home-v2-metric-card__trend-value"></span></p>
+                    </header>
+                    <div class="home-v2-metric-card__body">
+                      <p class="home-v2-metric-card__value" id="home5v-reach-total">—</p>
+                      <div class="home-v2-spark-wrap" data-spark-id="reach" aria-hidden="true"></div>
+                    </div>
+                  </button>
+                  <div class="home-v2-metric-card home-v2-metric-card--plain home-v5-tags-panel" id="home5v-tags-panel">
+                    <header class="home-v2-metric-card__head home-v5-tags-panel__head">
+                      <div class="home-v2-metric-card__title-block">
+                        <p class="home-v2-metric-card__label"><span data-i18n="home5.recentTags">Recent tags</span></p>
+                      </div>
+                    </header>
+                    <div class="home-v5-tags-panel__grid" id="home5v-tags-grid"></div>
+                  </div>
+                </div>
+              </section>
+              <section class="home-section home-v2-section home-v2-metrics-section" aria-labelledby="home-v5-analytics-title">
+                <div class="home2-section__head"><h2 id="home-v5-analytics-title" data-i18n="home5.analyticsTitle">Analytics</h2></div>
+                <div class="home-v2-metrics-carousel-shell" data-od-id="home-v5-metrics-carousel-shell">
+                  <button type="button" class="home-v2-metrics-carousel__nav home-v2-metrics-carousel__nav--prev" aria-label="Previous metrics" hidden><span class="material-icons" aria-hidden="true">chevron_left</span></button>
+                  <div class="home-v2-metrics-carousel" tabindex="-1">
+                    <div class="home-v2-metrics home-v2-metrics--carousel">
+                      <article class="home-v2-metric-card home-v2-metric-card--broadcasts" aria-labelledby="home-v5-broadcasts-label">
+                        <span class="home-v2-metric-card__decor" aria-hidden="true"><span class="material-icons">campaign</span></span>
+                        <header class="home-v2-metric-card__head"><div class="home-v2-metric-card__title-block"><p class="home-v2-metric-card__label" id="home-v5-broadcasts-label"><span data-i18n="home2.metric.broadcastsSent">Broadcasts sent</span></p><p class="home-v2-metric-card__caption" data-i18n="home2.period">Last 30 days</p></div></header>
+                        <div class="home-v2-metric-card__body home-v2-metric-card__body--solo"><p class="home-v2-metric-card__value" id="home5v-broadcasts-sent">—</p></div>
+                      </article>
+                      <article class="home-v2-metric-card" aria-labelledby="home-v5-clicks-label"><header class="home-v2-metric-card__head"><div class="home-v2-metric-card__title-block"><p class="home-v2-metric-card__label" id="home-v5-clicks-label"><span data-i18n="home2.metric.clickRate">Click rate</span></p><p class="home-v2-metric-card__caption" data-i18n="home2.period">Last 30 days</p></div><p class="home-v2-metric-card__trend is-up" id="home5v-clicks-trend"><span class="home-v2-metric-card__trend-value"></span></p></header><div class="home-v2-metric-card__body"><p class="home-v2-metric-card__value" id="home5v-click-rate">—</p><div class="home-v2-spark-wrap" data-spark-id="clicks" aria-hidden="true"></div></div></article>
+                      <article class="home-v2-metric-card" aria-labelledby="home-v5-delivery-label"><header class="home-v2-metric-card__head"><div class="home-v2-metric-card__title-block"><p class="home-v2-metric-card__label" id="home-v5-delivery-label"><span data-i18n="home2.metric.deliveryRate">Delivery rate</span></p><p class="home-v2-metric-card__caption" data-i18n="home2.period">Last 30 days</p></div><p class="home-v2-metric-card__trend is-up" id="home5v-delivery-trend"><span class="home-v2-metric-card__trend-value"></span></p></header><div class="home-v2-metric-card__body"><p class="home-v2-metric-card__value" id="home5v-delivery-rate">—</p><div class="home-v2-spark-wrap" data-spark-id="delivery" aria-hidden="true"></div></div></article>
+                      <article class="home-v2-metric-card" aria-labelledby="home-v5-read-label"><header class="home-v2-metric-card__head"><div class="home-v2-metric-card__title-block"><p class="home-v2-metric-card__label" id="home-v5-read-label"><span data-i18n="home2.metric.readRate">Read rate</span></p><p class="home-v2-metric-card__caption" data-i18n="home2.period">Last 30 days</p></div><p class="home-v2-metric-card__trend is-up" id="home5v-read-trend"><span class="home-v2-metric-card__trend-value"></span></p></header><div class="home-v2-metric-card__body"><p class="home-v2-metric-card__value" id="home5v-read-rate">—</p><div class="home-v2-spark-wrap" data-spark-id="read" aria-hidden="true"></div></div></article>
+                      <article class="home-v2-metric-card" aria-labelledby="home-v5-response-label"><header class="home-v2-metric-card__head"><div class="home-v2-metric-card__title-block"><p class="home-v2-metric-card__label" id="home-v5-response-label"><span data-i18n="home2.metric.responseRate">Response rate</span></p><p class="home-v2-metric-card__caption" data-i18n="home2.period">Last 30 days</p></div><p class="home-v2-metric-card__trend is-up" id="home5v-response-trend"><span class="home-v2-metric-card__trend-value"></span></p></header><div class="home-v2-metric-card__body"><p class="home-v2-metric-card__value" id="home5v-response-rate">—</p><div class="home-v2-spark-wrap" data-spark-id="response" aria-hidden="true"></div></div></article>
+                    </div>
+                  </div>
+                  <button type="button" class="home-v2-metrics-carousel__nav home-v2-metrics-carousel__nav--next" aria-label="More metrics"><span class="material-icons" aria-hidden="true">chevron_right</span></button>
+                </div>
+              </section>
+              <section class="home-section home-v2-section home-v2-chats-section" aria-labelledby="home-v5-recent-title">
+                <div class="home2-section__head">
+                  <h2 id="home-v5-recent-title" class="home-v2-awaiting-title"><span data-i18n="home3.metric.awaitingReply">Awaiting your reply</span><span class="home-v2-awaiting-badge" id="home5v-awaiting-count" aria-hidden="true">0</span></h2>
+                  <button class="home-text-link" type="button" id="home5v-view-all-chats"><span data-i18n="home2.recent.viewAll">View all conversations</span><span class="material-icons" aria-hidden="true">arrow_forward</span></button>
+                </div>
+                <ul class="home2-chat-list" id="home5v-chat-list"></ul>
+              </section>
+            </div>
+            <aside class="home-v2-aside">
+              <section class="home-section home-v2-section home-v2-quick-section" aria-labelledby="home-v5-quick-title">
+                <div class="home-section__heading home-v2-quick-heading"><h2 id="home-v5-quick-title" data-i18n="home3.quickStart.title">Quick Start</h2></div>
+                <div class="home-v2-quick-stack">
+                  <button class="home-v2-quick-card" type="button" data-home2v-action="broadcast"><span class="home-v2-quick-card__icon" aria-hidden="true"><span class="material-icons">campaign</span></span><span class="home-v2-quick-card__copy"><span class="home-v2-quick-card__title" data-i18n="home2.actions.broadcast.title">New broadcast message</span><span class="home-v2-quick-card__desc" data-i18n="home3.quickStart.broadcastDesc">Send a message to selected contacts.</span></span><span class="material-icons home-v2-quick-card__arrow" aria-hidden="true">arrow_forward</span></button>
+                </div>
+              </section>
+              <section class="home-section home-v2-section home-v2-announce-section" aria-labelledby="home-v5-announce-title">
+                <div class="home2-section__head">
+                  <h2 id="home-v5-announce-title" data-i18n="home3.announcements.title">Announcements</h2>
+                  <button class="home-text-link" type="button" data-home2-news="all">
+                    <span data-i18n="home2.news.viewAll">View all</span>
+                    <span class="material-icons" aria-hidden="true">arrow_forward</span>
+                  </button>
+                </div>
+                <ul class="home-v2-announce-list">
+                  <li>
+                    <button class="home-v2-announce-row" type="button" data-home2-news="featured">
+                      <span class="home-v2-announce-row__main">
+                        <span class="home-v2-announce-row__title" data-i18n="home2.news.featured.title">Targeted Messaging</span>
+                        <span class="home-v2-announce-row__excerpt" data-i18n="home2.news.featured.desc">Learn how to prepare your first broadcast.</span>
+                      </span>
+                      <time class="home-v2-announce-row__date" data-i18n="home3.news.featuredDate">Today</time>
+                    </button>
+                  </li>
+                  <li>
+                    <button class="home-v2-announce-row" type="button" data-home2-news="maintenance">
+                      <span class="home-v2-announce-row__main">
+                        <span class="home-v2-announce-row__title" data-i18n="home2.news.item1.title">Scheduled maintenance</span>
+                        <span class="home-v2-announce-row__excerpt" data-i18n="home3.news.maintenanceDesc">Platform updates on Oct 20 — brief read-only window.</span>
+                      </span>
+                      <time class="home-v2-announce-row__date" data-i18n="home2.news.item1.date">Oct 20</time>
+                    </button>
+                  </li>
+                  <li>
+                    <button class="home-v2-announce-row" type="button" data-home2-news="tags-guide">
+                      <span class="home-v2-announce-row__main">
+                        <span class="home-v2-announce-row__title" data-i18n="home2.news.item2.title">New guide: Managing audience tags</span>
+                        <span class="home-v2-announce-row__excerpt" data-i18n="home3.news.tagsGuideDesc">Step-by-step walkthrough for tagging your participants.</span>
+                      </span>
+                      <time class="home-v2-announce-row__date" data-i18n="home2.news.item2.date">Oct 9</time>
+                    </button>
+                  </li>
+                </ul>
+              </section>
+            </aside>
+          </div>
+        </div>
+      </main>
+
+      <div class="home-under-construction" id="home-under-construction" role="status" aria-live="polite" aria-label="Home under construction">
+        <div class="home-under-construction__panel">
+          <p class="home-under-construction__badge">HOME</p>
+          <h2 class="home-under-construction__title">Under construction</h2>
+          <p class="home-under-construction__desc">This page is a work in progress. Use Chats, Broadcasts, or Manage contacts from the sidebar.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Chats view -->
@@ -1984,7 +2089,10 @@
         </div>
       </div>
 
-      <ul class="chat-list" id="chat-list" role="list" data-od-id="chat-list"></ul>
+      <div class="list-scroll">
+      <ul class="chat-list" id="chat-list" role="list" data-od-id="chat-list" data-overlay-scroller></ul>
+      <div class="overlay-scrollbar" hidden aria-hidden="true"><div class="overlay-scrollbar__thumb"></div></div>
+      </div>
       </aside>
     </div>
 
@@ -2029,16 +2137,32 @@
       <div class="messages" id="messages" data-od-id="chat-messages"></div>
 
       <footer class="composer" data-od-id="chat-composer">
+        <div class="composer__stack">
+          <div class="composer-attach-preview hidden" id="composer-attach-preview" aria-live="polite"></div>
+          <div class="composer__row">
         <div class="attach-menu-wrap" data-od-id="chat-attach-wrap">
-          <input type="file" id="chat-attach-input" class="visually-hidden" accept="image/*,application/pdf,.pdf" tabindex="-1">
-          <label class="attach-btn" for="chat-attach-input" id="chat-attach-btn" data-i18n-aria="chats.attachAria" aria-label="Attach file" data-od-id="chat-attach-btn">
+          <button class="attach-btn" type="button" id="chat-attach-btn" data-i18n-aria="chats.attachAria" aria-label="Attach" aria-haspopup="menu" aria-expanded="false" aria-controls="chat-attach-menu" data-od-id="chat-attach-btn">
             <span class="material-symbols-outlined composer-icon" aria-hidden="true">add</span>
-          </label>
+          </button>
+          <div class="attach-menu" id="chat-attach-menu" role="menu" aria-hidden="true">
+            <button class="attach-menu__item" type="button" data-attach-action="image" role="menuitem">
+              <span class="material-symbols-outlined composer-icon" aria-hidden="true">image</span>
+              <span data-i18n="chats.attachImage">Image</span>
+            </button>
+            <button class="attach-menu__item" type="button" data-attach-action="pdf" role="menuitem">
+              <span class="material-symbols-outlined composer-icon" aria-hidden="true">picture_as_pdf</span>
+              <span data-i18n="chats.attachPdf">PDF</span>
+            </button>
+          </div>
+          <input type="file" id="chat-image-input" class="visually-hidden" accept="image/*" tabindex="-1">
+          <input type="file" id="chat-pdf-input" class="visually-hidden" accept=".pdf,application/pdf" multiple tabindex="-1">
         </div>
-        <input type="text" class="message-input" id="message-input" placeholder="Message" autocomplete="off" data-od-id="chat-message-input" data-i18n-placeholder="chats.messagePlaceholder">
+        <textarea class="message-input" id="message-input" rows="1" placeholder="Message" autocomplete="off" data-od-id="chat-message-input" data-i18n-placeholder="chats.messagePlaceholder"></textarea>
         <button type="button" class="composer-send-btn" id="chat-send-btn" disabled="" aria-label="Send message" data-od-id="chat-send-btn" data-i18n="chats.send" data-i18n-aria="chats.sendAria">
           Send
         </button>
+          </div>
+        </div>
       </footer>
       </main>
 
@@ -2046,9 +2170,12 @@
         <header class="chat-room-settings__header">
           <h2 class="chat-room-settings__title" id="chat-room-settings-title" data-i18n="communityRoom.title">Room settings</h2>
         </header>
-        <div class="chat-room-settings__body">
+        <div class="list-scroll">
+        <div class="chat-room-settings__body" data-overlay-scroller>
           <p class="chat-room-settings__count" id="chat-room-members-count">5 Members</p>
           <ul class="chat-room-members" id="chat-room-members-list" role="list"></ul>
+        </div>
+        <div class="overlay-scrollbar" hidden aria-hidden="true"><div class="overlay-scrollbar__thumb"></div></div>
         </div>
       </aside>
       </div>
@@ -2056,70 +2183,61 @@
     </div>
 
     <!-- Broadcasts view -->
-    <div class="view view--broadcasts view--broadcasts-list-hidden hidden" id="view-broadcasts" data-od-id="view-broadcasts">
-      <!-- MVP: list panel hidden — remove hidden to restore sent-broadcast list -->
-      <div class="panel-rail panel-rail--inbox" data-od-id="broadcasts-inbox-rail" hidden="">
+    <div class="view view--broadcasts hidden" id="view-broadcasts" data-od-id="view-broadcasts">
+      <div class="panel-rail panel-rail--inbox" data-od-id="broadcasts-inbox-rail">
         <aside class="inbox panel" data-od-id="broadcasts-inbox-panel">
           <header class="inbox-header mvp-panel-header mvp-panel-header--single" data-od-id="broadcasts-inbox-header">
             <div class="inbox-header__title-row">
               <h2 data-od-id="broadcasts-inbox-title" data-i18n="broadcasts.title">Broadcasts</h2>
-              <button type="button" aria-label="Create new broadcast" data-od-id="broadcasts-compose-btn" data-i18n-aria="broadcasts.createNewAria">
-                <span class="broadcasts-compose-icon-wrap" aria-hidden="true">
-                  <span class="material-icons-outlined">edit_note</span>
-                </span>
+              <button type="button" class="filter-btn contacts-manage-tags-btn" aria-label="Create new broadcast" data-od-id="broadcasts-compose-btn" data-i18n-aria="broadcasts.createNewAria">
+                <span class="material-icons" aria-hidden="true">add</span>
+                <span data-i18n="broadcasts.createNew">Create new</span>
+              </button>
+            </div>
+            <div class="inbox-header__actions" data-od-id="broadcasts-inbox-actions">
+              <button class="icon-btn broadcasts-search__button" id="broadcasts-search-button" type="button" data-i18n-aria="broadcasts.search" aria-label="Search broadcasts" aria-expanded="false" aria-controls="broadcasts-search">
+                <span class="material-symbols-outlined" aria-hidden="true">search</span>
               </button>
             </div>
           </header>
+          <div class="broadcasts-status-filter" data-od-id="broadcasts-status-filter">
+            <div class="filter-dropdown">
+              <button class="filter-btn" type="button" id="broadcasts-status-filter-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="broadcasts-status-filter-menu" data-i18n-aria="broadcasts.filterAria" aria-label="Filter broadcasts">
+                <span id="broadcasts-status-filter-value">All broadcasts</span>
+                <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
+              </button>
+              <ul class="filter-menu filter-menu--radio hidden" id="broadcasts-status-filter-menu" role="listbox" data-i18n-aria="broadcasts.filterAria" aria-label="Filter broadcasts">
+                <li><button type="button" class="filter-radio-item is-selected" data-value="all" data-i18n="broadcasts.filterAll">All broadcasts</button></li>
+                <li><button type="button" class="filter-radio-item" data-value="sent" data-i18n="broadcasts.filterSent">Sent broadcasts</button></li>
+                <li><button type="button" class="filter-radio-item" data-value="draft" data-i18n="broadcasts.filterDraft">Draft broadcasts</button></li>
+              </ul>
+            </div>
+          </div>
 
-          <ul class="broadcast-list" id="broadcast-list" role="list" data-od-id="broadcast-list"></ul>
+          <div class="broadcasts-search" id="broadcasts-search" data-od-id="broadcasts-search-row">
+            <div class="broadcasts-search__field">
+              <span class="material-icons broadcasts-search__icon" aria-hidden="true">search</span>
+              <input class="broadcasts-search__input" id="broadcasts-search-input" type="search" autocomplete="off" data-i18n-placeholder="broadcasts.searchPlaceholder" placeholder="Search broadcasts" aria-label="Search broadcasts" data-i18n-aria="broadcasts.search">
+              <button class="icon-btn broadcasts-search__close" id="broadcasts-search-close" type="button" data-i18n-aria="chats.closeSearch" aria-label="Close search">
+                <span class="material-icons" aria-hidden="true">close</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="list-scroll">
+          <ul class="broadcast-list" id="broadcast-list" role="list" data-od-id="broadcast-list" data-overlay-scroller></ul>
+          <div class="overlay-scrollbar" hidden aria-hidden="true"><div class="overlay-scrollbar__thumb"></div></div>
+          </div>
         </aside>
       </div>
+
+      <div class="broadcast-list-floating-tooltip" id="broadcast-list-floating-tooltip" role="tooltip" hidden></div>
 
       <div class="panel-rail panel-rail--chat" data-od-id="broadcast-detail-rail">
         <main class="broadcast-empty-state panel" id="broadcast-empty-state" data-od-id="broadcast-empty-state" hidden aria-hidden="true">
           <div class="broadcast-empty-state__content">
-            <div class="broadcast-empty-state__intro">
-              <h2 class="broadcast-empty-state__title">
-                <span data-i18n="broadcasts.emptyTitle">Broadcasts</span>
-                <span class="material-icons broadcast-empty-state__title-icon" aria-hidden="true">campaign</span>
-              </h2>
-            </div>
-            <div class="broadcast-empty-state__path" aria-label="Two steps to send a broadcast" data-i18n-aria="broadcasts.emptyPathAria">
-              <article class="broadcast-onboarding-card broadcast-onboarding-card--audience">
-                <div class="broadcast-onboarding-card__top">
-                  <span class="broadcast-onboarding-card__icon" aria-hidden="true">
-                    <span class="material-symbols-outlined">groups</span>
-                  </span>
-                  <div class="broadcast-onboarding-card__heading">
-                    <span class="broadcast-onboarding-card__step" aria-hidden="true" data-i18n="broadcasts.emptyStep1Label">Step 1</span>
-                    <h3 data-i18n="broadcasts.emptyStep1Title">Create a tag</h3>
-                    <span class="broadcast-onboarding-card__helper" data-i18n="broadcasts.emptyStep1Helper">Skip if you already have one</span>
-                  </div>
-                </div>
-                <p data-i18n="broadcasts.emptyStep1Body">Create a group tag on the Contacts page for the people you want to message.</p>
-                <button type="button" class="broadcast-onboarding-card__action broadcast-onboarding-card__action--secondary" id="broadcast-manage-tags-btn">
-                  <span data-i18n="broadcasts.emptyStep1Cta">Open contacts</span>
-                  <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
-                </button>
-              </article>
-              <span class="broadcast-empty-state__connector material-symbols-outlined" aria-hidden="true">arrow_forward</span>
-              <article class="broadcast-onboarding-card broadcast-onboarding-card--message">
-                <div class="broadcast-onboarding-card__top">
-                  <span class="broadcast-onboarding-card__icon" aria-hidden="true">
-                    <span class="material-symbols-outlined">campaign</span>
-                  </span>
-                  <div class="broadcast-onboarding-card__heading">
-                    <span class="broadcast-onboarding-card__step" aria-hidden="true" data-i18n="broadcasts.emptyStep2Label">Step 2</span>
-                    <h3 data-i18n="broadcasts.emptyStep2Title">Create your broadcast</h3>
-                  </div>
-                </div>
-                <p data-i18n="broadcasts.emptyStep2Body">Start your broadcast, choose the prepared tag, and write the message you want to send.</p>
-                <button type="button" class="broadcast-onboarding-card__action broadcast-onboarding-card__action--primary" id="broadcast-empty-new-btn" aria-label="Create new broadcast" data-i18n-aria="broadcasts.createNewAria">
-                  <span data-i18n="broadcasts.emptyCta">Create broadcast</span>
-                  <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
-                </button>
-              </article>
-            </div>
+            <p class="broadcast-empty-state__hint" data-i18n="broadcasts.emptyHint">Select a broadcast from the list or create new</p>
+            <button type="button" class="broadcast-empty-state__cta" id="broadcast-empty-new-btn" data-i18n="broadcasts.newBroadcast" data-i18n-aria="broadcasts.createNewAria">New broadcast</button>
           </div>
         </main>
         <main class="broadcast-detail panel" id="broadcast-detail" data-od-id="broadcast-detail-panel" hidden="" aria-hidden="true"></main>
@@ -2261,7 +2379,8 @@ You can create tags in Manage contacts page.</p>
 
     <!-- Contacts view -->
     <div class="view view--contacts hidden" id="view-contacts" data-od-id="view-contacts">
-      <div class="panel-rail panel-rail--full" data-od-id="contacts-rail">
+      <div class="panel-rail panel-rail--full contacts-rail" id="contacts-panel-rail" data-od-id="contacts-rail">
+        <div class="contacts-room-stack">
         <main class="contacts-panel" data-od-id="contacts-panel">
           <div class="contacts-card" data-od-id="contacts-card">
             <header class="contacts-page-header mvp-panel-header mvp-panel-header--stacked" data-od-id="contacts-header">
@@ -2278,12 +2397,13 @@ You can create tags in Manage contacts page.</p>
             </header>
 
             <div class="contacts-card__top" data-od-id="contacts-card-top">
-              <div class="contacts-search-wrap" data-od-id="contacts-search-wrap">
-                <span class="material-icons contacts-search-icon" aria-hidden="true">search</span>
-                <input type="search" class="contacts-search" id="contacts-search" placeholder="Search contacts" autocomplete="off" data-od-id="contacts-search" data-i18n-placeholder="contacts.searchContacts">
-              </div>
               <div class="contacts-toolbar" data-od-id="contacts-toolbar">
                 <div class="contacts-toolbar__row">
+                <div class="contacts-search-wrap" data-od-id="contacts-search-wrap">
+                  <span class="material-icons contacts-search-icon" aria-hidden="true">search</span>
+                  <input type="search" class="contacts-search" id="contacts-search" placeholder="Search contacts" autocomplete="off" data-od-id="contacts-search" data-i18n-placeholder="contacts.searchContacts">
+                </div>
+                <div class="contacts-toolbar__controls">
                 <div class="contacts-filters" data-od-id="contacts-filters">
                   <div class="filter-dropdown" data-od-id="contacts-filter-role">
                     <button class="filter-btn" type="button" id="filter-role-btn" aria-haspopup="listbox" aria-expanded="false">
@@ -2357,7 +2477,6 @@ You can create tags in Manage contacts page.</p>
                       </li>
                     </ul>
                   </div>
-                  <button class="contacts-clear-all-btn hidden" type="button" id="contacts-clear-all-btn" data-i18n="contacts.clearAll">Clear all</button>
                 </div>
                 <div class="contacts-table-tools" data-od-id="contacts-sort-control">
                   <div class="filter-dropdown contacts-sort-dropdown">
@@ -2372,10 +2491,12 @@ You can create tags in Manage contacts page.</p>
                     </ul>
                   </div>
                 </div>
+                <button type="button" class="filter-btn contacts-manage-tags-btn" id="contacts-toolbar-manage-tags" aria-controls="manage-tags-panel" data-i18n="contacts.createDeleteTags" data-i18n-aria="contacts.manageTagsAria">Create/delete tags</button>
+                </div>
                 </div>
                 <div class="contacts-active-filters" id="contacts-active-filters" data-od-id="contacts-active-tags" hidden="">
                   <div class="contacts-active-filters__chips" id="contacts-active-tags"></div>
-                  <button class="contacts-clear-filters" type="button" id="contacts-clear-filters" hidden="" data-i18n="contacts.clearFilters">Clear filters</button>
+                  <button class="contacts-clear-all-btn" type="button" id="contacts-clear-all-btn" data-i18n="contacts.clearAll">Clear all</button>
                 </div>
               </div>
             </div>
@@ -2394,13 +2515,11 @@ You can create tags in Manage contacts page.</p>
               </div>
               <div class="contacts-selection-bar__actions">
                 <div class="filter-dropdown add-tags-dropdown" id="contacts-add-tags-wrap">
-                  <button type="button" class="contacts-selection-btn contacts-selection-btn--outline" id="contacts-add-tags-btn" aria-haspopup="dialog" aria-expanded="false" disabled="">
-                    <span class="material-icons">sell</span>
-                    <span data-i18n="contacts.addTags">Add Tags</span>
-                  </button>
+                  <button type="button" class="contacts-selection-btn contacts-selection-btn--outline" id="contacts-add-tags-btn" aria-haspopup="dialog" aria-expanded="false" disabled="" data-i18n="contacts.addTags">Add Tags</button>
                   <div class="add-tags-popover hidden" id="contacts-add-tags-menu" role="dialog" aria-label="Add tags to selected contacts" aria-hidden="true">
                     <div class="add-tags-popover__header">
                       <p class="add-tags-popover__title" data-i18n="contacts.addTagsTitle">Add tags</p>
+                      <button type="button" class="add-tags-popover__manage" id="contacts-manage-all-tags" aria-controls="manage-tags-panel" data-i18n="contacts.createDeleteTags">Create/delete tags</button>
                     </div>
                     <div class="add-tags-popover__body">
                       <div class="add-tags-popover__selected hidden" id="contacts-add-tags-selected" aria-live="polite"></div>
@@ -2411,15 +2530,6 @@ You can create tags in Manage contacts page.</p>
                           <input type="search" id="contacts-add-tags-search" placeholder="Search tags" autocomplete="off" aria-label="Search tags" data-i18n-placeholder="contacts.searchTags" data-i18n-aria="contacts.searchTags">
                         </div>
                         <ul class="add-tags-popover__results hidden" id="contacts-add-tags-list" role="listbox" aria-label="Tag search results"></ul>
-                      </div>
-                      <div class="add-tags-popover__separator" role="separator" aria-hidden="true"></div>
-                      <div class="add-tags-popover__field-group">
-                        <label class="add-tags-popover__field-label" for="contacts-add-tags-new" data-i18n="contacts.createNewLabel">Create new</label>
-                        <div class="add-tags-popover__field">
-                          <span class="material-icons" aria-hidden="true">label</span>
-                          <input type="text" id="contacts-add-tags-new" placeholder="New tag name" maxlength="40" data-i18n-placeholder="contacts.newTagPlaceholder">
-                        </div>
-                        <button type="button" class="add-tags-popover__create-btn" id="contacts-add-tags-create-btn" disabled="" data-i18n="contacts.createTag">Create tag</button>
                       </div>
                     </div>
                     <div class="add-tags-popover__footer">
@@ -2434,25 +2544,50 @@ You can create tags in Manage contacts page.</p>
               </div>
             </div>
 
-            <div class="contacts-table-wrap" data-od-id="contacts-table-wrap">
-              <table class="contacts-table" id="contacts-table" data-od-id="contacts-table">
-                <thead>
-                  <tr>
-                    <th class="col-check">
-                      <label class="contacts-checkbox">
-                        <input type="checkbox" id="contacts-check-all" aria-label="Select all matching users">
-                        <span class="contacts-checkbox__mark"></span>
-                      </label>
-                    </th>
-                    <th class="col-name" data-i18n="contacts.colName">Name</th>
-                    <th class="col-role" data-i18n="contacts.colRole">Role</th>
-                    <th class="col-status" data-i18n="contacts.colStatus">Status</th>
-                    <th class="col-tags" data-i18n="contacts.colTags">Tags</th>
-                    <th class="col-chat" data-i18n="contacts.colViewChat">View chat</th>
-                  </tr>
-                </thead>
-                <tbody id="contacts-tbody" data-od-id="contacts-tbody"></tbody>
-              </table>
+            <div class="contacts-table-shell" data-od-id="contacts-table-shell">
+              <div class="contacts-table-head" data-od-id="contacts-table-head">
+                <table class="contacts-table">
+                  <colgroup>
+                    <col class="col-check">
+                    <col class="col-name">
+                    <col class="col-role">
+                    <col class="col-status">
+                    <col class="col-tags">
+                    <col class="col-chat">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th class="col-check">
+                        <label class="contacts-checkbox">
+                          <input type="checkbox" id="contacts-check-all" aria-label="Select all matching users">
+                          <span class="contacts-checkbox__mark"></span>
+                        </label>
+                      </th>
+                      <th class="col-name" data-i18n="contacts.colName">Name</th>
+                      <th class="col-role" data-i18n="contacts.colRole">Role</th>
+                      <th class="col-status" data-i18n="contacts.colStatus">Status</th>
+                      <th class="col-tags" data-i18n="contacts.colTags">Tags</th>
+                      <th class="col-chat" data-i18n="contacts.colViewChat">View chat</th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+              <div class="list-scroll">
+              <div class="contacts-table-wrap" data-od-id="contacts-table-wrap" data-overlay-scroller>
+                <table class="contacts-table" id="contacts-table" data-od-id="contacts-table">
+                  <colgroup>
+                    <col class="col-check">
+                    <col class="col-name">
+                    <col class="col-role">
+                    <col class="col-status">
+                    <col class="col-tags">
+                    <col class="col-chat">
+                  </colgroup>
+                  <tbody id="contacts-tbody" data-od-id="contacts-tbody"></tbody>
+                </table>
+              </div>
+              <div class="overlay-scrollbar" hidden aria-hidden="true"><div class="overlay-scrollbar__thumb"></div></div>
+              </div>
             </div>
 
             <footer class="contacts-footer" data-od-id="contacts-footer">
@@ -2482,6 +2617,43 @@ You can create tags in Manage contacts page.</p>
             </footer>
           </div>
         </main>
+        <aside class="manage-tags-panel panel" id="manage-tags-panel" aria-hidden="true" aria-labelledby="manage-tags-title">
+          <header class="manage-tags-panel__header contacts-page-header mvp-panel-header mvp-panel-header--stacked">
+            <div class="contacts-page-header__top">
+              <h2 class="manage-tags-panel__title" id="manage-tags-title" data-i18n="contacts.createDeleteTags">Create/delete tags</h2>
+              <button type="button" class="icon-btn manage-tags-panel__close" id="manage-tags-close-btn" data-i18n-aria="contacts.manageTagsCloseAria" aria-label="Close create/delete tags">
+                <span class="material-icons" aria-hidden="true">close</span>
+              </button>
+            </div>
+            <div class="contacts-page-header__meta">
+              <p class="contacts-subtitle" data-i18n="contacts.manageTagsHint">Create or delete tags here.</p>
+            </div>
+          </header>
+          <div class="manage-tags-panel__body">
+            <div class="manage-tags-fields">
+              <div class="manage-tags-search manage-tags-create-field" id="manage-tags-create-field">
+                <button type="button" class="manage-tags-create-trigger" id="manage-tags-create-trigger" aria-expanded="false" data-i18n-aria="contacts.createNewLabel">
+                  <span class="material-icons" aria-hidden="true">add</span>
+                  <span data-i18n="contacts.createNewLabel">Create new</span>
+                </button>
+                <span class="material-icons manage-tags-create-compose-icon" aria-hidden="true">add</span>
+                <input type="text" id="manage-tags-create-input" placeholder="New tag name" maxlength="40" autocomplete="off" data-i18n-placeholder="contacts.newTagPlaceholder" data-i18n-aria="contacts.newTagPlaceholder">
+                <button type="button" class="manage-tags-create-action" id="manage-tags-create-btn" disabled data-i18n="contacts.createAction" data-i18n-aria="contacts.createTag">Create</button>
+              </div>
+              <div class="manage-tags-search">
+                <span class="material-icons" aria-hidden="true">search</span>
+                <input type="search" id="manage-tags-search" placeholder="Search tags" autocomplete="off" data-i18n-placeholder="contacts.searchTags" data-i18n-aria="contacts.searchTags">
+              </div>
+            </div>
+            <div class="list-scroll">
+            <div class="manage-tags-scroller" data-overlay-scroller>
+              <ul class="manage-tags-list" id="manage-tags-list" role="list"></ul>
+            </div>
+            <div class="overlay-scrollbar" hidden aria-hidden="true"><div class="overlay-scrollbar__thumb"></div></div>
+            </div>
+          </div>
+        </aside>
+        </div>
       </div>
     </div>
 
@@ -2658,8 +2830,118 @@ You can create tags in Manage contacts page.</p>
 
   <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="app.js?v=20251028-chats-inbox-shrink"></script>
+  <div class="confirm-dialog" id="delete-tag-dialog" hidden="" aria-hidden="true">
+    <div class="confirm-dialog__backdrop" id="delete-tag-dialog-backdrop"></div>
+    <div
+      class="confirm-dialog__panel"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="delete-tag-dialog-title"
+      aria-describedby="delete-tag-dialog-desc"
+    >
+      <h2 class="confirm-dialog__title" id="delete-tag-dialog-title">Delete tag?</h2>
+      <p class="confirm-dialog__desc" id="delete-tag-dialog-desc"></p>
+      <div class="confirm-dialog__actions">
+        <button type="button" class="confirm-dialog__btn confirm-dialog__btn--text" id="delete-tag-dialog-cancel" data-i18n="contacts.deleteTagCancel">Cancel</button>
+        <button type="button" class="confirm-dialog__btn confirm-dialog__btn--danger-primary" id="delete-tag-dialog-confirm" data-i18n="contacts.deleteTagConfirm">Delete tag</button>
+      </div>
+    </div>
+  </div>
 
+  <div class="confirm-dialog" id="permission-denied-dialog" hidden="" aria-hidden="true">
+    <div class="confirm-dialog__backdrop" id="permission-denied-dialog-backdrop"></div>
+    <div
+      class="confirm-dialog__panel"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="permission-denied-dialog-title"
+      aria-describedby="permission-denied-dialog-desc"
+    >
+      <h2 class="confirm-dialog__title" id="permission-denied-dialog-title" data-i18n="contacts.permissionTitle">You don’t have permission to add tags</h2>
+      <p class="confirm-dialog__desc" id="permission-denied-dialog-desc" data-i18n="contacts.permissionDesc">Contact your Project Leader or administrator if you need this permission.</p>
+      <div class="confirm-dialog__actions">
+        <button type="button" class="confirm-dialog__btn confirm-dialog__btn--primary" id="permission-denied-dialog-close" data-i18n="contacts.permissionClose">OK</button>
+      </div>
+    </div>
+  </div>
 
+  <div class="attach-lab attach-lab--search" id="contacts-search-lab" hidden>
+    <button type="button" class="attach-lab__fab" id="contacts-search-lab-fab" aria-label="Open contact search examples" title="Drag to move" aria-expanded="false" aria-controls="contacts-search-lab-menu">
+      <span class="material-icons" aria-hidden="true">person_search</span>
+    </button>
+    <div class="attach-lab__menu" id="contacts-search-lab-menu" role="menu" aria-hidden="true">
+      <div class="attach-lab__group-head" role="presentation">
+        <p class="attach-lab__group-label">Search contacts</p>
+        <a class="attach-lab__ticket" href="https://jira.tmc-stargate.com/browse/WAPC-607" target="_blank" rel="noopener noreferrer" aria-label="Open WAPC-607 in Jira">
+          <svg class="attach-lab__ticket-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="#2684FF" d="M11.53 2C9.4 4.8 4.4 9.9 4.4 9.9l7.46 7.44C13.1 16.68 16 14.1 16 10.6 16 7.4 13.9 4.5 11.53 2z"/><path fill="#2684FF" d="M12.47 22c2.13-2.8 7.13-7.9 7.13-7.9l-7.46-7.44C10.9 7.32 8 9.9 8 13.4c0 3.2 2.1 6.1 4.47 8.6z"/><path fill="#0052CC" d="M12 9.1 6.7 14.4A6.4 6.4 0 0 0 12 18.5a6.4 6.4 0 0 0 5.3-4.1L12 9.1z"/></svg>
+          <span>607</span>
+        </a>
+      </div>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-search-lab="email">Email — alice.reynolds</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-search-lab="romanized">Romanized search — Tanaka</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-search-lab="kanji">Kanji search — 田中</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-search-lab="latinJp">Latin Japanese name — Yamamoto</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-search-lab="empty">No results</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-search-lab="clear">Clear search</button>
+    </div>
+  </div>
 
+  <div class="attach-lab" id="attach-lab" hidden>
+    <button type="button" class="attach-lab__fab" id="attach-lab-fab" aria-label="Open attach QA states" title="Drag to move" aria-expanded="false" aria-controls="attach-lab-menu">
+      <span class="material-icons" aria-hidden="true">fact_check</span>
+    </button>
+    <div class="attach-lab__menu" id="attach-lab-menu" role="menu" aria-hidden="true">
+      <div data-lab-view="chats">
+      <p class="attach-lab__group-label" role="presentation">Preview</p>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-attach-scenario="empty">Empty composer</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-attach-scenario="pdf-one">One PDF</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-attach-scenario="image-one">One image</button>
+      <p class="attach-lab__group-label" role="presentation">Menu rules</p>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-attach-scenario="error-image-with-pdf">PDF pending — Image disabled</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-attach-scenario="error-pdf-with-images">Images pending — PDF disabled</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-attach-scenario="error-pdf-max">Ten PDFs — PDF disabled</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-attach-scenario="error-fifth-image">Four images — Image disabled</button>
+      <p class="attach-lab__group-label" role="presentation">Validation</p>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-attach-scenario="error-file-too-large">File too large</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-attach-scenario="error-wrong-type">Unsupported file type</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-attach-scenario="delivery-failed-pdf">Failed delivery (PDF)</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-attach-scenario="delivery-failed-one-of-two">Two PDFs — one failed</button>
+      </div>
+      <div data-lab-view="contacts" hidden>
+      <div class="attach-lab__group-head" role="presentation">
+        <p class="attach-lab__group-label">Permission</p>
+        <a class="attach-lab__ticket" href="https://jira.tmc-stargate.com/browse/WAPC-609" target="_blank" rel="noopener noreferrer" aria-label="Open WAPC-609 in Jira">
+          <svg class="attach-lab__ticket-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="#2684FF" d="M11.53 2C9.4 4.8 4.4 9.9 4.4 9.9l7.46 7.44C13.1 16.68 16 14.1 16 10.6 16 7.4 13.9 4.5 11.53 2z"/><path fill="#2684FF" d="M12.47 22c2.13-2.8 7.13-7.9 7.13-7.9l-7.46-7.44C10.9 7.32 8 9.9 8 13.4c0 3.2 2.1 6.1 4.47 8.6z"/><path fill="#0052CC" d="M12 9.1 6.7 14.4A6.4 6.4 0 0 0 12 18.5a6.4 6.4 0 0 0 5.3-4.1L12 9.1z"/></svg>
+          <span>609</span>
+        </a>
+      </div>
+      <label class="attach-lab__check">
+        <input type="checkbox" id="contacts-lab-no-access">
+        <span>No access</span>
+      </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="attach-lab attach-lab--tags" id="contacts-tags-lab" hidden>
+    <button type="button" class="attach-lab__fab" id="contacts-tags-lab-fab" aria-label="Open tag delete examples" title="Drag to move" aria-expanded="false" aria-controls="contacts-tags-lab-menu">
+      <span class="material-icons" aria-hidden="true">label</span>
+    </button>
+    <div class="attach-lab__menu" id="contacts-tags-lab-menu" role="menu" aria-hidden="true">
+      <div class="attach-lab__group-head" role="presentation">
+        <p class="attach-lab__group-label">Delete tags</p>
+        <a class="attach-lab__ticket" href="https://jira.tmc-stargate.com/browse/WAPC-608" target="_blank" rel="noopener noreferrer" aria-label="Open WAPC-608 in Jira">
+          <svg class="attach-lab__ticket-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="#2684FF" d="M11.53 2C9.4 4.8 4.4 9.9 4.4 9.9l7.46 7.44C13.1 16.68 16 14.1 16 10.6 16 7.4 13.9 4.5 11.53 2z"/><path fill="#2684FF" d="M12.47 22c2.13-2.8 7.13-7.9 7.13-7.9l-7.46-7.44C10.9 7.32 8 9.9 8 13.4c0 3.2 2.1 6.1 4.47 8.6z"/><path fill="#0052CC" d="M12 9.1 6.7 14.4A6.4 6.4 0 0 0 12 18.5a6.4 6.4 0 0 0 5.3-4.1L12 9.1z"/></svg>
+          <span>608</span>
+        </a>
+      </div>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-tags-lab="open">Open manage tags</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-tags-lab="delete-unused">Delete unused tag</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-tags-lab="delete-in-use">Delete tag in use</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-tags-lab="delete-broadcast-draft">Delete tag — broadcast draft audience</button>
+      <button type="button" class="attach-lab__menu-item" role="menuitem" data-tags-lab="show-deleted-tag">View deleted tag in list</button>
+    </div>
+  </div>
+
+  <script src="app.js?v=20251117-draft-pill-tags-fab"></script>
 </body></html>
