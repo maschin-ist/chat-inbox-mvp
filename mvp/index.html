@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chats inbox — MVP</title>
-  <link rel="stylesheet" href="styles.css?v=20251119-hide-contact-emails">
+  <link rel="stylesheet" href="styles.css?v=20251120-hide-status">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0">
@@ -2405,26 +2405,42 @@ You can create tags in Manage contacts page.</p>
                 </div>
                 <div class="contacts-toolbar__controls">
                 <div class="contacts-filters" data-od-id="contacts-filters">
-                  <div class="filter-dropdown" data-od-id="contacts-filter-role">
+                  <div class="filter-dropdown filter-dropdown--role" data-od-id="contacts-filter-role">
                     <button class="filter-btn" type="button" id="filter-role-btn" aria-haspopup="listbox" aria-expanded="false">
                       <span class="filter-btn__label" data-i18n="contacts.filterRole">Role</span>
+                      <span class="filter-btn__count hidden" id="filter-role-count" aria-hidden="true"></span>
                       <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
                     </button>
-                    <ul class="filter-menu filter-menu--radio hidden" id="filter-role-menu" role="listbox">
-                      <li class="filter-menu__hint" data-i18n="contacts.oneRoleAtATime">One role at a time</li>
-                      <li><button type="button" class="filter-radio-item" data-value="" data-i18n="contacts.allRoles">All roles</button></li>
-                      <li><button type="button" class="filter-radio-item" data-value="Resident" data-i18n="contacts.roleResident">Resident</button></li>
-                      <li><button type="button" class="filter-radio-item" data-value="Worker" data-i18n="contacts.roleWorker">Worker</button></li>
-                      <li><button type="button" class="filter-radio-item" data-value="Visitor" data-i18n="contacts.roleVisitor">Visitor</button></li>
+                    <ul class="filter-menu filter-menu--checkbox hidden" id="filter-role-menu" role="listbox">
+                      <li>
+                        <label class="filter-check">
+                          <input type="checkbox" value="Resident">
+                          <span class="filter-check__box" aria-hidden="true"></span>
+                          <span class="filter-check__label" data-i18n="contacts.roleResident">Resident</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label class="filter-check">
+                          <input type="checkbox" value="Worker">
+                          <span class="filter-check__box" aria-hidden="true"></span>
+                          <span class="filter-check__label" data-i18n="contacts.roleWorker">Worker</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label class="filter-check">
+                          <input type="checkbox" value="Visitor">
+                          <span class="filter-check__box" aria-hidden="true"></span>
+                          <span class="filter-check__label" data-i18n="contacts.roleVisitor">Visitor</span>
+                        </label>
+                      </li>
                     </ul>
                   </div>
-                  <div class="filter-dropdown" data-od-id="contacts-filter-status">
+                  <div class="filter-dropdown contacts-filter-status hidden" data-od-id="contacts-filter-status" hidden aria-hidden="true">
                     <button class="filter-btn" type="button" id="filter-status-btn" aria-haspopup="listbox" aria-expanded="false">
                       <span class="filter-btn__label" data-i18n="contacts.filterStatus">Status</span>
                       <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
                     </button>
                     <ul class="filter-menu filter-menu--radio hidden" id="filter-status-menu" role="listbox">
-                      <li class="filter-menu__hint" data-i18n="contacts.oneStatusAtATime">One status at a time</li>
                       <li><button type="button" class="filter-radio-item" data-value="" data-i18n="contacts.allStatuses">All statuses</button></li>
                       <li><button type="button" class="filter-radio-item" data-value="not-started" data-i18n="status.not-started">Not started</button></li>
                       <li><button type="button" class="filter-radio-item" data-value="agreement-signed" data-i18n="status.agreement-signed">Agreement signed</button></li>
@@ -2439,7 +2455,6 @@ You can create tags in Manage contacts page.</p>
                       <span class="material-icons filter-chevron" aria-hidden="true">expand_more</span>
                     </button>
                     <ul class="filter-menu filter-menu--checkbox hidden" id="filter-tags-menu" role="listbox">
-                      <li class="filter-menu__hint" data-i18n="contacts.tagsFilterHint">Select any — matches all chosen</li>
                       <li>
                         <label class="filter-check">
                           <input type="checkbox" value="Member">
@@ -2491,7 +2506,7 @@ You can create tags in Manage contacts page.</p>
                     </ul>
                   </div>
                 </div>
-                <button type="button" class="filter-btn contacts-manage-tags-btn" id="contacts-toolbar-manage-tags" aria-controls="manage-tags-panel" data-i18n="contacts.createDeleteTags" data-i18n-aria="contacts.manageTagsAria">Create/delete tags</button>
+                <button type="button" class="filter-btn contacts-manage-tags-btn" id="contacts-toolbar-manage-tags" aria-controls="manage-tags-panel" data-i18n="contacts.createDeleteTags" data-i18n-aria="contacts.manageTagsAria">Manage tags</button>
                 </div>
                 </div>
                 <div class="contacts-active-filters" id="contacts-active-filters" data-od-id="contacts-active-tags" hidden="">
@@ -2506,7 +2521,7 @@ You can create tags in Manage contacts page.</p>
                 <div class="contacts-selection-bar__summary">
                   <span class="contacts-selection-pill" tabindex="0">
                     <span id="contacts-selection-count">0 users selected</span>
-                    <span class="contacts-selection-pill__hint" role="tooltip" id="contacts-selection-hint" data-i18n="contacts.selectionHint">Select contacts to add tags</span>
+                    <span class="contacts-selection-pill__hint" role="tooltip" id="contacts-selection-hint" data-i18n="contacts.selectionHint">Select contacts to assign a tag</span>
                     <button type="button" class="contacts-selection-pill__clear" id="contacts-selection-clear" aria-label="Clear selection" hidden="">
                       <span class="material-icons">close</span>
                     </button>
@@ -2515,11 +2530,11 @@ You can create tags in Manage contacts page.</p>
               </div>
               <div class="contacts-selection-bar__actions">
                 <div class="filter-dropdown add-tags-dropdown" id="contacts-add-tags-wrap">
-                  <button type="button" class="contacts-selection-btn contacts-selection-btn--outline" id="contacts-add-tags-btn" aria-haspopup="dialog" aria-expanded="false" disabled="" data-i18n="contacts.addTags">Add Tags</button>
-                  <div class="add-tags-popover hidden" id="contacts-add-tags-menu" role="dialog" aria-label="Add tags to selected contacts" aria-hidden="true">
+                  <button type="button" class="contacts-selection-btn contacts-selection-btn--outline" id="contacts-add-tags-btn" aria-haspopup="dialog" aria-expanded="false" disabled="" data-i18n="contacts.addTags">Assign tag</button>
+                  <div class="add-tags-popover hidden" id="contacts-add-tags-menu" role="dialog" aria-label="Assign tag to selected contacts" aria-hidden="true">
                     <div class="add-tags-popover__header">
-                      <p class="add-tags-popover__title" data-i18n="contacts.addTagsTitle">Add tags</p>
-                      <button type="button" class="add-tags-popover__manage" id="contacts-manage-all-tags" aria-controls="manage-tags-panel" data-i18n="contacts.createDeleteTags">Create/delete tags</button>
+                      <p class="add-tags-popover__title" data-i18n="contacts.addTagsTitle">Assign tag</p>
+                      <button type="button" class="add-tags-popover__manage" id="contacts-manage-all-tags" aria-controls="manage-tags-panel" data-i18n="contacts.createDeleteTags">Manage tags</button>
                     </div>
                     <div class="add-tags-popover__body">
                       <div class="add-tags-popover__selected hidden" id="contacts-add-tags-selected" aria-live="polite"></div>
@@ -2534,7 +2549,7 @@ You can create tags in Manage contacts page.</p>
                     </div>
                     <div class="add-tags-popover__footer">
                       <button type="button" class="add-tags-popover__cancel" id="contacts-add-tags-cancel" data-i18n="contacts.cancel">Cancel</button>
-                      <button type="button" class="add-tags-popover__apply" id="contacts-add-tags-apply" disabled="" data-i18n="contacts.applyTags">Apply tags</button>
+                      <button type="button" class="add-tags-popover__apply" id="contacts-add-tags-apply" disabled="" data-i18n="contacts.applyTags">Assign tag</button>
                     </div>
                   </div>
                 </div>
@@ -2620,8 +2635,8 @@ You can create tags in Manage contacts page.</p>
         <aside class="manage-tags-panel panel" id="manage-tags-panel" aria-hidden="true" aria-labelledby="manage-tags-title">
           <header class="manage-tags-panel__header contacts-page-header mvp-panel-header mvp-panel-header--stacked">
             <div class="contacts-page-header__top">
-              <h2 class="manage-tags-panel__title" id="manage-tags-title" data-i18n="contacts.createDeleteTags">Create/delete tags</h2>
-              <button type="button" class="icon-btn manage-tags-panel__close" id="manage-tags-close-btn" data-i18n-aria="contacts.manageTagsCloseAria" aria-label="Close create/delete tags">
+              <h2 class="manage-tags-panel__title" id="manage-tags-title" data-i18n="contacts.createDeleteTags">Manage tags</h2>
+              <button type="button" class="icon-btn manage-tags-panel__close" id="manage-tags-close-btn" data-i18n-aria="contacts.manageTagsCloseAria" aria-label="Close manage tags">
                 <span class="material-icons" aria-hidden="true">close</span>
               </button>
             </div>
@@ -2943,5 +2958,5 @@ You can create tags in Manage contacts page.</p>
     </div>
   </div>
 
-  <script src="app.js?v=20251117-draft-pill-tags-fab"></script>
+  <script src="app.js?v=20251120-assign-tag-bar"></script>
 </body></html>

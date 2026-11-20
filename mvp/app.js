@@ -320,8 +320,8 @@ const I18N_STRINGS = {
     'contacts.broadcastsTab': ' tab.',
     'contacts.infoTooltip':
       'Contacts are your Project or Official Page participants',
-    'contacts.addTags': 'Add Tags',
-    'contacts.addTagsTitle': 'Add tags',
+    'contacts.addTags': 'Assign tag',
+    'contacts.addTagsTitle': 'Assign tag',
     'contacts.addTagsSubtitle': 'Search or create a tag below',
     'contacts.addTagsSubtitleOne': '{{name}} · pick a tag',
     'contacts.addTagsSubtitleOneContact': '1 contact selected',
@@ -367,26 +367,26 @@ const I18N_STRINGS = {
     'contacts.selectionZero': '0 users selected',
     'contacts.selectionOne': '1 user selected',
     'contacts.selectionMany': '{{count}} users selected',
-    'contacts.selectionHint': 'Select contacts to add tags',
+    'contacts.selectionHint': 'Select contacts to assign a tag',
     'contacts.selectAll': 'Select all {{count}} users',
     'contacts.clearSelection': 'Clear selection',
     'contacts.noActiveChat': 'No active conversation',
     'contacts.openChatTooltip': 'Open this conversation in Chats',
     'contacts.openChatAria': 'Open chat with {{name}}',
     'contacts.selectRowAria': 'Select {{name}}',
-    'contacts.applyTags': 'Apply tags',
+    'contacts.applyTags': 'Assign tag',
     'contacts.cancel': 'Cancel',
     'contacts.permissionTitle': 'You don’t have permission to add tags',
     'contacts.permissionTitleDelete': 'You don’t have permission to delete tags',
     'contacts.permissionDesc': 'Contact your Project Leader or administrator if you need this permission.',
     'contacts.permissionClose': 'OK',
-    'contacts.manageTags': 'Create/delete tags',
-    'contacts.createDeleteTags': 'Create/delete tags',
+    'contacts.manageTags': 'Manage tags',
+    'contacts.createDeleteTags': 'Manage tags',
     'contacts.manageTagsHint': 'Create or delete tags here.',
     'contacts.newTagAction': 'New tag',
     'contacts.manageAllTags': 'Manage all tags',
-    'contacts.manageTagsAria': 'Open create/delete tags',
-    'contacts.manageTagsCloseAria': 'Close create/delete tags',
+    'contacts.manageTagsAria': 'Open manage tags',
+    'contacts.manageTagsCloseAria': 'Close manage tags',
     'contacts.tagsCount': '{{count}} tags',
     'contacts.tagsCountOne': '1 tag',
     'contacts.tagUsage': '{{count}} contacts',
@@ -771,8 +771,8 @@ const I18N_STRINGS = {
     'contacts.broadcastsTab': 'タブをご利用ください。',
     'contacts.infoTooltip':
       '連絡先は、プロジェクトまたは公式ページの参加者です',
-    'contacts.addTags': 'タグを追加',
-    'contacts.addTagsTitle': 'タグを追加',
+    'contacts.addTags': 'タグを割り当て',
+    'contacts.addTagsTitle': 'タグを割り当て',
     'contacts.addTagsSubtitle': '下の検索または新規作成からタグを選んでください',
     'contacts.addTagsSubtitleOne': '{{name}} · タグを選択',
     'contacts.addTagsSubtitleOneContact': '1件選択中',
@@ -818,26 +818,26 @@ const I18N_STRINGS = {
     'contacts.selectionZero': '0件選択中',
     'contacts.selectionOne': '1件選択中',
     'contacts.selectionMany': '{{count}}件選択中',
-    'contacts.selectionHint': '連絡先を選択してタグを追加',
+    'contacts.selectionHint': '連絡先を選択してタグを割り当て',
     'contacts.selectAll': 'すべて選択（{{count}}件）',
     'contacts.clearSelection': '選択を解除',
     'contacts.noActiveChat': 'チャットはありません',
     'contacts.openChatTooltip': 'チャットで会話を開く',
     'contacts.openChatAria': '{{name}}のチャットを開く',
     'contacts.selectRowAria': '{{name}}を選択',
-    'contacts.applyTags': 'タグを適用',
+    'contacts.applyTags': 'タグを割り当て',
     'contacts.cancel': 'キャンセル',
     'contacts.permissionTitle': 'タグを追加する権限がありません。',
     'contacts.permissionTitleDelete': 'タグを削除する権限がありません。',
     'contacts.permissionDesc': 'この権限が必要な場合は、Project Leaderまたは管理者にお問い合わせください。',
     'contacts.permissionClose': 'OK',
-    'contacts.manageTags': 'タグの作成と削除',
-    'contacts.createDeleteTags': 'タグの作成と削除',
+    'contacts.manageTags': 'タグを管理',
+    'contacts.createDeleteTags': 'タグを管理',
     'contacts.manageTagsHint': 'ここでタグの作成と削除ができます。',
     'contacts.newTagAction': '新規',
     'contacts.manageAllTags': 'すべてのタグを管理',
-    'contacts.manageTagsAria': 'タグの作成と削除を開く',
-    'contacts.manageTagsCloseAria': 'タグの作成と削除を閉じる',
+    'contacts.manageTagsAria': 'タグ管理を開く',
+    'contacts.manageTagsCloseAria': 'タグ管理を閉じる',
     'contacts.tagsCount': '{{count}}件のタグ',
     'contacts.tagsCountOne': '1件のタグ',
     'contacts.tagUsage': '{{count}}件',
@@ -1433,7 +1433,8 @@ function refreshLocalizedUI() {
   renderManageTagsList();
   updateManageAllTagsVisibility();
   updateContactsSelectionBar();
-  updateRoleFilterMenuSelection();
+  syncRoleFilterCheckboxes();
+  updateRoleFilterButton();
   updateStatusFilterMenuSelection();
   if (typeof renderLicensesView === 'function') {
     renderLicensesView();
@@ -2483,8 +2484,10 @@ const chatsSearchInput = document.getElementById('chats-search-input');
 const chatsSearchButton = document.getElementById('chats-search-button');
 const chatsSearchClose = document.getElementById('chats-search-close');
 
+const CONTACTS_SHOW_STATUS = false;
+
 let contactsSearchQuery = '';
-let contactsRoleFilter = '';
+let contactsRoleFilters = [];
 let contactsStatusFilter = '';
 let contactsTagFilters = [];
 let contactsSort = 'recently-tagged';
@@ -6554,11 +6557,11 @@ function getFilteredContacts() {
     list = list.filter((c) => contactMatchesSearch(c, contactsSearchQuery));
   }
 
-  if (contactsRoleFilter) {
-    list = list.filter((c) => c.role === contactsRoleFilter);
+  if (contactsRoleFilters.length > 0) {
+    list = list.filter((c) => contactsRoleFilters.includes(c.role));
   }
 
-  if (contactsStatusFilter) {
+  if (CONTACTS_SHOW_STATUS && contactsStatusFilter) {
     list = list.filter((c) => c.status === contactsStatusFilter);
   }
 
@@ -6569,11 +6572,28 @@ function getFilteredContacts() {
   return sortContactsForDisplay(list);
 }
 
-function updateRoleFilterMenuSelection() {
-  document.querySelectorAll('#filter-role-menu .filter-radio-item').forEach((item) => {
-    item.classList.toggle('is-selected', item.dataset.value === contactsRoleFilter);
+function roleFilterLabel(role) {
+  if (role === 'Resident') return t('contacts.roleResident');
+  if (role === 'Worker') return t('contacts.roleWorker');
+  if (role === 'Visitor') return t('contacts.roleVisitor');
+  return role;
+}
+
+function syncRoleFilterCheckboxes() {
+  document.querySelectorAll('#filter-role-menu input[type="checkbox"]').forEach((input) => {
+    input.checked = contactsRoleFilters.includes(input.value);
   });
-  document.getElementById('filter-role-btn')?.classList.toggle('is-active', !!contactsRoleFilter);
+}
+
+function updateRoleFilterButton() {
+  const btn = document.getElementById('filter-role-btn');
+  const countEl = document.getElementById('filter-role-count');
+  if (!btn || !countEl) return;
+
+  const count = contactsRoleFilters.length;
+  btn.classList.toggle('is-active', count > 0);
+  countEl.textContent = count > 0 ? String(count) : '';
+  countEl.classList.toggle('hidden', count === 0);
 }
 
 function updateStatusFilterMenuSelection() {
@@ -6585,8 +6605,8 @@ function updateStatusFilterMenuSelection() {
 
 function getContactsActiveFilterCount() {
   let count = 0;
-  if (contactsRoleFilter) count += 1;
-  if (contactsStatusFilter) count += 1;
+  if (contactsRoleFilters.length > 0) count += 1;
+  if (CONTACTS_SHOW_STATUS && contactsStatusFilter) count += 1;
   if (contactsTagFilters.length > 0) count += 1;
   return count;
 }
@@ -6594,13 +6614,14 @@ function getContactsActiveFilterCount() {
 function clearContactsFilters() {
   const searchEl = document.getElementById('contacts-search');
   contactsSearchQuery = '';
-  contactsRoleFilter = '';
+  contactsRoleFilters = [];
   contactsStatusFilter = '';
   contactsTagFilters = [];
   contactsPage = 1;
   contactsSelectAllMode = false;
   if (searchEl) searchEl.value = '';
-  updateRoleFilterMenuSelection();
+  syncRoleFilterCheckboxes();
+  updateRoleFilterButton();
   updateStatusFilterMenuSelection();
   syncTagsFilterCheckboxes();
   updateTagsFilterButton();
@@ -6635,8 +6656,14 @@ function bindFilterChipRemoveHandlers(container) {
         const searchEl = document.getElementById('contacts-search');
         if (searchEl) searchEl.value = '';
       } else if (removeType === 'role') {
-        contactsRoleFilter = '';
-        updateRoleFilterMenuSelection();
+        const role = btn.dataset.role;
+        if (role) {
+          contactsRoleFilters = contactsRoleFilters.filter((value) => value !== role);
+        } else {
+          contactsRoleFilters = [];
+        }
+        syncRoleFilterCheckboxes();
+        updateRoleFilterButton();
       } else if (removeType === 'status') {
         contactsStatusFilter = '';
         updateStatusFilterMenuSelection();
@@ -6659,24 +6686,18 @@ function renderContactsFilterChips() {
 
   const chips = [];
 
-  if (contactsRoleFilter) {
-    let roleLabel = contactsRoleFilter;
-    if (currentLocale === 'ja') {
-      if (contactsRoleFilter === 'Resident') roleLabel = '住民';
-      else if (contactsRoleFilter === 'Worker') roleLabel = 'ワーカー';
-      else if (contactsRoleFilter === 'Visitor') roleLabel = 'ビジター';
-    }
+  contactsRoleFilters.forEach((role) => {
     chips.push(`
       <span class="filter-chip filter-chip--role">
         <span class="filter-chip__prefix">${t('contacts.colRole')}</span>
-        <span class="filter-chip__label">${escapePreviewText(roleLabel)}</span>
-        <button class="filter-chip__remove" type="button" data-remove="role" aria-label="Remove role filter">
+        <span class="filter-chip__label">${escapePreviewText(roleFilterLabel(role))}</span>
+        <button class="filter-chip__remove" type="button" data-remove="role" data-role="${escapePreviewText(role)}" aria-label="Remove role filter">
           <span class="material-icons">close</span>
         </button>
       </span>`);
-  }
+  });
 
-  if (contactsStatusFilter) {
+  if (CONTACTS_SHOW_STATUS && contactsStatusFilter) {
     const meta = STATUS_DEFINITIONS[contactsStatusFilter];
     const statusLabel = meta?.labelKey ? t(meta.labelKey) : contactsStatusFilter;
     chips.push(`
@@ -8728,7 +8749,8 @@ function renderContactsTable() {
     const emptyLabel = contactsSearchQuery.trim()
       ? t('contacts.noSearchResults')
       : t('contacts.weavers', { count: 0 });
-    tbody.innerHTML = `<tr class="contacts-empty-row"><td colspan="6">${emptyLabel}</td></tr>`;
+    const emptyColspan = CONTACTS_SHOW_STATUS ? 6 : 5;
+    tbody.innerHTML = `<tr class="contacts-empty-row"><td colspan="${emptyColspan}">${emptyLabel}</td></tr>`;
   } else {
   tbody.innerHTML = pageItems
     .map((contact) => {
@@ -8750,7 +8772,7 @@ function renderContactsTable() {
         </span>
       </td>
       <td class="col-role">${contactRoleHtml(contact.role)}</td>
-      <td class="col-status">${contactStatusBadgeHtml(contact.status)}</td>
+      ${CONTACTS_SHOW_STATUS ? `<td class="col-status">${contactStatusBadgeHtml(contact.status)}</td>` : ''}
       <td class="col-tags">
         <div class="contact-tags">${tagsHtml}</div>
       </td>
@@ -8892,23 +8914,20 @@ function initContactsView() {
     }
   });
 
-  setupRoleFilterDropdown('filter-role-btn', 'filter-role-menu', (value) => {
-    contactsRoleFilter = value;
-    contactsPage = 1;
-    contactsSelectAllMode = false;
-    updateRoleFilterMenuSelection();
-    resetContactsTableScroll();
-    renderContactsTable();
-  });
+  setupRoleFilterDropdown('filter-role-btn', 'filter-role-menu');
 
-  setupStatusFilterDropdown('filter-status-btn', 'filter-status-menu', (value) => {
-    contactsStatusFilter = value;
-    contactsPage = 1;
-    contactsSelectAllMode = false;
-    updateStatusFilterMenuSelection();
-    resetContactsTableScroll();
-    renderContactsTable();
-  });
+  if (CONTACTS_SHOW_STATUS) {
+    setupStatusFilterDropdown('filter-status-btn', 'filter-status-menu', (value) => {
+      contactsStatusFilter = value;
+      contactsPage = 1;
+      contactsSelectAllMode = false;
+      updateStatusFilterMenuSelection();
+      resetContactsTableScroll();
+      renderContactsTable();
+    });
+  } else {
+    contactsStatusFilter = '';
+  }
 
   setupTagsFilterDropdown('filter-tags-btn', 'filter-tags-menu');
   initContactsSortDropdown();
@@ -8971,7 +8990,7 @@ function initContactsSortDropdown() {
   sync();
 }
 
-function setupRoleFilterDropdown(btnId, menuId, onSelect) {
+function setupRoleFilterDropdown(btnId, menuId) {
   const btn = document.getElementById(btnId);
   const menu = document.getElementById(menuId);
   if (!btn || !menu) return;
@@ -8986,16 +9005,27 @@ function setupRoleFilterDropdown(btnId, menuId, onSelect) {
     }
   });
 
-  menu.querySelectorAll('.filter-radio-item[data-value]').forEach((item) => {
-    item.addEventListener('click', (e) => {
-      e.stopPropagation();
-      onSelect(item.dataset.value);
-      menu.classList.add('hidden');
-      btn.setAttribute('aria-expanded', 'false');
+  menu.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  menu.querySelectorAll('input[type="checkbox"]').forEach((input) => {
+    input.addEventListener('change', () => {
+      if (input.checked) {
+        if (!contactsRoleFilters.includes(input.value)) contactsRoleFilters.push(input.value);
+      } else {
+        contactsRoleFilters = contactsRoleFilters.filter((role) => role !== input.value);
+      }
+      contactsPage = 1;
+      contactsSelectAllMode = false;
+      updateRoleFilterButton();
+      resetContactsTableScroll();
+      renderContactsTable();
     });
   });
 
-  updateRoleFilterMenuSelection();
+  syncRoleFilterCheckboxes();
+  updateRoleFilterButton();
 }
 
 function setupStatusFilterDropdown(btnId, menuId, onSelect) {

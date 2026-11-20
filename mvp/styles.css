@@ -5877,6 +5877,11 @@ a.message-pdf-card {
   overflow: visible;
 }
 
+.view--contacts .contacts-filter-status,
+.view--contacts .contacts-table .col-status {
+  display: none;
+}
+
 .contacts-rail.is-manage-tags-open .contacts-table-shell {
   overflow-x: auto;
 }
